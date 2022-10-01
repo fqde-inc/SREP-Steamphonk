@@ -187,5 +187,6 @@ include_directories(${SRE_INCLUDE})
 # build targets using sre
 SET(USE_SRE_PROJECT_EXAMPLES ON CACHE BOOL "Enable project examples for SRE")
 if (USE_SRE_PROJECT_EXAMPLES)
+add_subdirectory(LDtkLoader)
 add_subdirectory(project)
 endif(USE_SRE_PROJECT_EXAMPLES)
