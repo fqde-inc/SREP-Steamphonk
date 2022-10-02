@@ -4,6 +4,9 @@
 #include "Component.hpp"
 #include "SpriteComponent.hpp"
 #include "sre/Sprite.hpp"
+#include "CharacterStates/CharacterControllerPDA.hpp"
+
+class CharacterState;
 
 class CharacterController : public Component, public b2RayCastCallback {
 public:
@@ -45,4 +48,9 @@ private:
     float radius;
     bool left = false;
     bool right = false;
+
+    std::shared_ptr<CharacterState> state_;
 };
+
+
+

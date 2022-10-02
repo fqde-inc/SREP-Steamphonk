@@ -10,4 +10,4 @@ IF (WIN32)
 ENDIF(WIN32)
 
 add_subdirectory(Metroidvania)
-#add_subdirectory(platformer)
+add_subdirectory(platformer)

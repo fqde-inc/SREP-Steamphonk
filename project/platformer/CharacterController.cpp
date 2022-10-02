@@ -20,7 +20,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics->getFixture()->SetRestitution(0);
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
-
+    state_ = std::make_shared<CharacterState>();
 }
 
 bool CharacterController::onKey(SDL_Event &event) {
@@ -72,6 +72,8 @@ void CharacterController::update(float deltaTime) {
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
+
+    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
 }
 
 void CharacterController::jump() {

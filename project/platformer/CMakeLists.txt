@@ -6,7 +6,7 @@ file(GLOB Platformer
         )
 
 # Compile cpp files
-add_executable(SRE-Platformer ${Platformer})
+add_executable(SRE-Platformer ${Platformer} CharacterStates/CharacterControllerPDA.hpp CharacterStates/CharacterControllerPDA.cpp CharacterStates/StandingState.hpp CharacterStates/StandingState.cpp)
 target_link_libraries(SRE-Platformer ${all_libs})
 
 # copy files to dest
