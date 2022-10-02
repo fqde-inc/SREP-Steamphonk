@@ -30,6 +30,8 @@ public:
     static PlatformerGame* instance;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
+
+    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
 private:
     sre::SDLRenderer r;
 
