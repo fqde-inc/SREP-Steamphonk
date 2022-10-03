@@ -25,6 +25,7 @@ private:
     glm::vec2 getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension);
 
     void shootAtPlayer();
+    void flap();
     
     glm::vec2* target;
     std::vector<glm::vec2> positions;
@@ -33,8 +34,14 @@ private:
     int lastSegment = 0;
     bool looping = false;
 
-    bool reloading = false;
-    float reloadTime = 2.0f;
+    float flapTime = 1.0f;
+
+    float reloadTime = 0.0f;
+    float reloadTimeLimit = 2.0f;
+    float shootingInterval = 0.5f;
+    int shots = 3;
+    int shotsRemaining = 3;
+
     float radius;
 };
 

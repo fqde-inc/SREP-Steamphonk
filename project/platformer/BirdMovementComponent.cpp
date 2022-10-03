@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <stdio.h>
 #include <cmath>
 #include "BirdMovementComponent.hpp"
 #include "GameObject.hpp"
@@ -18,10 +19,22 @@ BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component
 
 void BirdMovementComponent::update(float deltaTime) {
     time += deltaTime;
+    reloadTime += deltaTime;
+
     gameObject->setPosition(computePositionAtTime(time));
 
-    if (fmod(time, 2.0f) >= 1.5 )
-        shootAtPlayer();
+    if ( reloadTime >= reloadTimeLimit ){
+        if(shotsRemaining == 0){
+            reloadTime = 0;
+            shotsRemaining = 3;
+        } else {
+            reloadTime -= shootingInterval;
+            shotsRemaining--;
+            shootAtPlayer();
+        }
+    }
+
+    flap();
 }
 
 glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
@@ -29,7 +42,7 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
     // fmod is a "%" function that returns float remainders
     // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
     int segment = (int) fmod( time, getNumberOfSegments()); 
-    float t = fmod(time, 1.0f);
+    float t = fmod(time, flapTime);
 
     // Did we reach the last segment ? 
     if( segment == 0 && lastSegment == getNumberOfSegments() - 1 ) {
@@ -105,13 +118,25 @@ int BirdMovementComponent::getNumberOfSegments() {
 
 void BirdMovementComponent::shootAtPlayer(){
 
+    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
+
     auto go = PlatformerGame::instance->createGameObject();     
     go->setPosition(gameObject->getPosition());
 
+    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
     auto spriteComponent = go->addComponent<SpriteComponent>();
-    spriteComponent->setSprite( PlatformerGame::instance->getSpriteAtlas()->get("433.png") );
+    spriteComponent->setSprite( sprite );
 
     auto l = go->addComponent<Laser>();
-    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
     l->setDirection(direction);
+
+    std::cout << "Coordinate : " << direction.x << ',' << direction.y << "\n";
+    std::cout << "Angle : " << -glm::atan(direction.x, direction.y) * 180 / M_PI << "\n";
+
+    go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
+}
+
+
+void BirdMovementComponent::flap(){
+    float t = fmod(time, flapTime);
 }

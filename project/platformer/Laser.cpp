@@ -21,7 +21,6 @@ void Laser::update(float deltaTime) {
     }
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
-
 }
 
 //TODO: Add collision logic
