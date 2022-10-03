@@ -32,6 +32,8 @@ public:
     static constexpr float32 timeStep = 1.0f / 60.0f;
 
     std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
+
+    glm::vec2 getPlayerPositon(){return player->getPosition();};
 private:
     sre::SDLRenderer r;
 
@@ -50,6 +52,7 @@ private:
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
+    std::shared_ptr<GameObject> player;
 
     void updatePhysics();
 

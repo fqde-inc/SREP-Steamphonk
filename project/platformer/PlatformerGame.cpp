@@ -55,7 +55,7 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    auto player = createGameObject();
+    player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");

@@ -20,7 +20,7 @@ void BirdMovementComponent::update(float deltaTime) {
     gameObject->setPosition(computePositionAtTime(time));
 
     if (fmod(time, 2.0f) >= 1.5 )
-        shootAtTarget();
+        shootAtPlayer();
 }
 
 glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
@@ -97,7 +97,7 @@ int BirdMovementComponent::getNumberOfSegments() {
     return positions.size() - 3;
 }
 
-void BirdMovementComponent::shootAtTarget(){
+void BirdMovementComponent::shootAtPlayer(){
 
     auto go = PlatformerGame::instance->createGameObject();     
     go->setPosition(gameObject->getPosition());
@@ -106,9 +106,6 @@ void BirdMovementComponent::shootAtTarget(){
     spriteComponent->setSprite( PlatformerGame::instance->getSpriteAtlas()->get("433.png") );
 
     auto l = go->addComponent<Laser>();
-    //l->setDirection(gameObject->);
-}
-
-void BirdMovementComponent::detectTarget(){
-    
+    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
+    l->setDirection(direction);
 }

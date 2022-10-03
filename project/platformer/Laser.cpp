@@ -20,7 +20,7 @@ void Laser::update(float deltaTime) {
         wasted = true;
     }
 
-    gameObject->setPosition( gameObject->getPosition() + constSpeed );
+    gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
 
 }
 
