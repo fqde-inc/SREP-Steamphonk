@@ -78,6 +78,7 @@ void CharacterController::update(float deltaTime) {
 
 void CharacterController::jump() {
     characterPhysics->addImpulse({0,0.15f});
+    state_->pushStack(std::make_shared<JumpingState>());
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {
@@ -90,6 +91,7 @@ void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
     isGrounded = true;
+    state_->popStack(Jumping);
     return 0; // terminate raycast
 }
 
