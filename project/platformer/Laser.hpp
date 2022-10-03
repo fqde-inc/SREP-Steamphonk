@@ -12,6 +12,16 @@ public:
 
     float lifetime = 0;
     bool wasted = false;
+
+    const glm::vec2 & getDirection() const{
+        return direction;
+    };
+
+    void setDirection(const glm::vec2 & _direction) {
+        direction = _direction;
+    };
+
 private:
+    glm::vec2 direction;
     float constSpeed = 8.0f;
 };

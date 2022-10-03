@@ -8,7 +8,7 @@
 #include <vector>
 #include "glm/glm.hpp"
 
-class BirdMovementComponent : public Component {
+class BirdMovementComponent : public Component{
 public:
     explicit BirdMovementComponent(GameObject *gameObject);
 
@@ -36,5 +36,6 @@ private:
 
     bool reloading = false;
     float reloadTime = 2.0f;
+    float radius;
 };
 

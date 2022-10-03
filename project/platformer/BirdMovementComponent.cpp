@@ -10,14 +10,16 @@
 #include "Laser.hpp"
 #include "SpriteComponent.hpp"
 
-BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component(gameObject) {}
+BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component(gameObject) {
+    //auto birdPhysics = gameObject->addComponent<PhysicsComponent>();
+    //spriteComponent = gameObject->getComponent<SpriteComponent>();
+}
 
 void BirdMovementComponent::update(float deltaTime) {
     time += deltaTime;
     gameObject->setPosition(computePositionAtTime(time));
-    
-    detectTarget();
-    if (fmod(time, 2.0f) == 1 )
+
+    if (fmod(time, 2.0f) >= 1.5 )
         shootAtTarget();
 }
 
@@ -27,7 +29,9 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
 
     if( segment == 0 && lastSegment == getNumberOfSegments() - 1 ){
         looping = !looping;
-        gameObject->getComponent<SpriteComponent>()->getSprite().setFlip({looping, false});
+        auto sprite = gameObject->getComponent<SpriteComponent>()->getSprite();
+        sprite.setFlip({!looping, false});
+        gameObject->getComponent<SpriteComponent>()->setSprite(sprite);
     }
 
     lastSegment = segment;
@@ -68,6 +72,7 @@ glm::vec2 BirdMovementComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, g
 glm::vec2 BirdMovementComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension) {
 
     float s = 2 * tension;
+    
     glm::vec2 dv1 = (p2-p0) / s;
     glm::vec2 dv2 = (p3-p1) / s;
 
@@ -89,18 +94,19 @@ void BirdMovementComponent::setPositions(std::vector<glm::vec2> positions) {
 
 int BirdMovementComponent::getNumberOfSegments() {
     // returns number of Quadratic Bézier spline segments instead
-    return (int) (positions.size() - 3);
+    return positions.size() - 3;
 }
 
 void BirdMovementComponent::shootAtTarget(){
-    auto go = PlatformerGame::instance->createGameObject(); 
-    
+
+    auto go = PlatformerGame::instance->createGameObject();     
     go->setPosition(gameObject->getPosition());
 
     auto spriteComponent = go->addComponent<SpriteComponent>();
     spriteComponent->setSprite( PlatformerGame::instance->getSpriteAtlas()->get("433.png") );
 
     auto l = go->addComponent<Laser>();
+    //l->setDirection(gameObject->);
 }
 
 void BirdMovementComponent::detectTarget(){
