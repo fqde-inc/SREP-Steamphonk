@@ -33,6 +33,7 @@ public:
 
     std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
 
+    // Less expensive to store player pointer and get position on demand
     glm::vec2 getPlayerPositon(){return player->getPosition();};
 private:
     sre::SDLRenderer r;

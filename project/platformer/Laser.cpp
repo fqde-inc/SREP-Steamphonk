@@ -14,9 +14,9 @@ using namespace std;
 Laser::Laser(GameObject *gameObject) : Component(gameObject) {}
 
 void Laser::update(float deltaTime) {
-    
+    //TODO: Do we want self desintegration ?
     lifetime += deltaTime;
-    if(lifetime >= 1 ) {
+    if(lifetime >= lifespan ) {
         wasted = true;
     }
 
@@ -24,6 +24,7 @@ void Laser::update(float deltaTime) {
 
 }
 
+//TODO: Add collision logic
 // void Laser::onCollision(shared_ptr<GameObject> other) {
 //     if(wasted) return;
 

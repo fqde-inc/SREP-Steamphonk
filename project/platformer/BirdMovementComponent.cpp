@@ -10,6 +10,7 @@
 #include "Laser.hpp"
 #include "SpriteComponent.hpp"
 
+//TODO refactor component to generic "pathFinder" 
 BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component(gameObject) {
     //auto birdPhysics = gameObject->addComponent<PhysicsComponent>();
     //spriteComponent = gameObject->getComponent<SpriteComponent>();
@@ -24,11 +25,16 @@ void BirdMovementComponent::update(float deltaTime) {
 }
 
 glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
+    
+    // fmod is a "%" function that returns float remainders
+    // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
     int segment = (int) fmod( time, getNumberOfSegments()); 
     float t = fmod(time, 1.0f);
 
-    if( segment == 0 && lastSegment == getNumberOfSegments() - 1 ){
+    // Did we reach the last segment ? 
+    if( segment == 0 && lastSegment == getNumberOfSegments() - 1 ) {
         looping = !looping;
+        
         auto sprite = gameObject->getComponent<SpriteComponent>()->getSprite();
         sprite.setFlip({!looping, false});
         gameObject->getComponent<SpriteComponent>()->setSprite(sprite);
@@ -36,11 +42,9 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
 
     lastSegment = segment;
     
-    if( looping )
+    // If we're looping, iterate backwards through the segments
+    if( looping ){
         segment = getNumberOfSegments() - 1 - segment;
-
-    //return glm::mix(positions[segment],positions[segment+1],t);
-    if(looping)
         return getCatmullPosition(
             positions[segment+3],
             positions[segment+2],
@@ -48,6 +52,7 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
             positions[segment],
             t,
             0.21f);
+    }
 
     return getCatmullPosition(
         positions[segment],
@@ -59,8 +64,7 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
 
 }
 
-// p(t) = (1-t)^3 * p0 + 3(1-t)^2 * p1 + 3t^2(1-t)p2 + t^3 p3
-
+// Bezier curve math
 glm::vec2 BirdMovementComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t) {
     return 
         ( ( 1 - t ) * ( 1 - t ) * ( 1 - t ) * p0 ) + 
@@ -69,6 +73,8 @@ glm::vec2 BirdMovementComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, g
         ( t * t * t * p3 );
 }
 
+// Catmull-Rom curve, uses the tension parameter to soften the curve at inflection point
+// See : https://pomax.github.io/bezierinfo/#catmullconv
 glm::vec2 BirdMovementComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension) {
 
     float s = 2 * tension;
