@@ -37,8 +37,9 @@ private:
     float flapTime = 1.0f;
 
     float reloadTime = 0.0f;
-    float reloadTimeLimit = 2.0f;
-    float shootingInterval = 0.5f;
+    float reloadTimeLimit = 2.5f;
+    float shootingInterval = 0.3f;
+
     int shots = 3;
     int shotsRemaining = 3;
 

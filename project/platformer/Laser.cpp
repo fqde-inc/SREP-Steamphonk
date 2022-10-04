@@ -7,30 +7,44 @@
 #include "Laser.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
+#include "PhysicsComponent.hpp"
+#include "PlatformerGame.hpp"
+#include "CharacterController.hpp"
 
 using namespace std;
 
 
-Laser::Laser(GameObject *gameObject) : Component(gameObject) {}
+Laser::Laser(GameObject *gameObject) : Component(gameObject) {
+    laserPhysics = gameObject->addComponent<PhysicsComponent>();
+    auto physicsScale = PlatformerGame::instance->physicsScale;
+    radius = 7/physicsScale;
+
+    laserPhysics->initCircle(b2_kinematicBody, radius, glm::vec2{1,1} * Level::tileSize/physicsScale, 0);
+    laserPhysics->setAutoUpdate(false);
+}
 
 void Laser::update(float deltaTime) {
     //TODO: Do we want self desintegration ?
     lifetime += deltaTime;
     if(lifetime >= lifespan ) {
-        wasted = true;
+        gameObject->setConsumed( true );
     }
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
+    laserPhysics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+
 }
 
-//TODO: Add collision logic
-// void Laser::onCollision(shared_ptr<GameObject> other) {
-//     if(wasted) return;
+void Laser::onCollisionStart(PhysicsComponent *comp) {
+    cout << "name : " << comp->getGameObject()->name << "\n";
+    if ( comp->getGameObject()->name == "Player" ){
+        comp->addImpulse( direction );
+        gameObject->setConsumed(true);
+    } else if ( comp->getGameObject()->name == "Platform"){
+        gameObject->setConsumed(true);
+    }
+}
 
-//     if (Asteroid* asteroid = dynamic_cast<Asteroid*>(other.get())) {
-//         wasted = true;
-//         asteroid->destroy();
-//         AsteroidsGame::incrementScore();
-//         return;
-//     }
-// }
+void Laser::onCollisionEnd(PhysicsComponent *comp) {
+    gameObject->setConsumed(true);
+}

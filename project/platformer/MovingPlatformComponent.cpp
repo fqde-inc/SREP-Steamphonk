@@ -13,12 +13,24 @@ MovingPlatformComponent::MovingPlatformComponent(GameObject *gameObject) : Compo
 
 void MovingPlatformComponent::update(float deltaTime) {
     totalTime += deltaTime;
-
+    float t = fmod( totalTime, 1.0f);
     // todo replace with easing function
-    if (fmod(totalTime,2)>1){
-        platformComponent->moveTo(movementEnd);
+    if (fmod(totalTime, 2) > 1){
+        platformComponent->moveTo(
+            glm::mix(
+                movementEnd,
+                movementStart,
+                //TODO add easing.cpp
+                sin( 1.5707963 * t)
+            ));
     } else {
-        platformComponent->moveTo(movementStart);
+        platformComponent->moveTo(
+            glm::mix(
+                movementStart,
+                movementEnd,
+                pow( 2, 6 * (t - 1) ) * abs( sin( t * M_PI * 3.5 ) )
+                //sin( 1.5707963 * fmod( totalTime, 1.0f))
+            ));
     }
 }
 

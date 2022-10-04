@@ -90,11 +90,11 @@ void PlatformerGame::initLevel() {
                                        {-50,350},
                                        {0,300},
                                        {50,350},
-                                       {100,400},
-                                       {150,300},
-                                       {200,200},
-                                       {250,300},
-                                       {300,400},
+                                       {100,300},
+                                       {150,350},
+                                       {200,300},
+                                       {250,350},
+                                       {300,300},
                                        {350,350},
                                        {400,300},
                                        {450,350},
@@ -126,6 +126,14 @@ void PlatformerGame::update(float time) {
 		updatePhysics();
 	}
     for (int i=0;i<sceneObjects.size();i++){
+        if(sceneObjects[i] == nullptr) 
+            continue;
+
+        if(sceneObjects[i]->consumed){
+            sceneObjects.erase(sceneObjects.begin() + i++);
+            continue;
+        }
+
         sceneObjects[i]->update(time);
     }
 }
@@ -264,6 +272,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         auto & aComponents = physA->second->getGameObject()->getComponents();
         auto & bComponents = physB->second->getGameObject()->getComponents();
         for (auto & c : aComponents){
+            cout << c->getGameObject()->name << "\n";
             if (begin){
                 c->onCollisionStart(physB->second);
             } else {

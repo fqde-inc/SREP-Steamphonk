@@ -32,6 +32,8 @@ public:
 
     void setRotation(float rotation);
 
+    void setConsumed(bool _consumed){consumed = _consumed;};
+
     const std::vector<std::shared_ptr<Component>>& getComponents();
 
     std::string name = "_";
@@ -42,6 +44,8 @@ private:
 
     glm::vec2 position;
     float rotation;
+
+    bool consumed = false;
 
     friend class PlatformerGame;
 };

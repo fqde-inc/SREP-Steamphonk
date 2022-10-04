@@ -6,6 +6,7 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
+#include "Laser.hpp"
 #include "BirdMovementComponent.hpp"
 
 class PhysicsComponent;
@@ -72,5 +73,6 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+    friend class Laser;
 };
 
