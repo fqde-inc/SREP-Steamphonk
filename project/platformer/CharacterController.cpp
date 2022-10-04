@@ -23,27 +23,8 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     state_ = std::make_shared<CharacterState>();
 }
 
-bool CharacterController::onKey(SDL_Event &event) {
-        switch (event.key.keysym.sym){
-            case SDLK_SPACE:
-            {
-                if (isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
-                    jump();
-                }
-            }
-            break;
-                case SDLK_LEFT:
-            {
-                left = event.type == SDL_KEYDOWN;
-            }
-            break;
-                case SDLK_RIGHT:
-            {
-                right = event.type == SDL_KEYDOWN;
-            }
-            break;
-        }
-
+bool CharacterController::handleInput(SDL_Event &event) {
+    state_->handleInput(*this, event);
     return false;
 }
 

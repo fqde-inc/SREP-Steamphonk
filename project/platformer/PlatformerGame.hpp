@@ -40,7 +40,7 @@ private:
 
     void render();
 
-    void onKey(SDL_Event &event);
+    void handleInput(SDL_Event &event);
 
     void handleContact(b2Contact *contact, bool begin);
 

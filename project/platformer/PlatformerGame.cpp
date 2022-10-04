@@ -40,7 +40,7 @@ PlatformerGame::PlatformerGame()
 
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
-        onKey(e);
+        handleInput(e);
     };
     r.frameUpdate = [&](float deltaTime){
         update(deltaTime);
@@ -170,10 +170,10 @@ void PlatformerGame::render() {
     }
 }
 
-void PlatformerGame::onKey(SDL_Event &event) {
+void PlatformerGame::handleInput(SDL_Event &event) {
     for (auto & gameObject: sceneObjects) {
         for (auto & c : gameObject->getComponents()){
-            bool consumed = c->onKey(event);
+            bool consumed = c->handleInput(event);
             if (consumed){
                 return;
             }
