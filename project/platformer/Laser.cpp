@@ -17,13 +17,20 @@ using namespace std;
 Laser::Laser(GameObject *gameObject) : Component(gameObject) {
     laserPhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
+    
     radius = 7/physicsScale;
 
-    laserPhysics->initCircle(b2_kinematicBody, radius, glm::vec2{1,1} * Level::tileSize/physicsScale, 0);
+    laserPhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     laserPhysics->setAutoUpdate(false);
 }
 
 void Laser::update(float deltaTime) {
+
+    // Check whether laser has collided with the level using a raycast (platforms)
+    auto from = laserPhysics->getBody()->GetWorldCenter();
+    b2Vec2 to {from.x,from.y -radius*1.3f};
+    PlatformerGame::instance->world->RayCast(this, from, to);
+
     //TODO: Do we want self desintegration ?
     lifetime += deltaTime;
     if(lifetime >= lifespan ) {
@@ -35,12 +42,16 @@ void Laser::update(float deltaTime) {
 
 }
 
+// Raycast callback
+float32 Laser::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+    gameObject->setConsumed(true);
+    return 0;
+};
+
 void Laser::onCollisionStart(PhysicsComponent *comp) {
-    cout << "name : " << comp->getGameObject()->name << "\n";
+    //TODO add collision handling on player's side
     if ( comp->getGameObject()->name == "Player" ){
         comp->addImpulse( direction );
-        gameObject->setConsumed(true);
-    } else if ( comp->getGameObject()->name == "Platform"){
         gameObject->setConsumed(true);
     }
 }
