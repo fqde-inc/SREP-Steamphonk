@@ -117,6 +117,7 @@ void PlatformerGame::initLevel() {
                                });
 
     level->generateLevel();
+    level->generateLevelFromFile();
 }
 
 void PlatformerGame::update(float time) {

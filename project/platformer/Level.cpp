@@ -23,7 +23,7 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     return res;
 }
 
-void generateLevelFromFile()
+void Level::generateLevelFromFile()
 {
     using namespace rapidjson;
     ifstream fis("testlvl.json");
@@ -31,7 +31,13 @@ void generateLevelFromFile()
     Document d;
     d.ParseStream(isw);
 
-    auto level = d["levels"]["layerInstances"].GetArray();
+    auto level = d["levels"]["layerInstances"]["autoLayerTiles"].GetArray();
+	
+    for (int i = 0; i < level.Size(); i++)
+    {
+		auto tile = level[i].GetObject();
+        auto pos = tile["px"].GetArray();
+    }
 }
 
 void Level::generateLevel() {

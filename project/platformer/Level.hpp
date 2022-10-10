@@ -20,6 +20,8 @@ public:
     static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas);
 
     void generateLevel();
+    void generateLevelFromFile();
+	
     std::shared_ptr<PlatformComponent> addPlatform(int x, int y, int startSpriteId, int length, bool kinematic);
     std::shared_ptr<PlatformComponent> addWall(int x, int y, int startSpriteId, int height);
 
