@@ -9,12 +9,10 @@ file(GLOB Platformer
 add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
-file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
 # copy files to dest
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY graphics/dirtsheet.png levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY graphics/dirtsheet.png levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY graphics/dirtsheet.png levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 IF (WIN32)
     # Copy dll files to ${CMAKE_CURRENT_BINARY_DIR}/Debug
