@@ -8,7 +8,10 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformComponent.hpp"
 #include "MovingPlatformComponent.hpp"
-
+#include "rapidjson/document.h"
+#include "rapidjson/istreamwrapper.h"
+#include <fstream>
+using namespace std;
 
 std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
@@ -18,6 +21,17 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     res->spriteAtlas = spriteAtlas;
 
     return res;
+}
+
+void generateLevelFromFile()
+{
+    using namespace rapidjson;
+    ifstream fis("testlvl.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    auto level = d["levels"]["layerInstances"].GetArray();
 }
 
 void Level::generateLevel() {
