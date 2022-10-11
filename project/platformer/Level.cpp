@@ -11,6 +11,8 @@
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>
+#include <sre/Inspector.hpp>
+using namespace sre;
 using namespace std;
 
 std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas) {
@@ -31,12 +33,22 @@ void Level::generateLevelFromFile()
     Document d;
     d.ParseStream(isw);
 
-    auto level = d["levels"]["layerInstances"]["autoLayerTiles"].GetArray();
+    auto level = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
+    string tileset = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__tilesetRelPath"].GetString();
+    tileset.insert(0, ".");
+    //auto curSprite = Texture::create().withFile(tileset)
+	//auto tileset = d["tilesets"].GetArray()[0]["relPath"].GetString();
 	
     for (int i = 0; i < level.Size(); i++)
     {
-		auto tile = level[i].GetObject();
-        auto pos = tile["px"].GetArray();
+        auto pos = level[i].GetObject()["px"].GetArray();
+        //auto src = level[i].GetObject()["src"].GetArray();
+		
+        std::shared_ptr<sre::SpriteAtlas> sprite = SpriteAtlas::createSingleSprite(Texture::create()
+            .withFile(tileset)
+            .build());
+
+        addTile(pos[0].GetInt() / 32, pos[1].GetInt() / 32, sprite);
     }
 }
 
@@ -82,3 +94,20 @@ std::shared_ptr<PlatformComponent> Level::addWall(int x, int y, int startSpriteI
     res->initWall(spriteAtlas, x,y,startSpriteId, length);
     return res;
 }
+
+std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas) {
+    auto gameObject = game->createGameObject();
+    gameObject->name = "Tile";
+    auto res = gameObject->addComponent<PlatformComponent>();
+    res->initWall(spriteAtlas, x, y, 0, 10);
+    return res;
+}
+
+//it's kinda dumb to use a sprite atlas, use sprite instead. 
+//std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::Sprite> sprite) {
+//    auto gameObject = game->createGameObject();
+//    gameObject->name = "Tile";
+//    auto res = gameObject->addComponent<PlatformComponent>();
+//    res->initTile(spriteAtlas, x, y, 0, 10);
+//    return res;
+//}
