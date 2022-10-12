@@ -23,6 +23,7 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     res->spriteAtlas = spriteAtlas;
 
     return res;
+
 }
 
 void Level::generateLevelFromFile()
@@ -32,22 +33,44 @@ void Level::generateLevelFromFile()
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
-
     auto level = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
     string tileset = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__tilesetRelPath"].GetString();
+    auto size = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__gridSize"].GetInt();
     tileset.insert(0, ".");
     //auto curSprite = Texture::create().withFile(tileset)
 	//auto tileset = d["tilesets"].GetArray()[0]["relPath"].GetString();
+    auto tex = Texture::create().withFile(tileset).build();
 	
     for (int i = 0; i < level.Size(); i++)
     {
         auto pos = level[i].GetObject()["px"].GetArray();
-        //auto src = level[i].GetObject()["src"].GetArray();
+        auto src = level[i].GetObject()["src"].GetArray();
 		
-        std::shared_ptr<sre::SpriteAtlas> sprite = SpriteAtlas::createSingleSprite(Texture::create()
-            .withFile(tileset)
-            .build());
+		
+        //std::shared_ptr<sre::SpriteAtlas> sprite = SpriteAtlas::createSingleSprite(Texture::create()
+        //    .withFile(tileset)
+        //    .build());
 
+        //auto sprite = Sprite::Sprite(
+        //        glm::ivec2(0, 0), //pos
+        //        glm::ivec2(1, 1), //size
+        //        glm::ivec2(src[0].GetInt(), src[0].GetInt()), //sprite pos
+        //        glm::ivec2(size, size), //spriteSize
+        //        glm::vec2(size / 2, size / 2), //anchor
+        //        tex);
+
+        //auto sprite = Sprite::Sprite();
+		//sprite.setPosition(glm::vec2(src[0].GetInt(), src[0].GetInt()));
+        
+        auto sprite = SpriteAtlas::createSingleSprite(
+            tex,
+            "tile",
+            glm::vec2(size / 2, size / 2),
+			glm::vec2(src[0].GetInt(), src[0].GetInt()),
+			glm::vec2(size, size)
+        );
+
+        //This results in various errors
         addTile(pos[0].GetInt() / 32, pos[1].GetInt() / 32, sprite);
     }
 }
@@ -95,19 +118,19 @@ std::shared_ptr<PlatformComponent> Level::addWall(int x, int y, int startSpriteI
     return res;
 }
 
-std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas) {
-    auto gameObject = game->createGameObject();
-    gameObject->name = "Tile";
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->initWall(spriteAtlas, x, y, 0, 10);
-    return res;
-}
-
-//it's kinda dumb to use a sprite atlas, use sprite instead. 
-//std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::Sprite> sprite) {
+//std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas) {
 //    auto gameObject = game->createGameObject();
 //    gameObject->name = "Tile";
 //    auto res = gameObject->addComponent<PlatformComponent>();
-//    res->initTile(spriteAtlas, x, y, 0, 10);
+//    res->initWall(spriteAtlas, x, y, 0, 10);
 //    return res;
 //}
+
+//it's kinda dumb to use a sprite atlas, use sprite instead. Alas not possible
+std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas) {
+    auto gameObject = game->createGameObject();
+    gameObject->name = "tile";
+    auto res = gameObject->addComponent<PlatformComponent>();
+    res->initTile(singleSpriteAtlas, x, y);
+    return res;
+}

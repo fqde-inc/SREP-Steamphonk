@@ -83,36 +83,33 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
 }
 
 //using a sprite is way nicer than sprite atlas since we have to go by individual sprites anyway, since map is hardcoded to Simple Texture Packer
-//void PlatformComponent::initTile(std::shared_ptr<sre::Sprite> sprite, int x, int y, int height = 10) {
-//    this->kinematic = false; // walls cannot be moved
-//    auto game = PlatformerGame::instance;
-//
-//    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
-//    float tileSize = Level::tileSize;
-//    glm::vec2 offset{ tileSize / 2,tileSize / 2 };
-//    pos = offset + glm::vec2{ x * tileSize,y * tileSize };
-//
-//    gameObject->setPosition(pos);
-//
-//    spriteComponent->setSprite(sprite);
-//    physics = gameObject->addComponent<PhysicsComponent>();
-//    pos.y += (height - 1) * 0.5f * tileSize;
-//    physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize * height } / physicsScale * 0.5f, pos / physicsScale, 0);
-//    physics->setAutoUpdate(false);
-//
-//    for (int i = 1; i < height; i++) {
-//        auto go = game->createGameObject();
-//        auto spriteComponent = go->addComponent<SpriteComponent>();
-//        int spriteOffset = i == height - 1 ? 0 : 30; // select middle or right piece
-//        auto sprite = spriteAtlas->get(std::to_string(startSpriteId + spriteOffset) + ".png");
-//        glm::vec2 offset{ tileSize / 2,tileSize / 2 };
-//        glm::vec2 pos = offset + glm::vec2{ x * tileSize,(y + i) * tileSize };
-//        go->setPosition(pos);
-//        spriteComponent->setSprite(sprite);
-//
-//        tiles.push_back(go);
-//    }
-//}
+void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas, int pixelX, int pixelY) {
+    this->kinematic = false; // tiles cannot be moved
+    auto game = PlatformerGame::instance;
+
+    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
+    float tileSize = Level::tileSize;
+    pos = glm::vec2{ pixelX, pixelY };
+
+    gameObject->setPosition(pos);
+
+	//This line might be causing issues
+    auto sprite = singleSpriteAtlas->get("tile");
+
+	spriteComponent->setSprite(sprite);
+    physics = gameObject->addComponent<PhysicsComponent>();
+    physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize } / physicsScale * 0.5f, pos / physicsScale, 0);
+    physics->setAutoUpdate(false);
+
+	//What exactly does this and down do?
+    //auto go = game->createGameObject();
+    //auto spriteComponent = go->addComponent<SpriteComponent>();
+    //glm::vec2 offset{ tileSize / 2,tileSize / 2 };
+    //go->setPosition(pos);
+    //spriteComponent->setSprite(sprite);
+
+    //tiles.push_back(go);
+}
 
 
 void PlatformComponent::moveTo(glm::vec2 tilePos) {
