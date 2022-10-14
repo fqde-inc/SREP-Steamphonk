@@ -9,15 +9,10 @@ file(GLOB Platformer
 add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
-# copy files to dest
-file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
 #copy files to graphics
-file(COPY graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/graphics)
-file(COPY graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug/graphics)
-file(COPY graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release/graphics)
+file(COPY levels/graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/levels/graphics)
+file(COPY levels/graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug/levels/graphics)
+file(COPY levels/graphics/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release/levels/graphics)
 
 # copy files to levels
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/levels)
