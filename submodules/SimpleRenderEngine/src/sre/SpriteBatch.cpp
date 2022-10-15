@@ -40,7 +40,7 @@ namespace sre{
                                            .withAttribute("vertex_color",colors)
                                            .build());
             auto mat = shader->createMaterial();
-            //Issue is trying to access lastTexture where the name is empty
+            //Issue is trying to access lastTexture where the name is empty. In general last is fucked up
             mat->setTexture(lastTexture->shared_from_this());
             materials.push_back(mat);
         };

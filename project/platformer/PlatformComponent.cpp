@@ -85,23 +85,26 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
 //using a sprite is way nicer than sprite atlas since we have to go by individual sprites anyway, since map is hardcoded to Simple Texture Packer
 void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas, int pixelX, int pixelY) {
     this->kinematic = false; // tiles cannot be moved
-    auto game = PlatformerGame::instance;
+    auto game = PlatformerGame::instance; //get game instance
 
-    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
-    float tileSize = Level::tileSize;
-    pos = glm::vec2{ pixelX, pixelY };
+    auto spriteComponent = gameObject->addComponent<SpriteComponent>(); //add sprite to gameObject reference
+    float tileSize = Level::tileSize; //get level tilesize
+    pos = glm::vec2{ pixelX, pixelY }; //define pos to pixel coordinates
 
-    gameObject->setPosition(pos);
+    gameObject->setPosition(pos); //set position of referenced GO to pixel pos
+
+	std::cout << "Spawn platform at: " << pos.x << ", " << pos.y << std::endl;
 
 	//This line might be causing issues
-    auto sprite = singleSpriteAtlas->get("tile");
+	auto sprite = singleSpriteAtlas->get("tile"); //get tile sprite from atlas reference
 
-	spriteComponent->setSprite(sprite);
-    physics = gameObject->addComponent<PhysicsComponent>();
+	spriteComponent->setSprite(sprite); //set sprite to sprite component ref on gameobject ref
+    physics = gameObject->addComponent<PhysicsComponent>(); //set physics on referenced GO
     physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize } / physicsScale * 0.5f, pos / physicsScale, 0);
     physics->setAutoUpdate(false);
 
-	//What exactly does this and down do?
+
+    //All this is a way to create additional gameObjects from within a gameObject, not applicable for single tiles
     //auto go = game->createGameObject();
     //auto spriteComponent = go->addComponent<SpriteComponent>();
     //glm::vec2 offset{ tileSize / 2,tileSize / 2 };

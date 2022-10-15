@@ -36,12 +36,14 @@ void Level::generateLevelFromFile()
     auto level = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
     string tileset = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__tilesetRelPath"].GetString();
     auto size = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__gridSize"].GetInt();
-    tileset.insert(0, ".");
+    //tileset.insert(0, "./");
     //auto curSprite = Texture::create().withFile(tileset)
 	//auto tileset = d["tilesets"].GetArray()[0]["relPath"].GetString();
     auto tex = Texture::create().withFile(tileset).build();
-	
+
+    //Go backwards to not flip level
     for (int i = 0; i < level.Size(); i++)
+    //for (int i = level.Size(); i > 0; i--)
     {
         auto pos = level[i].GetObject()["px"].GetArray();
         auto src = level[i].GetObject()["src"].GetArray();
@@ -71,7 +73,8 @@ void Level::generateLevelFromFile()
         );
 
         //This results in various errors
-        addTile(pos[0].GetInt() / 32, pos[1].GetInt() / 32, sprite);
+        addTile(pos[0].GetInt(), pos[1].GetInt(), sprite);
+        //addTile(pos[0].GetInt() / 32, pos[1].GetInt() / 32, sprite);
     }
 }
 
