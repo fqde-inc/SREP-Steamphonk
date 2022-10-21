@@ -54,6 +54,8 @@ void Level::generateLevelFromFile()
         //    .withFile(tileset)
         //    .build());
 
+
+        //This might be destroyed when it's tried to being accessed later. Might be the reason for the errors
         auto sprite = SpriteAtlas::createSingleSprite(
             tex,
             "tile",
