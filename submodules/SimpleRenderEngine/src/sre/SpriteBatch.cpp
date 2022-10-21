@@ -41,7 +41,9 @@ namespace sre{
                                            .build());
             auto mat = shader->createMaterial();
             //Issue is trying to access lastTexture where the name is empty. In general last is fucked up
-            mat->setTexture(lastTexture->shared_from_this());
+            //Just for easier debugging
+            auto tex = lastTexture->shared_from_this();
+            mat->setTexture(tex);
             materials.push_back(mat);
         };
 

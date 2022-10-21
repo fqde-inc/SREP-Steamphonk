@@ -116,7 +116,7 @@ void PlatformerGame::initLevel() {
                                        {1250,350},
                                });
 
-    //level->generateLevel();
+    level->generateLevel();
     level->generateLevelFromFile();
 }
 

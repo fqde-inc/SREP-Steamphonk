@@ -23,7 +23,6 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     res->spriteAtlas = spriteAtlas;
 
     return res;
-
 }
 
 void Level::generateLevelFromFile()
@@ -39,6 +38,8 @@ void Level::generateLevelFromFile()
     //tileset.insert(0, "./");
     //auto curSprite = Texture::create().withFile(tileset)
 	//auto tileset = d["tilesets"].GetArray()[0]["relPath"].GetString();
+
+    //Texture is not loaded properly
     auto tex = Texture::create().withFile(tileset).build();
 
     //Go backwards to not flip level
@@ -53,32 +54,35 @@ void Level::generateLevelFromFile()
         //    .withFile(tileset)
         //    .build());
 
-        //auto sprite = Sprite::Sprite(
-        //        glm::ivec2(0, 0), //pos
-        //        glm::ivec2(1, 1), //size
-        //        glm::ivec2(src[0].GetInt(), src[0].GetInt()), //sprite pos
-        //        glm::ivec2(size, size), //spriteSize
-        //        glm::vec2(size / 2, size / 2), //anchor
-        //        tex);
-
-        //auto sprite = Sprite::Sprite();
-		//sprite.setPosition(glm::vec2(src[0].GetInt(), src[0].GetInt()));
-        
         auto sprite = SpriteAtlas::createSingleSprite(
             tex,
             "tile",
             glm::vec2(size / 2, size / 2),
-			glm::vec2(src[0].GetInt(), src[0].GetInt()),
-			glm::vec2(size, size)
+            glm::vec2(src[0].GetInt(), src[0].GetInt()),
+            glm::vec2(size, size)
         );
 
+        //auto sprite = Sprite::Sprite();
+		//sprite.setPosition(glm::vec2(src[0].GetInt(), src[0].GetInt()));
+        
+   //     auto spriteAtlas = SpriteAtlas::createSingleSprite(
+   //         tex,
+   //         "tile",
+   //         glm::vec2(size / 2, size / 2),
+			//glm::vec2(src[0].GetInt(), src[0].GetInt()),
+			//glm::vec2(size, size)
+   //     );
+
         //This results in various errors
-        addTile(pos[0].GetInt(), pos[1].GetInt(), sprite);
+        addTile(pos[0].GetInt(), pos[1].GetInt(), spriteAtlas);
         //addTile(pos[0].GetInt() / 32, pos[1].GetInt() / 32, sprite);
     }
 }
 
 void Level::generateLevel() {
+    //Add test wall
+    addWall(0, 0, 0, 0);
+
     // start wall
     addWall(-1, 0, 2, 10);
 
@@ -134,6 +138,10 @@ std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, std::shared_ptr<
     auto gameObject = game->createGameObject();
     gameObject->name = "tile";
     auto res = gameObject->addComponent<PlatformComponent>();
-    res->initTile(singleSpriteAtlas, x, y);
+
+    //This works
+    res->initTileTest(std::to_string(2 + 30) + ".png", spriteAtlas, x, y, 2, 0);
+    // This doesn't
+    //res->initTileTest("tile", singleSpriteAtlas, x, y, 2, 0);
     return res;
 }
