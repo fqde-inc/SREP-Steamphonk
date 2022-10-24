@@ -8,6 +8,9 @@
 #include "PhysicsComponent.hpp"
 #include "CharacterController.hpp"
 #include "BirdMovementComponent.hpp"
+#include "rapidjson/istreamwrapper.h"
+#include "rapidjson/document.h"
+#include <fstream>
 
 using namespace std;
 using namespace sre;
@@ -25,6 +28,13 @@ PlatformerGame::PlatformerGame()
     r.init().withSdlInitFlags(SDL_INIT_EVERYTHING)
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
+
+    using namespace rapidjson;
+    ifstream fis("testlvl.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+    auto hexValue = d["bgColor"].GetString();
 
     backgroundColor = {0.6f,0.6f,1.0f,1.0f};
 

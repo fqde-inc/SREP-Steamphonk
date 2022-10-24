@@ -33,6 +33,7 @@ void Level::generateLevelFromFile(int levelNumber)
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
+	
     auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
     auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
     auto levelWidth = d["levels"].GetArray()[levelNumber]["pxWid"].GetInt();
@@ -49,7 +50,7 @@ void Level::generateLevelFromFile(int levelNumber)
 
         string spriteName = ldtkMap[std::make_pair(src[0].GetInt(), src[1].GetInt())];
 
-        addTile(worldX - levelWidth + x, levelHeight - y - worldY, spriteName);
+        addTile(worldX + levelWidth - x, levelHeight - y - worldY, spriteName);
     }
 }
 
