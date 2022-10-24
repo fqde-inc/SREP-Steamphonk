@@ -82,6 +82,7 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
     }
 }
 
+
 void PlatformComponent::moveTo(glm::vec2 tilePos) {
     assert(kinematic);
     glm::vec2 offset{Level::tileSize/2,Level::tileSize/2};
