@@ -6,6 +6,7 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
+#include "CharacterController.hpp"
 #include "BirdMovementComponent.hpp"
 
 class PhysicsComponent;
@@ -46,6 +47,7 @@ private:
 
     std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<CharacterController> characterController;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
 
@@ -66,5 +68,6 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+
 };
 

@@ -57,11 +57,6 @@ void CharacterController::update(float deltaTime) {
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
 }
 
-void CharacterController::jump() {
-    characterPhysics->addImpulse({0,0.15f});
-    state_->pushStack(std::make_shared<JumpingState>());
-}
-
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {
 
 }

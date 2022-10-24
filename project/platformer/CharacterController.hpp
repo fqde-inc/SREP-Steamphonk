@@ -38,6 +38,11 @@ public:
     std::shared_ptr<PhysicsComponent> characterPhysics;
     bool left = false;
     bool right = false;
+    std::shared_ptr<CharacterState> state_;
+    bool isGrounded = false;
+    friend class CharacterState;
+    friend class StandingState;
+    friend class JumpingState;
 private:
     sre::Sprite standing;
     sre::Sprite walk1;
@@ -47,10 +52,8 @@ private:
     sre::Sprite flyDown;
 
     std::shared_ptr<SpriteComponent> spriteComponent;
-    bool isGrounded = false;
     float radius;
 
-    std::shared_ptr<CharacterState> state_;
 };
 
 
