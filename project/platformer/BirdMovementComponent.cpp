@@ -11,7 +11,6 @@ BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component
 void BirdMovementComponent::update(float deltaTime) {
     time += deltaTime;
     gameObject->setPosition(computePositionAtTime(time));
-	std::cout << "Bird position: " << gameObject->getPosition().x << ", " << gameObject->getPosition().y << std::endl;
 }
 
 glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {

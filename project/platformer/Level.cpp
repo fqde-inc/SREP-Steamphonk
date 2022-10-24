@@ -50,7 +50,7 @@ void Level::generateLevelFromFile(int levelNumber)
 
         string spriteName = ldtkMap[std::make_pair(src[0].GetInt(), src[1].GetInt())];
 
-        addTile(worldX + levelWidth - x, levelHeight - y - worldY, spriteName);
+        addTile(worldX + x, levelHeight - worldY - y, spriteName);
     }
 }
 
