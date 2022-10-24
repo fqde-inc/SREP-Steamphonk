@@ -46,6 +46,7 @@ private:
 
     std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
 

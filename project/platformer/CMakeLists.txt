@@ -19,6 +19,11 @@ file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
+# copy texture packer json
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
 # copy files to levels
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)

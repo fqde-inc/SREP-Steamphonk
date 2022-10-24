@@ -15,27 +15,29 @@
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 
     // todo initialize
     res->game = game;
     res->spriteAtlas = spriteAtlas;
+    res->tileAtlas = tileAtlas;
 
     return res;
 }
 
-void Level::generateLevelFromFile()
+void Level::generateLevelFromFile(int levelNumber)
 {
     using namespace rapidjson;
     ifstream fis("testlvl.json");
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
-    auto level = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
-    string tileset = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__tilesetRelPath"].GetString();
-    auto gridSize = d["levels"].GetArray()[0]["layerInstances"].GetArray()[0]["__gridSize"].GetInt();
-    auto pxHeight = d["levels"].GetArray()[0]["pxHei"].GetInt();
+    auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
+    auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
+    auto levelWidth = d["levels"].GetArray()[levelNumber]["pxWid"].GetInt();
+    auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
+    auto worldY = d["levels"].GetArray()[levelNumber]["worldY"].GetInt();
 
     for (int i = 0; i < level.Size(); i++)
     {
@@ -45,9 +47,9 @@ void Level::generateLevelFromFile()
 		int x = pos[0].GetInt();
 		int y = pos[1].GetInt();
 
-        int spriteId = ldtkMap[std::make_pair(src[0].GetInt(), src[1].GetInt())];
+        string spriteName = ldtkMap[std::make_pair(src[0].GetInt(), src[1].GetInt())];
 
-        addWall(pxHeight/gridSize - x/gridSize, pxHeight / gridSize - y/gridSize, spriteId, 1);
+        addTile(worldX - levelWidth + x, levelHeight - y - worldY, spriteName);
     }
 }
 
@@ -94,5 +96,13 @@ std::shared_ptr<PlatformComponent> Level::addWall(int x, int y, int startSpriteI
     gameObject->name = "Platform";
     auto res = gameObject->addComponent<PlatformComponent>();
     res->initWall(spriteAtlas, x,y,startSpriteId, length);
+    return res;
+}
+
+std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, string name) {
+    auto gameObject = game->createGameObject();
+    gameObject->name = "Platform";
+    auto res = gameObject->addComponent<PlatformComponent>();
+    res->initTile(tileAtlas, x, y, name);
     return res;
 }
