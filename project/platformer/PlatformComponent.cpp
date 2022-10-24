@@ -82,58 +82,6 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
     }
 }
 
-void PlatformComponent::initTileTest(std::string tileName, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int height) {
-    this->kinematic = false; // walls cannot be moved
-    auto game = PlatformerGame::instance;
-
-    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
-    auto sprite = spriteAtlas->get(tileName);
-    float tileSize = Level::tileSize;
-    glm::vec2 offset{ tileSize / 2,tileSize / 2 };
-    pos = offset + glm::vec2{ x , y };
-
-    gameObject->setPosition(pos);
-
-    spriteComponent->setSprite(sprite);
-    physics = gameObject->addComponent<PhysicsComponent>();
-    pos.y += (height - 1) * 0.5f * tileSize;
-    physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize * height } / physicsScale * 0.5f, pos / physicsScale, 0);
-    physics->setAutoUpdate(false);
-}
-
-//using a sprite is way nicer than sprite atlas since we have to go by individual sprites anyway, since map is hardcoded to Simple Texture Packer
-void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> singleSpriteAtlas, int pixelX, int pixelY) {
-    this->kinematic = false; // tiles cannot be moved
-    auto game = PlatformerGame::instance; //get game instance
-
-    auto spriteComponent = gameObject->addComponent<SpriteComponent>(); //add sprite to gameObject reference
-    float tileSize = Level::tileSize; //get level tilesize
-    pos = glm::vec2{ pixelX, pixelY }; //define pos to pixel coordinates
-
-    gameObject->setPosition(pos); //set position of referenced GO to pixel pos
-
-	std::cout << "Spawn platform at: " << pos.x << ", " << pos.y << std::endl;
-
-	//This line might be causing issues
-	auto sprite = singleSpriteAtlas->get("tile"); //get tile sprite from atlas reference
-
-	spriteComponent->setSprite(sprite); //set sprite to sprite component ref on gameobject ref
-    physics = gameObject->addComponent<PhysicsComponent>(); //set physics on referenced GO
-    physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize } / physicsScale * 0.5f, pos / physicsScale, 0);
-    physics->setAutoUpdate(false);
-
-
-    //All this is a way to create additional gameObjects from within a gameObject, not applicable for single tiles
-    //auto go = game->createGameObject();
-    //auto spriteComponent = go->addComponent<SpriteComponent>();
-    //glm::vec2 offset{ tileSize / 2,tileSize / 2 };
-    //go->setPosition(pos);
-    //spriteComponent->setSprite(sprite);
-
-    //tiles.push_back(go);
-}
-
-
 void PlatformComponent::moveTo(glm::vec2 tilePos) {
     assert(kinematic);
     glm::vec2 offset{Level::tileSize/2,Level::tileSize/2};
