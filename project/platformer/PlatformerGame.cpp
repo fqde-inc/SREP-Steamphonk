@@ -62,6 +62,12 @@ PlatformerGame::PlatformerGame()
     r.frameRender = [&](){
         render();
     };
+
+    r.mouseEvent = [&](SDL_Event& event) {
+        mouseMotion = event.motion;
+        mouseButton = event.button;
+    };
+	
     // start game loop
     r.startEventLoop();
 }
@@ -257,6 +263,11 @@ void PlatformerGame::EndContact(b2Contact *contact) {
     b2ContactListener::EndContact(contact);
     handleContact(contact, false);
 }
+
+//glm::vec2 PlatformerGame::getMousePosition()
+//{
+//    return glm::vec2(mouseMotion.x, mouseMotion.y);
+//}
 
 void PlatformerGame::deregisterPhysicsComponent(PhysicsComponent *r) {
     auto iter = physicsComponentLookup.find(r->getFixture());

@@ -38,11 +38,13 @@ private:
     sre::Sprite flyUp;
     sre::Sprite fly;
     sre::Sprite flyDown;
-
+    std::shared_ptr<GameObject> cursor;
     std::shared_ptr<SpriteComponent> spriteComponent;
     std::shared_ptr<PhysicsComponent> characterPhysics;
     bool isGrounded = false;
     float radius;
     bool left = false;
     bool right = false;
+
+    void DisplayCursor();
 };

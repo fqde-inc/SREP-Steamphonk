@@ -28,6 +28,11 @@ public:
     void EndContact(b2Contact *contact) override;
 
     static PlatformerGame* instance;
+	
+    //glm::vec2 getMousePosition();
+
+    SDL_MouseMotionEvent mouseMotion;
+    SDL_MouseButtonEvent mouseButton;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
 private:
