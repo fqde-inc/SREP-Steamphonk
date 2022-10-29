@@ -43,6 +43,7 @@ void CharacterController::update(float deltaTime) {
     if (right){
         movement.x ++;
     }
+
     float accelerationSpeed = 0.010f;
     characterPhysics->addImpulse(movement*accelerationSpeed);
     float maximumVelocity = 2;

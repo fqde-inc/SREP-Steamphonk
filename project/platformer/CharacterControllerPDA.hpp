@@ -10,7 +10,8 @@ class CharacterController;
 
 enum CharacterStateTypes {
     Standing,
-    Jumping
+    Jumping,
+    Walking
 };
 
 #pragma region CharacterState
@@ -61,5 +62,18 @@ enum CharacterStateTypes {
         void handleInput(CharacterController& character, SDL_Event &event) override;
         void update(CharacterController &character) override;
     };
+
+#pragma endregion
+
+#pragma region WalkingState
+
+class WalkingState : public CharacterState {
+public:
+    explicit WalkingState() : CharacterState(0) {
+        stateType = Walking;
+    };
+    void handleInput(CharacterController& character, SDL_Event &event) override;
+    void update(CharacterController &character) override;
+};
 
 #pragma endregion

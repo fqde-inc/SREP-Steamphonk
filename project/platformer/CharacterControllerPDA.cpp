@@ -64,11 +64,13 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
         case SDLK_LEFT:
         {
             character.left = event.type == SDL_KEYDOWN;
+            pushStack(std::make_shared<WalkingState>());
         }
             break;
         case SDLK_RIGHT:
         {
             character.right = event.type == SDL_KEYDOWN;
+            pushStack(std::make_shared<WalkingState>());
         }
             break;
     }
@@ -82,9 +84,61 @@ void StandingState::update(CharacterController &character) {
 #pragma region JumpingState Methods
 
 void JumpingState::handleInput(CharacterController& character, SDL_Event &event) {
+    switch (event.key.keysym.sym){
+        case SDLK_LEFT:
+        {
+            character.left = event.type == SDL_KEYDOWN;
+            if(event.type == SDL_KEYUP) {
+                popStack(Walking);
+            }
+        }
+            break;
+        case SDLK_RIGHT:
+        {
+            character.right = event.type == SDL_KEYDOWN;
+            if(event.type == SDL_KEYUP) {
+                popStack(Walking);
+            }
+        }
+            break;
+    }
 }
 
 void JumpingState::update(CharacterController &character) {
+}
+
+#pragma endregion
+
+#pragma region WalkingState Methods
+
+void WalkingState::handleInput(CharacterController& character, SDL_Event &event) {
+    switch (event.key.keysym.sym){
+        case SDLK_SPACE:
+        {
+            if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
+                pushStack(std::make_shared<JumpingState>());
+                character.characterPhysics->addImpulse({0,0.15f});
+                character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
+                character.characterPhysics->addImpulse({0,0.15f});
+            }
+        }
+            break;
+        case SDLK_LEFT:
+        {
+            character.left = event.type == SDL_KEYDOWN;
+            if(event.type == SDL_KEYUP) popStack(Walking);
+        }
+            break;
+        case SDLK_RIGHT:
+        {
+            character.right = event.type == SDL_KEYDOWN;
+            if(event.type == SDL_KEYUP) popStack(Walking);
+        }
+            break;
+    }
+}
+
+void WalkingState::update(CharacterController &character) {
 }
 
 #pragma endregion
