@@ -199,7 +199,3 @@ void FiringState::update(CharacterController &character) {
 }
 
 #pragma endregion
-
-void Jump(CharacterController& character, SDL_Event &event) {
-
-}
