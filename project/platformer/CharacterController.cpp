@@ -20,10 +20,6 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics->getFixture()->SetRestitution(0);
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
-
-    cursor = PlatformerGame::instance->createGameObject();
-    cursor->name = "Cursor";
-	cursor->addComponent<SpriteComponent>()->setSprite(PlatformerGame::instance->spriteAtlas->get("28.png"));
 }
 
 bool CharacterController::onKey(SDL_Event &event) {
@@ -48,14 +44,6 @@ bool CharacterController::onKey(SDL_Event &event) {
         }
 
     return false;
-}
-
-void CharacterController::DisplayCursor()
-{
-	auto mouseMotion = PlatformerGame::instance->mouseMotion;
-    //glm::vec2 mousePos = PlatformerGame::instance->getMousePosition();
-    cursor->setPosition(glm::vec2((int)mouseMotion.x, (int)mouseMotion.y));
-    //cursor->getComponent<SpriteComponent>()->getTransform()->setLocalPosition(mousePos);
 }
 
 void CharacterController::update(float deltaTime) {
@@ -83,7 +71,6 @@ void CharacterController::update(float deltaTime) {
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
-    DisplayCursor();
 }
 
 void CharacterController::jump() {

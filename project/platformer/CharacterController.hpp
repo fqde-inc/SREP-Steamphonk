@@ -45,6 +45,4 @@ private:
     float radius;
     bool left = false;
     bool right = false;
-
-    void DisplayCursor();
 };
