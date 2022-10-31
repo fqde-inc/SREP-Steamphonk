@@ -27,6 +27,11 @@ enum CharacterStateTypes {
 
         virtual void handleInput(CharacterController& character, SDL_Event &event);
         virtual void update(CharacterController& character);
+        virtual void jump(CharacterController& character, SDL_Event &event);
+        virtual void moveLeft(CharacterController& character, SDL_Event &event);
+        virtual void moveRight(CharacterController& character, SDL_Event &event);
+        virtual void fire(CharacterController& character, SDL_Event &event);
+        virtual void swapWeapons(CharacterController& character, SDL_Event &event);
 
         static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
 

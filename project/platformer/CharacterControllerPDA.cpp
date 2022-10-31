@@ -46,6 +46,51 @@ void CharacterState::popStack(CharacterStateTypes type) {
     }
 }
 
+void CharacterState::jump(CharacterController &character, SDL_Event &event) {
+    if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
+        pushStack(std::make_shared<JumpingState>());
+        character.characterPhysics->addImpulse({0,0.15f});
+        character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
+        character.characterPhysics->addImpulse({0,0.15f});
+    }
+}
+
+void CharacterState::moveLeft(CharacterController &character, SDL_Event &event) {
+    character.left = event.type == SDL_KEYDOWN;
+    if(event.type == SDL_KEYUP) popStack(Walking);
+}
+
+void CharacterState::moveRight(CharacterController &character, SDL_Event &event) {
+    character.right = event.type == SDL_KEYDOWN;
+    if(event.type == SDL_KEYUP) popStack(Walking);
+}
+
+void CharacterState::fire(CharacterController &character, SDL_Event &event) {
+    if (event.type == SDL_KEYUP) {
+        character.firing = false;
+        return;
+    }
+
+    if (!character.firing) {
+        character.firing = true;
+        pushStack(std::make_shared<FiringState>());
+    }
+}
+
+void CharacterState::swapWeapons(CharacterController &character, SDL_Event &event) {
+    if (event.type == SDL_KEYUP) {
+        character.swappingGun = false;
+        return;
+    }
+
+    if(!character.swappingGun){
+        character.swappingGun = true;
+        std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
+                {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
+        character.equippedGuns.swap(swappedGuns);
+    }
+}
+
 #pragma endregion
 
 #pragma region StandingState Methods
@@ -53,48 +98,25 @@ void CharacterState::popStack(CharacterStateTypes type) {
 void StandingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
         case SDLK_SPACE:
-            if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
-                pushStack(std::make_shared<JumpingState>());
-                character.characterPhysics->addImpulse({0,0.15f});
-                character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
-                character.characterPhysics->addImpulse({0,0.15f});
-            }
+            jump(character, event);
             break;
 
         case SDLK_LEFT:
-            character.left = event.type == SDL_KEYDOWN;
-            if (event.type == SDL_KEYDOWN) pushStack(std::make_shared<WalkingState>());
+            moveLeft(character, event);
+            pushStack(std::make_shared<WalkingState>());
             break;
 
         case SDLK_RIGHT:
-            character.right = event.type == SDL_KEYDOWN;
-            if (event.type == SDL_KEYDOWN) pushStack(std::make_shared<WalkingState>());
+            moveRight(character, event);
+            pushStack(std::make_shared<WalkingState>());
             break;
 
         case SDLK_e:
-            if (event.type == SDL_KEYUP) {
-                character.firing = false;
-                return;
-            }
-
-            if (!character.firing) {
-                character.firing = true;
-                pushStack(std::make_shared<FiringState>());
-            }
+            fire(character, event);
             break;
 
         case SDLK_q:
-            if (event.type == SDL_KEYUP) {
-                character.swappingGun = false;
-                return;
-            }
-
-            if(!character.swappingGun){
-                character.swappingGun = true;
-                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
-                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
-                character.equippedGuns.swap(swappedGuns);
-            }
+            swapWeapons(character, event);
             break;
     }
 }
@@ -109,43 +131,19 @@ void StandingState::update(CharacterController &character) {
 void JumpingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
         case SDLK_LEFT:
-            character.left = event.type == SDL_KEYDOWN;
-            if(event.type == SDL_KEYUP) {
-                popStack(Walking);
-            }
+            moveLeft(character, event);
             break;
 
         case SDLK_RIGHT:
-            character.right = event.type == SDL_KEYDOWN;
-            if(event.type == SDL_KEYUP) {
-                popStack(Walking);
-            }
+            moveRight(character, event);
             break;
 
         case SDLK_e:
-            if (event.type == SDL_KEYUP) {
-                character.firing = false;
-                return;
-            }
-
-            if (!character.firing) {
-                character.firing = true;
-                pushStack(std::make_shared<FiringState>());
-            }
+            fire(character, event);
             break;
 
         case SDLK_q:
-            if (event.type == SDL_KEYUP) {
-                character.swappingGun = false;
-                return;
-            }
-
-            if(!character.swappingGun){
-                character.swappingGun = true;
-                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
-                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
-                character.equippedGuns.swap(swappedGuns);
-            }
+            swapWeapons(character, event);
             break;
     }
 }
@@ -167,48 +165,23 @@ void JumpingState::exit() {
 void WalkingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
         case SDLK_SPACE:
-            if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
-                pushStack(std::make_shared<JumpingState>());
-                character.characterPhysics->addImpulse({0,0.15f});
-                character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
-                character.characterPhysics->addImpulse({0,0.15f});
-            }
+            jump(character, event);
             break;
 
         case SDLK_LEFT:
-            character.left = event.type == SDL_KEYDOWN;
-            if(event.type == SDL_KEYUP) popStack(Walking);
+            moveLeft(character, event);
             break;
 
         case SDLK_RIGHT:
-            character.right = event.type == SDL_KEYDOWN;
-            if(event.type == SDL_KEYUP) popStack(Walking);
+            moveRight(character, event);
             break;
 
         case SDLK_e:
-            if (event.type == SDL_KEYUP) {
-                character.firing = false;
-                return;
-            }
-
-            if (!character.firing) {
-                character.firing = true;
-                pushStack(std::make_shared<FiringState>());
-            }
+            fire(character, event);
             break;
 
         case SDLK_q:
-            if (event.type == SDL_KEYUP) {
-                character.swappingGun = false;
-                return;
-            }
-
-            if(!character.swappingGun){
-                character.swappingGun = true;
-                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
-                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
-                character.equippedGuns.swap(swappedGuns);
-            }
+            swapWeapons(character, event);
             break;
     }
 }
@@ -227,3 +200,6 @@ void FiringState::update(CharacterController &character) {
 
 #pragma endregion
 
+void Jump(CharacterController& character, SDL_Event &event) {
+
+}
