@@ -72,28 +72,27 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
             break;
 
         case SDLK_e:
-            character.firing = true;
-
             if (event.type == SDL_KEYUP) {
                 character.firing = false;
                 return;
             }
 
-            if (character.firing) {
+            if (!character.firing) {
+                character.firing = true;
                 pushStack(std::make_shared<FiringState>());
             }
             break;
 
         case SDLK_q:
-            character.swappingGun = true;
-
             if (event.type == SDL_KEYUP) {
                 character.swappingGun = false;
                 return;
             }
 
-            if(character.swappingGun){
-                std::tuple<GunTypes, GunTypes> swappedGuns = {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
+            if(!character.swappingGun){
+                character.swappingGun = true;
+                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
+                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
                 character.equippedGuns.swap(swappedGuns);
             }
             break;
@@ -124,28 +123,27 @@ void JumpingState::handleInput(CharacterController& character, SDL_Event &event)
             break;
 
         case SDLK_e:
-            character.firing = true;
-
             if (event.type == SDL_KEYUP) {
                 character.firing = false;
                 return;
             }
 
-            if (character.firing) {
+            if (!character.firing) {
+                character.firing = true;
                 pushStack(std::make_shared<FiringState>());
             }
             break;
 
         case SDLK_q:
-            character.swappingGun = true;
-
             if (event.type == SDL_KEYUP) {
                 character.swappingGun = false;
                 return;
             }
 
-            if(character.swappingGun){
-                std::tuple<GunTypes, GunTypes> swappedGuns = {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
+            if(!character.swappingGun){
+                character.swappingGun = true;
+                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
+                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
                 character.equippedGuns.swap(swappedGuns);
             }
             break;
@@ -188,28 +186,27 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
             break;
 
         case SDLK_e:
-            character.firing = true;
-
             if (event.type == SDL_KEYUP) {
                 character.firing = false;
                 return;
             }
 
-            if (character.firing) {
+            if (!character.firing) {
+                character.firing = true;
                 pushStack(std::make_shared<FiringState>());
             }
             break;
 
         case SDLK_q:
-            character.swappingGun = true;
-
             if (event.type == SDL_KEYUP) {
                 character.swappingGun = false;
                 return;
             }
 
-            if(character.swappingGun){
-                std::tuple<GunTypes, GunTypes> swappedGuns = {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
+            if(!character.swappingGun){
+                character.swappingGun = true;
+                std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
+                        {get<1>(character.equippedGuns), get<0>(character.equippedGuns)};
                 character.equippedGuns.swap(swappedGuns);
             }
             break;
@@ -224,14 +221,7 @@ void WalkingState::update(CharacterController &character) {
 #pragma region FiringState Methods
 
 void FiringState::update(CharacterController &character) {
-        switch (get<0>(character.equippedGuns)) {
-            case NullGun:
-                std::cout << "Null Whiff" << std::endl;
-                break;
-            case Revolver:
-                std::cout << "Bang!" << std::endl;
-                break;
-        }
+    get<0>(character.equippedGuns)->Fire();
     popStack(Firing);
 }
 

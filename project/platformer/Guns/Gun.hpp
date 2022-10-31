@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <iostream>
 
 enum GunTypes {
     NullGun,
@@ -12,6 +13,10 @@ enum GunTypes {
 class Gun {
 public:
     explicit Gun() {}
-    virtual void Fire();
+
+    virtual void Fire() {
+        std::cout << "Whiff!" << std::endl;
+    }
+
     GunTypes gunType = NullGun;
 };

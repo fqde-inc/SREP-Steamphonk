@@ -6,6 +6,7 @@
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
 #include "Guns/Gun.hpp"
+#include "Guns/Revolver.hpp"
 #include <tuple>
 
 class CharacterState;
@@ -27,7 +28,7 @@ public:
 
     bool handleInput(SDL_Event &event) override;
 
-    std::tuple<GunTypes, GunTypes> equippedGuns = {NullGun, Revolver};
+    std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> equippedGuns = {std::make_shared<Gun>(), std::make_shared<RevolverGun>()};
 
     bool swappingGun = false;
     bool firing = false;

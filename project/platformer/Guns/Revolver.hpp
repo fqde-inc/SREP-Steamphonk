@@ -3,14 +3,16 @@
 //
 
 #pragma once
-
 #include "Gun.hpp"
+#include <iostream>
 
-class RevolverGun : Gun {
+class RevolverGun : public Gun {
 public:
-    explicit RevolverGun() {
+    explicit RevolverGun() : Gun() {
         gunType = Revolver;
     }
 
-    void Fire() override;
+    void Fire() override {
+        std::cout << "Bang!" << std::endl;
+    }
 };
