@@ -182,6 +182,9 @@ void PlatformerGame::render() {
                 case Walking:
                     ImGui::BulletText("%s","Walking");
                     break;
+                case Firing:
+                    ImGui::BulletText("%s","Firing");
+                    break;
             }
         }
         ImGui::End();

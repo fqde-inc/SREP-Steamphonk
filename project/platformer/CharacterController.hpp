@@ -5,6 +5,8 @@
 #include "SpriteComponent.hpp"
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
+#include "Guns/Gun.hpp"
+#include <tuple>
 
 class CharacterState;
 
@@ -25,7 +27,10 @@ public:
 
     bool handleInput(SDL_Event &event) override;
 
-    void jump();
+    std::tuple<GunTypes, GunTypes> equippedGuns = {NullGun, Revolver};
+
+    bool swappingGun = false;
+    bool firing = false;
 
     // raycast callback
     virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,

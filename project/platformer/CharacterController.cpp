@@ -68,7 +68,12 @@ void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
     isGrounded = true;
-    state_->popStack(Jumping);
+    if(state_->characterStateStack[0]->stateType == Jumping) {
+        state_->popStack(Jumping);
+        if(left || right) {
+            state_->pushStack(std::make_shared<WalkingState>());
+        }
+    }
     return 0; // terminate raycast
 }
 
