@@ -32,11 +32,13 @@ bool CharacterController::onKey(SDL_Event &event) {
             }
             break;
                 case SDLK_LEFT:
+                case SDLK_a:
             {
                 left = event.type == SDL_KEYDOWN;
             }
             break;
                 case SDLK_RIGHT:
+                case SDLK_d:
             {
                 right = event.type == SDL_KEYDOWN;
             }

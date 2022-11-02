@@ -13,6 +13,7 @@
 #include "rapidjson/document.h"
 #include <fstream>
 #include "Crosshair.hpp"
+#include "PlayerShooting.hpp"
 
 using namespace std;
 using namespace sre;
@@ -87,6 +88,7 @@ void PlatformerGame::initLevel() {
     auto playerSpriteObj = spriteAtlas->get("19.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
+    player->addComponent<PlayerShooting>();
     auto characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
@@ -150,7 +152,7 @@ void PlatformerGame::initLevel() {
     level->generateLevelFromFile(1);
     level->generateLevelFromFile(2);
 
-    auto crosshair = createGameObject();
+    crosshair = createGameObject();
     crosshair->name = "Crosshair";
     auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
     crosshairSprite->setSprite(spriteAtlas->get("28.png"));
@@ -315,7 +317,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         auto & aComponents = physA->second->getGameObject()->getComponents();
         auto & bComponents = physB->second->getGameObject()->getComponents();
         for (auto & c : aComponents){
-            cout << c->getGameObject()->name << "\n";
+            //cout << c->getGameObject()->name << "\n";
             if (begin){
                 c->onCollisionStart(physB->second);
             } else {

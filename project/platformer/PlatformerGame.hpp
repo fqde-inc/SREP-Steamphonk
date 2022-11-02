@@ -34,6 +34,7 @@ public:
     SDL_MouseMotionEvent mouseMotion;
     SDL_MouseButtonEvent mouseButton;
 
+    std::shared_ptr<GameObject> crosshair;
     std::shared_ptr<SideScrollingCamera> camera;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;

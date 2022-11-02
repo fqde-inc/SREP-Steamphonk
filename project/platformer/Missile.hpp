@@ -7,7 +7,9 @@
 
 class Missile : public Component, b2RayCastCallback{
 public:
-    explicit Missile(GameObject *gameObject);
+    explicit Missile(GameObject* gameObject);
+	
+    void setTarget(std::string _target);
 
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 
@@ -34,4 +36,6 @@ private:
 
     float constSpeed = 5.5f;
     float radius;
+
+    std::string target;
 };
