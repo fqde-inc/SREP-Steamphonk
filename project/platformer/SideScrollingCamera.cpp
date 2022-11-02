@@ -79,3 +79,17 @@ void SideScrollingCamera::setZoomMode(bool zoomEnabled) {
 bool SideScrollingCamera::isZoomMode() {
     return zoom;
 }
+
+glm::vec2 SideScrollingCamera::pixelToCameraSpace(glm::vec2& pixelCoordinates)
+{
+    auto position = pixelCoordinates;
+	
+    position.x += offset.x;
+    position.y += offset.y;
+    if (zoom) {
+        position.x -= offset.x / 2;
+        position.y -= offset.y / 2;
+    }
+
+    return position;
+}

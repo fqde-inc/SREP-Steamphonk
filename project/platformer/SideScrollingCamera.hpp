@@ -15,6 +15,7 @@ public:
     void setZoomMode(bool zoomEnabled);
     bool isZoomMode();
 
+    glm::vec2 pixelToCameraSpace(glm::vec2& pixelCoordinates);
     sre::Camera& getCamera();
 private:
     sre::Camera camera;

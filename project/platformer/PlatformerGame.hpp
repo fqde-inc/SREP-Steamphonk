@@ -34,6 +34,8 @@ public:
     SDL_MouseMotionEvent mouseMotion;
     SDL_MouseButtonEvent mouseButton;
 
+    std::shared_ptr<SideScrollingCamera> camera;
+
     static constexpr float32 timeStep = 1.0f / 60.0f;
 private:
     sre::SDLRenderer r;
@@ -49,7 +51,6 @@ private:
 
     void handleContact(b2Contact *contact, bool begin);
 
-    std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
