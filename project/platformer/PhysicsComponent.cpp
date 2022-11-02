@@ -91,8 +91,6 @@ void PhysicsComponent::initBox(b2BodyType type, glm::vec2 size, glm::vec2 center
     fxD.density = density;
     fixture = body->CreateFixture(&fxD);
 
-
-
     PlatformerGame::instance->registerPhysicsComponent(this);
 }
 

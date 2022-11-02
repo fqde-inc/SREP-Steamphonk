@@ -19,6 +19,9 @@ public:
     void update(float deltaTime) override;
 
     glm::vec2 getPosition();
+
+    void onCollisionStart(PhysicsComponent *comp) override {};
+    void onCollisionEnd(PhysicsComponent *comp) override {};
 private:
     std::vector<std::shared_ptr<GameObject>> tiles;
     std::shared_ptr<PhysicsComponent> physics;

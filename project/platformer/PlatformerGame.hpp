@@ -6,7 +6,9 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
-#include "BirdMovementComponent.hpp"
+#include "Missile.hpp"
+#include "EnemyComponent.hpp"
+#include "FollowPathComponent.hpp"
 
 class PhysicsComponent;
 
@@ -35,6 +37,11 @@ public:
     std::shared_ptr<SideScrollingCamera> camera;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
+
+    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
+
+    // Less expensive to store player pointer and get position on demand
+    glm::vec2 getPlayerPositon(){return player->getPosition();};
 private:
     sre::SDLRenderer r;
 
@@ -53,6 +60,7 @@ private:
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
+    std::shared_ptr<GameObject> player;
 
     void updatePhysics();
 
@@ -60,7 +68,9 @@ private:
 
     sre::Color backgroundColor;
     b2World * world = nullptr;
-    BirdMovementComponent* birdMovement;
+
+     std::shared_ptr<FollowPathComponent> birdMovement;
+
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
@@ -71,5 +81,6 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+    friend class Missile;
 };
 
