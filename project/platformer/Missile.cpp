@@ -4,7 +4,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <iostream>
 #include <cmath>
-#include "Laser.hpp"
+#include "Missile.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "PhysicsComponent.hpp"
@@ -13,21 +13,20 @@
 
 using namespace std;
 
-
-Laser::Laser(GameObject *gameObject) : Component(gameObject) {
-    laserPhysics = gameObject->addComponent<PhysicsComponent>();
+Missile::Missile(GameObject *gameObject) : Component(gameObject) {
+    missilePhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
     
     radius = 7/physicsScale;
 
-    laserPhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
-    laserPhysics->setAutoUpdate(false);
+    missilePhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
+    missilePhysics->setAutoUpdate(false);
 }
 
-void Laser::update(float deltaTime) {
+void Missile::update(float deltaTime) {
 
-    // Check whether laser has collided with the level using a raycast (platforms)
-    auto from = laserPhysics->getBody()->GetWorldCenter();
+    // Check whether missile has collided with the level using a raycast (platforms)
+    auto from = missilePhysics->getBody()->GetWorldCenter();
     b2Vec2 to {from.x,from.y -radius*1.3f};
     PlatformerGame::instance->world->RayCast(this, from, to);
 
@@ -38,17 +37,17 @@ void Laser::update(float deltaTime) {
     }
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
-    laserPhysics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+    missilePhysics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 
 }
 
 // Raycast callback
-float32 Laser::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
     gameObject->setConsumed(true);
     return 0;
 };
 
-void Laser::onCollisionStart(PhysicsComponent *comp) {
+void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
     if ( comp->getGameObject()->name == "Player" ){
         comp->addImpulse( direction );
@@ -56,6 +55,6 @@ void Laser::onCollisionStart(PhysicsComponent *comp) {
     }
 }
 
-void Laser::onCollisionEnd(PhysicsComponent *comp) {
+void Missile::onCollisionEnd(PhysicsComponent *comp) {
     gameObject->setConsumed(true);
 }

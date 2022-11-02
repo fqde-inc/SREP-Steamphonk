@@ -14,7 +14,9 @@ MovingPlatformComponent::MovingPlatformComponent(GameObject *gameObject) : Compo
 void MovingPlatformComponent::update(float deltaTime) {
     totalTime += deltaTime;
     float t = fmod( totalTime, 1.0f);
-    // todo replace with easing function
+
+    //TODO replace with easing function 
+    // https://github.com/nicolausYes/easing-functions/blob/master/src/easing.cpp
     if (fmod(totalTime, 2) > 1){
         platformComponent->moveTo(
             glm::mix(

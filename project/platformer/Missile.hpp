@@ -5,9 +5,9 @@
 #include "PhysicsComponent.hpp"
 #include "Component.hpp"
 
-class Laser : public Component, b2RayCastCallback{
+class Missile : public Component, b2RayCastCallback{
 public:
-    explicit Laser(GameObject *gameObject);
+    explicit Missile(GameObject *gameObject);
 
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 
@@ -29,7 +29,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
 private:
-    std::shared_ptr<PhysicsComponent> laserPhysics;
+    std::shared_ptr<PhysicsComponent> missilePhysics;
     glm::vec2 direction;
 
     float constSpeed = 5.5f;

@@ -1,43 +1,22 @@
-//
-// Created by Morten Nobel-Jørgensen on 11/6/17.
-//
-
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-#include "BirdMovementComponent.hpp"
+#include "FollowPathComponent.hpp"
 #include "GameObject.hpp"
 #include "PlatformerGame.hpp"
-#include "Laser.hpp"
+#include "Missile.hpp"
 #include "SpriteComponent.hpp"
 
-//TODO refactor component to generic "pathFinder" 
-BirdMovementComponent::BirdMovementComponent(GameObject *gameObject) : Component(gameObject) {
-    //auto birdPhysics = gameObject->addComponent<PhysicsComponent>();
-    //spriteComponent = gameObject->getComponent<SpriteComponent>();
+FollowPathComponent::FollowPathComponent(GameObject *gameObject) : Component(gameObject) {
+    spriteRef = gameObject->getComponent<SpriteComponent>();
 }
 
-void BirdMovementComponent::update(float deltaTime) {
+void FollowPathComponent::update(float deltaTime) {
     time += deltaTime;
-    reloadTime += deltaTime;
-
     gameObject->setPosition(computePositionAtTime(time));
-
-    if ( reloadTime >= reloadTimeLimit ){
-        if(shotsRemaining == 0){
-            reloadTime = 0;
-            shotsRemaining = 3;
-        } else {
-            reloadTime -= shootingInterval;
-            shotsRemaining--;
-            shootAtPlayer();
-        }
-    }
-
-    flap();
 }
 
-glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
+glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
     
     // fmod is a "%" function that returns float remainders
     // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
@@ -78,7 +57,7 @@ glm::vec2 BirdMovementComponent::computePositionAtTime(float time) {
 }
 
 // Bezier curve math
-glm::vec2 BirdMovementComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t) {
+glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t) {
     return 
         ( ( 1 - t ) * ( 1 - t ) * ( 1 - t ) * p0 ) + 
         ( 3 * ( 1 - t ) * ( 1 - t ) * t * p1 )+ 
@@ -88,7 +67,7 @@ glm::vec2 BirdMovementComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, g
 
 // Catmull-Rom curve, uses the tension parameter to soften the curve at inflection point
 // See : https://pomax.github.io/bezierinfo/#catmullconv
-glm::vec2 BirdMovementComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension) {
+glm::vec2 FollowPathComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension) {
 
     float s = 2 * tension;
     
@@ -103,40 +82,15 @@ glm::vec2 BirdMovementComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, 
     return c0 * p1 + c1 * dv1 + c2 * p2 + c3 * dv2;
 }
 
-const std::vector<glm::vec2> &BirdMovementComponent::getPositions() {
+const std::vector<glm::vec2> &FollowPathComponent::getPositions() {
     return positions;
 }
 
-void BirdMovementComponent::setPositions(std::vector<glm::vec2> positions) {
+void FollowPathComponent::setPositions(std::vector<glm::vec2> positions) {
     this->positions = std::move(positions);
 }
 
-int BirdMovementComponent::getNumberOfSegments() {
+int FollowPathComponent::getNumberOfSegments() {
     // returns number of Quadratic Bézier spline segments instead
     return positions.size() - 3;
-}
-
-void BirdMovementComponent::shootAtPlayer(){
-
-    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
-
-    auto go = PlatformerGame::instance->createGameObject();     
-    go->setPosition(gameObject->getPosition());
-
-    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
-    auto spriteComponent = go->addComponent<SpriteComponent>();
-    spriteComponent->setSprite( sprite );
-
-    auto l = go->addComponent<Laser>();
-    l->setDirection(direction);
-
-    std::cout << "Coordinate : " << direction.x << ',' << direction.y << "\n";
-    std::cout << "Angle : " << -glm::atan(direction.x, direction.y) * 180 / M_PI << "\n";
-
-    go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
-}
-
-
-void BirdMovementComponent::flap(){
-    float t = fmod(time, flapTime);
 }

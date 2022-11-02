@@ -7,7 +7,8 @@
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 #include "PhysicsComponent.hpp"
 #include "CharacterController.hpp"
-#include "BirdMovementComponent.hpp"
+#include "EnemyComponent.hpp"
+#include "FollowPathComponent.hpp"
 
 using namespace std;
 using namespace sre;
@@ -84,7 +85,10 @@ void PlatformerGame::initLevel() {
     auto bird = spriteAtlas->get("433.png");
     bird.setFlip({true,false});
     spriteComponent->setSprite(bird);
-    birdMovement = birdObj->addComponent<BirdMovementComponent>().get();
+    
+    birdObj->addComponent<EnemyComponent>();
+
+    birdMovement = birdObj->addComponent<FollowPathComponent>();
 
     birdMovement->setPositions({
                                        {-50,350},

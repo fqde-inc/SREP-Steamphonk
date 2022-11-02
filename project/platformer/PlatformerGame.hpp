@@ -6,8 +6,9 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
-#include "Laser.hpp"
-#include "BirdMovementComponent.hpp"
+#include "Missile.hpp"
+#include "EnemyComponent.hpp"
+#include "FollowPathComponent.hpp"
 
 class PhysicsComponent;
 
@@ -62,7 +63,9 @@ private:
 
     sre::Color backgroundColor;
     b2World * world = nullptr;
-    BirdMovementComponent* birdMovement;
+
+     std::shared_ptr<FollowPathComponent> birdMovement;
+
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
@@ -73,6 +76,6 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
-    friend class Laser;
+    friend class Missile;
 };
 
