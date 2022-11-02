@@ -26,6 +26,7 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
 void Missile::setTarget(std::string _target)
 {
+    missilePhysics->setSensor(true);
     target = _target;
 }
 
@@ -49,7 +50,7 @@ void Missile::update(float deltaTime) {
 
 // Raycast callback
 float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-    gameObject->setConsumed(true);
+    //gameObject->setConsumed(true);
     return 0;
 };
 
@@ -62,5 +63,5 @@ void Missile::onCollisionStart(PhysicsComponent *comp) {
 }
 
 void Missile::onCollisionEnd(PhysicsComponent *comp) {
-    gameObject->setConsumed(true);
+    //gameObject->setConsumed(true);
 }
