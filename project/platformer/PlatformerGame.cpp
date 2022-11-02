@@ -9,6 +9,9 @@
 #include "CharacterController.hpp"
 #include "EnemyComponent.hpp"
 #include "FollowPathComponent.hpp"
+#include "rapidjson/istreamwrapper.h"
+#include "rapidjson/document.h"
+#include <fstream>
 
 using namespace std;
 using namespace sre;
@@ -27,15 +30,26 @@ PlatformerGame::PlatformerGame()
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
 
+    using namespace rapidjson;
+    ifstream fis("testlvl.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+    auto hexValue = d["bgColor"].GetString();
+
     backgroundColor = {0.6f,0.6f,1.0f,1.0f};
 
-    //spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json","platformer-art-deluxe.png");
-    spriteAtlas = SpriteAtlas::create("texture.json",Texture::create()
-            .withFile("texture.png")
+    spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
+            .withFile( "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
 
-    level = Level::createDefaultLevel(this, spriteAtlas);
+    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
+        .withFile("dirtsheet.png")
+        .withFilterSampling(false)
+        .build());
+
+    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
 
@@ -120,7 +134,9 @@ void PlatformerGame::initLevel() {
                                        {1250,350},
                                });
 
-    level->generateLevel();
+    level->generateLevelFromFile(0);
+    level->generateLevelFromFile(1);
+    level->generateLevelFromFile(2);
 }
 
 void PlatformerGame::update(float time) {

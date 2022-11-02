@@ -9,6 +9,8 @@ file(GLOB Metroidvania
 add_executable(Metroidvania ${Metroidvania})
 target_link_libraries(Metroidvania ${all_libs})
 
+file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 #TODO change this when we have a json file 
 #file(COPY Metroidvania-art.json Metroidvania-art.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 #file(COPY Metroidvania-art.json Metroidvania-art.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)

@@ -13,6 +13,7 @@ public:
 
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
     void initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int height);
+    void initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, int pixelX, int pixelY, std::string name);
 
     void moveTo(glm::vec2 tilePos);
     void update(float deltaTime) override;
