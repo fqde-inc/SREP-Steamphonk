@@ -19,20 +19,47 @@ sre::Camera &SideScrollingCamera::getCamera() {
 
 void SideScrollingCamera::update(float deltaTime) {
     if (followObject != nullptr){
+		
         auto position = followObject->getPosition();
-
         position.x += offset.x;
-        position.y = offset.y;
-        if (zoom){
-            position.x -= offset.x/2;
-            position.y = offset.y/2;
+        position.y += offset.y;
+        if (zoom) {
+            position.x -= offset.x / 2;
+            position.y -= offset.y / 2;
         }
-        gameObject->setPosition(position);
-        vec3 eye (position, 0);
-        vec3 at (position, -1);
+        
+        //If the camera has not reached the player, add lerp, otherwise reset
+        if (length(lastPosition - position) > 0.1f) {
+            lerpTime += deltaTime;
+		}
+        else
+        {
+            lerpTime = 0;
+        }
+
+        std::cout <<"Pos x: "<<position.x << " last pos x: "<<lastPosition.x << " Lerp: " << lerpTime << std::endl;
+
+        vec2 targetPos = vec2lerp(position, lastPosition, lerpTime);
+		
+        gameObject->setPosition(targetPos);
+        vec3 eye (targetPos, 0);
+        vec3 at (targetPos, -1);
         vec3 up (0, 1, 0);
         camera.lookAt(eye, at, up);
+
+        lastPosition = targetPos;
     }
+}
+
+vec2 SideScrollingCamera::vec2lerp(vec2& a, vec2& b, float t)
+{
+    if (t > 1.0f)
+    {
+		t = 1.0f;
+    }
+	
+    //Lerp between two vectors a and b by t
+    return a * t + b * (1.f - t);
 }
 
 void SideScrollingCamera::setFollowObject(std::shared_ptr<GameObject> followObject, glm::vec2 offset) {

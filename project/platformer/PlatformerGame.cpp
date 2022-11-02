@@ -11,7 +11,6 @@
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/document.h"
 #include <fstream>
-
 #include "Crosshair.hpp"
 
 using namespace std;
@@ -77,11 +76,6 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    auto crosshair = createGameObject();
-    crosshair->name = "Crosshair";
-    crosshair->addComponent<SpriteComponent>()->setSprite(spriteAtlas->get("28.png"));
-    crosshair->addComponent<Crosshair>();
-
     auto player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
@@ -102,7 +96,15 @@ void PlatformerGame::initLevel() {
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
     camObj->setPosition(windowSize * 0.5f);
-    camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
+    camera->setFollowObject(player, { 0,0});
+    //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
+    camera->setZoomMode(true);
+
+    auto crosshair = createGameObject();
+    crosshair->name = "Crosshair";
+    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
+	crosshairSprite->setSprite(spriteAtlas->get("28.png"));
+    crosshair->addComponent<Crosshair>();
 
     auto birdObj = createGameObject();
     birdObj->name = "Bird";
