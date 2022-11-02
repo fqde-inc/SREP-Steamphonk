@@ -7,7 +7,8 @@
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 #include "PhysicsComponent.hpp"
 #include "CharacterController.hpp"
-#include "BirdMovementComponent.hpp"
+#include "EnemyComponent.hpp"
+#include "FollowPathComponent.hpp"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/document.h"
 #include <fstream>
@@ -69,7 +70,7 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    auto player = createGameObject();
+    player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");
@@ -98,17 +99,20 @@ void PlatformerGame::initLevel() {
     auto bird = spriteAtlas->get("433.png");
     bird.setFlip({true,false});
     spriteComponent->setSprite(bird);
-    birdMovement = birdObj->addComponent<BirdMovementComponent>().get();
+    
+    birdObj->addComponent<EnemyComponent>();
+
+    birdMovement = birdObj->addComponent<FollowPathComponent>();
 
     birdMovement->setPositions({
                                        {-50,350},
                                        {0,300},
                                        {50,350},
-                                       {100,400},
-                                       {150,300},
-                                       {200,200},
-                                       {250,300},
-                                       {300,400},
+                                       {100,300},
+                                       {150,350},
+                                       {200,300},
+                                       {250,350},
+                                       {300,300},
                                        {350,350},
                                        {400,300},
                                        {450,350},
@@ -142,6 +146,14 @@ void PlatformerGame::update(float time) {
 		updatePhysics();
 	}
     for (int i=0;i<sceneObjects.size();i++){
+        if(sceneObjects[i] == nullptr) 
+            continue;
+
+        if(sceneObjects[i]->consumed){
+            sceneObjects.erase(sceneObjects.begin() + i++);
+            continue;
+        }
+
         sceneObjects[i]->update(time);
     }
 }
@@ -280,6 +292,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         auto & aComponents = physA->second->getGameObject()->getComponents();
         auto & bComponents = physB->second->getGameObject()->getComponents();
         for (auto & c : aComponents){
+            cout << c->getGameObject()->name << "\n";
             if (begin){
                 c->onCollisionStart(physB->second);
             } else {

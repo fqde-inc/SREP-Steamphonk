@@ -13,7 +13,7 @@ public:
 
     ~GameObject();
 
-    template <class T>                                                  // Add component of a given type to a gameObject. example:
+    template <class T>                                   // Add component of a given type to a gameObject. example:
     std::shared_ptr<T> addComponent();                   // std::shared_ptr<SpriteComponent> spriteComponent = gameObject->addComponent<SpriteComponent>();
 
     template <class T>                                   //  Get component of a given type to a gameObject. If not found return empty shared_ptr (==nullptr). example:
@@ -32,15 +32,20 @@ public:
 
     void setRotation(float rotation);
 
+    void setConsumed(bool _consumed){consumed = _consumed;};
+
     const std::vector<std::shared_ptr<Component>>& getComponents();
 
     std::string name = "_";
+    
 private:
     GameObject() = default;
     std::vector<std::shared_ptr<Component>> components;
 
     glm::vec2 position;
     float rotation;
+
+    bool consumed = false;
 
     friend class PlatformerGame;
 };
