@@ -29,8 +29,6 @@ public:
 
     static PlatformerGame* instance;
 	
-    //glm::vec2 getMousePosition();
-
     SDL_MouseMotionEvent mouseMotion;
     SDL_MouseButtonEvent mouseButton;
 

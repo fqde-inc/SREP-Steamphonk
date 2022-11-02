@@ -37,8 +37,6 @@ void SideScrollingCamera::update(float deltaTime) {
             lerpTime = 0;
         }
 
-        std::cout <<"Pos x: "<<position.x << " last pos x: "<<lastPosition.x << " Lerp: " << lerpTime << std::endl;
-
         vec2 targetPos = vec2lerp(position, lastPosition, lerpTime);
 		
         gameObject->setPosition(targetPos);
@@ -80,16 +78,16 @@ bool SideScrollingCamera::isZoomMode() {
     return zoom;
 }
 
-glm::vec2 SideScrollingCamera::pixelToCameraSpace(glm::vec2& pixelCoordinates)
-{
-    auto position = pixelCoordinates;
-	
-    position.x += offset.x;
-    position.y += offset.y;
-    if (zoom) {
-        position.x -= offset.x / 2;
-        position.y -= offset.y / 2;
-    }
-
-    return position;
-}
+//glm::vec2 SideScrollingCamera::pixelToCameraSpace(glm::vec2& pixelCoordinates)
+//{
+//    auto position = pixelCoordinates;
+//	
+//    position.x += offset.x;
+//    position.y += offset.y;
+//    if (zoom) {
+//        position.x -= offset.x / 2;
+//        position.y -= offset.y / 2;
+//    }
+//
+//    return position;
+//}

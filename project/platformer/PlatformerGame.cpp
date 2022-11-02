@@ -16,7 +16,7 @@
 using namespace std;
 using namespace sre;
 
-const glm::vec2 PlatformerGame::windowSize(800,600);
+const glm::vec2 PlatformerGame::windowSize(1400,800);
 
 PlatformerGame* PlatformerGame::instance = nullptr;
 
@@ -52,6 +52,10 @@ PlatformerGame::PlatformerGame()
     level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
+
+    //Enable mouse lock
+    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
@@ -100,12 +104,6 @@ void PlatformerGame::initLevel() {
     //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
     camera->setZoomMode(true);
 
-    auto crosshair = createGameObject();
-    crosshair->name = "Crosshair";
-    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
-	crosshairSprite->setSprite(spriteAtlas->get("28.png"));
-    crosshair->addComponent<Crosshair>();
-
     auto birdObj = createGameObject();
     birdObj->name = "Bird";
     auto spriteComponent = birdObj->addComponent<SpriteComponent>();
@@ -147,6 +145,12 @@ void PlatformerGame::initLevel() {
     level->generateLevelFromFile(0);
     level->generateLevelFromFile(1);
     level->generateLevelFromFile(2);
+
+    auto crosshair = createGameObject();
+    crosshair->name = "Crosshair";
+    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
+    crosshairSprite->setSprite(spriteAtlas->get("28.png"));
+    crosshair->addComponent<Crosshair>();
 }
 
 void PlatformerGame::update(float time) {
