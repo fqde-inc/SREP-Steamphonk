@@ -56,8 +56,8 @@ PlatformerGame::PlatformerGame()
     initLevel();
 
     //Enable mouse lock
-    //SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
-    //SDL_SetRelativeMouseMode(SDL_TRUE);
+    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
