@@ -14,6 +14,7 @@
 using namespace std;
 
 Missile::Missile(GameObject *gameObject) : Component(gameObject) {
+    target = "Player";
     missilePhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
     
@@ -21,6 +22,12 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
     missilePhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     missilePhysics->setAutoUpdate(false);
+}
+
+void Missile::setTarget(std::string _target)
+{
+    missilePhysics->setSensor(true);
+    target = _target;
 }
 
 void Missile::update(float deltaTime) {
@@ -43,18 +50,18 @@ void Missile::update(float deltaTime) {
 
 // Raycast callback
 float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-    gameObject->setConsumed(true);
+    //gameObject->setConsumed(true);
     return 0;
 };
 
 void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
-    if ( comp->getGameObject()->name == "Player" ){
+    if ( comp->getGameObject()->name == target ){
         comp->addImpulse( direction );
         gameObject->setConsumed(true);
     }
 }
 
 void Missile::onCollisionEnd(PhysicsComponent *comp) {
-    gameObject->setConsumed(true);
+    //gameObject->setConsumed(true);
 }

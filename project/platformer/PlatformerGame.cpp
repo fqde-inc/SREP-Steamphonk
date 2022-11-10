@@ -12,13 +12,13 @@
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/document.h"
 #include <fstream>
-
 #include "Crosshair.hpp"
+#include "PlayerShooting.hpp"
 
 using namespace std;
 using namespace sre;
 
-const glm::vec2 PlatformerGame::windowSize(800,600);
+const glm::vec2 PlatformerGame::windowSize(1400,800);
 
 PlatformerGame* PlatformerGame::instance = nullptr;
 
@@ -55,6 +55,10 @@ PlatformerGame::PlatformerGame()
 
     initLevel();
 
+    //Enable mouse lock
+    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
         handleInput(e);
@@ -78,18 +82,14 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    auto crosshair = createGameObject();
-    crosshair->name = "Crosshair";
-    crosshair->addComponent<SpriteComponent>()->setSprite(spriteAtlas->get("28.png"));
-    crosshair->addComponent<Crosshair>();
-
-    auto player = createGameObject();
+    player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
-    characterController = player->addComponent<CharacterController>();
+    player->addComponent<PlayerShooting>();
+    auto characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
             spriteAtlas->get("20.png"),
@@ -103,7 +103,9 @@ void PlatformerGame::initLevel() {
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
     camObj->setPosition(windowSize * 0.5f);
-    camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
+    camera->setFollowObject(player, { 0,0});
+    //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
+    camera->setZoomMode(true);
 
     auto birdObj = createGameObject();
     birdObj->name = "Bird";
@@ -149,6 +151,12 @@ void PlatformerGame::initLevel() {
     level->generateLevelFromFile(0);
     level->generateLevelFromFile(1);
     level->generateLevelFromFile(2);
+
+    crosshair = createGameObject();
+    crosshair->name = "Crosshair";
+    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
+    crosshairSprite->setSprite(spriteAtlas->get("28.png"));
+    crosshair->addComponent<Crosshair>();
 }
 
 void PlatformerGame::update(float time) {
@@ -331,7 +339,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         auto & aComponents = physA->second->getGameObject()->getComponents();
         auto & bComponents = physB->second->getGameObject()->getComponents();
         for (auto & c : aComponents){
-            cout << c->getGameObject()->name << "\n";
+            //cout << c->getGameObject()->name << "\n";
             if (begin){
                 c->onCollisionStart(physB->second);
             } else {

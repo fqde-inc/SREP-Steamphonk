@@ -30,10 +30,11 @@ public:
 
     static PlatformerGame* instance;
 	
-    //glm::vec2 getMousePosition();
-
     SDL_MouseMotionEvent mouseMotion;
     SDL_MouseButtonEvent mouseButton;
+
+    std::shared_ptr<GameObject> crosshair;
+    std::shared_ptr<SideScrollingCamera> camera;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
 
@@ -55,7 +56,6 @@ private:
 
     void handleContact(b2Contact *contact, bool begin);
 
-    std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
