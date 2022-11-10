@@ -12,7 +12,6 @@
 #include "SpriteComponent.hpp"
 #include "PlayerShooting.hpp"
 
-//TODO refactor component to generic "pathFinder" 
 PlayerShooting::PlayerShooting(GameObject *gameObject) : Component(gameObject) {
     auto enemyPhysics = gameObject->addComponent<PhysicsComponent>();
 }
@@ -31,7 +30,7 @@ void PlayerShooting::update(float deltaTime) {
     }
 }
 
-bool PlayerShooting::onKey(SDL_Event& event) {
+bool PlayerShooting::handleInput(SDL_Event& event) {
     switch (event.key.keysym.sym) {
         case SDLK_f:
         {

@@ -56,12 +56,12 @@ PlatformerGame::PlatformerGame()
     initLevel();
 
     //Enable mouse lock
-    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
-    SDL_SetRelativeMouseMode(SDL_TRUE);
+    //SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+    //SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
-        onKey(e);
+        handleInput(e);
     };
     r.frameUpdate = [&](float deltaTime){
         update(deltaTime);
@@ -215,13 +215,35 @@ void PlatformerGame::render() {
         world->DrawDebugData();
         rp.drawLines(debugDraw.getLines());
         debugDraw.clear();
+
+        ImGui::SetNextWindowPos(ImVec2(0, .0f), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_Always);
+        ImGui::Begin("", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Text("%s", "Current States");
+        for (int i = 0; i < characterController->state_->characterStateStack.size(); ++i) {
+            switch (characterController->state_->characterStateStack[i]->stateType) {
+                case Standing:
+                    ImGui::BulletText("%s","Standing");
+                    break;
+                case Jumping:
+                    ImGui::BulletText("%s","Jumping");
+                    break;
+                case Walking:
+                    ImGui::BulletText("%s","Walking");
+                    break;
+                case Firing:
+                    ImGui::BulletText("%s","Firing");
+                    break;
+            }
+        }
+        ImGui::End();
     }
 }
 
-void PlatformerGame::onKey(SDL_Event &event) {
+void PlatformerGame::handleInput(SDL_Event &event) {
     for (auto & gameObject: sceneObjects) {
         for (auto & c : gameObject->getComponents()){
-            bool consumed = c->onKey(event);
+            bool consumed = c->handleInput(event);
             if (consumed){
                 return;
             }

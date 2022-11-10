@@ -12,6 +12,7 @@
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>
 #include <sre/Inspector.hpp>
+
 using namespace sre;
 using namespace std;
 

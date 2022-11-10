@@ -20,31 +20,11 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics->getFixture()->SetRestitution(0);
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
+    state_ = std::make_shared<CharacterState>();
 }
 
-bool CharacterController::onKey(SDL_Event &event) {
-        switch (event.key.keysym.sym){
-            case SDLK_SPACE:
-            {
-                if (isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
-                    jump();
-                }
-            }
-            break;
-                case SDLK_LEFT:
-                case SDLK_a:
-            {
-                left = event.type == SDL_KEYDOWN;
-            }
-            break;
-                case SDLK_RIGHT:
-                case SDLK_d:
-            {
-                right = event.type == SDL_KEYDOWN;
-            }
-            break;
-        }
-
+bool CharacterController::handleInput(SDL_Event &event) {
+    state_->handleInput(*this, event);
     return false;
 }
 
@@ -63,6 +43,7 @@ void CharacterController::update(float deltaTime) {
     if (right){
         movement.x ++;
     }
+
     float accelerationSpeed = 0.010f;
     characterPhysics->addImpulse(movement*accelerationSpeed);
     float maximumVelocity = 2;
@@ -73,10 +54,8 @@ void CharacterController::update(float deltaTime) {
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
-}
 
-void CharacterController::jump() {
-    characterPhysics->addImpulse({0,0.15f});
+    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {
@@ -89,6 +68,12 @@ void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
     isGrounded = true;
+    if(state_->characterStateStack[0]->stateType == Jumping) {
+        state_->popStack(Jumping);
+        if(left || right) {
+            state_->pushStack(std::make_shared<WalkingState>());
+        }
+    }
     return 0; // terminate raycast
 }
 

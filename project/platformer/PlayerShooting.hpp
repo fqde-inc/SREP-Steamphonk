@@ -14,7 +14,7 @@ public:
 
     void update(float deltaTime) override;
 
-    bool onKey(SDL_Event& event) override;
+    bool handleInput(SDL_Event& event) override;
 
     void shootAt(glm::vec2 position);
 private:
