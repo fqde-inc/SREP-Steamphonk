@@ -47,9 +47,6 @@ void EnemyComponent::shootAtPlayer(){
     auto l = go->addComponent<Missile>();
     l->setDirection(direction);
 
-    /*std::cout << "Coordinate : " << direction.x << ',' << direction.y << "\n";
-    std::cout << "Angle : " << -glm::atan(direction.x, direction.y) * 180 / M_PI << "\n";*/
-
     go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
     
 }
