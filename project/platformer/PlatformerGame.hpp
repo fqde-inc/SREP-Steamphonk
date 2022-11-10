@@ -6,8 +6,7 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
-#include "Missile.hpp"
-#include "EnemyComponent.hpp"
+#include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
 
 class PhysicsComponent;
@@ -47,12 +46,13 @@ private:
 
     void render();
 
-    void onKey(SDL_Event &event);
+    void handleInput(SDL_Event &event);
 
     void handleContact(b2Contact *contact, bool begin);
 
     std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
@@ -77,6 +77,7 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+
     friend class Missile;
 };
 
