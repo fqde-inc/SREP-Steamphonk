@@ -13,6 +13,8 @@
 #include "rapidjson/document.h"
 #include <fstream>
 
+#include "Crosshair.hpp"
+
 using namespace std;
 using namespace sre;
 
@@ -63,6 +65,12 @@ PlatformerGame::PlatformerGame()
     r.frameRender = [&](){
         render();
     };
+
+    r.mouseEvent = [&](SDL_Event& event) {
+        mouseMotion = event.motion;
+        mouseButton = event.button;
+    };
+	
     // start game loop
     r.startEventLoop();
 }
@@ -70,7 +78,12 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    player = createGameObject();
+    auto crosshair = createGameObject();
+    crosshair->name = "Crosshair";
+    crosshair->addComponent<SpriteComponent>()->setSprite(spriteAtlas->get("28.png"));
+    crosshair->addComponent<Crosshair>();
+
+    auto player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");
@@ -89,9 +102,8 @@ void PlatformerGame::initLevel() {
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
-    camObj->setPosition(windowSize*0.5f);
-    camera->setFollowObject(player,{200,windowSize.y*0.5f});
-
+    camObj->setPosition(windowSize * 0.5f);
+    camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
 
     auto birdObj = createGameObject();
     birdObj->name = "Bird";
@@ -291,6 +303,11 @@ void PlatformerGame::EndContact(b2Contact *contact) {
     b2ContactListener::EndContact(contact);
     handleContact(contact, false);
 }
+
+//glm::vec2 PlatformerGame::getMousePosition()
+//{
+//    return glm::vec2(mouseMotion.x, mouseMotion.y);
+//}
 
 void PlatformerGame::deregisterPhysicsComponent(PhysicsComponent *r) {
     auto iter = physicsComponentLookup.find(r->getFixture());
