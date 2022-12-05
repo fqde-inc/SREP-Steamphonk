@@ -20,15 +20,18 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
     
     // fmod is a "%" function that returns float remainders
     // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
+    
     int segment = (int) fmod( time, getNumberOfSegments()); 
+    
     float t = fmod(time, flapTime);
 
     // Did we reach the last segment ? 
     if( segment == 0 && lastSegment == getNumberOfSegments() - 1 ) {
-        looping = !looping;
+        looping = ! looping;
         
         auto sprite = gameObject->getComponent<SpriteComponent>()->getSprite();
         sprite.setFlip({!looping, false});
+
         gameObject->getComponent<SpriteComponent>()->setSprite(sprite);
     }
 
@@ -37,32 +40,68 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
     // If we're looping, iterate backwards through the segments
     if( looping ){
         segment = getNumberOfSegments() - 1 - segment;
-        return getCatmullPosition(
-            positions[segment+3],
-            positions[segment+2],
-            positions[segment+1],
-            positions[segment],
-            t,
-            0.21f);
+        switch (type) {
+            case BEZIER:
+                return getBezierPosition(
+                positions[segment * 2 + 2],
+                positions[segment * 2 + 1],
+                positions[segment * 2],
+                t);
+            
+            case CATMULL_ROW:
+                return getCatmullPosition(
+                positions[segment+3],
+                positions[segment+2],
+                positions[segment+1],
+                positions[segment],
+                t,
+                0.21f);
+            
+            case LINEAR:
+                return glm::mix(
+                    positions[segment + 1], 
+                    positions[segment],
+                    t);
+        }
     }
 
-    return getCatmullPosition(
-        positions[segment],
-        positions[segment+1],
-        positions[segment+2],
-        positions[segment+3],
-        t,
-        0.21f);
-
+    switch (type) {
+        case BEZIER:
+            return getBezierPosition(
+                positions[segment * 2],
+                positions[segment * 2 + 1],
+                positions[segment * 2 + 2],
+                t);
+        
+        case CATMULL_ROW:
+            return getCatmullPosition(
+                positions[segment],
+                positions[segment+1],
+                positions[segment+2],
+                positions[segment+3],
+                t,
+                0.21f);
+        
+        case LINEAR:
+            return glm::mix(
+                positions[segment], 
+                positions[segment+1],
+                t);
+    }
 }
 
 // Bezier curve math
-glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t) {
-    return 
-        ( ( 1 - t ) * ( 1 - t ) * ( 1 - t ) * p0 ) + 
-        ( 3 * ( 1 - t ) * ( 1 - t ) * t * p1 )+ 
-        ( 3 * ( 1 - t ) * t * t * p2 ) + 
-        ( t * t * t * p3 );
+glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, float t) {
+
+    glm::vec2 v0 = glm::mix(
+        p0, p1, t
+    );
+    
+    glm::vec2 v1 = glm::mix(
+        p1, p2, t
+    );
+
+    return glm::mix(v0, v1, t);
 }
 
 // Catmull-Rom curve, uses the tension parameter to soften the curve at inflection point
@@ -91,6 +130,15 @@ void FollowPathComponent::setPositions(std::vector<glm::vec2> positions) {
 }
 
 int FollowPathComponent::getNumberOfSegments() {
-    // returns number of Quadratic Bézier spline segments instead
-    return positions.size() - 3;
+    switch (type) {
+        case BEZIER:
+            return positions.size() / 2 - 1;
+
+        case CATMULL_ROW:
+            return positions.size() - 3;
+
+        case LINEAR:
+            return positions.size() - 1;
+    }
+    return 0;
 }
