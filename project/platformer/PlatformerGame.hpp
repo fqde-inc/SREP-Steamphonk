@@ -8,6 +8,7 @@
 #include "Level.hpp"
 #include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
+#include "EnemyComponent.hpp"
 
 class PhysicsComponent;
 
@@ -82,6 +83,7 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+    friend class EnemyComponent;
 
     friend class Missile;
 };

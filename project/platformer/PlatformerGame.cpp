@@ -114,11 +114,8 @@ void PlatformerGame::initLevel() {
     bird.setFlip({true,false});
     spriteComponent->setSprite(bird);
     
-    birdObj->addComponent<EnemyComponent>();
-
-    birdMovement = birdObj->addComponent<FollowPathComponent>();
-    birdMovement->setType(BEZIER);
-    birdMovement->setPositions({
+    auto enemy = birdObj->addComponent<EnemyComponent>();
+    enemy->setPathing({
         {-50,350},
         {0,300},
         {50,350},
@@ -146,7 +143,9 @@ void PlatformerGame::initLevel() {
         {1150,350},
         {1200,300},
         {1250,350},
-    });
+    }, BEZIER);
+
+    birdMovement = enemy->getPathing();
 
     level->generateLevelFromFile(0);
     level->generateLevelFromFile(1);
@@ -191,8 +190,8 @@ void PlatformerGame::render() {
 
         std::vector<glm::vec3> lines;
         for (int i=0;i<5000;i++){
-            float t = (i/5001.0f)*birdMovement->getNumberOfSegments();
-            float t1 = ((i+1)/5001.0f)*birdMovement->getNumberOfSegments();
+            float t = (i/5001.0f) * birdMovement->getNumberOfSegments();
+            float t1 = ((i+1)/5001.0f) * birdMovement->getNumberOfSegments();
             auto p = birdMovement->computePositionAtTime(t);
             auto p1 = birdMovement->computePositionAtTime(t1);
             lines.push_back(glm::vec3(p,0));

@@ -10,11 +10,14 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 #include "CharacterController.hpp"
+#include "EnemyComponent.hpp"
 
 using namespace std;
 
 Missile::Missile(GameObject *gameObject) : Component(gameObject) {
+
     target = "Player";
+
     missilePhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
     
@@ -44,7 +47,7 @@ void Missile::update(float deltaTime) {
     }
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
-    missilePhysics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+    missilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 
 }
 
@@ -57,6 +60,9 @@ float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b
 void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
     if ( comp->getGameObject()->name == target ){
+        if(target == "Bird")
+            comp->getGameObject()->getComponent<EnemyComponent>()->kill();
+
         comp->addImpulse( direction );
         gameObject->setConsumed(true);
     }
