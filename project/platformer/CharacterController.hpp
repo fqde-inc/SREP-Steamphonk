@@ -8,7 +8,8 @@
 #include "Guns/Gun.hpp"
 #include "Guns/RocketLauncher.hpp"
 #include "Guns/Shotgun.hpp"
-#include <tuple>
+#include "TimerComponent.hpp"
+
 
 class CharacterState;
 
@@ -46,6 +47,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
+    std::shared_ptr<TimerComponent> cooldownTimer;
     bool left = false;
     bool right = false;
     std::shared_ptr<CharacterState> state_;
