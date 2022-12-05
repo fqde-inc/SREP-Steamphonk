@@ -55,6 +55,20 @@ void Level::generateLevelFromFile(int levelNumber)
     }
 }
 
+glm::vec2 Level::getIdentifierPosition(int levelNumber, std::string identifier)
+{
+    using namespace rapidjson;
+    ifstream fis("testlvl.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    auto entities = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["entityInstances"].GetArray();
+    //std::find()
+    //auto entity = std::find(entities, entities.end(), )
+    return glm::vec2(0, 0);
+}
+
 void Level::generateLevel() {
     //Add test wall
     addWall(0, 0, 0, 0);

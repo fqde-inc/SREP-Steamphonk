@@ -39,7 +39,7 @@ PlatformerGame::PlatformerGame()
     d.ParseStream(isw);
     auto hexValue = d["bgColor"].GetString();
 
-    backgroundColor = {0.6f,0.6f,1.0f,1.0f};
+    backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
     spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
             .withFile( "platformer-art-deluxe.png")
@@ -99,6 +99,8 @@ void PlatformerGame::initLevel() {
             spriteAtlas->get("28.png")
     );
 
+    player->setPosition(glm::vec2(297, -629));
+
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
@@ -149,8 +151,8 @@ void PlatformerGame::initLevel() {
     });
 
     level->generateLevelFromFile(0);
-    level->generateLevelFromFile(1);
-    level->generateLevelFromFile(2);
+    //level->generateLevelFromFile(1);
+    //level->generateLevelFromFile(2);
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
