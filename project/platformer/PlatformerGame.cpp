@@ -19,7 +19,6 @@ using namespace std;
 using namespace sre;
 
 const glm::vec2 PlatformerGame::windowSize(1400,800);
-
 PlatformerGame* PlatformerGame::instance = nullptr;
 
 PlatformerGame::PlatformerGame()
@@ -153,8 +152,6 @@ void PlatformerGame::initLevel() {
     });
 
     level->generateLevelFromFile(0);
-    //level->generateLevelFromFile(1);
-    //level->generateLevelFromFile(2);
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
@@ -215,7 +212,6 @@ void PlatformerGame::render() {
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
 
-    /*
     if (doDebugDraw){
         world->DrawDebugData();
         rp.drawLines(debugDraw.getLines());
@@ -243,7 +239,6 @@ void PlatformerGame::render() {
         }
         ImGui::End();
     }
-    */
 }
 
 void PlatformerGame::handleInput(SDL_Event &event) {
