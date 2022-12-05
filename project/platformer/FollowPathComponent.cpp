@@ -21,7 +21,7 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
     // fmod is a "%" function that returns float remainders
     // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
     
-    int segment = (int) fmod( time, getNumberOfSegments()) * 4; 
+    int segment = (int) fmod( time, getNumberOfSegments()); 
     
     float t = fmod(time, flapTime);
 
@@ -43,8 +43,8 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
         switch (type) {
             case BEZIER:
                 return getBezierPosition(
-                positions[segment * 2 +2],
-                positions[segment * 2 +1],
+                positions[segment * 2 + 2],
+                positions[segment * 2 + 1],
                 positions[segment * 2],
                 t);
             
@@ -92,8 +92,6 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
 
 // Bezier curve math
 glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, float t) {
-    int segment = (int)fmod(time, getNumberOfSegments());
-    float t = fmod(time,1.0f);
 
     glm::vec2 v0 = glm::mix(
         p0, p1, t
