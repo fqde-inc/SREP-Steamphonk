@@ -66,35 +66,30 @@ void CharacterState::moveRight(CharacterController &character, SDL_Event &event)
 }
 
 void CharacterState::fire(CharacterController &character, SDL_Event &event) {
-    if (event.type == SDL_KEYUP) {
-        character.firing = false;
+    if (character.cooldownTimer->isRunning) {
         return;
     }
 
-    if (!character.firing) {
-        character.firing = true;
-        pushStack(std::make_shared<FiringState>());
-    }
+    character.cooldownTimer->initTimer(character.cooldownTime);
+    pushStack(std::make_shared<FiringState>());
 }
 
 void CharacterState::swapWeapons(CharacterController &character, SDL_Event &event) {
-    if (event.type == SDL_KEYUP) {
-        character.swappingGun = false;
+    if (character.cooldownTimer->isRunning) {
         return;
     }
 
-    if(!character.swappingGun){
-        character.swappingGun = true;
-        switch (character.equippedGun) {
-            case RocketLauncher:
-                character.equippedGun = Shotgun;
-                break;
-            case Shotgun:
-                character.equippedGun = RocketLauncher;
-                break;
-            default:
-                break;
-        }
+    std::cout << "Swapped" << std::endl;
+    character.cooldownTimer->initTimer(character.cooldownTime);
+    switch (character.equippedGun) {
+        case RocketLauncher:
+            character.equippedGun = Shotgun;
+            break;
+        case Shotgun:
+            character.equippedGun = RocketLauncher;
+            break;
+        default:
+            break;
     }
 }
 

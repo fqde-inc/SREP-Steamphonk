@@ -8,7 +8,8 @@
 #include "Guns/Gun.hpp"
 #include "Guns/RocketLauncher.hpp"
 #include "Guns/Shotgun.hpp"
-#include <tuple>
+#include "TimerComponent.hpp"
+
 
 class CharacterState;
 
@@ -29,11 +30,8 @@ public:
 
     bool handleInput(SDL_Event &event) override;
 
-    std::shared_ptr<Gun> rocketLauncher = std::make_shared<RocketLauncherGun>();
-    std::shared_ptr<Gun> shotgun = std::make_shared<ShotgunGun>();
-
-    bool swappingGun = false;
-    bool firing = false;
+    std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
+    std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
 
     GunTypes equippedGun = RocketLauncher;
 
@@ -46,6 +44,9 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
+    std::shared_ptr<TimerComponent> cooldownTimer;
+    float cooldownTime = .75f;
+
     bool left = false;
     bool right = false;
     std::shared_ptr<CharacterState> state_;

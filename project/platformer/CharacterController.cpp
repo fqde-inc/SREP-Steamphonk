@@ -13,6 +13,7 @@
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
+    cooldownTimer = gameObject->addComponent<TimerComponent>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     radius = 10/physicsScale;
