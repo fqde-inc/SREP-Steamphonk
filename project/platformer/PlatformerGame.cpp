@@ -105,8 +105,7 @@ void PlatformerGame::initLevel() {
     //player->setPosition(glm::vec2(10, -4));
     glm::vec2 spawn = level->getIdentifierPosition(0, "PlayerStart");
     cout << "Spawn: " << spawn.x << " , " << spawn.y << endl;
-
-    //player->setPosition(spawn);
+    player->setPosition(spawn);
     //cout << "Player pos: " << player->getPosition().x << " , " << player->getPosition().y << endl;
 
     auto camObj = createGameObject();

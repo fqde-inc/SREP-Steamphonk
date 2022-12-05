@@ -35,7 +35,7 @@ void Level::generateLevelFromFile(int levelNumber)
     Document d;
     d.ParseStream(isw);
 	
-    auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["autoLayerTiles"].GetArray();
+    auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[1]["autoLayerTiles"].GetArray();
     auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
     auto levelWidth = d["levels"].GetArray()[levelNumber]["pxWid"].GetInt();
     auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
@@ -64,15 +64,20 @@ glm::vec2 Level::getIdentifierPosition(int levelNumber, std::string identifier)
     d.ParseStream(isw);
 
     auto entities = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["entityInstances"].GetArray();
+    auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
+    auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
+    auto worldY = d["levels"].GetArray()[levelNumber]["worldY"].GetInt();
 
     for (int i = 0; i < entities.Size(); i++)
     {
-        if(identifier == entities[i].GetObject()["__identifier"]);
+        string compare = entities[i].GetObject()["__identifier"].GetString();
+        if(identifier.compare(compare))
+        //if(identifier == compare)
         {
             auto pos = entities[i].GetObject()["px"].GetArray();
             int x = pos[0].GetInt();
             int y = pos[1].GetInt();
-            return glm::vec2(x, y);
+            return glm::vec2(worldX + x, levelHeight - worldY - y);
         }
     }
 
