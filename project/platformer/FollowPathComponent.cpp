@@ -43,10 +43,9 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
         switch (type) {
             case BEZIER:
                 return getBezierPosition(
-                positions[segment+3],
-                positions[segment+2],
-                positions[segment+1],
-                positions[segment],
+                positions[segment * 2 +2],
+                positions[segment * 2 +1],
+                positions[segment * 2],
                 t);
             
             case CATMULL_ROW:
@@ -69,10 +68,9 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
     switch (type) {
         case BEZIER:
             return getBezierPosition(
-                positions[segment],
-                positions[segment+1],
-                positions[segment+2],
-                positions[segment+3],
+                positions[segment * 2],
+                positions[segment * 2 + 1],
+                positions[segment * 2 + 2],
                 t);
         
         case CATMULL_ROW:
@@ -93,12 +91,19 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
 }
 
 // Bezier curve math
-glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t) {
-    return 
-        ( 1 - t ) * ( 1 - t ) * ( 1 - t ) * p0 
-        + ( 3 *  t * ( 1 - t ) * ( 1 - t )) * p1 
-        + ( 3 * t * t * ( 1 - t ) * p2 ) 
-        + ( t * t * t * p3 );
+glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, float t) {
+    int segment = (int)fmod(time, getNumberOfSegments());
+    float t = fmod(time,1.0f);
+
+    glm::vec2 v0 = glm::mix(
+        p0, p1, t
+    );
+    
+    glm::vec2 v1 = glm::mix(
+        p1, p2, t
+    );
+
+    return glm::mix(v0, v1, t);
 }
 
 // Catmull-Rom curve, uses the tension parameter to soften the curve at inflection point
@@ -129,7 +134,7 @@ void FollowPathComponent::setPositions(std::vector<glm::vec2> positions) {
 int FollowPathComponent::getNumberOfSegments() {
     switch (type) {
         case BEZIER:
-            return int (positions.size() - 1) / 4;
+            return positions.size() / 2 - 1;
 
         case CATMULL_ROW:
             return positions.size() - 3;
