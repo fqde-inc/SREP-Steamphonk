@@ -967,7 +967,7 @@ void ImDrawList::PathBezierCurveTo(const ImVec2& p2, const ImVec2& p3, const ImV
     }
     else
     {
-        float t_step = 1.0f / (float)num_segments;
+        float t_step = 1.0f / (float) num_segments;
         for (int i_step = 1; i_step <= num_segments; i_step++)
         {
             float t = t_step * i_step;

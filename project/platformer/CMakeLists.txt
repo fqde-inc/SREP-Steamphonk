@@ -10,8 +10,24 @@ add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
 # copy files to dest
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+#copy files to graphics
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# copy texture packer json
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# copy files to levels
+file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 IF (WIN32)
     # Copy dll files to ${CMAKE_CURRENT_BINARY_DIR}/Debug

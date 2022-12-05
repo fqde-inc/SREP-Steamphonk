@@ -35,8 +35,9 @@ void PlatformComponent::init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int 
 
     pos.x += (width-1)*0.5f*tileSize;
     physics->initBox(kinematic?b2_kinematicBody:b2_staticBody, glm::vec2{tileSize*width,tileSize}/physicsScale*0.5f,pos/physicsScale,0);
-
     physics->setAutoUpdate(false);
+    physics->getFixture()->SetRestitution(0);
+    
     for (int i = 1;i<width;i++){
         auto go = game->createGameObject();
         auto spriteComponent = go->addComponent<SpriteComponent>();
@@ -67,6 +68,7 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
     pos.y += (height-1)*0.5f*tileSize;
     physics->initBox(kinematic?b2_kinematicBody:b2_staticBody, glm::vec2{tileSize,tileSize*height}/physicsScale*0.5f,pos/physicsScale,0);
     physics->setAutoUpdate(false);
+    physics->getFixture()->SetRestitution(0);
 
     for (int i = 1;i<height;i++){
         auto go = game->createGameObject();
@@ -80,6 +82,24 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
 
         tiles.push_back(go);
     }
+}
+
+void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, int pixelX, int pixelY, std::string name)
+{
+    this->kinematic = false; // walls cannot be moved
+    auto game = PlatformerGame::instance;
+    pos = glm::vec2(pixelX, pixelY);
+
+    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
+    auto sprite = tileAtlas->get(name);
+    float tileSize = sprite.getSpriteSize().x;
+
+    gameObject->setPosition(pos);
+
+    spriteComponent->setSprite(sprite);
+    physics = gameObject->addComponent<PhysicsComponent>();
+    physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize } / physicsScale * 0.5f, pos / physicsScale, 0);
+    physics->setAutoUpdate(false);
 }
 
 

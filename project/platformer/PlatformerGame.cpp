@@ -7,12 +7,18 @@
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 #include "PhysicsComponent.hpp"
 #include "CharacterController.hpp"
-#include "BirdMovementComponent.hpp"
+#include "EnemyComponent.hpp"
+#include "FollowPathComponent.hpp"
+#include "rapidjson/istreamwrapper.h"
+#include "rapidjson/document.h"
+#include <fstream>
+#include "Crosshair.hpp"
+#include "PlayerShooting.hpp"
 
 using namespace std;
 using namespace sre;
 
-const glm::vec2 PlatformerGame::windowSize(800,600);
+const glm::vec2 PlatformerGame::windowSize(1400,800);
 
 PlatformerGame* PlatformerGame::instance = nullptr;
 
@@ -26,21 +32,36 @@ PlatformerGame::PlatformerGame()
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
 
+    using namespace rapidjson;
+    ifstream fis("testlvl.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+    auto hexValue = d["bgColor"].GetString();
+
     backgroundColor = {0.6f,0.6f,1.0f,1.0f};
 
-    //spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json","platformer-art-deluxe.png");
     spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
             .withFile( "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
 
-    level = Level::createDefaultLevel(this, spriteAtlas);
+    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
+        .withFile("dirtsheet.png")
+        .withFilterSampling(false)
+        .build());
+
+    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
 
+    //Enable mouse lock
+    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
-        onKey(e);
+        handleInput(e);
     };
     r.frameUpdate = [&](float deltaTime){
         update(deltaTime);
@@ -48,6 +69,12 @@ PlatformerGame::PlatformerGame()
     r.frameRender = [&](){
         render();
     };
+
+    r.mouseEvent = [&](SDL_Event& event) {
+        mouseMotion = event.motion;
+        mouseButton = event.button;
+    };
+	
     // start game loop
     r.startEventLoop();
 }
@@ -55,13 +82,14 @@ PlatformerGame::PlatformerGame()
 void PlatformerGame::initLevel() {
     initPhysics();
 
-    auto player = createGameObject();
+    player = createGameObject();
     player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
-    auto characterController = player->addComponent<CharacterController>();
+    player->addComponent<PlayerShooting>();
+    characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
             spriteAtlas->get("20.png"),
@@ -74,9 +102,10 @@ void PlatformerGame::initLevel() {
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
-    camObj->setPosition(windowSize*0.5f);
-    camera->setFollowObject(player,{200,windowSize.y*0.5f});
-
+    camObj->setPosition(windowSize * 0.5f);
+    camera->setFollowObject(player, { 0,0});
+    //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
+    camera->setZoomMode(true);
 
     auto birdObj = createGameObject();
     birdObj->name = "Bird";
@@ -84,17 +113,20 @@ void PlatformerGame::initLevel() {
     auto bird = spriteAtlas->get("433.png");
     bird.setFlip({true,false});
     spriteComponent->setSprite(bird);
-    birdMovement = birdObj->addComponent<BirdMovementComponent>().get();
+    
+    birdObj->addComponent<EnemyComponent>();
+
+    birdMovement = birdObj->addComponent<FollowPathComponent>();
 
     birdMovement->setPositions({
                                        {-50,350},
                                        {0,300},
                                        {50,350},
-                                       {100,400},
-                                       {150,300},
-                                       {200,200},
-                                       {250,300},
-                                       {300,400},
+                                       {100,300},
+                                       {150,350},
+                                       {200,300},
+                                       {250,350},
+                                       {300,300},
                                        {350,350},
                                        {400,300},
                                        {450,350},
@@ -116,7 +148,15 @@ void PlatformerGame::initLevel() {
                                        {1250,350},
                                });
 
-    level->generateLevel();
+    level->generateLevelFromFile(0);
+    level->generateLevelFromFile(1);
+    level->generateLevelFromFile(2);
+
+    crosshair = createGameObject();
+    crosshair->name = "Crosshair";
+    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
+    crosshairSprite->setSprite(spriteAtlas->get("28.png"));
+    crosshair->addComponent<Crosshair>();
 }
 
 void PlatformerGame::update(float time) {
@@ -126,6 +166,14 @@ void PlatformerGame::update(float time) {
 		updatePhysics();
 	}
     for (int i=0;i<sceneObjects.size();i++){
+        if(sceneObjects[i] == nullptr) 
+            continue;
+
+        if(sceneObjects[i]->consumed){
+            sceneObjects.erase(sceneObjects.begin() + i++);
+            continue;
+        }
+
         sceneObjects[i]->update(time);
     }
 }
@@ -167,13 +215,35 @@ void PlatformerGame::render() {
         world->DrawDebugData();
         rp.drawLines(debugDraw.getLines());
         debugDraw.clear();
+
+        ImGui::SetNextWindowPos(ImVec2(0, .0f), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_Always);
+        ImGui::Begin("", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Text("%s", "Current States");
+        for (int i = 0; i < characterController->state_->characterStateStack.size(); ++i) {
+            switch (characterController->state_->characterStateStack[i]->stateType) {
+                case Standing:
+                    ImGui::BulletText("%s","Standing");
+                    break;
+                case Jumping:
+                    ImGui::BulletText("%s","Jumping");
+                    break;
+                case Walking:
+                    ImGui::BulletText("%s","Walking");
+                    break;
+                case Firing:
+                    ImGui::BulletText("%s","Firing");
+                    break;
+            }
+        }
+        ImGui::End();
     }
 }
 
-void PlatformerGame::onKey(SDL_Event &event) {
+void PlatformerGame::handleInput(SDL_Event &event) {
     for (auto & gameObject: sceneObjects) {
         for (auto & c : gameObject->getComponents()){
-            bool consumed = c->onKey(event);
+            bool consumed = c->handleInput(event);
             if (consumed){
                 return;
             }
@@ -242,6 +312,11 @@ void PlatformerGame::EndContact(b2Contact *contact) {
     handleContact(contact, false);
 }
 
+//glm::vec2 PlatformerGame::getMousePosition()
+//{
+//    return glm::vec2(mouseMotion.x, mouseMotion.y);
+//}
+
 void PlatformerGame::deregisterPhysicsComponent(PhysicsComponent *r) {
     auto iter = physicsComponentLookup.find(r->getFixture());
     if (iter != physicsComponentLookup.end()){
@@ -264,6 +339,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         auto & aComponents = physA->second->getGameObject()->getComponents();
         auto & bComponents = physB->second->getGameObject()->getComponents();
         for (auto & c : aComponents){
+            //cout << c->getGameObject()->name << "\n";
             if (begin){
                 c->onCollisionStart(physB->second);
             } else {

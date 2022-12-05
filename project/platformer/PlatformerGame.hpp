@@ -6,7 +6,8 @@
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
 #include "Level.hpp"
-#include "BirdMovementComponent.hpp"
+#include "CharacterController.hpp"
+#include "FollowPathComponent.hpp"
 
 class PhysicsComponent;
 
@@ -28,8 +29,19 @@ public:
     void EndContact(b2Contact *contact) override;
 
     static PlatformerGame* instance;
+	
+    SDL_MouseMotionEvent mouseMotion;
+    SDL_MouseButtonEvent mouseButton;
+
+    std::shared_ptr<GameObject> crosshair;
+    std::shared_ptr<SideScrollingCamera> camera;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
+
+    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
+
+    // Less expensive to store player pointer and get position on demand
+    glm::vec2 getPlayerPositon(){return player->getPosition();};
 private:
     sre::SDLRenderer r;
 
@@ -40,14 +52,16 @@ private:
 
     void render();
 
-    void onKey(SDL_Event &event);
+    void handleInput(SDL_Event &event);
 
     void handleContact(b2Contact *contact, bool begin);
 
-    std::shared_ptr<SideScrollingCamera> camera;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<CharacterController> characterController;
+    std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
+    std::shared_ptr<GameObject> player;
 
     void updatePhysics();
 
@@ -55,7 +69,9 @@ private:
 
     sre::Color backgroundColor;
     b2World * world = nullptr;
-    BirdMovementComponent* birdMovement;
+
+     std::shared_ptr<FollowPathComponent> birdMovement;
+
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
@@ -66,5 +82,7 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+
+    friend class Missile;
 };
 
