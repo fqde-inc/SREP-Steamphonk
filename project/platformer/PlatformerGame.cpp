@@ -90,30 +90,25 @@ void PlatformerGame::initLevel() {
     playerSprite->setSprite(playerSpriteObj);
     player->addComponent<PlayerShooting>();
 
-    //characterController = player->addComponent<CharacterController>();
-    //characterController->setSprites(
-    //        spriteAtlas->get("19.png"),
-    //        spriteAtlas->get("20.png"),
-    //        spriteAtlas->get("21.png"),
-    //        spriteAtlas->get("26.png"),
-    //        spriteAtlas->get("27.png"),
-    //        spriteAtlas->get("28.png")
-    //);
+    characterController = player->addComponent<CharacterController>();
+    characterController->setSprites(
+            spriteAtlas->get("19.png"),
+            spriteAtlas->get("20.png"),
+            spriteAtlas->get("21.png"),
+            spriteAtlas->get("26.png"),
+            spriteAtlas->get("27.png"),
+            spriteAtlas->get("28.png")
+    );
 
-
-    //player->setPosition(glm::vec2(297, -629));
-    //player->setPosition(glm::vec2(10, -4));
     glm::vec2 spawn = level->getIdentifierPosition(0, "PlayerStart");
     cout << "Spawn: " << spawn.x << " , " << spawn.y << endl;
     player->setPosition(spawn);
-    //cout << "Player pos: " << player->getPosition().x << " , " << player->getPosition().y << endl;
 
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
     camObj->setPosition(windowSize * 0.5f);
     camera->setFollowObject(player, { 0,0});
-    //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
     camera->setZoomMode(true);
 
     auto birdObj = createGameObject();
