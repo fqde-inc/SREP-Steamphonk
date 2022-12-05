@@ -15,7 +15,7 @@ public:
 
     void stopTimer() {
         setTime = 0;
-        isRunning = true;
+        isRunning = false;
     }
 
     void update(float deltaTime) override {
