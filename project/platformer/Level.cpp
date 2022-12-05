@@ -64,8 +64,18 @@ glm::vec2 Level::getIdentifierPosition(int levelNumber, std::string identifier)
     d.ParseStream(isw);
 
     auto entities = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["entityInstances"].GetArray();
-    //std::find()
-    //auto entity = std::find(entities, entities.end(), )
+
+    for (int i = 0; i < entities.Size(); i++)
+    {
+        if(identifier == entities[i].GetObject()["__identifier"]);
+        {
+            auto pos = entities[i].GetObject()["px"].GetArray();
+            int x = pos[0].GetInt();
+            int y = pos[1].GetInt();
+            return glm::vec2(x, y);
+        }
+    }
+
     return glm::vec2(0, 0);
 }
 
