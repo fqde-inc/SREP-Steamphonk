@@ -56,6 +56,8 @@ void CharacterController::update(float deltaTime) {
     updateSprite(deltaTime);
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
+
+    std::cout << "Cur pos: " << gameObject->getPosition().x << " , " << gameObject->getPosition().y << std::endl;
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {

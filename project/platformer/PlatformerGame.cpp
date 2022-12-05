@@ -89,17 +89,25 @@ void PlatformerGame::initLevel() {
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
     player->addComponent<PlayerShooting>();
-    characterController = player->addComponent<CharacterController>();
-    characterController->setSprites(
-            spriteAtlas->get("19.png"),
-            spriteAtlas->get("20.png"),
-            spriteAtlas->get("21.png"),
-            spriteAtlas->get("26.png"),
-            spriteAtlas->get("27.png"),
-            spriteAtlas->get("28.png")
-    );
 
-    player->setPosition(glm::vec2(297, -629));
+    //characterController = player->addComponent<CharacterController>();
+    //characterController->setSprites(
+    //        spriteAtlas->get("19.png"),
+    //        spriteAtlas->get("20.png"),
+    //        spriteAtlas->get("21.png"),
+    //        spriteAtlas->get("26.png"),
+    //        spriteAtlas->get("27.png"),
+    //        spriteAtlas->get("28.png")
+    //);
+
+
+    //player->setPosition(glm::vec2(297, -629));
+    //player->setPosition(glm::vec2(10, -4));
+    glm::vec2 spawn = level->getIdentifierPosition(0, "PlayerStart");
+    cout << "Spawn: " << spawn.x << " , " << spawn.y << endl;
+
+    //player->setPosition(spawn);
+    //cout << "Player pos: " << player->getPosition().x << " , " << player->getPosition().y << endl;
 
     auto camObj = createGameObject();
     camObj->name = "Camera";
@@ -213,6 +221,7 @@ void PlatformerGame::render() {
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
 
+    /*
     if (doDebugDraw){
         world->DrawDebugData();
         rp.drawLines(debugDraw.getLines());
@@ -240,6 +249,7 @@ void PlatformerGame::render() {
         }
         ImGui::End();
     }
+    */
 }
 
 void PlatformerGame::handleInput(SDL_Event &event) {
