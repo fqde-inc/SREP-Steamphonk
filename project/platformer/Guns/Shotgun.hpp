@@ -6,13 +6,13 @@
 #include "Gun.hpp"
 #include <iostream>
 
-class RevolverGun : public Gun {
+class ShotgunGun : public Gun {
 public:
-    explicit RevolverGun() : Gun() {
-        gunType = Revolver;
+    explicit ShotgunGun() : Gun() {
+        gunType = Shotgun;
     }
 
     void Fire() override {
-        std::cout << "Bang!" << std::endl;
+        std::cout << "Shotgun Bang!" << std::endl;
     }
 };

@@ -85,9 +85,16 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
 
     if(!character.swappingGun){
         character.swappingGun = true;
-        std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> swappedGuns =
-                {std::get<1>(character.equippedGuns), std::get<0>(character.equippedGuns)};
-        character.equippedGuns.swap(swappedGuns);
+        switch (character.equippedGun) {
+            case RocketLauncher:
+                character.equippedGun = Shotgun;
+                break;
+            case Shotgun:
+                character.equippedGun = RocketLauncher;
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -194,7 +201,18 @@ void WalkingState::update(CharacterController &character) {
 #pragma region FiringState Methods
 
 void FiringState::update(CharacterController &character) {
-    std::get<0>(character.equippedGuns)->Fire();
+
+    switch (character.equippedGun) {
+        case RocketLauncher:
+            character.rocketLauncher->Fire();
+            break;
+        case Shotgun:
+            character.shotgun->Fire();
+            break;
+        default:
+            break;
+    }
+
     popStack(Firing);
 }
 

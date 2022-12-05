@@ -6,8 +6,8 @@
 
 enum BulletTypes {
     None,
-    Revolver,
-    Sniper
+    Shotgun,
+    Rocket
 };
 
 class Bullet {
