@@ -5,6 +5,7 @@
 #include "MovingPlatformComponent.hpp"
 #include "PlatformComponent.hpp"
 #include "GameObject.hpp"
+#include <SDL_stdinc.h>
 
 MovingPlatformComponent::MovingPlatformComponent(GameObject *gameObject) : Component(gameObject)
 {

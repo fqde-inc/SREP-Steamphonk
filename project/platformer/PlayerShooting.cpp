@@ -10,13 +10,13 @@
 #include "PlatformerGame.hpp"
 #include "Missile.hpp"
 #include "SpriteComponent.hpp"
+#include "PlayerShooting.hpp"
 
-//TODO refactor component to generic "pathFinder" 
-EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
+PlayerShooting::PlayerShooting(GameObject *gameObject) : Component(gameObject) {
     auto enemyPhysics = gameObject->addComponent<PhysicsComponent>();
 }
 
-void EnemyComponent::update(float deltaTime) {
+void PlayerShooting::update(float deltaTime) {
     reloadTime += deltaTime;
 
     if ( reloadTime >= reloadTimeLimit ){
@@ -26,32 +26,37 @@ void EnemyComponent::update(float deltaTime) {
         } else {
             reloadTime -= shootingInterval;
             shotsRemaining--;
-            shootAtPlayer();
+        }
+    }
+}
+
+bool PlayerShooting::handleInput(SDL_Event& event) {
+    switch (event.key.keysym.sym) {
+        case SDLK_f:
+        {
+            shootAt(PlatformerGame::instance->crosshair->getPosition());
         }
     }
 
-    animate();
+    return false;
 }
 
-void EnemyComponent::shootAtPlayer(){
+void PlayerShooting::shootAt(glm::vec2 position)
+{
+    std::cout << "Player shooting" << std::endl;
+	
+    glm::vec2 direction = glm::normalize(position - gameObject->getPosition());
 
-    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
-
-    auto go = PlatformerGame::instance->createGameObject();     
+    auto go = PlatformerGame::instance->createGameObject();
     go->setPosition(gameObject->getPosition());
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
     auto spriteComponent = go->addComponent<SpriteComponent>();
-    spriteComponent->setSprite( sprite );
+    spriteComponent->setSprite(sprite);
 
     auto l = go->addComponent<Missile>();
+    l->setTarget("Bird");
     l->setDirection(direction);
 
-    go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
-    
-}
-
-void EnemyComponent::animate(){
-    //TODO: Animate sprite ?
-    //float t = fmod(time, keyFrameTime);
+    go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
 }

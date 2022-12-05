@@ -61,6 +61,3 @@ private:
     float radius;
 
 };
-
-
-

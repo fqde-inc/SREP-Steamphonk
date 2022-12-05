@@ -92,7 +92,7 @@ void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, in
 
     auto spriteComponent = gameObject->addComponent<SpriteComponent>();
     auto sprite = tileAtlas->get(name);
-    float tileSize = Level::tileSize;
+    float tileSize = sprite.getSpriteSize().x;
 
     gameObject->setPosition(pos);
 

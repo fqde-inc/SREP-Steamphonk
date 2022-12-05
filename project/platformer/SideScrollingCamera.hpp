@@ -15,11 +15,16 @@ public:
     void setZoomMode(bool zoomEnabled);
     bool isZoomMode();
 
+    glm::vec2 offset;
+    	
+    //glm::vec2 pixelToCameraSpace(glm::vec2& pixelCoordinates);
     sre::Camera& getCamera();
 private:
     sre::Camera camera;
     std::shared_ptr<GameObject> followObject;
-    glm::vec2 offset;
     bool zoom = false;
+    float lerpTime = 0.f;
+    glm::vec2 lastPosition;
+    glm::vec2 vec2lerp(glm::vec2& a, glm::vec2& b, float t);
 };
 
