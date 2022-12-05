@@ -71,8 +71,7 @@ glm::vec2 Level::getIdentifierPosition(int levelNumber, std::string identifier)
     for (int i = 0; i < entities.Size(); i++)
     {
         string compare = entities[i].GetObject()["__identifier"].GetString();
-        if(identifier.compare(compare))
-        //if(identifier == compare)
+        if(identifier.compare(compare) == 0)
         {
             auto pos = entities[i].GetObject()["px"].GetArray();
             int x = pos[0].GetInt();
