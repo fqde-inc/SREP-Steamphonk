@@ -89,7 +89,7 @@ void PlatformerGame::initLevel() {
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
     player->addComponent<PlayerShooting>();
-    auto characterController = player->addComponent<CharacterController>();
+    characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
             spriteAtlas->get("20.png"),

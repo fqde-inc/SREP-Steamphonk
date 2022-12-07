@@ -6,9 +6,9 @@
 
 #pragma once
 
-class RevolverBullet : Bullet{
+class ShotgunBullet : Bullet{
 public:
-    explicit RevolverBullet() {
-        bulletType = Revolver;
+    explicit ShotgunBullet() {
+        bulletType = Shotgun;
     };
 };

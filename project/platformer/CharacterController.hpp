@@ -6,8 +6,10 @@
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
 #include "Guns/Gun.hpp"
-#include "Guns/Revolver.hpp"
-#include <tuple>
+#include "Guns/RocketLauncher.hpp"
+#include "Guns/Shotgun.hpp"
+#include "TimerComponent.hpp"
+
 
 class CharacterState;
 
@@ -28,10 +30,10 @@ public:
 
     bool handleInput(SDL_Event &event) override;
 
-    std::tuple<std::shared_ptr<Gun>, std::shared_ptr<Gun>> equippedGuns = {std::make_shared<Gun>(), std::make_shared<RevolverGun>()};
+    std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
+    std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
 
-    bool swappingGun = false;
-    bool firing = false;
+    GunTypes equippedGun = RocketLauncher;
 
     // raycast callback
     virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
@@ -42,6 +44,9 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
+    std::shared_ptr<TimerComponent> cooldownTimer;
+    float cooldownTime = .75f;
+
     bool left = false;
     bool right = false;
     std::shared_ptr<CharacterState> state_;

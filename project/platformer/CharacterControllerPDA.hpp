@@ -17,31 +17,31 @@ enum CharacterStateTypes {
 
 #pragma region CharacterState
 
-    class CharacterState {
-    public:
-        explicit CharacterState();
-        explicit CharacterState(int a) {};
-        virtual ~CharacterState() = default;
+class CharacterState {
+public:
+    explicit CharacterState();
+    explicit CharacterState(int a) {};
+    virtual ~CharacterState() = default;
 
-        CharacterStateTypes stateType = Standing;
+    CharacterStateTypes stateType = Standing;
 
-        virtual void handleInput(CharacterController& character, SDL_Event &event);
-        virtual void update(CharacterController& character);
-        virtual void jump(CharacterController& character, SDL_Event &event);
-        virtual void moveLeft(CharacterController& character, SDL_Event &event);
-        virtual void moveRight(CharacterController& character, SDL_Event &event);
-        virtual void fire(CharacterController& character, SDL_Event &event);
-        virtual void swapWeapons(CharacterController& character, SDL_Event &event);
+    virtual void handleInput(CharacterController& character, SDL_Event &event);
+    virtual void update(CharacterController& character);
+    virtual void jump(CharacterController& character, SDL_Event &event);
+    virtual void moveLeft(CharacterController& character, SDL_Event &event);
+    virtual void moveRight(CharacterController& character, SDL_Event &event);
+    virtual void fire(CharacterController& character, SDL_Event &event);
+    virtual void swapWeapons(CharacterController& character, SDL_Event &event);
 
-        static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
+    static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
 
-        static void pushStack(const std::shared_ptr<CharacterState>& state);
-        static void popStack(CharacterStateTypes type);
+    static void pushStack(const std::shared_ptr<CharacterState>& state);
+    static void popStack(CharacterStateTypes type);
 
-    private:
-        virtual void enter();
-        virtual void exit();
-    };
+private:
+    virtual void enter();
+    virtual void exit();
+};
 
 #pragma endregion
 

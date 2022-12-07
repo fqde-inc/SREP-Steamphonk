@@ -7,7 +7,8 @@
 
 enum GunTypes {
     NullGun,
-    Revolver,
+    Shotgun,
+    RocketLauncher,
 };
 
 class Gun {
