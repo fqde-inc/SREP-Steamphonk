@@ -199,10 +199,10 @@ void FiringState::update(CharacterController &character) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
-            character.rocketLauncher->Fire();
+            character.rocketLauncher->Fire(*character.playerShooting);
             break;
         case Shotgun:
-            character.shotgun->Fire();
+            character.shotgun->Fire(*character.playerShooting);
             break;
         default:
             break;

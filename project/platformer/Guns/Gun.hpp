@@ -4,6 +4,7 @@
 
 #pragma once
 #include <iostream>
+#include "../PlayerShooting.hpp"
 
 enum GunTypes {
     NullGun,
@@ -15,7 +16,7 @@ class Gun {
 public:
     explicit Gun() {}
 
-    virtual void Fire() {
+    virtual void Fire(PlayerShooting &pShooting) {
         std::cout << "Whiff!" << std::endl;
     }
 

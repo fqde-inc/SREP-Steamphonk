@@ -12,7 +12,7 @@ public:
         gunType = Shotgun;
     }
 
-    void Fire() override {
+    void Fire(PlayerShooting &pShooting) override {
         std::cout << "Shotgun Bang!" << std::endl;
     }
 };

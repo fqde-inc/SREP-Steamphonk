@@ -94,6 +94,8 @@ public:
     explicit FiringState() : CharacterState(0) {
         stateType = Firing;
     };
+    void handleInput(CharacterController& character, SDL_Event &event) override {}
+
     void update(CharacterController &character) override;
 };
 

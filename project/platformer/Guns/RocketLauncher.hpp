@@ -5,6 +5,7 @@
 #pragma once
 #include "Gun.hpp"
 #include <iostream>
+#include "../PlayerShooting.hpp"
 
 class RocketLauncherGun : public Gun {
 public:
@@ -12,7 +13,8 @@ public:
         gunType = RocketLauncher;
     }
 
-    void Fire() override {
+    void Fire(PlayerShooting &pShooting) override {
         std::cout << "Rocket Bang!" << std::endl;
+        pShooting.shootAtCursor();
     }
 };

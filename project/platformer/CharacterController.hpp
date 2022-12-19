@@ -9,6 +9,7 @@
 #include "Guns/RocketLauncher.hpp"
 #include "Guns/Shotgun.hpp"
 #include "TimerComponent.hpp"
+#include "PlayerShooting.hpp"
 
 
 class CharacterState;
@@ -32,6 +33,7 @@ public:
 
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
     std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
+    std::shared_ptr<PlayerShooting> playerShooting;
 
     GunTypes equippedGun = RocketLauncher;
 
