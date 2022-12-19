@@ -9,6 +9,7 @@
 #include "Guns/RocketLauncher.hpp"
 #include "Guns/Shotgun.hpp"
 #include "TimerComponent.hpp"
+#include "Guns/RocketLauncher.hpp"
 
 
 class CharacterState;

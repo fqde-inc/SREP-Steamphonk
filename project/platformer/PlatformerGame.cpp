@@ -19,7 +19,6 @@ using namespace std;
 using namespace sre;
 
 const glm::vec2 PlatformerGame::windowSize(1400,800);
-
 PlatformerGame* PlatformerGame::instance = nullptr;
 
 PlatformerGame::PlatformerGame()
@@ -39,7 +38,7 @@ PlatformerGame::PlatformerGame()
     d.ParseStream(isw);
     auto hexValue = d["bgColor"].GetString();
 
-    backgroundColor = {0.6f,0.6f,1.0f,1.0f};
+    backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
     spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
             .withFile( "platformer-art-deluxe.png")
@@ -79,6 +78,11 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
+std::shared_ptr<Level> PlatformerGame::getLevel()
+{
+	return level;
+}
+
 void PlatformerGame::initLevel() {
     initPhysics();
 
@@ -89,6 +93,7 @@ void PlatformerGame::initLevel() {
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
     player->addComponent<PlayerShooting>();
+	
     characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
@@ -98,13 +103,12 @@ void PlatformerGame::initLevel() {
             spriteAtlas->get("27.png"),
             spriteAtlas->get("28.png")
     );
-
+	
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
     camObj->setPosition(windowSize * 0.5f);
     camera->setFollowObject(player, { 0,0});
-    //camera->setFollowObject(player, { 200,windowSize.y * 0.5f });
     camera->setZoomMode(true);
 
     auto birdObj = createGameObject();
@@ -148,8 +152,6 @@ void PlatformerGame::initLevel() {
     birdMovement = enemy->getPathing();
 
     level->generateLevelFromFile(0);
-    level->generateLevelFromFile(1);
-    level->generateLevelFromFile(2);
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
@@ -310,11 +312,6 @@ void PlatformerGame::EndContact(b2Contact *contact) {
     b2ContactListener::EndContact(contact);
     handleContact(contact, false);
 }
-
-//glm::vec2 PlatformerGame::getMousePosition()
-//{
-//    return glm::vec2(mouseMotion.x, mouseMotion.y);
-//}
 
 void PlatformerGame::deregisterPhysicsComponent(PhysicsComponent *r) {
     auto iter = physicsComponentLookup.find(r->getFixture());
