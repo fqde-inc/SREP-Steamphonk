@@ -3,6 +3,7 @@
 #include <Box2D/Box2D.h>
 #include "Component.hpp"
 #include "SpriteComponent.hpp"
+#include "Damagable.hpp"
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
 #include "Guns/Gun.hpp"

@@ -20,7 +20,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
 	
-    characterDamagable->setMaxLife(1);
+    characterDamagable->setMaxLife(10);
     characterDamagable->overrideDeathAction([this]() {
         returnToSpawn = true;
         });
