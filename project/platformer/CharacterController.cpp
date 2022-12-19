@@ -18,7 +18,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     gameObject->addComponent<PlayerShooting>();
 	
     auto physicsScale = PlatformerGame::instance->physicsScale;
-    spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+    spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
 	
     characterDamagable->setMaxLife(10);
     characterDamagable->overrideDeathAction([this]() {
@@ -89,7 +89,7 @@ void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
 void CharacterController::onDeath()
 {
-	auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+	auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
 	gameObject->setPosition(spawn);
 	characterPhysics->setLinearVelocity({ 0,0 });
 }

@@ -46,8 +46,8 @@ PlatformerGame::PlatformerGame()
             .withFilterSampling(false)
             .build());
 
-    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
-        .withFile("dirtsheet.png")
+    tileAtlas = SpriteAtlas::create("steamphonk.json", Texture::create()
+        .withFile("steamphonk.png")
         .withFilterSampling(false)
         .build());
 
@@ -151,7 +151,8 @@ void PlatformerGame::initLevel() {
         {1250,350},
     });
 
-    level->generateLevelFromFile(0);
+    //level->generateLevelFromFile(0);
+    level->generateLevel();
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
