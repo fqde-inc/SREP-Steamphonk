@@ -14,6 +14,7 @@ using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
+    cooldownTimer = gameObject->addComponent<TimerComponent>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
