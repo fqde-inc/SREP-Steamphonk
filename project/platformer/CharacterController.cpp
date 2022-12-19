@@ -1,7 +1,3 @@
-//
-// Created by Morten Nobel-Jørgensen on 19/10/2017.
-//
-
 #include <SDL_events.h>
 #include <iostream>
 #include "CharacterController.hpp"
@@ -16,18 +12,22 @@ using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     gameObject->name = "Player";
-
+    characterDamagable = gameObject->addComponent<Damagable>();
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     cooldownTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
-    auto damagable = gameObject->addComponent<Damagable>();
-    damagable->setMaxLife(1);
-
+	
     auto physicsScale = PlatformerGame::instance->physicsScale;
-    auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+    spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+	
+    characterDamagable->setMaxLife(1);
+    characterDamagable->overrideDeathAction([this]() {
+        returnToSpawn = true;
+        });
 	
     radius = 10/physicsScale;
     characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
+    std::cout << "Spawned player at " << spawn.x << ", " << spawn.y << std::endl;
     characterPhysics->getFixture()->SetRestitution(0);
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
@@ -40,6 +40,16 @@ bool CharacterController::handleInput(SDL_Event &event) {
 }
 
 void CharacterController::update(float deltaTime) {
+	//Calling it here seems to be fine regarding isLocked so it doesn't happen during a simulation step
+    if (returnToSpawn /*&& this->characterPhysics->getBody()->lock*/)
+    {
+        auto physicsScale = PlatformerGame::instance->physicsScale;
+        this->characterPhysics->getBody()->SetTransform(b2Vec2(spawn.x / physicsScale, spawn.y / physicsScale), 0);
+        this->characterDamagable->resetLife();
+        std::cout << "Player returned to " << spawn.x << ", " << spawn.y << std::endl;
+        returnToSpawn = false;
+    }
+	
     // raycast ignores any shape in the starting point
     auto from = characterPhysics->getBody()->GetWorldCenter();
     b2Vec2 to {from.x,from.y -radius*1.3f};
@@ -75,6 +85,13 @@ void CharacterController::onCollisionStart(PhysicsComponent *comp) {
 
 void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
+}
+
+void CharacterController::onDeath()
+{
+	auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+	gameObject->setPosition(spawn);
+	characterPhysics->setLinearVelocity({ 0,0 });
 }
 
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {

@@ -45,6 +45,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
+    std::shared_ptr<Damagable> characterDamagable;
     std::shared_ptr<TimerComponent> cooldownTimer;
     float cooldownTime = .75f;
 
@@ -56,6 +57,8 @@ public:
     friend class StandingState;
     friend class JumpingState;
 private:
+    glm::vec2 spawn;
+    bool returnToSpawn = false;
     sre::Sprite standing;
     sre::Sprite walk1;
     sre::Sprite walk2;
@@ -65,5 +68,5 @@ private:
     std::shared_ptr<GameObject> cursor;
     std::shared_ptr<SpriteComponent> spriteComponent;
     float radius;
-
+    void onDeath();
 };
