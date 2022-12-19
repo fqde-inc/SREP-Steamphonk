@@ -25,6 +25,8 @@ public:
     std::shared_ptr<GameObject> createGameObject();
     static const glm::vec2 windowSize;
 
+    std::shared_ptr<Level> getLevel();
+
     void BeginContact(b2Contact *contact) override;
 
     void EndContact(b2Contact *contact) override;
