@@ -10,6 +10,7 @@ public:
     explicit Missile(GameObject* gameObject);
 	
     void setTarget(std::string _target);
+    const std::string & getTarget() const{return target;};
 
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 

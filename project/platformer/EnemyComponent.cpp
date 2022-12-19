@@ -20,8 +20,9 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
 
-    physics->initCircle(b2_kinematicBody, 15/physicsScale, gameObject->getPosition()/physicsScale, 0);
+    physics->initCircle(b2_dynamicBody, 15/physicsScale, gameObject->getPosition()/physicsScale, 0);
     physics->setAutoUpdate(false);
+    physics->getBody()->SetGravityScale(0.0f);
     physics->setSensor(true);
 }
 
@@ -33,7 +34,14 @@ void EnemyComponent::setPathing( std::vector<glm::vec2> positions, PathType type
 
 void EnemyComponent::update(float deltaTime) {
     
+    if(mustDie)
+        kill();
+
     if(!isAlive){
+
+        if(path != nullptr)
+            gameObject->removeComponent(path);
+
         reloadTime += deltaTime;
 
         if ( reloadTime >= reloadTimeLimit ){
@@ -73,6 +81,7 @@ void EnemyComponent::shootAtPlayer(){
 
     auto l = go->addComponent<Missile>();
     l->setDirection(direction);
+    l->setTarget("Player");
 
     go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
 }
@@ -85,22 +94,32 @@ void EnemyComponent::animate(){
 void EnemyComponent::kill(){
     isAlive = false;
 
-    if(path != nullptr)
-        delete path.get();
+    auto sprite = gameObject->getComponent<SpriteComponent>()->getSprite();
+    sprite.setRotation(sprite.getRotation() + 180);
+    gameObject->getComponent<SpriteComponent>()->setSprite(sprite);
 
-    physics->getBody()->SetGravityScale(10);
+    physics->getBody()->SetAwake(false);
+    physics->getBody()->SetGravityScale(1);
+    physics->getBody()->SetType(b2_kinematicBody);
     physics->setAutoUpdate(true);
+    physics->addForce(deathForce);
 }
 
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
+    if(!isAlive) 
+        return;
+
     std::cout << "Collision enemy : " << comp->getGameObject()->name << std::endl;
     if( comp->getGameObject()->getComponent<Missile>() != nullptr ){
-        kill();
+        std::shared_ptr<Missile> missile = comp->getGameObject()->getComponent<Missile>();
+        if( missile->getTarget() == "Bird" ){
+            mustDie = true;
+            deathForce = missile->getDirection();
+        }
     }
 }
 
 void EnemyComponent::onCollisionEnd(PhysicsComponent *comp) {
-
 }
 
 float32 EnemyComponent::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {

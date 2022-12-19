@@ -25,11 +25,11 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
     missilePhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     missilePhysics->setAutoUpdate(false);
+    missilePhysics->setSensor(true);
 }
 
 void Missile::setTarget(std::string _target)
 {
-    missilePhysics->setSensor(true);
     target = _target;
 }
 
@@ -59,15 +59,14 @@ float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b
 
 void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
-    if ( comp->getGameObject()->name == target ){
-        if(target == "Bird")
-            comp->getGameObject()->getComponent<EnemyComponent>()->kill();
+    auto go = comp->getGameObject();
 
-        comp->addImpulse( direction );
+    if ( go->name == target ){
+        if(target == "Player")
+            comp->addImpulse( direction );
         gameObject->setConsumed(true);
     }
 }
 
 void Missile::onCollisionEnd(PhysicsComponent *comp) {
-    //gameObject->setConsumed(true);
 }

@@ -32,6 +32,8 @@ private:
     void animate();
 
     bool isAlive = true;
+    bool mustDie = false;
+    glm::vec2 deathForce;
     
     glm::vec2* target;
 
