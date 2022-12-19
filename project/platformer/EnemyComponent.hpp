@@ -6,6 +6,7 @@
 #include "glm/glm.hpp"
 #include "PhysicsComponent.hpp"
 #include "FollowPathComponent.hpp"
+#include "Damagable.hpp"
 
 class EnemyComponent : public Component, public b2RayCastCallback {
 public:
@@ -27,13 +28,14 @@ private:
 
     std::shared_ptr<FollowPathComponent> path;
     std::shared_ptr<PhysicsComponent> physics;
+    std::shared_ptr<Damagable> damagable;
 
     void shootAtPlayer();
     void animate();
 
     bool isAlive = true;
     bool mustDie = false;
-    glm::vec2 deathForce;
+    glm::vec2 lastHitDirection;
     
     glm::vec2* target;
 

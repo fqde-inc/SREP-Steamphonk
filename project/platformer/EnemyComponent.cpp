@@ -15,6 +15,7 @@
 #include "PhysicsComponent.hpp"
 #include "FollowPathComponent.hpp"
 #include "glm/gtx/string_cast.hpp"
+#include "Damagable.hpp"
 
 EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics = gameObject->addComponent<PhysicsComponent>();
@@ -24,6 +25,10 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics->setAutoUpdate(false);
     physics->getBody()->SetGravityScale(0.0f);
     physics->setSensor(true);
+
+    damagable = gameObject->addComponent<Damagable>();
+    damagable->setMaxLife(1);
+    damagable->setLife(1);
 }
 
 void EnemyComponent::setPathing( std::vector<glm::vec2> positions, PathType type = BEZIER){
@@ -81,7 +86,7 @@ void EnemyComponent::shootAtPlayer(){
 
     auto l = go->addComponent<Missile>();
     l->setDirection(direction);
-    l->setTarget("Player");
+    l->setOrigin(gameObject->name);
 
     go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
 }
@@ -102,19 +107,17 @@ void EnemyComponent::kill(){
     physics->getBody()->SetGravityScale(1);
     physics->getBody()->SetType(b2_kinematicBody);
     physics->setAutoUpdate(true);
-    physics->addForce(deathForce);
+    physics->addForce(lastHitDirection);
 }
 
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
-    if(!isAlive) 
-        return;
 
     std::cout << "Collision enemy : " << comp->getGameObject()->name << std::endl;
     if( comp->getGameObject()->getComponent<Missile>() != nullptr ){
         std::shared_ptr<Missile> missile = comp->getGameObject()->getComponent<Missile>();
-        if( missile->getTarget() == "Bird" ){
-            mustDie = true;
-            deathForce = missile->getDirection();
+
+        if( missile->getOrigin() == "Player" ){
+            lastHitDirection = missile->getDirection();
         }
     }
 }
