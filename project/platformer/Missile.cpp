@@ -10,6 +10,7 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 #include "CharacterController.hpp"
+#include "Damagable.hpp"
 
 using namespace std;
 
@@ -58,6 +59,12 @@ void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
     if ( comp->getGameObject()->name == target ){
         comp->addImpulse( direction );
+		
+        if (comp->getGameObject()->getComponent<Damagable>() != nullptr)
+        {
+			comp->getGameObject()->getComponent<Damagable>()->takeDamage(1);
+        }
+
         gameObject->setConsumed(true);
     }
 }

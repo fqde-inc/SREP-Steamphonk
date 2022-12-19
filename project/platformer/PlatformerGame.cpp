@@ -14,6 +14,7 @@
 #include <fstream>
 #include "Crosshair.hpp"
 #include "PlayerShooting.hpp"
+#include "Damagable.hpp"
 
 using namespace std;
 using namespace sre;
@@ -87,13 +88,11 @@ void PlatformerGame::initLevel() {
     initPhysics();
 
     player = createGameObject();
-    player->name = "Player";
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = spriteAtlas->get("19.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
-    player->addComponent<PlayerShooting>();
-	
+
     characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),

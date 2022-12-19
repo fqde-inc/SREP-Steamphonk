@@ -49,7 +49,7 @@ private:
 
     void initLevel();
     void initPhysics();
-
+    void spawnPlayer();
     void update(float time);
 
     void render();
