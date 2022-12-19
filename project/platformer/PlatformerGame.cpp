@@ -78,6 +78,11 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
+std::shared_ptr<Level> PlatformerGame::getLevel()
+{
+	return level;
+}
+
 void PlatformerGame::initLevel() {
     initPhysics();
 
@@ -88,7 +93,7 @@ void PlatformerGame::initLevel() {
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
     player->addComponent<PlayerShooting>();
-
+	
     characterController = player->addComponent<CharacterController>();
     characterController->setSprites(
             spriteAtlas->get("19.png"),
@@ -98,11 +103,7 @@ void PlatformerGame::initLevel() {
             spriteAtlas->get("27.png"),
             spriteAtlas->get("28.png")
     );
-
-    glm::vec2 spawn = level->getIdentifierPosition(0, "PlayerStart");
-    cout << "Spawn: " << spawn.x << " , " << spawn.y << endl;
-    player->setPosition(spawn);
-
+	
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
@@ -312,11 +313,6 @@ void PlatformerGame::EndContact(b2Contact *contact) {
     b2ContactListener::EndContact(contact);
     handleContact(contact, false);
 }
-
-//glm::vec2 PlatformerGame::getMousePosition()
-//{
-//    return glm::vec2(mouseMotion.x, mouseMotion.y);
-//}
 
 void PlatformerGame::deregisterPhysicsComponent(PhysicsComponent *r) {
     auto iter = physicsComponentLookup.find(r->getFixture());

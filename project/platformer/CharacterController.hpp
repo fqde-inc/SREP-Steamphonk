@@ -9,6 +9,7 @@
 #include "Guns/RocketLauncher.hpp"
 #include "Guns/Shotgun.hpp"
 #include <tuple>
+#include "Guns/RocketLauncher.hpp"
 
 class CharacterState;
 

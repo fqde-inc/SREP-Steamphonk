@@ -10,13 +10,16 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 #include "SpriteComponent.hpp"
+using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
+    auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");
+	
     radius = 10/physicsScale;
-    characterPhysics->initCircle(b2_dynamicBody, radius, glm::vec2{1.5,1.5}*Level::tileSize/physicsScale,1);
+    characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
     characterPhysics->getFixture()->SetRestitution(0);
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
