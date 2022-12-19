@@ -11,6 +11,7 @@
 #include "PlatformerGame.hpp"
 #include "CharacterController.hpp"
 #include "EnemyComponent.hpp"
+#include "Damagable.hpp"
 
 using namespace std;
 
@@ -64,6 +65,12 @@ void Missile::onCollisionStart(PhysicsComponent *comp) {
     if ( go->name == target ){
         if(target == "Player")
             comp->addImpulse( direction );
+		
+        if (comp->getGameObject()->getComponent<Damagable>() != nullptr)
+        {
+			comp->getGameObject()->getComponent<Damagable>()->takeDamage(1);
+        }
+
         gameObject->setConsumed(true);
     }
 }
