@@ -43,8 +43,6 @@ bool PlayerShooting::handleInput(SDL_Event& event) {
 
 void PlayerShooting::shootAt(glm::vec2 position)
 {
-    std::cout << "Player shooting" << std::endl;
-	
     glm::vec2 direction = glm::normalize(position - gameObject->getPosition());
 
     auto go = PlatformerGame::instance->createGameObject();
@@ -55,9 +53,30 @@ void PlayerShooting::shootAt(glm::vec2 position)
     spriteComponent->setSprite(sprite);
 
     auto l = go->addComponent<Missile>();
+    l->setTarget("Bird");
     l->setDirection(direction);
-    l->setOrigin("Player");
 
     go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
+}
 
+void PlayerShooting::shootAtCursor()
+{
+    glm::vec2 direction = glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
+
+    auto go = PlatformerGame::instance->createGameObject();
+    go->setPosition(gameObject->getPosition());
+
+    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
+    auto spriteComponent = go->addComponent<SpriteComponent>();
+    spriteComponent->setSprite(sprite);
+
+    auto l = go->addComponent<Missile>();
+    l->setTarget("Bird");
+    l->setDirection(direction);
+
+    go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
+}
+
+glm::vec2 PlayerShooting::getShootDirection() {
+    return glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
 }

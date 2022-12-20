@@ -92,8 +92,9 @@ void PlatformerGame::initLevel() {
     auto playerSpriteObj = spriteAtlas->get("19.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSprite->setSprite(playerSpriteObj);
-
+    auto pShooting = player->addComponent<PlayerShooting>();
     characterController = player->addComponent<CharacterController>();
+    characterController->playerShooting = pShooting;
     characterController->setSprites(
             spriteAtlas->get("19.png"),
             spriteAtlas->get("20.png"),
@@ -102,7 +103,7 @@ void PlatformerGame::initLevel() {
             spriteAtlas->get("27.png"),
             spriteAtlas->get("28.png")
     );
-	
+		
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
