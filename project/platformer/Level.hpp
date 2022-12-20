@@ -20,6 +20,8 @@ public:
 
     void generateLevel();
     void generateLevelFromFile(int levelNumber);
+
+    glm::vec2 getIdentifierPosition(int levelNumber, std::string identifier);
 	
     std::shared_ptr<PlatformComponent> addPlatform(int x, int y, int startSpriteId, int length, bool kinematic);
     std::shared_ptr<PlatformComponent> addWall(int x, int y, int startSpriteId, int height);

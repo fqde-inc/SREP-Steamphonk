@@ -50,7 +50,7 @@ void CharacterState::jump(CharacterController &character, SDL_Event &event) {
     if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
         pushStack(std::make_shared<JumpingState>());
         character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
-        character.characterPhysics->addImpulse({0,0.15f});
+        character.characterPhysics->addImpulse({0,0.11f});
     }
 }
 
