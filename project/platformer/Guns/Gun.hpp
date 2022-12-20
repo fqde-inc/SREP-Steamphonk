@@ -16,9 +16,11 @@ class Gun {
 public:
     explicit Gun() {}
 
+    GunTypes gunType = NullGun;
+    float RecoilMagnitude = 0;
+
     virtual void Fire(PlayerShooting &pShooting) {
         std::cout << "Whiff!" << std::endl;
     }
 
-    GunTypes gunType = NullGun;
 };

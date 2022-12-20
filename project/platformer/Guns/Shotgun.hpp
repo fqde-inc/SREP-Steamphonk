@@ -5,14 +5,16 @@
 #pragma once
 #include "Gun.hpp"
 #include <iostream>
+#include "../PlayerShooting.hpp"
 
 class ShotgunGun : public Gun {
 public:
     explicit ShotgunGun() : Gun() {
         gunType = Shotgun;
+        RecoilMagnitude = 0.1f;
     }
 
     void Fire(PlayerShooting &pShooting) override {
-        std::cout << "Shotgun Bang!" << std::endl;
+        pShooting.shootAtCursor();
     }
 };

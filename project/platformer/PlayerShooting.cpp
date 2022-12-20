@@ -43,8 +43,6 @@ bool PlayerShooting::handleInput(SDL_Event& event) {
 
 void PlayerShooting::shootAt(glm::vec2 position)
 {
-    std::cout << "Player shooting" << std::endl;
-	
     glm::vec2 direction = glm::normalize(position - gameObject->getPosition());
 
     auto go = PlatformerGame::instance->createGameObject();
@@ -63,8 +61,6 @@ void PlayerShooting::shootAt(glm::vec2 position)
 
 void PlayerShooting::shootAtCursor()
 {
-    std::cout << "Player shooting" << std::endl;
-
     glm::vec2 direction = glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
 
     auto go = PlatformerGame::instance->createGameObject();
@@ -79,4 +75,8 @@ void PlayerShooting::shootAtCursor()
     l->setDirection(direction);
 
     go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
+}
+
+glm::vec2 PlayerShooting::getShootDirection() {
+    return glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
 }

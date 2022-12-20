@@ -11,10 +11,10 @@ class RocketLauncherGun : public Gun {
 public:
     explicit RocketLauncherGun() : Gun() {
         gunType = RocketLauncher;
+        RecoilMagnitude = 0.2f;
     }
 
     void Fire(PlayerShooting &pShooting) override {
-        std::cout << "Rocket Bang!" << std::endl;
         pShooting.shootAtCursor();
     }
 };

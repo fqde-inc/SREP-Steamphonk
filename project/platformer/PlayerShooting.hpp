@@ -18,6 +18,9 @@ public:
 
     void shootAt(glm::vec2 position);
     void shootAtCursor();
+
+    glm::vec2 getShootDirection();
+
 private:
     float reloadTime = 0.0f;
     float reloadTimeLimit = 2.5f;

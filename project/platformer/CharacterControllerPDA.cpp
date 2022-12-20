@@ -49,7 +49,6 @@ void CharacterState::popStack(CharacterStateTypes type) {
 void CharacterState::jump(CharacterController &character, SDL_Event &event) {
     if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
         pushStack(std::make_shared<JumpingState>());
-        character.characterPhysics->addImpulse({0,0.15f});
         character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
         character.characterPhysics->addImpulse({0,0.15f});
     }
@@ -79,7 +78,6 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
         return;
     }
 
-    std::cout << "Swapped" << std::endl;
     character.cooldownTimer->initTimer(character.cooldownTime);
     switch (character.equippedGun) {
         case RocketLauncher:
@@ -200,9 +198,11 @@ void FiringState::update(CharacterController &character) {
     switch (character.equippedGun) {
         case RocketLauncher:
             character.rocketLauncher->Fire(*character.playerShooting);
+            character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
             character.shotgun->Fire(*character.playerShooting);
+            character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;
         default:
             break;
