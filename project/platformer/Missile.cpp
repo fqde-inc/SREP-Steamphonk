@@ -10,11 +10,15 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 #include "CharacterController.hpp"
+#include "EnemyComponent.hpp"
+#include "Damagable.hpp"
 
 using namespace std;
 
 Missile::Missile(GameObject *gameObject) : Component(gameObject) {
-    target = "Player";
+
+    gameObject->name = "Missile";
+
     missilePhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
     
@@ -22,12 +26,7 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
     missilePhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     missilePhysics->setAutoUpdate(false);
-}
-
-void Missile::setTarget(std::string _target)
-{
     missilePhysics->setSensor(true);
-    target = _target;
 }
 
 void Missile::update(float deltaTime) {
@@ -44,24 +43,32 @@ void Missile::update(float deltaTime) {
     }
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
-    missilePhysics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+    missilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 
 }
 
 // Raycast callback
 float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+    //TODO: Remove comment for wall & floor collisions
+
     //gameObject->setConsumed(true);
     return 0;
 };
 
 void Missile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
-    if ( comp->getGameObject()->name == target ){
-        comp->addImpulse( direction );
+    auto go = comp->getGameObject();
+
+    if ( go->name != origin ){
+		
+        if (comp->getGameObject()->getComponent<Damagable>() != nullptr)
+        {
+			comp->getGameObject()->getComponent<Damagable>()->takeDamage(damage);
+        }
+        
         gameObject->setConsumed(true);
     }
 }
 
 void Missile::onCollisionEnd(PhysicsComponent *comp) {
-    //gameObject->setConsumed(true);
 }

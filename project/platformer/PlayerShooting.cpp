@@ -53,7 +53,7 @@ void PlayerShooting::shootAt(glm::vec2 position)
     spriteComponent->setSprite(sprite);
 
     auto l = go->addComponent<Missile>();
-    l->setTarget("Bird");
+    l->setOrigin("Player");
     l->setDirection(direction);
 
     go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);
@@ -71,7 +71,7 @@ void PlayerShooting::shootAtCursor()
     spriteComponent->setSprite(sprite);
 
     auto l = go->addComponent<Missile>();
-    l->setTarget("Bird");
+    l->setOrigin("Player");
     l->setDirection(direction);
 
     go->setRotation(180 - glm::atan(direction.x, direction.y) * 180 / M_PI);

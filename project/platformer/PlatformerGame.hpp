@@ -8,6 +8,7 @@
 #include "Level.hpp"
 #include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
+#include "EnemyComponent.hpp"
 
 class PhysicsComponent;
 
@@ -49,7 +50,7 @@ private:
 
     void initLevel();
     void initPhysics();
-
+    void spawnPlayer();
     void update(float time);
 
     void render();
@@ -84,6 +85,7 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+    friend class EnemyComponent;
 
     friend class Missile;
 };

@@ -13,6 +13,7 @@ FollowPathComponent::FollowPathComponent(GameObject *gameObject) : Component(gam
 
 void FollowPathComponent::update(float deltaTime) {
     time += deltaTime;
+    
     gameObject->setPosition(computePositionAtTime(time));
 }
 
