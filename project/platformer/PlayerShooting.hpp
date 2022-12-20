@@ -17,6 +17,10 @@ public:
     bool handleInput(SDL_Event& event) override;
 
     void shootAt(glm::vec2 position);
+    void shootAtCursor();
+
+    glm::vec2 getShootDirection();
+
 private:
     float reloadTime = 0.0f;
     float reloadTimeLimit = 2.5f;
@@ -24,5 +28,6 @@ private:
 
     const int maxShots = 1;
 	int shotsRemaining = maxShots;
+
 };
 
