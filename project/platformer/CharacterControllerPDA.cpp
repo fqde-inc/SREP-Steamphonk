@@ -6,6 +6,7 @@
 #include "CharacterControllerPDA.hpp"
 #include <SDL_events.h>
 #include "PhysicsComponent.hpp"
+#include "Gun.hpp"
 
 std::vector<std::shared_ptr<CharacterState>> CharacterState::characterStateStack;
 
@@ -197,11 +198,11 @@ void FiringState::update(CharacterController &character) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
-            character.rocketLauncher->Fire(*character.playerShooting);
+            character.rocketLauncher->Fire(character.playerShooting->getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
-            character.shotgun->Fire(*character.playerShooting);
+            character.shotgun->Fire(character.playerShooting->getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;
         default:

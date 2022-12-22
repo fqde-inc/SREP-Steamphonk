@@ -4,17 +4,15 @@
 
 #pragma once
 #include "Gun.hpp"
-#include <iostream>
-#include "../PlayerShooting.hpp"
+#include "BulletFactory.hpp"
 
 class ShotgunGun : public Gun {
 public:
-    explicit ShotgunGun() : Gun() {
+    explicit ShotgunGun() {
         gunType = Shotgun;
+        bulletType = Pellets;
         RecoilMagnitude = 0.1f;
     }
 
-    void Fire(PlayerShooting &pShooting) override {
-        pShooting.shootAtCursor();
-    }
+    void Fire(glm::vec2 _position, glm::vec2 _direction);
 };

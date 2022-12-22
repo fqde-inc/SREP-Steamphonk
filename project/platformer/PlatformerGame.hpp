@@ -9,8 +9,10 @@
 #include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
 #include "EnemyComponent.hpp"
+#include "Box2D/Box2D.h"
 
 class PhysicsComponent;
+class CharacterController;
 
 enum class GameState{
     Ready,
@@ -88,5 +90,6 @@ private:
     friend class EnemyComponent;
 
     friend class Missile;
+    friend class Gun;
 };
 

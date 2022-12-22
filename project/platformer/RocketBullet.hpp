@@ -1,0 +1,35 @@
+//
+// Created by Giorgio Perri  on 31/10/22.
+//
+
+#include "Box2D/Box2D.h"
+#include "Bullet.hpp"
+
+#pragma once
+
+class RocketBullet : Bullet {
+public:
+
+    float explosionRadius;
+    int splashDamage;
+    float steer_force = 15.0f;
+
+    explicit RocketBullet() {
+        //missilePhysics->setAutoUpdate(false);
+    };
+
+
+    // void update(float deltaTime) override {
+    //     acceleration = SeekTarget();
+    //     velocity += acceleration * deltaTime;
+    //     velocity = velocity.clamped(speed)
+    //     rotation = velocity.angle()
+    //     position += velocity * delta * 100
+    // }
+
+    // void SeekTarget() {
+    //     if target:
+    //         auto desired = (target.position - position).normalized() * speed
+    //         steer = (desired - velocity).normalized() * steer_force
+    // }
+};
