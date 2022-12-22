@@ -2,7 +2,6 @@
 // Created by Giorgio Perri  on 31/10/22.
 //
 
-#include "Box2D/Box2D.h"
 #include "Bullet.hpp"
 
 #pragma once
@@ -14,9 +13,7 @@ public:
     int splashDamage;
     float steer_force = 15.0f;
 
-    RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
-        missilePhysics->setAutoUpdate(false);
-    };
+    RocketBullet(GameObject* gameObject) : Bullet(gameObject){};
 
 
     // void update(float deltaTime) override {

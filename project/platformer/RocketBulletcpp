@@ -1,0 +1,29 @@
+//
+// Created by Giorgio Perri  on 31/10/22.
+//
+
+#include "RocketBullet.hpp"
+#include "PlatformerGame.hpp"
+
+RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
+    missilePhysics->setAutoUpdate(false);
+
+    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("missile_0.png");
+    auto spriteComponent = gameObject->getComponent<SpriteComponent>();
+    spriteComponent->setSprite( sprite );
+};
+
+
+// void update(float deltaTime) override {
+//     acceleration = SeekTarget();
+//     velocity += acceleration * deltaTime;
+//     velocity = velocity.clamped(speed)
+//     rotation = velocity.angle()
+//     position += velocity * delta * 100
+// }
+
+// void SeekTarget() {
+//     if target:
+//         auto desired = (target.position - position).normalized() * speed
+//         steer = (desired - velocity).normalized() * steer_force
+// }

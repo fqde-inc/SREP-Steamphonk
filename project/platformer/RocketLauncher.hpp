@@ -10,7 +10,7 @@ class RocketLauncherGun : public Gun {
 public:
     explicit RocketLauncherGun() {
         gunType = RocketLauncher;
-        bulletType = Pellets;
+        bulletType = Rocket;
         RecoilMagnitude = 0.2f;
     }
 };
