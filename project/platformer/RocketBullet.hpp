@@ -7,15 +7,15 @@
 
 #pragma once
 
-class RocketBullet : Bullet {
+class RocketBullet : public Bullet {
 public:
 
     float explosionRadius;
     int splashDamage;
     float steer_force = 15.0f;
 
-    explicit RocketBullet() {
-        //missilePhysics->setAutoUpdate(false);
+    RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
+        missilePhysics->setAutoUpdate(false);
     };
 
 

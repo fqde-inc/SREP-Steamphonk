@@ -13,6 +13,4 @@ public:
         bulletType = Pellets;
         RecoilMagnitude = 0.2f;
     }
-
-    void Fire(glm::vec2 _position, glm::vec2 _direction);
 };

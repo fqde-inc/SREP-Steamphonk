@@ -8,9 +8,9 @@
 #include "GameObject.hpp"
 
 
-class Bullet {
+class Bullet : public Missile {
 public:
-    explicit Bullet();
+    Bullet(GameObject* gameObject) : Missile(gameObject) {};
 
     int damage = 10;
     int speed = 500;

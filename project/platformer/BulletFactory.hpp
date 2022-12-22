@@ -11,17 +11,17 @@ enum BulletTypes {
 
 class BulletFactory {
 public:
-    std::shared_ptr<Bullet> Make(BulletTypes type){
+    static std::shared_ptr<Bullet> Make(std::shared_ptr<GameObject> go, BulletTypes type){
         switch (type)
         {
             case None:
-                return std::make_shared<Bullet>();
+                return go->addComponent<Bullet>();
             case Pellets:
-                return std::make_shared<Bullet>();
+                return go->addComponent<ShotgunBullet>();
             case Rocket:
-                return std::make_shared<Bullet>();
+                return go->addComponent<RocketBullet>();
             default:
-                return std::make_shared<Bullet>();
+                return go->addComponent<RocketBullet>();
         }
     };
 };

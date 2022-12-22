@@ -26,7 +26,7 @@ public:
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
 
-private:
+protected:
     std::shared_ptr<PhysicsComponent> missilePhysics;
     glm::vec2 direction;
 
