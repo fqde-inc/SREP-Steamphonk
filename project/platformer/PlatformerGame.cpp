@@ -153,9 +153,6 @@ void PlatformerGame::initLevel() {
 
     /*level->generateSpecificLevel(0);
     level->generateSpecificLevel(1);*/
-
-    level->continouslyGenerateLevelByPosition(player);
-	
     //level->generateLevel();
 
     crosshair = createGameObject();
@@ -166,6 +163,7 @@ void PlatformerGame::initLevel() {
 }
 
 void PlatformerGame::update(float time) {
+    level->generateLevelByPosition(player);
     updatePhysics();
 	if (time > 0.03) // if framerate approx 30 fps then run two physics steps
 	{

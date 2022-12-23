@@ -28,6 +28,28 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     return res;
 }
 
+std::string Level::getNameByCoords(std::pair<int, int> coords)
+{
+    ifstream tfis("steamphonk.json");
+    IStreamWrapper tisw(tfis);
+    Document t;
+    t.ParseStream(tisw);
+    auto tiles = t["frames"].GetArray();
+
+    for (int i = 0; i < tiles.Size(); i++)
+    {
+        auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
+        auto y = tiles[i].GetObject()["frame"].GetObject()["y"].GetInt();
+
+        if (x == coords.first && y == coords.second)
+        {
+            return tiles[i].GetObject()["filename"].GetString();
+        }
+    }
+
+    return "";
+}
+
 /// <summary>
 /// Loads a level from a json file
 /// </summary>
@@ -58,29 +80,34 @@ void Level::generateSpecificLevel(int levelNumber)
 		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         addTile(worldX + x, levelHeight - worldY - y, spriteName);
     }
+	
+    lastGenerated = levelNumber;
 }
 
 /// <summary>
-/// Continously generate level by position unloading old levels and loading new levels
+/// Only generate level if the player is within position. Also handles unloading old levels and loading new levels
 /// </summary>
 /// <param name="target"></param>
-void continouslyGenerateLevelByPosition(std::shared_ptr<GameObject> target)
+void Level::generateLevelByPosition(std::shared_ptr<GameObject> target)
 {
+	//Seems to be pretty fast?
+	//This method needs to be optimized, should probably cash the json read operation
     auto id = getLevelIdByPosition(target->getPosition());
 
-    if (id == -1)
+    if (lastGenerated == id)
     {
         return;
     }
-
+		
     generateSpecificLevel(id);
+	//Also delete old id here
 }
 
 /// <summary>
 /// Returns the chunk id that the player is inside
 /// </summary>
 /// <param name="pos"></param>
-int getLevelIdByPosition(glm::vec2 pos)
+int Level::getLevelIdByPosition(glm::vec2 pos)
 {
     ifstream fis("1.json");
     IStreamWrapper isw(fis);
@@ -139,28 +166,6 @@ void Level::generateLevel() {
             addTile(worldX + x, levelHeight - worldY - y, spriteName);
         }
     }
-}
-
-std::string Level::getNameByCoords(std::pair<int, int> coords)
-{
-    ifstream tfis("steamphonk.json");
-    IStreamWrapper tisw(tfis);
-    Document t;
-    t.ParseStream(tisw);
-    auto tiles = t["frames"].GetArray();
-
-    for (int i = 0; i < tiles.Size(); i++)
-    {
-        auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
-        auto y = tiles[i].GetObject()["frame"].GetObject()["y"].GetInt();
-
-		if (x == coords.first && y == coords.second)
-		{
-			return tiles[i].GetObject()["filename"].GetString();
-		}
-    }
-
-    return "";
 }
 
 glm::vec2 Level::getIdentifierPosition(std::string identifier)
