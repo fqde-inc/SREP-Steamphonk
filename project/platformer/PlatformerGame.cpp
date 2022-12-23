@@ -151,8 +151,12 @@ void PlatformerGame::initLevel() {
         {1250,350},
     });
 
-    //level->generateLevelFromFile(0);
-    level->generateLevel();
+    /*level->generateSpecificLevel(0);
+    level->generateSpecificLevel(1);*/
+
+    level->continouslyGenerateLevelByPosition(player);
+	
+    //level->generateLevel();
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";

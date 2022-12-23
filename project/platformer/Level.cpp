@@ -28,7 +28,11 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shar
     return res;
 }
 
-void Level::generateLevelFromFile(int levelNumber)
+/// <summary>
+/// Loads a level from a json file
+/// </summary>
+/// <param name="levelNumber"></param>
+void Level::generateSpecificLevel(int levelNumber)
 {
     ifstream fis("1.json");
     IStreamWrapper isw(fis);
@@ -51,10 +55,59 @@ void Level::generateLevelFromFile(int levelNumber)
 
         string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
 
+		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         addTile(worldX + x, levelHeight - worldY - y, spriteName);
     }
 }
 
+/// <summary>
+/// Continously generate level by position unloading old levels and loading new levels
+/// </summary>
+/// <param name="target"></param>
+void continouslyGenerateLevelByPosition(std::shared_ptr<GameObject> target)
+{
+    auto id = getLevelIdByPosition(target->getPosition());
+
+    if (id == -1)
+    {
+        return;
+    }
+
+    generateSpecificLevel(id);
+}
+
+/// <summary>
+/// Returns the chunk id that the player is inside
+/// </summary>
+/// <param name="pos"></param>
+int getLevelIdByPosition(glm::vec2 pos)
+{
+    ifstream fis("1.json");
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    auto levels = d["levels"].GetArray();
+
+    for (int i = 0; i < levels.Size(); i++)
+    {
+        auto h = d["levels"].GetArray()[i]["pxHei"].GetInt();
+        auto w = d["levels"].GetArray()[i]["pxWid"].GetInt();
+        auto x = d["levels"].GetArray()[i]["worldX"].GetInt();
+        auto y = d["levels"].GetArray()[i]["worldY"].GetInt();
+
+        if (pos.x >= x && pos.x <= x + w && pos.y >= y && pos.y <= y + h)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+/// <summary>
+/// Generates all levels
+/// </summary>
 void Level::generateLevel() {
     ifstream fis("1.json");
     IStreamWrapper isw(fis);

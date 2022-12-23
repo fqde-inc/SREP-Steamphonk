@@ -19,7 +19,9 @@ public:
     static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas);
 
     void generateLevel();
-    void generateLevelFromFile(int levelNumber);
+    void generateSpecificLevel(int levelNumber);
+    void continouslyGenerateLevelByPosition(std::shared_ptr<GameObject> target);
+    int getLevelIdByPosition(glm::vec2 pos);
 
     glm::vec2 getIdentifierPosition(std::string identifier);
     std::string getNameByCoords(std::pair<int, int> coords);
