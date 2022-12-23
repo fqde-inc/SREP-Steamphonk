@@ -66,7 +66,7 @@ void CharacterController::update(float deltaTime) {
     }
     updateSprite(deltaTime);
 
-    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
+    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {

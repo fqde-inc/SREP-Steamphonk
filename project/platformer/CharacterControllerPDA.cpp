@@ -29,7 +29,7 @@ void CharacterState::handleInput(CharacterController& character, SDL_Event &even
     characterStateStack[0]->handleInput(character, event);
 }
 
-void CharacterState::update(CharacterController &character) {
+void CharacterState::update(CharacterController &character, float deltaTime) {
 
 }
 
@@ -94,7 +94,23 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
 
 #pragma endregion
 
-#pragma region StandingState Methods
+#pragma region StandingState
+
+StandingState::StandingState() : CharacterState(0) {
+    stateType = Standing;
+    animationSprites = {PlatformerGame::instance->characterAtlas->get("tile000.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile001.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile002.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile003.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile004.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile005.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile006.png"),
+    };
+
+    for (int i = 0; i < animationSprites.size(); ++i) {
+        animationSprites[i].setScale(glm::vec2(.7f));
+    }
+}
 
 void StandingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
@@ -118,15 +134,56 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
     }
 }
 
-void StandingState::update(CharacterController &character) {
+void StandingState::update(CharacterController &character, float deltaTime) {
+    if(character.characterPhysics->getLinearVelocity().y != 0) {
+        pushStack(std::make_shared<JumpingState>());
+    }
+
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
+
+    animationTime += deltaTime;
+
+    if(animationTime >= animationFrameRate) {
+        animationIndex = (animationIndex + 1) % animationSprites.size();
+        animationTime = 0;
+    }
+
+    character.spriteComponent->setSprite(animationSprites[animationIndex]);
 }
 
 #pragma endregion
 
 #pragma region JumpingState Methods
+
+JumpingState::JumpingState() : CharacterState(0) {
+    stateType = Jumping;
+    enter();
+
+    animationSpritesStart = {PlatformerGame::instance->characterAtlas->get("tile015.png"),
+                             PlatformerGame::instance->characterAtlas->get("tile016.png"),
+                             PlatformerGame::instance->characterAtlas->get("tile017.png"),
+                             PlatformerGame::instance->characterAtlas->get("tile018.png"),
+    };
+
+    animationSpritesEnd = {PlatformerGame::instance->characterAtlas->get("tile025.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile026.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile027.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile028.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile029.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile030.png"),
+                           PlatformerGame::instance->characterAtlas->get("tile031.png"),
+    };
+
+    for (int i = 0; i < animationSpritesStart.size(); ++i) {
+        animationSpritesStart[i].setScale(glm::vec2(.7f));
+    }
+
+    for (int i = 0; i < animationSpritesEnd.size(); ++i) {
+        animationSpritesEnd[i].setScale(glm::vec2(.7f));
+    }
+}
 
 void JumpingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
@@ -144,10 +201,27 @@ void JumpingState::handleInput(CharacterController& character, SDL_Event &event)
     }
 }
 
-void JumpingState::update(CharacterController &character) {
+void JumpingState::update(CharacterController &character, float deltaTime) {
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
+
+    animationTime += deltaTime;
+
+    isFalling = character.characterPhysics->getLinearVelocity().y < 0;
+
+    if (isFalling) {
+        spritesToRender = animationSpritesEnd;
+    } else {
+        spritesToRender = animationSpritesStart;
+    }
+
+    if(animationTime >= animationFrameRate) {
+        animationIndex = (animationIndex + 1) % spritesToRender.size();
+        animationTime = 0;
+    }
+
+    character.spriteComponent->setSprite(spritesToRender[animationIndex]);
 }
 
 void JumpingState::enter() {
@@ -160,6 +234,24 @@ void JumpingState::exit() {
 #pragma endregion
 
 #pragma region WalkingState Methods
+
+WalkingState::WalkingState() : CharacterState(0) {
+    stateType = Walking;
+
+    animationSprites = {PlatformerGame::instance->characterAtlas->get("tile007.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile008.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile009.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile010.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile011.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile012.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile013.png"),
+                        PlatformerGame::instance->characterAtlas->get("tile014.png"),
+    };
+
+    for (int i = 0; i < animationSprites.size(); ++i) {
+        animationSprites[i].setScale(glm::vec2(.7f));
+    }
+}
 
 void WalkingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
@@ -181,17 +273,26 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
     }
 }
 
-void WalkingState::update(CharacterController &character) {
+void WalkingState::update(CharacterController &character, float deltaTime) {
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
+
+    animationTime += deltaTime;
+
+    if(animationTime >= animationFrameRate) {
+        animationIndex = (animationIndex + 1) % animationSprites.size();
+        animationTime = 0;
+    }
+
+    character.spriteComponent->setSprite(animationSprites[animationIndex]);
 }
 
 #pragma endregion
 
 #pragma region FiringState Methods
 
-void FiringState::update(CharacterController &character) {
+void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
