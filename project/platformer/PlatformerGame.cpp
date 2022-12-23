@@ -51,6 +51,11 @@ PlatformerGame::PlatformerGame()
         .withFilterSampling(false)
         .build());
 
+    characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
+        .withFile("characterAnims.png")
+        .withFilterSampling(false)
+        .build());
+
     level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
@@ -89,8 +94,9 @@ void PlatformerGame::initLevel() {
 
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
-    auto playerSpriteObj = spriteAtlas->get("19.png");
+    auto playerSpriteObj = characterAtlas->get("tile000.png");
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
+    playerSpriteObj.setScale(glm::vec2(.7,.7));
     playerSprite->setSprite(playerSpriteObj);
     auto pShooting = player->addComponent<PlayerShooting>();
     characterController = player->addComponent<CharacterController>();

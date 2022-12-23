@@ -62,6 +62,7 @@ private:
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
+    std::shared_ptr<sre::SpriteAtlas> characterAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
