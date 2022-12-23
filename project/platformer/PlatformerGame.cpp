@@ -256,8 +256,8 @@ void PlatformerGame::handleInput(SDL_Event &event) {
             case SDLK_z:
                 camera->setZoomMode(!camera->isZoomMode());
                 break;
-            case SDLK_d:
-                // press 'd' for physics debug
+            case SDLK_i:
+                // press 'i' for physics debug
                 doDebugDraw = !doDebugDraw;
                 if (doDebugDraw){
                     world->SetDebugDraw(&debugDraw);

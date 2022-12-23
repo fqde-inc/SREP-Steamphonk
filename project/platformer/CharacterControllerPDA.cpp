@@ -6,6 +6,7 @@
 #include "CharacterControllerPDA.hpp"
 #include <SDL_events.h>
 #include "PhysicsComponent.hpp"
+#include "PlatformerGame.hpp"
 
 std::vector<std::shared_ptr<CharacterState>> CharacterState::characterStateStack;
 
@@ -64,7 +65,7 @@ void CharacterState::moveRight(CharacterController &character, SDL_Event &event)
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
-void CharacterState::fire(CharacterController &character, SDL_Event &event) {
+void CharacterState::fire(CharacterController &character) {
     if (character.cooldownTimer->isRunning) {
         return;
     }
@@ -101,18 +102,14 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
             jump(character, event);
             break;
 
-        case SDLK_LEFT:
+        case SDLK_a:
             moveLeft(character, event);
             pushStack(std::make_shared<WalkingState>());
             break;
 
-        case SDLK_RIGHT:
+        case SDLK_d:
             moveRight(character, event);
             pushStack(std::make_shared<WalkingState>());
-            break;
-
-        case SDLK_e:
-            fire(character, event);
             break;
 
         case SDLK_q:
@@ -122,6 +119,9 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
 }
 
 void StandingState::update(CharacterController &character) {
+    if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
+        fire(character);
+    }
 }
 
 #pragma endregion
@@ -130,16 +130,12 @@ void StandingState::update(CharacterController &character) {
 
 void JumpingState::handleInput(CharacterController& character, SDL_Event &event) {
     switch (event.key.keysym.sym){
-        case SDLK_LEFT:
+        case SDLK_a:
             moveLeft(character, event);
             break;
 
-        case SDLK_RIGHT:
+        case SDLK_d:
             moveRight(character, event);
-            break;
-
-        case SDLK_e:
-            fire(character, event);
             break;
 
         case SDLK_q:
@@ -149,6 +145,9 @@ void JumpingState::handleInput(CharacterController& character, SDL_Event &event)
 }
 
 void JumpingState::update(CharacterController &character) {
+    if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
+        fire(character);
+    }
 }
 
 void JumpingState::enter() {
@@ -168,16 +167,12 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
             jump(character, event);
             break;
 
-        case SDLK_LEFT:
+        case SDLK_a:
             moveLeft(character, event);
             break;
 
-        case SDLK_RIGHT:
+        case SDLK_d:
             moveRight(character, event);
-            break;
-
-        case SDLK_e:
-            fire(character, event);
             break;
 
         case SDLK_q:
@@ -187,6 +182,9 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
 }
 
 void WalkingState::update(CharacterController &character) {
+    if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
+        fire(character);
+    }
 }
 
 #pragma endregion
