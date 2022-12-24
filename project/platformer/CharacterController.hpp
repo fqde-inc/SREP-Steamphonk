@@ -11,6 +11,7 @@
 #include "TimerComponent.hpp"
 #include "Guns/RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
+#include "Damagable.hpp"
 
 
 class CharacterState;
@@ -39,6 +40,7 @@ public:
     bool rocketLauncherFired = false;
 
     std::shared_ptr<PlayerShooting> playerShooting;
+    std::shared_ptr<Damagable> damageComponent;
 
     GunTypes equippedGun = RocketLauncher;
 

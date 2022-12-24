@@ -11,7 +11,6 @@
 #include "PlatformerGame.hpp"
 #include "SpriteComponent.hpp"
 #include "PlayerShooting.hpp"
-#include "Damagable.hpp"
 using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
@@ -21,8 +20,8 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     cooldownTimer = gameObject->addComponent<TimerComponent>();
     reloadTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
-    auto damagable = gameObject->addComponent<Damagable>();
-    damagable->setMaxLife(1);
+    damageComponent = gameObject->addComponent<Damagable>();
+    damageComponent->setMaxLife(1);
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition(0, "PlayerStart");

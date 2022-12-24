@@ -10,6 +10,7 @@ public:
     void setMaxLife(int life);
     void setLife(int life);
     void addLife(int life);
+    int getCurLife();
     
 private:
     int maxLife = 10;

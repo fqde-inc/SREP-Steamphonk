@@ -99,8 +99,6 @@ void CharacterState::reload(CharacterController &character) {
     character.rocketLauncherFired = false;
 
     character.reloadTimer->initTimer(character.reloadTime);
-
-    std::cout << "reloaded!\n";
 ;}
 
 #pragma endregion

@@ -29,3 +29,7 @@ void Damagable::addLife(int damage)
 {
 	curLife += damage;
 }
+
+int Damagable::getCurLife() {
+    return curLife;
+}

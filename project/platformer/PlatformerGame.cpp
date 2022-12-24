@@ -221,6 +221,18 @@ void PlatformerGame::render() {
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
 
+    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 40), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(300, 15), ImGuiSetCond_Always);
+    ImGui::Begin("weapon", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shothun");
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(300, 15), ImGuiSetCond_Always);
+    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
+    ImGui::End();
+
     if (doDebugDraw){
         world->DrawDebugData();
         rp.drawLines(debugDraw.getLines());
