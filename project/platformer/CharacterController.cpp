@@ -100,7 +100,7 @@ float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &poi
             state_->pushStack(std::make_shared<WalkingState>());
         }
     }
-    return 0; // terminate raycast
+    return 0;
 }
 
 void CharacterController::setSprites(sre::Sprite standing, sre::Sprite walk1, sre::Sprite walk2, sre::Sprite flyUp,

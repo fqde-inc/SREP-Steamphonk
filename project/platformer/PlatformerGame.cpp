@@ -161,8 +161,11 @@ void PlatformerGame::initLevel() {
 
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
-    auto crosshairSprite = crosshair->addComponent<SpriteComponent>();
-    crosshairSprite->setSprite(spriteAtlas->get("28.png"));
+    auto crosshairSpriteComponent = crosshair->addComponent<SpriteComponent>();
+    auto crosshairSprite = characterAtlas->get("crosshair.png");
+    crosshairSprite.setScale({0.3f, 0.3f});
+//    crosshairSprite.setOrderInBatch(99);
+    crosshairSpriteComponent->setSprite(crosshairSprite);
     crosshair->addComponent<Crosshair>();
 }
 
