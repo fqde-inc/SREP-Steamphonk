@@ -22,7 +22,7 @@ public:
 	
     void generateLevel();
     void generateSpecificLevel(int levelNumber);
-    void generateLevelByPosition(std::shared_ptr<GameObject> target);
+    void generateLevelByPosition(glm::vec2 target);
     int getLevelIdByPosition(glm::vec2 pos);
 
     glm::vec2 getIdentifierPosition(std::string identifier);
@@ -33,7 +33,8 @@ public:
     static constexpr float tileSize = 21;
 private:
     Level() = default;
-    int lastGenerated;
+	//-2 is unitialized, -1 not found
+    int lastGenerated = -2;
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;

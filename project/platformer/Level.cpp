@@ -88,17 +88,18 @@ void Level::generateSpecificLevel(int levelNumber)
 /// Only generate level if the player is within position. Also handles unloading old levels and loading new levels
 /// </summary>
 /// <param name="target"></param>
-void Level::generateLevelByPosition(std::shared_ptr<GameObject> target)
+void Level::generateLevelByPosition(glm::vec2 target)
 {
 	//Seems to be pretty fast?
 	//This method needs to be optimized, should probably cash the json read operation
-    auto id = getLevelIdByPosition(target->getPosition());
+    auto id = getLevelIdByPosition(target);
 
-    if (lastGenerated == id)
+    if (lastGenerated == id || id == -1)
     {
         return;
     }
 		
+	cout << "Generating level: " << id << endl;
     generateSpecificLevel(id);
 	//Also delete old id here
 }

@@ -163,7 +163,7 @@ void PlatformerGame::initLevel() {
 }
 
 void PlatformerGame::update(float time) {
-    level->generateLevelByPosition(player);
+    level->generateLevelByPosition(player->getPosition());
     updatePhysics();
 	if (time > 0.03) // if framerate approx 30 fps then run two physics steps
 	{
