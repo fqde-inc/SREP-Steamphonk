@@ -19,6 +19,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     cooldownTimer = gameObject->addComponent<TimerComponent>();
+    reloadTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
     auto damagable = gameObject->addComponent<Damagable>();
     damagable->setMaxLife(1);

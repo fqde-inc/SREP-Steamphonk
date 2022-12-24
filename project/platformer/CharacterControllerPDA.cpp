@@ -94,6 +94,15 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
     }
 }
 
+void CharacterState::reload(CharacterController &character) {
+    character.shotgunFired = false;
+    character.rocketLauncherFired = false;
+
+    character.reloadTimer->initTimer(character.reloadTime);
+
+    std::cout << "reloaded!\n";
+;}
+
 #pragma endregion
 
 #pragma region StandingState
@@ -150,6 +159,10 @@ void StandingState::update(CharacterController &character, float deltaTime) {
     if(animationTime >= animationFrameRate) {
         animationIndex = (animationIndex + 1) % animationSprites.size();
         animationTime = 0;
+    }
+
+    if(!character.reloadTimer->isRunning && (character.shotgunFired || character.rocketLauncherFired)) {
+        reload(character);
     }
 
     animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
@@ -304,12 +317,18 @@ void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
+            if(character.rocketLauncherFired) break;
+            character.reloadTimer->initTimer(character.reloadTime);
             character.rocketLauncher->Fire(*character.playerShooting);
+            character.rocketLauncherFired = true;
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
+            if(character.shotgunFired) break;
+            character.reloadTimer->initTimer(character.reloadTime);
             character.shotgun->Fire(*character.playerShooting);
+            character.shotgunFired = true;
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;
