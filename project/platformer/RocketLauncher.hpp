@@ -11,6 +11,6 @@ public:
     explicit RocketLauncherGun() {
         gunType = RocketLauncher;
         bulletType = Rocket;
-        RecoilMagnitude = 0.2f;
+        RecoilMagnitude = 0.15f;
     }
 };
