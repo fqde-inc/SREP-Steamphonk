@@ -27,6 +27,11 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
     missilePhysics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     missilePhysics->setAutoUpdate(false);
     missilePhysics->setSensor(true);
+
+
+    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
+    spriteComponent = gameObject->addComponent<SpriteComponent>();
+    spriteComponent->setSprite(sprite);
 }
 
 void Missile::update(float deltaTime) {

@@ -1,3 +1,4 @@
+
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
 #include <vector>

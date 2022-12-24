@@ -10,17 +10,13 @@
 
 
 void Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
-    auto go = PlatformerGame::instance->createGameObject();
-    go->setPosition(_position);
 
-    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
-    auto spriteComponent = go->addComponent<SpriteComponent>();
-    spriteComponent->setSprite(sprite);
+    auto l = BulletFactory::Make(bulletType);
 
-    auto l = BulletFactory::Make(go, bulletType);
-    //go->addComponent<Bullet>();
     l->setOrigin("Player");
     l->setDirection(_direction);
 
+    auto go = l->getGameObject();
+    go->setPosition(_position);
     go->setRotation(180 - glm::atan(_direction.x, _direction.y) * 180 / M_PI);
 }

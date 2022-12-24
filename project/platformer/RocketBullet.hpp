@@ -2,9 +2,8 @@
 // Created by Giorgio Perri  on 31/10/22.
 //
 
+#include <Box2D/Box2D.h>
 #include "Bullet.hpp"
-
-#pragma once
 
 class RocketBullet : public Bullet {
 public:
@@ -13,8 +12,14 @@ public:
     int splashDamage;
     float steer_force = 15.0f;
 
-    RocketBullet(GameObject* gameObject) : Bullet(gameObject){};
+    RocketBullet(GameObject* gameObject);    
+    
+    // raycast callback
+    virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
+                                      const b2Vec2& normal, float32 fraction) override;
 
+    void onCollisionStart(PhysicsComponent *comp) override;
+    void onCollisionEnd(PhysicsComponent *comp) override;
 
     // void update(float deltaTime) override {
     //     acceleration = SeekTarget();
