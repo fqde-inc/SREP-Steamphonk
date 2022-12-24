@@ -48,6 +48,7 @@ void CharacterController::update(float deltaTime) {
 
     characterPhysics->fixRotation();
     glm::vec2 movement{0,0};
+
     if (left){
         movement.x --;
     }
@@ -57,7 +58,7 @@ void CharacterController::update(float deltaTime) {
 
     float accelerationSpeed = 0.010f;
     characterPhysics->addImpulse(movement*accelerationSpeed);
-    float maximumVelocity = 2;
+    float maximumVelocity = 2.5f;
     auto linearVelocity = characterPhysics->getLinearVelocity();
     float currentVelocity = linearVelocity.x;
     if (abs(currentVelocity) > maximumVelocity){

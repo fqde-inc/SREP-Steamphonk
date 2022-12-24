@@ -57,11 +57,13 @@ void CharacterState::jump(CharacterController &character, SDL_Event &event) {
 
 void CharacterState::moveLeft(CharacterController &character, SDL_Event &event) {
     character.left = event.type == SDL_KEYDOWN;
+    character.lastIsLeft = true;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
 void CharacterState::moveRight(CharacterController &character, SDL_Event &event) {
     character.right = event.type == SDL_KEYDOWN;
+    character.lastIsLeft = false;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
@@ -150,6 +152,8 @@ void StandingState::update(CharacterController &character, float deltaTime) {
         animationTime = 0;
     }
 
+    animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
+
     character.spriteComponent->setSprite(animationSprites[animationIndex]);
 }
 
@@ -221,6 +225,8 @@ void JumpingState::update(CharacterController &character, float deltaTime) {
         animationTime = 0;
     }
 
+    spritesToRender[animationIndex].setFlip({character.lastIsLeft, false});
+
     character.spriteComponent->setSprite(spritesToRender[animationIndex]);
 }
 
@@ -284,6 +290,8 @@ void WalkingState::update(CharacterController &character, float deltaTime) {
         animationIndex = (animationIndex + 1) % animationSprites.size();
         animationTime = 0;
     }
+
+    animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
 
     character.spriteComponent->setSprite(animationSprites[animationIndex]);
 }

@@ -52,6 +52,7 @@ public:
 
     bool left = false;
     bool right = false;
+    bool lastIsLeft = false;
     std::shared_ptr<CharacterState> state_;
     bool isGrounded = false;
     friend class CharacterState;
