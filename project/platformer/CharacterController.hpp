@@ -52,11 +52,14 @@ public:
 
     bool left = false;
     bool right = false;
+    bool lastIsLeft = false;
     std::shared_ptr<CharacterState> state_;
     bool isGrounded = false;
     friend class CharacterState;
     friend class StandingState;
     friend class JumpingState;
+
+    std::shared_ptr<SpriteComponent> spriteComponent;
 private:
     sre::Sprite standing;
     sre::Sprite walk1;
@@ -65,7 +68,6 @@ private:
     sre::Sprite fly;
     sre::Sprite flyDown;
     std::shared_ptr<GameObject> cursor;
-    std::shared_ptr<SpriteComponent> spriteComponent;
     float radius;
 
 };

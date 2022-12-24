@@ -11,7 +11,7 @@ class RocketLauncherGun : public Gun {
 public:
     explicit RocketLauncherGun() : Gun() {
         gunType = RocketLauncher;
-        RecoilMagnitude = 0.2f;
+        RecoilMagnitude = 0.15f;
     }
 
     void Fire(PlayerShooting &pShooting) override {
