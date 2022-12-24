@@ -8,7 +8,7 @@
 class RocketBullet : public Bullet {
 public:
 
-    float explosionRadius;
+    float explosionRadius = 8.0f;
     int splashDamage;
     float steer_force = 15.0f;
 
@@ -20,6 +20,7 @@ public:
 
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
+    void explode();
 
     // void update(float deltaTime) override {
     //     acceleration = SeekTarget();
@@ -34,4 +35,15 @@ public:
     //         auto desired = (target.position - position).normalized() * speed
     //         steer = (desired - velocity).normalized() * steer_force
     // }
+};
+
+//subclass b2QueryCallback
+class MyQueryCallback : public b2QueryCallback {
+public:
+    std::vector<b2Body*> foundBodies;
+    
+    bool ReportFixture(b2Fixture* fixture) {
+        foundBodies.push_back( fixture->GetBody() ); 
+        return true;//keep going to find all fixtures in the query area
+    }
 };

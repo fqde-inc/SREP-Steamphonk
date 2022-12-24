@@ -94,5 +94,7 @@ private:
 
     friend class Missile;
     friend class Gun;
+    friend class RocketBullet;
+    friend class Explosion;
 };
 
