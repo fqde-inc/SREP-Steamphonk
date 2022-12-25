@@ -117,7 +117,6 @@ void EnemyComponent::kill(){
 
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
 
-    // std::cout << "Collision enemy : " << comp->getGameObject()->name << std::endl;
     if( comp->getGameObject()->getComponent<Missile>() != nullptr ){
         std::shared_ptr<Missile> missile = comp->getGameObject()->getComponent<Missile>();
 
