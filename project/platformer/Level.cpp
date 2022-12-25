@@ -17,20 +17,21 @@ using namespace rapidjson;
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 
-    // todo initialize
     res->game = game;
     res->spriteAtlas = spriteAtlas;
     res->tileAtlas = tileAtlas;
+	res->levelName = levelName;
+	res->spritesheetName = spritesheetName;
 
     return res;
 }
 
 std::string Level::getNameByCoords(std::pair<int, int> coords)
 {
-    ifstream tfis("steamphonk.json");
+    ifstream tfis(spritesheetName);
     IStreamWrapper tisw(tfis);
     Document t;
     t.ParseStream(tisw);
@@ -56,7 +57,7 @@ std::string Level::getNameByCoords(std::pair<int, int> coords)
 /// <param name="levelNumber"></param>
 void Level::generateSpecificLevel(int levelNumber)
 {
-    ifstream fis("1.json");
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -110,7 +111,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 /// <param name="pos"></param>
 int Level::getLevelIdByPosition(glm::vec2 pos)
 {
-    ifstream fis("1.json");
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -137,7 +138,7 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
 /// Generates all levels
 /// </summary>
 void Level::generateLevel() {
-    ifstream fis("1.json");
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -171,7 +172,7 @@ void Level::generateLevel() {
 
 glm::vec2 Level::getIdentifierPosition(std::string identifier)
 {
-    ifstream fis("1.json");
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);

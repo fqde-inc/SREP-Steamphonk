@@ -32,12 +32,12 @@ PlatformerGame::PlatformerGame()
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
 
-    using namespace rapidjson;
-    ifstream fis("testlvl.json");
-    IStreamWrapper isw(fis);
-    Document d;
-    d.ParseStream(isw);
-    auto hexValue = d["bgColor"].GetString();
+    //using namespace rapidjson;
+    //ifstream fis("testlvl.json");
+    //IStreamWrapper isw(fis);
+    //Document d;
+    //d.ParseStream(isw);
+    //auto hexValue = d["bgColor"].GetString();
 
     backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
@@ -46,12 +46,12 @@ PlatformerGame::PlatformerGame()
             .withFilterSampling(false)
             .build());
 
-    tileAtlas = SpriteAtlas::create("steamphonk.json", Texture::create()
-        .withFile("steamphonk.png")
+    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
+        .withFile("dirtsheet.png")
         .withFilterSampling(false)
         .build());
-
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
+	
+    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
 
     initLevel();
 
