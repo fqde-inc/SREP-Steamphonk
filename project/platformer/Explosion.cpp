@@ -32,6 +32,7 @@ void Explosion::update(float deltaTime)
 	if(timer->isRunning) {
 		if(physics->getBody()->IsAwake());
 			physics->getBody()->SetAwake(false);
+			
 		auto sprite = spriteComponent->getSprite();
 		sprite.setColor(glm::vec4{ 1, 1, 1, sprite.getColor().a - 10.0f });
 		return;

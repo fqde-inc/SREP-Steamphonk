@@ -80,12 +80,25 @@ private:
 
      std::shared_ptr<FollowPathComponent> birdMovement;
 
+    
+    // Box2D / Physics
+    enum _entityCategory {
+        BACKGROUND  = 0x0001,
+        WALLS       = 0x0002,
+        PLAYER      = 0x0003,
+        MISSILE     = 0x0004,
+        ENEMY       = 0x0005,
+    };
+
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
+    
     std::map<b2Fixture*,PhysicsComponent *> physicsComponentLookup;
+    
     Box2DDebugDraw debugDraw;
     bool doDebugDraw = false;
+
     friend class PhysicsComponent;
     friend class Level;
     friend class CharacterController;

@@ -70,6 +70,11 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
     physics->setAutoUpdate(false);
     physics->getFixture()->SetRestitution(0);
 
+    b2Filter filter = physics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::WALLS;
+    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
+    physics->getFixture()->SetFilterData(filter);
+
     for (int i = 1;i<height;i++){
         auto go = game->createGameObject();
         auto spriteComponent = go->addComponent<SpriteComponent>();
@@ -100,6 +105,11 @@ void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, in
     physics = gameObject->addComponent<PhysicsComponent>();
     physics->initBox(kinematic ? b2_kinematicBody : b2_staticBody, glm::vec2{ tileSize,tileSize } / physicsScale * 0.5f, pos / physicsScale, 0);
     physics->setAutoUpdate(false);
+
+    b2Filter filter = physics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::WALLS;
+    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
+    physics->getFixture()->SetFilterData(filter);
 }
 
 

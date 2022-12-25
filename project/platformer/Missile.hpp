@@ -36,7 +36,7 @@ protected:
     float lifespan = 2.5f;
 
     float constSpeed = 5.5f;
-    float radius;
+    float radius = 7.0f;
 
     float damage = 1;
 

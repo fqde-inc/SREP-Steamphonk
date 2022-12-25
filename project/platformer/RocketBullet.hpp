@@ -12,6 +12,9 @@ public:
     int splashDamage;
     float steer_force = 15.0f;
 
+    float gracePeriod = .1f;
+    std::shared_ptr<TimerComponent> graceTimer;
+
     RocketBullet(GameObject* gameObject);    
     
     // raycast callback
@@ -22,7 +25,9 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
     void explode();
 
-    // void update(float deltaTime) override {
+    void update(float deltaTime) override; 
+
+    // {
     //     acceleration = SeekTarget();
     //     velocity += acceleration * deltaTime;
     //     velocity = velocity.clamped(speed)
@@ -38,12 +43,12 @@ public:
 };
 
 //subclass b2QueryCallback
-class MyQueryCallback : public b2QueryCallback {
-public:
-    std::vector<b2Body*> foundBodies;
+// class MyQueryCallback : public b2QueryCallback {
+// public:
+//     std::vector<b2Body*> foundBodies;
     
-    bool ReportFixture(b2Fixture* fixture) {
-        foundBodies.push_back( fixture->GetBody() ); 
-        return true;//keep going to find all fixtures in the query area
-    }
-};
+//     bool ReportFixture(b2Fixture* fixture) {
+//         foundBodies.push_back( fixture->GetBody() ); 
+//         return true;//keep going to find all fixtures in the query area
+//     }
+// };
