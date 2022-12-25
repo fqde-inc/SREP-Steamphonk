@@ -11,24 +11,37 @@
 RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
     
     std::cout << "Fired rocket" << std::endl;
-
-    missilePhysics->setAutoUpdate(false);
+    //missilePhysics->setAutoUpdate(false);
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("missile_0.png");
     spriteComponent->setSprite( sprite );
+
+    graceTimer = gameObject->addComponent<TimerComponent>();
+    graceTimer->initTimer(gracePeriod);
+    
 };
 
 // Raycast callback
 float32 RocketBullet::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+    if(graceTimer->isRunning)
+        return 0;
+
+aaa    b2Filter f = fixture->GetFilterData();
+
+    std::cout << "Fixture : " << f.categoryBits << std::endl;
+    std::cout << "Fixture : " << f.maskBits << std::endl;
+
     explode();
     gameObject->setConsumed(true);
-
     return 0;
 };
 
 void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
 }
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
+    if(graceTimer->isRunning)
+        return;
+
     Bullet::onCollisionStart(comp); 
 }
 
@@ -76,13 +89,21 @@ void RocketBullet::explode() {
     // }
 
 
-// void update(float deltaTime) override {
+void RocketBullet::update(float deltaTime) {
+    Bullet::update(deltaTime);
+    auto spriteSize = spriteComponent->getSprite().getSpriteSize().x;
+    missilePhysics->moveTo( 
+        glm::vec2( 
+            ( gameObject->getPosition().x - spriteSize/2) /PlatformerGame::instance->physicsScale,
+            gameObject->getPosition().y/PlatformerGame::instance->physicsScale
+        )
+    );
 //     acceleration = SeekTarget();
 //     velocity += acceleration * deltaTime;
 //     velocity = velocity.clamped(speed)
 //     rotation = velocity.angle()
 //     position += velocity * delta * 100
-// }
+}
 
 // void SeekTarget() {
 //     if target:
