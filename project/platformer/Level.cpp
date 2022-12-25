@@ -1,5 +1,5 @@
 //
-// Created by Morten Nobel-Jørgensen on 11/3/17.
+// Created by Søren Skouv 😎
 //
 
 #include "Level.hpp"
@@ -182,6 +182,11 @@ void Level::generateLevel() {
     }
 }
 
+/// <summary>
+/// Returns the position of a given identifier
+/// </summary>
+/// <param name="identifier"></param>
+/// <returns></returns>
 glm::vec2 Level::getIdentifierPosition(std::string identifier)
 {
     ifstream fis(levelName);
