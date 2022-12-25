@@ -96,15 +96,6 @@ void PlatformerGame::initLevel() {
     auto pShooting = player->addComponent<PlayerShooting>();
     characterController = player->addComponent<CharacterController>();
     characterController->playerShooting = pShooting;
-    characterController->setSprites(
-            spriteAtlas->get("19.png"),
-            spriteAtlas->get("20.png"),
-            spriteAtlas->get("21.png"),
-            spriteAtlas->get("26.png"),
-            spriteAtlas->get("27.png"),
-            spriteAtlas->get("28.png")
-    );
-		
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
