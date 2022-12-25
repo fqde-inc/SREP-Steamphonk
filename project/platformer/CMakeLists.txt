@@ -15,9 +15,9 @@ file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMA
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 # copy files to dest
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
