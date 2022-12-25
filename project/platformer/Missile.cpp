@@ -28,10 +28,8 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
     b2Filter filter = missilePhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::MISSILE;
-    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::ENEMY;
+    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::ENEMY | PlatformerGame::PLAYER;
     missilePhysics->getFixture()->SetFilterData(filter);
-
-
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
     spriteComponent = gameObject->addComponent<SpriteComponent>();

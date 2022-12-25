@@ -25,14 +25,16 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
     physics->initCircle(b2_kinematicBody, radius, gameObject->getPosition()/physicsScale, 0);
     physics->setAutoUpdate(true);
     physics->setSensor(true);
+
+    b2Filter filter = physics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::MISSILE;
+    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::ENEMY | PlatformerGame::PLAYER;
+    physics->getFixture()->SetFilterData(filter);
 }
 
 void Explosion::update(float deltaTime)
 {
 	if(timer->isRunning) {
-		if(physics->getBody()->IsAwake());
-			physics->getBody()->SetAwake(false);
-			
 		auto sprite = spriteComponent->getSprite();
 		sprite.setColor(glm::vec4{ 1, 1, 1, sprite.getColor().a - 10.0f });
 		return;
@@ -49,7 +51,8 @@ float32 Explosion::ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
 };
 
 void Explosion::onCollisionStart(PhysicsComponent *comp){
-	comp->addImpulse(glm::vec2{0.05f});
+	comp->addImpulse(glm::vec2{0.15f});
+	physics->getBody()->SetAwake(false);
 };
 
 void Explosion::onCollisionEnd(PhysicsComponent *comp) {

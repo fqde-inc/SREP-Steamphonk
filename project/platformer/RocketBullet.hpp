@@ -8,10 +8,13 @@
 class RocketBullet : public Bullet {
 public:
 
-    float explosionRadius = 8.0f;
-    int splashDamage;
+    float explosionRadius   = 8.0f;
+    float explosionDamage   = 2.0f;
+    float explosionForce    = 10.0f;
     float steer_force = 15.0f;
 
+    // Intangibility timer
+    // TODO ?
     float gracePeriod = .1f;
     std::shared_ptr<TimerComponent> graceTimer;
 

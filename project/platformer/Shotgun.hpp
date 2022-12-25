@@ -11,6 +11,6 @@ public:
     explicit ShotgunGun() {
         gunType = Shotgun;
         bulletType = Pellets;
-        RecoilMagnitude = 0.1f;
+        RecoilMagnitude = 0.15f;
     }
 };

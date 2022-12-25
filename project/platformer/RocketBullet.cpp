@@ -13,11 +13,16 @@ RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
     std::cout << "Fired rocket" << std::endl;
     //missilePhysics->setAutoUpdate(false);
 
+    b2Filter filter = missilePhysics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::MISSILE;
+    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::ENEMY;
+    missilePhysics->getFixture()->SetFilterData(filter);
+
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("missile_0.png");
     spriteComponent->setSprite( sprite );
-
+    
     graceTimer = gameObject->addComponent<TimerComponent>();
-    graceTimer->initTimer(gracePeriod);
+    //graceTimer->initTimer(gracePeriod);
     
 };
 
@@ -26,7 +31,7 @@ float32 RocketBullet::ReportFixture( b2Fixture* fixture, const b2Vec2& point, co
     if(graceTimer->isRunning)
         return 0;
 
-aaa    b2Filter f = fixture->GetFilterData();
+    b2Filter f = fixture->GetFilterData();
 
     std::cout << "Fixture : " << f.categoryBits << std::endl;
     std::cout << "Fixture : " << f.maskBits << std::endl;
@@ -39,9 +44,6 @@ aaa    b2Filter f = fixture->GetFilterData();
 void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
 }
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
-    if(graceTimer->isRunning)
-        return;
-
     Bullet::onCollisionStart(comp); 
 }
 
@@ -91,6 +93,7 @@ void RocketBullet::explode() {
 
 void RocketBullet::update(float deltaTime) {
     Bullet::update(deltaTime);
+
     auto spriteSize = spriteComponent->getSprite().getSpriteSize().x;
     missilePhysics->moveTo( 
         glm::vec2( 
