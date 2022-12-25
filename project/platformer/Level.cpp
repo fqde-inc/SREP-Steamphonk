@@ -17,11 +17,10 @@ using namespace rapidjson;
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 
     res->game = game;
-    res->spriteAtlas = spriteAtlas;
     res->tileAtlas = tileAtlas;
 	res->levelName = levelName;
 	res->spritesheetName = spritesheetName;
@@ -222,23 +221,6 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
     }
 
     return glm::vec2(0, 0);
-}
-
-std::shared_ptr<PlatformComponent> Level::addPlatform(int x, int y, int startSpriteId, int length, bool kinematic) {
-    auto gameObject = game->createGameObject();
-    gameObject->name = "Platform";
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->init(spriteAtlas, x,y,startSpriteId, length, kinematic);
-    return res;
-}
-
-
-std::shared_ptr<PlatformComponent> Level::addWall(int x, int y, int startSpriteId, int length) {
-    auto gameObject = game->createGameObject();
-    gameObject->name = "Platform";
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->initWall(spriteAtlas, x,y,startSpriteId, length);
-    return res;
 }
 
 std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, string name) {

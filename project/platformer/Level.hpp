@@ -16,7 +16,7 @@ enum class TileCollider {
 
 class Level {
 public:
-    static std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName);
+    static std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName);
 
     std::string getNameByCoords(std::pair<int, int> coords);
 	
@@ -40,7 +40,6 @@ private:
 	//-2 is unitialized, -1 not found
     int lastGenerated = -2;
     PlatformerGame* game;
-    std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 };
 

@@ -41,17 +41,12 @@ PlatformerGame::PlatformerGame()
 
     backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
-    spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
-            .withFile( "platformer-art-deluxe.png")
-            .withFilterSampling(false)
-            .build());
-
     tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
         .withFile("dirttile.png")
         .withFilterSampling(false)
         .build());
 	
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirttile.json");
+    level = Level::createDefaultLevel(this, tileAtlas, "testlvl.json", "dirttile.json");
 
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
