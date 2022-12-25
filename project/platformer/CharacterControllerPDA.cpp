@@ -305,12 +305,12 @@ void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
-            character.rocketLauncher->Fire(character.playerShooting->getGameObject()->getPosition(), character.playerShooting->getShootDirection());
+            character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
-            character.shotgun->Fire(character.playerShooting->getGameObject()->getPosition(), character.playerShooting->getShootDirection());
+            character.shotgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;

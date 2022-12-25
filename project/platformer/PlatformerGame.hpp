@@ -86,8 +86,9 @@ private:
         BACKGROUND  = 0x0001,
         WALLS       = 0x0002,
         PLAYER      = 0x0003,
-        MISSILE     = 0x0004,
-        ENEMY       = 0x0005,
+        ENEMY       = 0x0004,
+        MISSILE     = 0x0005,
+        BULLET      = 0x0006,
     };
 
     const float physicsScale = 100;
@@ -107,6 +108,7 @@ private:
 
     friend class Missile;
     friend class Gun;
+    friend class Bullet;
     friend class RocketBullet;
     friend class Explosion;
 };

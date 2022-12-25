@@ -14,7 +14,7 @@ RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
     //missilePhysics->setAutoUpdate(false);
 
     b2Filter filter = missilePhysics->getFixture()->GetFilterData();
-    filter.categoryBits = PlatformerGame::MISSILE;
+    filter.categoryBits = PlatformerGame::BULLET;
     filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::ENEMY;
     missilePhysics->getFixture()->SetFilterData(filter);
 
@@ -31,11 +31,6 @@ float32 RocketBullet::ReportFixture( b2Fixture* fixture, const b2Vec2& point, co
     if(graceTimer->isRunning)
         return 0;
 
-    b2Filter f = fixture->GetFilterData();
-
-    std::cout << "Fixture : " << f.categoryBits << std::endl;
-    std::cout << "Fixture : " << f.maskBits << std::endl;
-
     explode();
     gameObject->setConsumed(true);
     return 0;
@@ -43,6 +38,7 @@ float32 RocketBullet::ReportFixture( b2Fixture* fixture, const b2Vec2& point, co
 
 void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
 }
+
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
     Bullet::onCollisionStart(comp); 
 }
@@ -94,13 +90,13 @@ void RocketBullet::explode() {
 void RocketBullet::update(float deltaTime) {
     Bullet::update(deltaTime);
 
-    auto spriteSize = spriteComponent->getSprite().getSpriteSize().x;
-    missilePhysics->moveTo( 
-        glm::vec2( 
-            ( gameObject->getPosition().x - spriteSize/2) /PlatformerGame::instance->physicsScale,
-            gameObject->getPosition().y/PlatformerGame::instance->physicsScale
-        )
-    );
+    // auto spriteSize = spriteComponent->getSprite().getSpriteSize().x;
+    // missilePhysics->moveTo( 
+    //     glm::vec2( 
+    //         ( gameObject->getPosition().x - spriteSize/2) /PlatformerGame::instance->physicsScale,
+    //         gameObject->getPosition().y/PlatformerGame::instance->physicsScale
+    //     )
+    // );
 //     acceleration = SeekTarget();
 //     velocity += acceleration * deltaTime;
 //     velocity = velocity.clamped(speed)
