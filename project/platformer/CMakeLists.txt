@@ -9,6 +9,10 @@ file(GLOB Platformer
 add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
+# old graphics
+file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 # copy files to dest
 file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
