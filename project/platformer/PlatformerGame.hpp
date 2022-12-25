@@ -62,6 +62,7 @@ private:
     void handleContact(b2Contact *contact, bool begin);
 
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<sre::SpriteAtlas> UIAtlas;
     std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 

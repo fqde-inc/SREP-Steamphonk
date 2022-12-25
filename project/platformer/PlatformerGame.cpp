@@ -56,6 +56,11 @@ PlatformerGame::PlatformerGame()
         .withFilterSampling(false)
         .build());
 
+    UIAtlas = SpriteAtlas::create("UISprites.json", Texture::create()
+            .withFile("UISprites.png")
+            .withFilterSampling(false)
+            .build());
+
     level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
