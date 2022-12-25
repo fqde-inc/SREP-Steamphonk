@@ -164,9 +164,14 @@ void PlatformerGame::initLevel() {
     auto crosshairSpriteComponent = crosshair->addComponent<SpriteComponent>();
     auto crosshairSprite = characterAtlas->get("crosshair.png");
     crosshairSprite.setScale({0.3f, 0.3f});
-//    crosshairSprite.setOrderInBatch(99);
+    crosshairSprite.setOrderInBatch(99);
     crosshairSpriteComponent->setSprite(crosshairSprite);
     crosshair->addComponent<Crosshair>();
+
+    auto& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    io.Fonts->AddFontFromFileTTF("Minecraft.ttf", 20);
+    io.FontDefault = io.Fonts->Fonts[1];
 }
 
 void PlatformerGame::update(float time) {
@@ -221,15 +226,20 @@ void PlatformerGame::render() {
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
 
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowBorderSize = 0.0f;
+
     ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 40), ImGuiSetCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(300, 15), ImGuiSetCond_Always);
-    ImGui::Begin("weapon", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shothun");
+    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("weapon", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shotgun");
     ImGui::End();
 
     ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(300, 15), ImGuiSetCond_Always);
-    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
     ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
     ImGui::End();
 
