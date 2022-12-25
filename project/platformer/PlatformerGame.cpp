@@ -58,8 +58,6 @@ PlatformerGame::PlatformerGame()
         .withFilterSampling(false)
         .build());
 
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
-
     initLevel();
 
     //Enable mouse lock

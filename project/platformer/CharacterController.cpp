@@ -16,12 +16,11 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     cooldownTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
-    auto damagable = gameObject->addComponent<Damagable>();
-    damagable->setMaxLife(1);
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
-	
+   
+    characterDamagable = gameObject->addComponent<Damagable>();
     characterDamagable->setMaxLife(10);
     characterDamagable->overrideDeathAction([this]() {
         returnToSpawn = true;
