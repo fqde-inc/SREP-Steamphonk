@@ -151,10 +151,6 @@ void PlatformerGame::initLevel() {
         {1250,350},
     });
 
-    /*level->generateSpecificLevel(0);
-    level->generateSpecificLevel(1);*/
-    //level->generateLevel();
-
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
     auto crosshairSprite = crosshair->addComponent<SpriteComponent>();

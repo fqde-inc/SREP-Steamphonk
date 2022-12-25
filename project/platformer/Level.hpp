@@ -32,7 +32,9 @@ public:
 
     static constexpr float tileSize = 21;
 private:
+    void generateLevelBounds();
     Level() = default;
+    std::vector<glm::vec4> levelBounds;
 	std::string levelName;
     std::string spritesheetName;
 	//-2 is unitialized, -1 not found

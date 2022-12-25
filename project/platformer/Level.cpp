@@ -91,8 +91,6 @@ void Level::generateSpecificLevel(int levelNumber)
 /// <param name="target"></param>
 void Level::generateLevelByPosition(glm::vec2 target)
 {
-	//Seems to be pretty fast?
-	//This method needs to be optimized, should probably cash the json read operation
     auto id = getLevelIdByPosition(target);
 
     if (lastGenerated == id || id == -1)
@@ -102,7 +100,6 @@ void Level::generateLevelByPosition(glm::vec2 target)
 		
 	cout << "Generating level: " << id << endl;
     generateSpecificLevel(id);
-	//Also delete old id here
 }
 
 /// <summary>
@@ -110,6 +107,26 @@ void Level::generateLevelByPosition(glm::vec2 target)
 /// </summary>
 /// <param name="pos"></param>
 int Level::getLevelIdByPosition(glm::vec2 pos)
+{
+    if (levelBounds.empty())
+    {
+        generateLevelBounds();
+    }
+	
+    for (int i = 0; i < levelBounds.size(); i++)
+    {
+        auto l = levelBounds[i];
+        if (pos.x >= l[0] && pos.x <= l[0] + l[2] && pos.y >= l[1] && pos.y <= l[1] + l[3])
+        {
+            return i;
+        }
+    }
+}
+
+/// <summary>
+/// Caches the level bounds
+/// </summary>
+void Level::generateLevelBounds()
 {
     ifstream fis(levelName);
     IStreamWrapper isw(fis);
@@ -125,13 +142,8 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
         auto x = d["levels"].GetArray()[i]["worldX"].GetInt();
         auto y = d["levels"].GetArray()[i]["worldY"].GetInt();
 
-        if (pos.x >= x && pos.x <= x + w && pos.y >= y && pos.y <= y + h)
-        {
-            return i;
-        }
+        levelBounds.push_back(glm::vec4(x, y, w, h));
     }
-
-    return -1;
 }
 
 /// <summary>
