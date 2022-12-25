@@ -75,7 +75,9 @@ private:
     sre::Color backgroundColor;
     b2World * world = nullptr;
 
-     std::shared_ptr<FollowPathComponent> birdMovement;
+    ImFont* pixelated;
+
+    std::shared_ptr<FollowPathComponent> birdMovement;
 
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);

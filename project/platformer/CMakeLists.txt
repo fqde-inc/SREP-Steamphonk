@@ -14,9 +14,9 @@ file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.p
 file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/testlvl.json platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-file(COPY UI/Minecraft.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY UI/Minecraft.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY UI/Minecraft.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY UI/PixelatedFont.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY UI/PixelatedFont.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY UI/PixelatedFont.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 #copy files to graphics
 file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

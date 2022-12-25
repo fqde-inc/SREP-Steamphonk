@@ -81,6 +81,10 @@ void CharacterController::update(float deltaTime) {
     }
     updateSprite(deltaTime);
 
+    if(!isGrounded && (state_->characterStateStack[0]->stateType != Jumping && state_->characterStateStack[0]->stateType != Firing)) {
+        state_->pushStack(std::make_shared<JumpingState>());
+    }
+
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
 }
 

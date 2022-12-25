@@ -170,8 +170,11 @@ void PlatformerGame::initLevel() {
 
     auto& io = ImGui::GetIO();
     io.Fonts->AddFontDefault();
-    io.Fonts->AddFontFromFileTTF("Minecraft.ttf", 20);
-    io.FontDefault = io.Fonts->Fonts[1];
+    pixelated = io.Fonts->AddFontFromFileTTF("PixelatedFont.ttf", 20);
+    io.FontDefault = io.Fonts->Fonts[0];
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowBorderSize = 0.0f;
 }
 
 void PlatformerGame::update(float time) {
@@ -226,21 +229,23 @@ void PlatformerGame::render() {
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
 
-    ImGuiStyle& style = ImGui::GetStyle();
-    style.WindowBorderSize = 0.0f;
 
     ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 40), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
     ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
     ImGui::Begin("weapon", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
     ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shotgun");
+    ImGui::PopFont();
     ImGui::End();
 
     ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
     ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
     ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
     ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
+    ImGui::PopFont();
     ImGui::End();
 
     if (doDebugDraw){

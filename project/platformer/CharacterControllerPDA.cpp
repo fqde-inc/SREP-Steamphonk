@@ -144,10 +144,6 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
 }
 
 void StandingState::update(CharacterController &character, float deltaTime) {
-    if(character.characterPhysics->getLinearVelocity().y != 0) {
-        pushStack(std::make_shared<JumpingState>());
-    }
-
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
