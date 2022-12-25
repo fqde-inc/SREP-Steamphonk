@@ -19,10 +19,19 @@ file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-# copy texture packer json
+file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# copy level texture packer json
 file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# copy character texture packer json
+file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 # copy files to levels
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

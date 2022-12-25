@@ -12,11 +12,13 @@ using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     gameObject->name = "Player";
-    characterDamagable = gameObject->addComponent<Damagable>();
+
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     cooldownTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
-	
+    auto damagable = gameObject->addComponent<Damagable>();
+    damagable->setMaxLife(1);
+
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
 	
@@ -58,6 +60,7 @@ void CharacterController::update(float deltaTime) {
 
     characterPhysics->fixRotation();
     glm::vec2 movement{0,0};
+
     if (left){
         movement.x --;
     }
@@ -65,9 +68,23 @@ void CharacterController::update(float deltaTime) {
         movement.x ++;
     }
 
-    float accelerationSpeed = 0.010f;
+    glm::vec2 currentVel = characterPhysics->getLinearVelocity();
+
+    if (currentVel.x > 0 && !right) {
+        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x - 0.15f, currentVel.y));
+    }
+
+    if (currentVel.x < 0 && !left) {
+        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x + 0.15f, currentVel.y));
+    }
+
+    if(!left && !right && glm::abs(currentVel.x) < 0.1f) {
+        characterPhysics->setLinearVelocity(glm::vec2(0, currentVel.y));
+    }
+
+    float accelerationSpeed = 0.008f;
     characterPhysics->addImpulse(movement*accelerationSpeed);
-    float maximumVelocity = 2;
+    float maximumVelocity = 2.5f;
     auto linearVelocity = characterPhysics->getLinearVelocity();
     float currentVelocity = linearVelocity.x;
     if (abs(currentVelocity) > maximumVelocity){
@@ -76,7 +93,7 @@ void CharacterController::update(float deltaTime) {
     }
     updateSprite(deltaTime);
 
-    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this);
+    if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {
@@ -102,7 +119,7 @@ float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &poi
             state_->pushStack(std::make_shared<WalkingState>());
         }
     }
-    return 0; // terminate raycast
+    return 0;
 }
 
 void CharacterController::setSprites(sre::Sprite standing, sre::Sprite walk1, sre::Sprite walk2, sre::Sprite flyUp,

@@ -8,6 +8,7 @@
 #include "Level.hpp"
 #include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
+#include "EnemyComponent.hpp"
 
 class PhysicsComponent;
 
@@ -44,6 +45,8 @@ public:
 
     // Less expensive to store player pointer and get position on demand
     glm::vec2 getPlayerPositon(){return player->getPosition();};
+
+    std::shared_ptr<sre::SpriteAtlas> characterAtlas;
 private:
     sre::SDLRenderer r;
 
@@ -84,6 +87,7 @@ private:
     friend class Level;
     friend class CharacterController;
     friend class PlatformComponent;
+    friend class EnemyComponent;
 
     friend class Missile;
 };

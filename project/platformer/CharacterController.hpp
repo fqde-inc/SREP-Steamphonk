@@ -11,6 +11,7 @@
 #include "Guns/Shotgun.hpp"
 #include "TimerComponent.hpp"
 #include "Guns/RocketLauncher.hpp"
+#include "PlayerShooting.hpp"
 
 
 class CharacterState;
@@ -34,6 +35,7 @@ public:
 
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
     std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
+    std::shared_ptr<PlayerShooting> playerShooting;
 
     GunTypes equippedGun = RocketLauncher;
 
@@ -52,11 +54,14 @@ public:
 
     bool left = false;
     bool right = false;
+    bool lastIsLeft = false;
     std::shared_ptr<CharacterState> state_;
     bool isGrounded = false;
     friend class CharacterState;
     friend class StandingState;
     friend class JumpingState;
+
+    std::shared_ptr<SpriteComponent> spriteComponent;
 private:
     glm::vec2 spawn;
     bool returnToSpawn = false;
@@ -67,7 +72,6 @@ private:
     sre::Sprite fly;
     sre::Sprite flyDown;
     std::shared_ptr<GameObject> cursor;
-    std::shared_ptr<SpriteComponent> spriteComponent;
     float radius;
     void onDeath();
 };
