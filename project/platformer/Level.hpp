@@ -16,27 +16,31 @@ enum class TileCollider {
 
 class Level {
 public:
-    static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas);
+    static std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName);
 
-    void generateLevel();
-    void generateLevelFromFile(int levelNumber);
-
-    glm::vec2 getIdentifierPosition(int levelNumber, std::string identifier);
+    std::string getNameByCoords(std::pair<int, int> coords);
 	
+    void generateLevel();
+    void generateSpecificLevel(int levelNumber);
+    void generateLevelByPosition(glm::vec2 target);
+    int getLevelIdByPosition(glm::vec2 pos);
+
+    glm::vec2 getIdentifierPosition(std::string identifier);
     std::shared_ptr<PlatformComponent> addPlatform(int x, int y, int startSpriteId, int length, bool kinematic);
     std::shared_ptr<PlatformComponent> addWall(int x, int y, int startSpriteId, int height);
     std::shared_ptr<PlatformComponent> addTile(int x, int y, std::string name);
 
     static constexpr float tileSize = 21;
 private:
+    void generateLevelBounds();
     Level() = default;
+    std::vector<glm::vec4> levelBounds;
+	std::string levelName;
+    std::string spritesheetName;
+	//-2 is unitialized, -1 not found
+    int lastGenerated = -2;
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
-    std::map<std::pair<int,int>, std::string> ldtkMap{
-        {std::make_pair(0,0), "dirt.png"},
-        {std::make_pair(0,16), "dirt_bot.png"},
-        {std::make_pair(16,0), "dirt_top.png"}
-    };
 };
 

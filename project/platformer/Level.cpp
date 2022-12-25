@@ -1,5 +1,5 @@
 //
-// Created by Morten Nobel-Jørgensen on 11/3/17.
+// Created by Søren Skouv 😎
 //
 
 #include "Level.hpp"
@@ -13,24 +13,51 @@
 #include <fstream>
 #include <sre/Inspector.hpp>
 
+using namespace rapidjson;
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> spriteAtlas, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 
-    // todo initialize
     res->game = game;
     res->spriteAtlas = spriteAtlas;
     res->tileAtlas = tileAtlas;
+	res->levelName = levelName;
+	res->spritesheetName = spritesheetName;
 
     return res;
 }
 
-void Level::generateLevelFromFile(int levelNumber)
+std::string Level::getNameByCoords(std::pair<int, int> coords)
 {
-    using namespace rapidjson;
-    ifstream fis("testlvl.json");
+    ifstream tfis(spritesheetName);
+    IStreamWrapper tisw(tfis);
+    Document t;
+    t.ParseStream(tisw);
+    auto tiles = t["frames"].GetArray();
+
+    for (int i = 0; i < tiles.Size(); i++)
+    {
+        auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
+        auto y = tiles[i].GetObject()["frame"].GetObject()["y"].GetInt();
+
+        if (x == coords.first && y == coords.second)
+        {
+            return tiles[i].GetObject()["filename"].GetString();
+        }
+    }
+
+    return "";
+}
+
+/// <summary>
+/// Loads a level from a json file
+/// </summary>
+/// <param name="levelNumber"></param>
+void Level::generateSpecificLevel(int levelNumber)
+{
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -49,67 +76,152 @@ void Level::generateLevelFromFile(int levelNumber)
 		int x = pos[0].GetInt();
 		int y = pos[1].GetInt();
 
-        string spriteName = ldtkMap[std::make_pair(src[0].GetInt(), src[1].GetInt())];
+        string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
 
+		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         addTile(worldX + x, levelHeight - worldY - y, spriteName);
+    }
+	
+    lastGenerated = levelNumber;
+}
+
+/// <summary>
+/// Only generate level if the player is within position. Also handles unloading old levels and loading new levels
+/// </summary>
+/// <param name="target"></param>
+void Level::generateLevelByPosition(glm::vec2 target)
+{
+    auto id = getLevelIdByPosition(target);
+
+    if (lastGenerated == id || id == -1)
+    {
+        return;
+    }
+		
+	cout << "Generating level: " << id << endl;
+    generateSpecificLevel(id);
+}
+
+/// <summary>
+/// Returns the chunk id that the player is inside
+/// </summary>
+/// <param name="pos"></param>
+int Level::getLevelIdByPosition(glm::vec2 pos)
+{
+    if (levelBounds.empty())
+    {
+        generateLevelBounds();
+    }
+	
+    for (int i = 0; i < levelBounds.size(); i++)
+    {
+        auto l = levelBounds[i];
+        if (pos.x >= l[0] && pos.x <= l[0] + l[2] && pos.y >= l[1] && pos.y <= l[1] + l[3])
+        {
+            return i;
+        }
     }
 }
 
-glm::vec2 Level::getIdentifierPosition(int levelNumber, std::string identifier)
+/// <summary>
+/// Caches the level bounds
+/// </summary>
+void Level::generateLevelBounds()
 {
-    using namespace rapidjson;
-    ifstream fis("testlvl.json");
+    ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
 
-    auto entities = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[0]["entityInstances"].GetArray();
-    auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
-    auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
-    auto worldY = d["levels"].GetArray()[levelNumber]["worldY"].GetInt();
+    auto levels = d["levels"].GetArray();
 
-    for (int i = 0; i < entities.Size(); i++)
+    for (int i = 0; i < levels.Size(); i++)
     {
-        string compare = entities[i].GetObject()["__identifier"].GetString();
-        if(identifier.compare(compare) == 0)
+        auto h = d["levels"].GetArray()[i]["pxHei"].GetInt();
+        auto w = d["levels"].GetArray()[i]["pxWid"].GetInt();
+        auto x = d["levels"].GetArray()[i]["worldX"].GetInt();
+        auto y = d["levels"].GetArray()[i]["worldY"].GetInt();
+
+        levelBounds.push_back(glm::vec4(x, y, w, h));
+    }
+}
+
+/// <summary>
+/// Generates all levels
+/// </summary>
+void Level::generateLevel() {
+    ifstream fis(levelName);
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    auto levels = d["levels"].GetArray();
+
+    for (int i = 0; i < levels.Size(); i++)
+    {
+        auto level = d["levels"].GetArray()[i]["layerInstances"].GetArray()[2]["autoLayerTiles"].GetArray();
+        auto levelHeight = d["levels"].GetArray()[i]["pxHei"].GetInt();
+        auto levelWidth = d["levels"].GetArray()[i]["pxWid"].GetInt();
+        auto worldX = d["levels"].GetArray()[i]["worldX"].GetInt();
+        auto worldY = d["levels"].GetArray()[i]["worldY"].GetInt();
+
+
+        //This doesnt work wat
+        for (int i = 0; i < level.Size(); i++)
         {
-            auto pos = entities[i].GetObject()["px"].GetArray();
+            auto pos = level[i].GetObject()["px"].GetArray();
+            auto src = level[i].GetObject()["src"].GetArray();
+
             int x = pos[0].GetInt();
             int y = pos[1].GetInt();
-            return glm::vec2(worldX + x, levelHeight - worldY - y);
+			
+            string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
+
+            addTile(worldX + x, levelHeight - worldY - y, spriteName);
+        }
+    }
+}
+
+/// <summary>
+/// Returns the position of a given identifier
+/// </summary>
+/// <param name="identifier"></param>
+/// <returns></returns>
+glm::vec2 Level::getIdentifierPosition(std::string identifier)
+{
+    ifstream fis(levelName);
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    auto levels = d["levels"].GetArray();
+
+    for (int i = 0; i < levels.Size(); i++)
+    {
+        auto entities = d["levels"].GetArray()[i]["layerInstances"].GetArray();
+        for (int j = 0; j < entities.Size(); j++)
+        {
+            auto entity = entities[j]["entityInstances"].GetArray();
+            auto levelHeight = d["levels"].GetArray()[i]["pxHei"].GetInt();
+            auto worldX = d["levels"].GetArray()[i]["worldX"].GetInt();
+            auto worldY = d["levels"].GetArray()[i]["worldY"].GetInt();
+
+            for (int i = 0; i < entity.Size(); i++)
+            {
+                string compare = entity[i].GetObject()["__identifier"].GetString();
+                cout << i << ": " << compare << endl;
+                if (identifier.compare(compare) == 0)
+                {
+                    auto pos = entity[i].GetObject()["px"].GetArray();
+                    int x = pos[0].GetInt();
+                    int y = pos[1].GetInt();
+                    return glm::vec2(worldX + x, levelHeight - worldY - y);
+                }
+            }
         }
     }
 
     return glm::vec2(0, 0);
-}
-
-void Level::generateLevel() {
-    //Add test wall
-    addWall(0, 0, 0, 0);
-
-    // start wall
-    addWall(-1, 0, 2, 10);
-
-    // floor
-    addPlatform(0, 0, 2, 100, false);
-    // ceil
-    addPlatform(0, 20, 2, 100, false);
-
-    auto movingPlatform = addPlatform(10, 3, 2, 5, true);
-    auto movingPlatformComponent = movingPlatform->getGameObject()->addComponent<MovingPlatformComponent>();
-    movingPlatformComponent->setMovementStart({10,3});
-    movingPlatformComponent->setMovementEnd({10,5});
-
-    // add some more platforms
-    addPlatform(15, 7, 2, 5, true);
-    addPlatform(20, 3, 2, 5, true);
-    addPlatform(25, 7, 2, 5, true);
-    addPlatform(30, 10, 2, 5, true);
-    addPlatform(35, 7, 2, 5, true);
-    addPlatform(40, 3, 2, 5, true);
-
-    // end wall
-    addWall(100, 0, 2, 10);
 }
 
 std::shared_ptr<PlatformComponent> Level::addPlatform(int x, int y, int startSpriteId, int length, bool kinematic) {
@@ -130,6 +242,7 @@ std::shared_ptr<PlatformComponent> Level::addWall(int x, int y, int startSpriteI
 }
 
 std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, string name) {
+    //cout << "(" << x << y << ") ";
     auto gameObject = game->createGameObject();
     gameObject->name = "Platform";
     auto res = gameObject->addComponent<PlatformComponent>();

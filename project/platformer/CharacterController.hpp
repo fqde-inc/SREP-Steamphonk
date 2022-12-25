@@ -3,6 +3,7 @@
 #include <Box2D/Box2D.h>
 #include "Component.hpp"
 #include "SpriteComponent.hpp"
+#include "Damagable.hpp"
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
 #include "Gun.hpp"
@@ -47,6 +48,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
+    std::shared_ptr<Damagable> characterDamagable;
     std::shared_ptr<TimerComponent> cooldownTimer;
     float cooldownTime = .75f;
 
@@ -61,6 +63,8 @@ public:
 
     std::shared_ptr<SpriteComponent> spriteComponent;
 private:
+    glm::vec2 spawn;
+    bool returnToSpawn = false;
     sre::Sprite standing;
     sre::Sprite walk1;
     sre::Sprite walk2;
@@ -69,4 +73,5 @@ private:
     sre::Sprite flyDown;
     std::shared_ptr<GameObject> cursor;
     float radius;
+    void onDeath();
 };
