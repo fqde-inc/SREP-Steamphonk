@@ -89,6 +89,8 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
                 positions[segment+1],
                 t);
     }
+
+    return glm::vec2{0,0};
 }
 
 // Bezier curve math

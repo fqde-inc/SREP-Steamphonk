@@ -3,8 +3,11 @@
 //
 
 #pragma once
+
 #include <iostream>
-#include "../PlayerShooting.hpp"
+#include "Box2D/Box2D.h"
+#include "BulletFactory.hpp"
+
 
 enum GunTypes {
     NullGun,
@@ -14,13 +17,11 @@ enum GunTypes {
 
 class Gun {
 public:
-    explicit Gun() {}
+    explicit Gun(){};
 
     GunTypes gunType = NullGun;
+    BulletTypes bulletType = None;
     float RecoilMagnitude = 0;
-
-    virtual void Fire(PlayerShooting &pShooting) {
-        std::cout << "Whiff!" << std::endl;
-    }
-
+    
+    void Fire(glm::vec2 _position, glm::vec2 _direction);
 };
