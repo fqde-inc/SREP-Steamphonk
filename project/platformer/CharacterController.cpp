@@ -29,6 +29,12 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     radius = 10/physicsScale;
     characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
     characterPhysics->getFixture()->SetRestitution(0);
+
+    b2Filter filter = characterPhysics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::PLAYER;
+    filter.maskBits = PlatformerGame::WALLS | PlatformerGame::MISSILE;
+    characterPhysics->getFixture()->SetFilterData(filter);
+
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
     state_ = std::make_shared<CharacterState>();

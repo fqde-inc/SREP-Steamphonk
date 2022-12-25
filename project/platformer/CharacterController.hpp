@@ -5,11 +5,11 @@
 #include "SpriteComponent.hpp"
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
-#include "Guns/Gun.hpp"
-#include "Guns/RocketLauncher.hpp"
-#include "Guns/Shotgun.hpp"
+#include "Gun.hpp"
+#include "RocketLauncher.hpp"
+#include "Shotgun.hpp"
 #include "TimerComponent.hpp"
-#include "Guns/RocketLauncher.hpp"
+#include "RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
 
 
@@ -69,5 +69,4 @@ private:
     sre::Sprite flyDown;
     std::shared_ptr<GameObject> cursor;
     float radius;
-
 };

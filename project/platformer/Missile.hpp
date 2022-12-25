@@ -3,11 +3,12 @@
 #include <Box2D/Box2D.h>
 #include "GameObject.hpp"
 #include "PhysicsComponent.hpp"
+#include "SpriteComponent.hpp"
 #include "Component.hpp"
 
 class Missile : public Component, b2RayCastCallback{
 public:
-    explicit Missile(GameObject* gameObject);
+    Missile(GameObject* gameObject);
 	
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 
@@ -26,15 +27,16 @@ public:
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
 
-private:
+protected:
     std::shared_ptr<PhysicsComponent> missilePhysics;
+    std::shared_ptr<SpriteComponent> spriteComponent;
     glm::vec2 direction;
 
     float lifetime = 0;
     float lifespan = 2.5f;
 
     float constSpeed = 5.5f;
-    float radius;
+    float radius = 7.0f;
 
     float damage = 1;
 
