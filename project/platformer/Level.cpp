@@ -12,6 +12,7 @@
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>
 #include <sre/Inspector.hpp>
+#include "ObjectPool.hpp"
 
 using namespace rapidjson;
 using namespace sre;
@@ -25,6 +26,8 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
         .withFile("dirttile.png")
         .withFilterSampling(false)
         .build());;
+	res->tilePool = ObjectPool<GameObject>(res->tileAtlas);
+    res->foliagePool = ObjectPool<GameObject>(res->tileAtlas);
 	res->levelName = levelName;
 	res->spritesheetName = spritesheetName;
 
@@ -134,6 +137,7 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type = World)
 		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         switch (type)
         {
+            //TODO: these methods should pool their sprites
         case GenerationType::World:
             addTile(coords, spriteName);
             break;
@@ -312,11 +316,12 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
 }
 
 std::shared_ptr<PlatformComponent> Level::addTile(std::pair<int, int> coords, string name) {
-    //cout << "(" << x << y << ") ";
-    auto gameObject = game->createGameObject();
-    gameObject->name = "Platform";
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->initTile(tileAtlas, coords, name);
+    //Check if there is an available tile with the correct name in the pool
+    auto res = tilePool.tryGet(name);
+    if (!res)
+    {
+        res = tilePool.addNew(name);
+    }
     return res;
 }
 

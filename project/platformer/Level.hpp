@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <sre/SpriteAtlas.hpp>
+#include <ObjectPool.hpp>
 
 class PlatformerGame;
 class GameObject;
@@ -48,6 +49,8 @@ public:
 private:
     void generateLevelBounds();
     Level() = default;
+    ObjectPool<GameObject> tilePool;
+    ObjectPool<GameObject> foliagePool;
     std::vector<Bounds> levelBounds;
 	std::string levelName;
     std::string spritesheetName;
