@@ -1,0 +1,40 @@
+\hypertarget{TimerComponent_8hpp_source}{}\doxysection{Timer\+Component.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{classTimerComponent}{TimerComponent}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{6 \textcolor{keyword}{public}:}
+\DoxyCodeLine{7     \textcolor{keywordtype}{bool} isRunning = \textcolor{keyword}{false};}
+\DoxyCodeLine{8     \mbox{\hyperlink{classTimerComponent}{TimerComponent}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject) : \mbox{\hyperlink{classComponent}{Component}}(gameObject) \{\}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10     \textcolor{keywordtype}{void} initTimer(\textcolor{keywordtype}{float} time) \{}
+\DoxyCodeLine{11         elapsedTime = 0;}
+\DoxyCodeLine{12         setTime = time;}
+\DoxyCodeLine{13         isRunning = \textcolor{keyword}{true};}
+\DoxyCodeLine{14     \}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} stopTimer() \{}
+\DoxyCodeLine{17         setTime = 0;}
+\DoxyCodeLine{18         isRunning = \textcolor{keyword}{false};}
+\DoxyCodeLine{19     \}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{22         \textcolor{keywordflow}{if} (setTime == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         elapsedTime += deltaTime;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26         \textcolor{keywordflow}{if}(elapsedTime >= setTime) \{}
+\DoxyCodeLine{27             stopTimer();}
+\DoxyCodeLine{28         \}}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{private}:}
+\DoxyCodeLine{32     \textcolor{keywordtype}{float} elapsedTime;}
+\DoxyCodeLine{33     \textcolor{keywordtype}{float} setTime = 0;}
+\DoxyCodeLine{34 \};}
+\DoxyCodeLine{35 }
+
+\end{DoxyCode}

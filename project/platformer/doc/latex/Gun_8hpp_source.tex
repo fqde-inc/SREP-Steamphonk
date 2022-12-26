@@ -1,0 +1,32 @@
+\hypertarget{Gun_8hpp_source}{}\doxysection{Gun.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Giorgio Perri  on 31/10/22.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}Box2D/Box2D.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}BulletFactory.hpp"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{enum} GunTypes \{}
+\DoxyCodeLine{13     NullGun,}
+\DoxyCodeLine{14     Shotgun,}
+\DoxyCodeLine{15     RocketLauncher,}
+\DoxyCodeLine{16 \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{classGun}{Gun}} \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \textcolor{keyword}{explicit} \mbox{\hyperlink{classGun}{Gun}}()\{\};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     GunTypes gunType = NullGun;}
+\DoxyCodeLine{23     BulletTypes bulletType = None;}
+\DoxyCodeLine{24     \textcolor{keywordtype}{float} RecoilMagnitude = 0;}
+\DoxyCodeLine{25     }
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} Fire(glm::vec2 \_position, glm::vec2 \_direction);}
+\DoxyCodeLine{27 \};}
+
+\end{DoxyCode}

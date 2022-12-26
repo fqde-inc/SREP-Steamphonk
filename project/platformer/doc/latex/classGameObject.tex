@@ -1,0 +1,60 @@
+\hypertarget{classGameObject}{}\doxysection{Game\+Object Class Reference}
+\label{classGameObject}\index{GameObject@{GameObject}}
+
+
+Collaboration diagram for Game\+Object\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGameObject_a06a9408b223e0708a3fe6b7c65decc67}\label{classGameObject_a06a9408b223e0708a3fe6b7c65decc67}} 
+{\footnotesize template$<$class T $>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries add\+Component} ()
+\item 
+\mbox{\Hypertarget{classGameObject_ac9a87febca21d5f4e4d69bde2973950d}\label{classGameObject_ac9a87febca21d5f4e4d69bde2973950d}} 
+{\footnotesize template$<$class T $>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ {\bfseries get\+Component} ()
+\item 
+\mbox{\Hypertarget{classGameObject_abd9f2cf92a9bee981b8c90fd8b467099}\label{classGameObject_abd9f2cf92a9bee981b8c90fd8b467099}} 
+bool {\bfseries remove\+Component} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComponent}{Component}} $>$ component)
+\item 
+\mbox{\Hypertarget{classGameObject_ac8c022600059c9f0e594ed061449d0a8}\label{classGameObject_ac8c022600059c9f0e594ed061449d0a8}} 
+void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classGameObject_ad952e8ab193f501fcbbd9cdd7af38077}\label{classGameObject_ad952e8ab193f501fcbbd9cdd7af38077}} 
+void {\bfseries update} (float delta\+Time)
+\item 
+\mbox{\Hypertarget{classGameObject_a865998a1c90ece1be6d468d2ea1a649a}\label{classGameObject_a865998a1c90ece1be6d468d2ea1a649a}} 
+const glm\+::vec2 \& {\bfseries get\+Position} () const
+\item 
+\mbox{\Hypertarget{classGameObject_a3412c1fb5b7b627973d089e26eef7105}\label{classGameObject_a3412c1fb5b7b627973d089e26eef7105}} 
+void {\bfseries set\+Position} (const glm\+::vec2 \&position)
+\item 
+\mbox{\Hypertarget{classGameObject_a5d48d669049ece382ea28f32cdd78266}\label{classGameObject_a5d48d669049ece382ea28f32cdd78266}} 
+float {\bfseries get\+Rotation} () const
+\item 
+\mbox{\Hypertarget{classGameObject_a41ad1b7588e26eab258b3278877c2ba4}\label{classGameObject_a41ad1b7588e26eab258b3278877c2ba4}} 
+void {\bfseries set\+Rotation} (float rotation)
+\item 
+\mbox{\Hypertarget{classGameObject_ab25ef92a5f3978f4d703d5a541bc5f81}\label{classGameObject_ab25ef92a5f3978f4d703d5a541bc5f81}} 
+void {\bfseries set\+Consumed} (bool \+\_\+consumed)
+\item 
+\mbox{\Hypertarget{classGameObject_aeb41bba2ac25b35149ab31a2b27cee24}\label{classGameObject_aeb41bba2ac25b35149ab31a2b27cee24}} 
+const std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComponent}{Component}} $>$ $>$ \& {\bfseries get\+Components} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGameObject_af542b33c8de269343e22c5629e6b66c0}\label{classGameObject_af542b33c8de269343e22c5629e6b66c0}} 
+std\+::string {\bfseries name} = \char`\"{}\+\_\+\char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGameObject_af36e9e19544e60fb8481e5acaa41b632}\label{classGameObject_af36e9e19544e60fb8481e5acaa41b632}} 
+class {\bfseries Platformer\+Game}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Game\+Object.\+hpp\item 
+Game\+Object.\+cpp\end{DoxyCompactItemize}

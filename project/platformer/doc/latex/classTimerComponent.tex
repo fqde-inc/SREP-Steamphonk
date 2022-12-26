@@ -1,0 +1,69 @@
+\hypertarget{classTimerComponent}{}\doxysection{Timer\+Component Class Reference}
+\label{classTimerComponent}\index{TimerComponent@{TimerComponent}}
+
+
+Inheritance diagram for Timer\+Component\+:
+% FIG 0
+
+
+Collaboration diagram for Timer\+Component\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classTimerComponent_ae6dc8090c040e61f0f6625acdcd96e94}\label{classTimerComponent_ae6dc8090c040e61f0f6625acdcd96e94}} 
+{\bfseries Timer\+Component} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classTimerComponent_aa2037ffbbf70f09f1d8842cf680cbd45}\label{classTimerComponent_aa2037ffbbf70f09f1d8842cf680cbd45}} 
+void {\bfseries init\+Timer} (float time)
+\item 
+\mbox{\Hypertarget{classTimerComponent_af8026f1c68768d0315d7e1732a700662}\label{classTimerComponent_af8026f1c68768d0315d7e1732a700662}} 
+void {\bfseries stop\+Timer} ()
+\item 
+void \mbox{\hyperlink{classTimerComponent_ae727e2006c8402da8c3bb57da92797d6}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classTimerComponent_ab51594f8b6e94074ebb39d085421d940}\label{classTimerComponent_ab51594f8b6e94074ebb39d085421d940}} 
+bool {\bfseries is\+Running} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classTimerComponent_ae727e2006c8402da8c3bb57da92797d6}\label{classTimerComponent_ae727e2006c8402da8c3bb57da92797d6}} 
+\index{TimerComponent@{TimerComponent}!update@{update}}
+\index{update@{update}!TimerComponent@{TimerComponent}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Timer\+Component\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Timer\+Component.\+hpp\end{DoxyCompactItemize}

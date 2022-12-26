@@ -1,0 +1,66 @@
+\hypertarget{PhysicsComponent_8hpp_source}{}\doxysection{Physics\+Component.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Box2D/Common/b2Math.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Box2D/Collision/Shapes/b2PolygonShape.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}Box2D/Collision/Shapes/b2CircleShape.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Box2D/Dynamics/b2Body.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{explicit} \mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{12     \textcolor{keyword}{virtual} \mbox{\hyperlink{classPhysicsComponent}{\string~PhysicsComponent}}();}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} initCircle(b2BodyType type, \textcolor{keywordtype}{float} radius,glm::vec2 center,\textcolor{keywordtype}{float} density);}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} initBox(b2BodyType type, glm::vec2 size,glm::vec2 center,\textcolor{keywordtype}{float} density);}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keywordtype}{void} addForce(glm::vec2 force);     \textcolor{comment}{// Force gradually affects the velocity over time}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} addImpulse(glm::vec2 force);   \textcolor{comment}{// Instantly affects velocity}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} setLinearVelocity(glm::vec2 velocity);}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     glm::vec2 getLinearVelocity();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{bool} isSensor();}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} setSensor(\textcolor{keywordtype}{bool} enabled);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} fixRotation();}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{comment}{// Move to position in physics scale}}
+\DoxyCodeLine{33     \textcolor{comment}{// Internally implemented by setting linearVelocity to delta value}}
+\DoxyCodeLine{34     \textcolor{comment}{// This will make objects move until setLinearVelocity(\{0,0\}) is called.}}
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} moveTo(glm::vec2 pos);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{comment}{// Get position in physics scale}}
+\DoxyCodeLine{38     glm::vec2 getPosition();}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{comment}{//  is updating sprite transform based on ridig body}}
+\DoxyCodeLine{41     \textcolor{keywordtype}{bool} isAutoUpdate() \textcolor{keyword}{const};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{//  update sprite transform based on ridig body}}
+\DoxyCodeLine{44     \textcolor{keywordtype}{void} setAutoUpdate(\textcolor{keywordtype}{bool} autoUpdate);}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     b2Body * getBody ();}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     b2Fixture* getFixture();}
+\DoxyCodeLine{49 \textcolor{keyword}{private}:}
+\DoxyCodeLine{50     \textcolor{comment}{// auto update sprite position and rotation based on physics update}}
+\DoxyCodeLine{51     \textcolor{keywordtype}{bool} autoUpdate = \textcolor{keyword}{true};}
+\DoxyCodeLine{52     b2PolygonShape * polygon = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{53     b2CircleShape * circle = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{54     b2Body * body = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{55     b2Shape::Type shapeType;}
+\DoxyCodeLine{56     b2Fixture* fixture = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{57     b2BodyType rbType;}
+\DoxyCodeLine{58     std::vector<PhysicsComponent *> collidingBodies;}
+\DoxyCodeLine{59     b2World * world = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{60 \};}
+\DoxyCodeLine{61 }
+
+\end{DoxyCode}

@@ -1,0 +1,35 @@
+\hypertarget{Component_8hpp_source}{}\doxysection{Component.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}sre/SpriteBatch.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{comment}{// Forward declaration}}
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{classGameObject}{GameObject}};}
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}};}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{classComponent}{Component}} \{                                           \textcolor{comment}{// Abstract class that adds behavior to a GameObject}}
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \textcolor{keyword}{explicit} \mbox{\hyperlink{classComponent}{Component}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{14     \textcolor{keyword}{virtual} \mbox{\hyperlink{classComponent}{\string~Component}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \mbox{\hyperlink{classGameObject}{GameObject}} *getGameObject();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} handleInput(SDL\_Event \&event);                   \textcolor{comment}{// The function should return true, if the key event is consumed. This prevents other components to receive the event.}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime);}
+\DoxyCodeLine{21     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} renderSprite(sre::SpriteBatch::SpriteBatchBuilder\& spriteBatchBuilder);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}}* comp);}
+\DoxyCodeLine{24     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} onCollisionEnd(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}}* comp);}
+\DoxyCodeLine{25 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{26     \mbox{\hyperlink{classGameObject}{GameObject}} *gameObject;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classGameObject}{GameObject}};}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+
+\end{DoxyCode}

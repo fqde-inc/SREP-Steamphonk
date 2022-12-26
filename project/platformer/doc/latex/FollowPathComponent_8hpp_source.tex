@@ -1,0 +1,60 @@
+\hypertarget{FollowPathComponent_8hpp_source}{}\doxysection{Follow\+Path\+Component.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Morten Nobel-\/Jørgensen on 11/6/17.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}glm/glm.hpp"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{enum} PathType \{ BEZIER, CATMULL\_ROW, LINEAR \};}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{classFollowPathComponent}{FollowPathComponent}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}}\{}
+\DoxyCodeLine{14 \textcolor{keyword}{public}:}
+\DoxyCodeLine{15     \textcolor{keyword}{explicit} \mbox{\hyperlink{classFollowPathComponent}{FollowPathComponent}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{const} std::vector<glm::vec2>\& getPositions();}
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} setPositions(std::vector<glm::vec2> positions);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keyword}{const} PathType\& getType()\{\textcolor{keywordflow}{return} type;\};}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} setType(PathType \_type)\{type = \_type;\};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{comment}{// Public for debugging purposes}}
+\DoxyCodeLine{26     glm::vec2 computePositionAtTime(\textcolor{keywordtype}{float} time);}
+\DoxyCodeLine{27     \textcolor{keywordtype}{int} getNumberOfSegments();}
+\DoxyCodeLine{28     }
+\DoxyCodeLine{29 \textcolor{keyword}{private}:}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     glm::vec2 getLinearPosition(glm::vec2 p0, glm::vec2 p1, \textcolor{keywordtype}{float} t);}
+\DoxyCodeLine{32     glm::vec2 getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, \textcolor{keywordtype}{float} t);}
+\DoxyCodeLine{33     glm::vec2 getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, \textcolor{keywordtype}{float} t, \textcolor{keywordtype}{float} tension);}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     std::vector<glm::vec2> positions;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     std::shared\_ptr<Component> spriteRef; }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     PathType type;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{float} time = 0;}
+\DoxyCodeLine{42     \textcolor{keywordtype}{int} lastSegment = 0;}
+\DoxyCodeLine{43     \textcolor{keywordtype}{bool} looping = \textcolor{keyword}{false};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{float} flapTime = 1.0f;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{float} reloadTime = 0.0f;}
+\DoxyCodeLine{48     \textcolor{keywordtype}{float} reloadTimeLimit = 2.5f;}
+\DoxyCodeLine{49     \textcolor{keywordtype}{float} shootingInterval = 0.15f;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{int} shots = 3;}
+\DoxyCodeLine{52     \textcolor{keywordtype}{int} shotsRemaining = 3;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{float} radius;}
+\DoxyCodeLine{55 \};}
+
+\end{DoxyCode}

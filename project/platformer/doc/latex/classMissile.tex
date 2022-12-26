@@ -1,0 +1,121 @@
+\hypertarget{classMissile}{}\doxysection{Missile Class Reference}
+\label{classMissile}\index{Missile@{Missile}}
+
+
+Inheritance diagram for Missile\+:
+% FIG 0
+
+
+Collaboration diagram for Missile\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMissile_a1eccb20717c052e2935f89974bffbb09}\label{classMissile_a1eccb20717c052e2935f89974bffbb09}} 
+{\bfseries Missile} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classMissile_ad2136aa6695eeb9c5144391fd193b78b}\label{classMissile_ad2136aa6695eeb9c5144391fd193b78b}} 
+void {\bfseries init} (std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ sprite\+Atlas, int x, int y, int start\+Sprite\+Id, int width, bool kinematic)
+\item 
+void \mbox{\hyperlink{classMissile_a26d22a5fe14fa03d9a4500a1ccd9ae02}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classMissile_a2865d56bbc702850719f082e3ea8209b}\label{classMissile_a2865d56bbc702850719f082e3ea8209b}} 
+const std\+::string \& {\bfseries get\+Origin} () const
+\item 
+\mbox{\Hypertarget{classMissile_aa59c0e815d0058c5b75842a65a929723}\label{classMissile_aa59c0e815d0058c5b75842a65a929723}} 
+void {\bfseries set\+Origin} (std\+::string \+\_\+origin)
+\item 
+\mbox{\Hypertarget{classMissile_a5dc2dc12a93146d3f111ed73fd137534}\label{classMissile_a5dc2dc12a93146d3f111ed73fd137534}} 
+const glm\+::vec2 \& {\bfseries get\+Direction} () const
+\item 
+\mbox{\Hypertarget{classMissile_a19c92127fc5953a9c70848de3df07185}\label{classMissile_a19c92127fc5953a9c70848de3df07185}} 
+void {\bfseries set\+Direction} (const glm\+::vec2 \&\+\_\+direction)
+\item 
+\mbox{\Hypertarget{classMissile_ab9b73fb71691ca1157530322d3bd2d97}\label{classMissile_ab9b73fb71691ca1157530322d3bd2d97}} 
+virtual float32 {\bfseries Report\+Fixture} (b2\+Fixture $\ast$fixture, const b2\+Vec2 \&point, const b2\+Vec2 \&normal, float32 fraction) override
+\item 
+void \mbox{\hyperlink{classMissile_a51ddc273416130f29a77362893d5bdd1}{on\+Collision\+Start}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+void \mbox{\hyperlink{classMissile_a300426786f7ed0da529a07fef6514c71}{on\+Collision\+End}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMissile_a811f4c21ffb5ef50afbb283ebe4682d3}\label{classMissile_a811f4c21ffb5ef50afbb283ebe4682d3}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $>$ {\bfseries missile\+Physics}
+\item 
+\mbox{\Hypertarget{classMissile_a0116982c93b74cb28f521905263fa9d1}\label{classMissile_a0116982c93b74cb28f521905263fa9d1}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSpriteComponent}{Sprite\+Component}} $>$ {\bfseries sprite\+Component}
+\item 
+\mbox{\Hypertarget{classMissile_aafaacab2691927dad4f046973c87c3c9}\label{classMissile_aafaacab2691927dad4f046973c87c3c9}} 
+glm\+::vec2 {\bfseries direction}
+\item 
+\mbox{\Hypertarget{classMissile_a38e1cb1cab26301c584d12a572c8ad3e}\label{classMissile_a38e1cb1cab26301c584d12a572c8ad3e}} 
+float {\bfseries lifetime} = 0
+\item 
+\mbox{\Hypertarget{classMissile_a9838f5b031b14e3eb77a6fd6b05c8c42}\label{classMissile_a9838f5b031b14e3eb77a6fd6b05c8c42}} 
+float {\bfseries lifespan} = 2.\+5f
+\item 
+\mbox{\Hypertarget{classMissile_aae5f3ec860a0a9d480a6c758416efb4d}\label{classMissile_aae5f3ec860a0a9d480a6c758416efb4d}} 
+float {\bfseries const\+Speed} = 5.\+5f
+\item 
+\mbox{\Hypertarget{classMissile_ae43ff42f6a305b3756ace5180830e25b}\label{classMissile_ae43ff42f6a305b3756ace5180830e25b}} 
+float {\bfseries radius} = 7.\+0f
+\item 
+\mbox{\Hypertarget{classMissile_ad9476062fa33135b2f03562db4bfa365}\label{classMissile_ad9476062fa33135b2f03562db4bfa365}} 
+float {\bfseries damage} = 1
+\item 
+\mbox{\Hypertarget{classMissile_af50985b1e39b50734df2398e547a1fe0}\label{classMissile_af50985b1e39b50734df2398e547a1fe0}} 
+std\+::string {\bfseries origin}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMissile_a300426786f7ed0da529a07fef6514c71}\label{classMissile_a300426786f7ed0da529a07fef6514c71}} 
+\index{Missile@{Missile}!onCollisionEnd@{onCollisionEnd}}
+\index{onCollisionEnd@{onCollisionEnd}!Missile@{Missile}}
+\doxysubsubsection{\texorpdfstring{onCollisionEnd()}{onCollisionEnd()}}
+{\footnotesize\ttfamily void Missile\+::on\+Collision\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classMissile_a51ddc273416130f29a77362893d5bdd1}\label{classMissile_a51ddc273416130f29a77362893d5bdd1}} 
+\index{Missile@{Missile}!onCollisionStart@{onCollisionStart}}
+\index{onCollisionStart@{onCollisionStart}!Missile@{Missile}}
+\doxysubsubsection{\texorpdfstring{onCollisionStart()}{onCollisionStart()}}
+{\footnotesize\ttfamily void Missile\+::on\+Collision\+Start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classMissile_a26d22a5fe14fa03d9a4500a1ccd9ae02}\label{classMissile_a26d22a5fe14fa03d9a4500a1ccd9ae02}} 
+\index{Missile@{Missile}!update@{update}}
+\index{update@{update}!Missile@{Missile}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Missile\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Missile.\+hpp\item 
+Missile.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,76 @@
+\hypertarget{classSideScrollingCamera}{}\doxysection{Side\+Scrolling\+Camera Class Reference}
+\label{classSideScrollingCamera}\index{SideScrollingCamera@{SideScrollingCamera}}
+
+
+Inheritance diagram for Side\+Scrolling\+Camera\+:
+% FIG 0
+
+
+Collaboration diagram for Side\+Scrolling\+Camera\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_a28843ad919abe8bd1bc29231b2cb7661}\label{classSideScrollingCamera_a28843ad919abe8bd1bc29231b2cb7661}} 
+{\bfseries Side\+Scrolling\+Camera} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+void \mbox{\hyperlink{classSideScrollingCamera_a8e96b499f41458fb5ae4596c5d63be2e}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_ad228850b55179c8f2add73c05b8198a9}\label{classSideScrollingCamera_ad228850b55179c8f2add73c05b8198a9}} 
+void {\bfseries set\+Follow\+Object} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ follow\+Object, glm\+::vec2 offset)
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_acb7e327b7669369af8cd0939be2e49be}\label{classSideScrollingCamera_acb7e327b7669369af8cd0939be2e49be}} 
+void {\bfseries set\+Zoom\+Mode} (bool zoom\+Enabled)
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_a3f7dc2b0ddcfa58bf5a8bf67c89ea011}\label{classSideScrollingCamera_a3f7dc2b0ddcfa58bf5a8bf67c89ea011}} 
+bool {\bfseries is\+Zoom\+Mode} ()
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_acd625829d70e8459541262470838f22b}\label{classSideScrollingCamera_acd625829d70e8459541262470838f22b}} 
+sre\+::\+Camera \& {\bfseries get\+Camera} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSideScrollingCamera_a3b0bf349d5e52d789674499b52b61746}\label{classSideScrollingCamera_a3b0bf349d5e52d789674499b52b61746}} 
+glm\+::vec2 {\bfseries offset}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classSideScrollingCamera_a8e96b499f41458fb5ae4596c5d63be2e}\label{classSideScrollingCamera_a8e96b499f41458fb5ae4596c5d63be2e}} 
+\index{SideScrollingCamera@{SideScrollingCamera}!update@{update}}
+\index{update@{update}!SideScrollingCamera@{SideScrollingCamera}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Side\+Scrolling\+Camera\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Side\+Scrolling\+Camera.\+hpp\item 
+Side\+Scrolling\+Camera.\+cpp\end{DoxyCompactItemize}
