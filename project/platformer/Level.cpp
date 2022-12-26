@@ -188,13 +188,13 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
     for (int i = 0; i < levelBounds.size(); i++)
     {
         auto b = levelBounds[i];
-        if (pos.x >= b.x && pos.x <= b.xMax && pos.y >= b.y && pos.y <= b.yMax)
+        if (pos.x >= b.x && pos.x <= b.xMax && pos.y <= b.y && pos.y >= b.yMax)
         {
             return i;
         }
     }
 
-    cout << "No bounds found matching position : (" << pos.x << ", " << pos.y << "), returning index 0" << endl;
+    cout << "No bounds found matching position : (" << pos.x << ", " << pos.y << "), returning default index 0" << endl;
     return 0;
 }
 
