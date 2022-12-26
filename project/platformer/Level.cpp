@@ -187,8 +187,8 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
 	
     for (int i = 0; i < levelBounds.size(); i++)
     {
-        auto l = levelBounds[i];
-        if (pos.x >= l[0] && pos.x <= l[0] + l[2] && pos.y >= l[1] && pos.y <= l[1] + l[3])
+        auto b = levelBounds[i];
+        if (pos.x >= b.x && pos.x <= b.xMax && pos.y >= b.y && pos.y <= b.yMax)
         {
             return i;
         }
@@ -217,9 +217,15 @@ void Level::generateLevelBounds()
         auto x = d["levels"].GetArray()[i]["worldX"].GetInt();
         auto y = d["levels"].GetArray()[i]["worldY"].GetInt();
 
-        cout << "Pushing bounds for :" << i << ". x: " << x << " y: " << -y << " w: " << x + w << " h: " - y - h << endl;
+        cout << "Pushing bounds for :" << i << endl << " - x: " << x << " y: " << -y << " w: " << x + w << " h: " << - y - h << " to known bounds." << endl;
 
-        levelBounds.push_back(glm::vec4(x, -y, x+w, -y-h));
+        Bounds bound;
+        bound.x = x;
+        bound.y = -y;
+        bound.xMax = x + w;
+        bound.yMax = - y - h;
+
+        levelBounds.push_back(bound);
     }
 }
 

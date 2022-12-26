@@ -19,6 +19,13 @@ enum GenerationType {
 	Foliage
 };
 
+struct Bounds {
+    int x;
+    int y;
+    int xMax;
+    int yMax;
+};
+
 class Level {
 public:
     static std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName);
@@ -41,7 +48,7 @@ public:
 private:
     void generateLevelBounds();
     Level() = default;
-    std::vector<glm::vec4> levelBounds;
+    std::vector<Bounds> levelBounds;
 	std::string levelName;
     std::string spritesheetName;
     std::string foliageLayer;
