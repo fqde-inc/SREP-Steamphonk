@@ -31,13 +31,11 @@ public:
     int getLevelIdByPosition(glm::vec2 pos);
     void setWorldLayer(std::string identifier);
     void setFoliageLayer(std::string identifier);
-    int getLayerIndexForLevel(string identifier, int levelNo);
-	
+    int getLayerIndexForLevel(std::string identifier, int levelNo);
+    std::pair<int,int> srepCoordinates(int x, int y, int worldX, int worldY);
     glm::vec2 getIdentifierPosition(std::string identifier);
-    std::shared_ptr<PlatformComponent> addPlatform(int x, int y, int startSpriteId, int length, bool kinematic);
-    std::shared_ptr<PlatformComponent> addWall(int x, int y, int startSpriteId, int height);
-    std::shared_ptr<PlatformComponent> addTile(int x, int y, std::string name);
-    void addSprite(int x, int y, std::string name);
+    std::shared_ptr<PlatformComponent> addTile(std::pair<int,int> pos, std::string name);
+    void addSprite(std::pair<int, int> coords, std::string name);
 
     static constexpr float tileSize = 21;
 private:

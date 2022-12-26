@@ -89,11 +89,11 @@ void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, 
     }
 }
 
-void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, int pixelX, int pixelY, std::string name)
+void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::pair<int,int> coords, std::string name)
 {
     this->kinematic = false; // walls cannot be moved
     auto game = PlatformerGame::instance;
-    pos = glm::vec2(pixelX, pixelY);
+    pos = glm::vec2(coords.first, coords.second);
 
     auto spriteComponent = gameObject->addComponent<SpriteComponent>();
     auto sprite = tileAtlas->get(name);
