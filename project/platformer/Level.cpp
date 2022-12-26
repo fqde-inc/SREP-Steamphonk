@@ -96,7 +96,7 @@ int Level::getLayerIndexForLevel(string identifier, int levelNo)
 /// Loads a level from a json file
 /// </summary>
 /// <param name="levelNumber"></param>
-void Level::generateSpecificLevel(int levelNumber, GenerationType type = World)
+void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 {
     ifstream fis(levelName);
     IStreamWrapper isw(fis);
@@ -171,11 +171,11 @@ void Level::generateLevelByPosition(glm::vec2 target)
     }
 	
     //Pools all tiles for later use
-    tilePool->clear();
-    foliagePool->clear();
+    tilePool->releaseAllInstances();
+    foliagePool->releaseAllInstances();
 
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
-    generateSpecificLevel(id);
+    generateSpecificLevel(id, World);
     generateSpecificLevel(id, Foliage);
 }
 
@@ -256,7 +256,6 @@ void Level::generateLevel() {
         auto worldY = d["levels"].GetArray()[i]["worldY"].GetInt();
 
 
-        //This doesnt work wat
         for (int i = 0; i < level.Size(); i++)
         {
             auto pos = level[i].GetObject()["px"].GetArray();
@@ -305,7 +304,6 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
                     auto pos = entity[i].GetObject()["px"].GetArray();
                     int x = pos[0].GetInt();
                     int y = pos[1].GetInt();
-                    //return glm::vec2(worldX + x, /*levelHeight*/ - worldY - y);
                     auto coords = srepCoordinates(x, y, worldX, worldY);
                     return glm::vec2(coords.first, coords.second);
                 }
@@ -316,23 +314,58 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
     return glm::vec2(0, 0);
 }
 
-std::shared_ptr<PlatformComponent> Level::addTile(std::pair<int, int> coords, string name) {
-    //Check if there is an available tile with the correct name in the pool
-    auto res = tilePool->get(name);
-    return res->getComponent<PlatformComponent>();
+void Level::addTile(std::pair<int, int> coords, string name) 
+{
+    auto res = tilePool->tryGetInstance(name);
+    if (res)
+    {
+        res->setPosition(glm::vec2(coords.first, coords.second));
+        return res->getComponent<PlatformComponent>();
+    }
+    else
+    {
+        res = createTile(coords, name);
+        tilePool->addActiveInstance(res->name, res);
+    }
+    
+    return res;
 }
 
-void Level::addSprite(std::pair<int, int> coords, string name) {
-    //cout << "(" << x << y << ") ";
+void Level::addSprite(std::pair<int, int> coords, string name) 
+{
+    auto res = foliagePool->tryGetInstance(name);
+    if (res)
+    {
+        res->setPosition(glm::vec2(coords.first, coords.second));
+    }
+    else
+    {
+        res = createSprite(coords, name);
+        tilePool->addActiveInstance(res->name, res);
+    }
+
+    return res;
+}
+
+std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::string name)
+{
+    std::cout << "Added " << name << " to pool" << std::endl;
     auto gameObject = game->createGameObject();
     gameObject->name = "Platform";
-    auto pos = glm::vec2(coords.first, coords.second);
+    auto res = gameObject->addComponent<PlatformComponent>();
+    res->initTile(tileAtlas, std::make_pair(0,0), name);
+    gameObject->setPosition(glm::vec2(pos.first, pos.second));
+    return gameObject;
+}
 
+std::shared_ptr<GameObject> Level::createSprite(std::pair<int, int> pos, std::string name)
+{
+    auto gameObject = game->createGameObject();
     auto spriteComponent = gameObject->addComponent<SpriteComponent>();
     auto sprite = tileAtlas->get(name);
     float tileSize = sprite.getSpriteSize().x;
-
-    gameObject->setPosition(pos);
-
     spriteComponent->setSprite(sprite);
+    gameObject->name = "Sprite";
+    gameObject->setPosition(glm::vec2(pos.first, pos.second));
+    return gameObject;
 }

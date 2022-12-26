@@ -11,8 +11,6 @@ class PlatformComponent : public Component {
 public:
     explicit PlatformComponent(GameObject *gameObject);
 
-    void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
-    void initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int height);
     void initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::pair<int,int> coords, std::string name);
 
     void moveTo(glm::vec2 tilePos);

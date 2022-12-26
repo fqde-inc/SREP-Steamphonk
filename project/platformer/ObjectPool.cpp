@@ -13,25 +13,26 @@ std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAt
     return res;
 }
 
-std::shared_ptr<GameObject> ObjectPool::get(const std::string& key)
+std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 {
     auto it = _pool.find(key);
 	//If we dont have a match, add new object
     if (it == _pool.end())
     {
-        addNew(key);
+        addActiveInstance(key);
 		//Use end iterator and decrement one
         it = --_pool.end();
     }
 	//Get the value to the key
     auto res = it->second;
     _pool.erase(it);
-    _pool.emplace_hint(_pool.cend(), key, res);
+    _used.emplace_hint(_used.cend(), key, res);
     return res;
 }
 
-void ObjectPool::clear()
+void ObjectPool::releaseAllInstances()
 {
+	std::cout << "Moved " << _used.size() << " objects to pool" << std::endl;
     for (auto it = _used.begin(); it != _used.end(); ++it)
     {
         std::shared_ptr<GameObject> res = it->second;
@@ -40,11 +41,7 @@ void ObjectPool::clear()
     }
 }
 
-void ObjectPool::addNew(const std::string& name)
+void ObjectPool::addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object)
 {
-    auto gameObject = PlatformerGame::instance->createGameObject();
-    gameObject->name = "Platform";
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->initTile(tileAtlas, std::make_pair(0,0), name);
-    _pool.emplace_hint(_pool.cend(), name, gameObject);
+    _used.emplace_hint(_used.cend(), key, object);
 }
