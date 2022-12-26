@@ -21,13 +21,14 @@ using namespace std;
 std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) 
 {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
+	
     res->game = game;
     res->tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
         .withFile("dirttile.png")
         .withFilterSampling(false)
         .build());;
-	res->tilePool = ObjectPool(res->tileAtlas);
-    res->foliagePool = ObjectPool(res->tileAtlas);
+	res->tilePool = ObjectPool::createPool(res->tileAtlas);
+    res->foliagePool = ObjectPool::createPool(res->tileAtlas);
 	res->levelName = levelName;
 	res->spritesheetName = spritesheetName;
 
@@ -112,7 +113,7 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type = World)
             break;
         case GenerationType::Foliage:
             cout << "Generating foliage" << endl;
-            index = getLayerIndexForLevel(worldLayer, levelNumber);
+            index = getLayerIndexForLevel(foliageLayer, levelNumber);
             break;
     }
 	
@@ -170,8 +171,8 @@ void Level::generateLevelByPosition(glm::vec2 target)
     }
 	
     //Pools all tiles for later use
-    tilePool.clear();
-    foliagePool.clear();
+    tilePool->clear();
+    foliagePool->clear();
 
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
     generateSpecificLevel(id);
@@ -317,7 +318,7 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
 
 std::shared_ptr<PlatformComponent> Level::addTile(std::pair<int, int> coords, string name) {
     //Check if there is an available tile with the correct name in the pool
-    auto res = tilePool.get(name);
+    auto res = tilePool->get(name);
     return res->getComponent<PlatformComponent>();
 }
 

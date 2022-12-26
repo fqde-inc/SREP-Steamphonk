@@ -1,5 +1,5 @@
 //
-// Created by Giorgio Perri  on 31/10/22.
+// Created by Søren Skouv
 //
 #pragma once
 
@@ -7,7 +7,7 @@
 
 class ObjectPool {
 public:
-    ObjectPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas);
+    static std::shared_ptr<ObjectPool> createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas);
     std::shared_ptr<GameObject> get(const std::string& key);
     void clear();
 private:

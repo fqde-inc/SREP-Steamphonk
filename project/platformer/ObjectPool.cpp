@@ -6,9 +6,11 @@
 #include "ObjectPool.hpp"
 #include "PlatformComponent.hpp"
 
-ObjectPool::ObjectPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
+std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
-	this->tileAtlas = tileAtlas;
+    std::shared_ptr<ObjectPool> res = std::shared_ptr<ObjectPool>(new ObjectPool());
+    res->tileAtlas = tileAtlas;
+    return res;
 }
 
 std::shared_ptr<GameObject> ObjectPool::get(const std::string& key)
@@ -24,7 +26,7 @@ std::shared_ptr<GameObject> ObjectPool::get(const std::string& key)
 	//Get the value to the key
     auto res = it->second;
     _pool.erase(it);
-    _used.insert(*it);
+    _pool.emplace_hint(_pool.cend(), key, res);
     return res;
 }
 
@@ -32,15 +34,17 @@ void ObjectPool::clear()
 {
     for (auto it = _used.begin(); it != _used.end(); ++it)
     {
-        it->second->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
-        _pool.emplace_hint(_pool.cend(), it);
+        std::shared_ptr<GameObject> res = it->second;
+        res->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
+        _pool.emplace_hint(_pool.cend(), res->name, res);
     }
 }
 
-void ObjectPool::addNew(const std::string& name){
+void ObjectPool::addNew(const std::string& name)
+{
     auto gameObject = PlatformerGame::instance->createGameObject();
     gameObject->name = "Platform";
     auto res = gameObject->addComponent<PlatformComponent>();
     res->initTile(tileAtlas, std::make_pair(0,0), name);
-    _pool.emplace_hint(_pool.cend(), name, res);
+    _pool.emplace_hint(_pool.cend(), name, gameObject);
 }

@@ -7,7 +7,6 @@
 class PlatformerGame;
 class GameObject;
 class PlatformComponent;
-//template <typename T> class ObjectPool;
 
 enum class TileCollider {
     Block,
@@ -50,8 +49,8 @@ public:
 private:
     void generateLevelBounds();
     Level() = default;
-    ObjectPool tilePool;
-    ObjectPool foliagePool;
+    std::shared_ptr<ObjectPool> tilePool;
+    std::shared_ptr<ObjectPool> foliagePool;
     std::vector<Bounds> levelBounds;
 	std::string levelName;
     std::string spritesheetName;
