@@ -46,3 +46,11 @@ void Damagable::resetLife()
 	cout << "Resetting life from " << curLife << " to: " << maxLife << endl;
 	curLife = maxLife;
 }
+
+int Damagable::getCurLife() {
+    return curLife;
+}
+
+int Damagable::getMaxLife() {
+    return maxLife;
+}

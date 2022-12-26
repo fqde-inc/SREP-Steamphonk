@@ -172,6 +172,9 @@ void PlatformerGame::initLevel() {
 
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowBorderSize = 0.0f;
+
+    heartFull  = Texture::create().withFile("heartFull.png").withFilterSampling(false).build();
+    heartEmpty = Texture::create().withFile("heartEmpty.png").withFilterSampling(false).build();
 }
 
 void PlatformerGame::update(float time) {
@@ -237,14 +240,31 @@ void PlatformerGame::render() {
     ImGui::PopFont();
     ImGui::End();
 
-//    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
-//    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
-//    ImGui::SetNextWindowBgAlpha(0);
-//    ImGui::PushFont(pixelated);
-//    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-//    ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
-//    ImGui::PopFont();
-//    ImGui::End();
+    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
+    ImGui::Begin("Health", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("%s", "Health:");
+    ImGui::PopFont();
+    ImGui::End();
+
+    ImVec2 uv0(0,1); // flip y axis coordinates
+    ImVec2 uv1(1,0);
+
+    ImGui::SetNextWindowPos(ImVec2(-24 + 85, windowSize.y - 85), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
+    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    Texture* texFull = heartFull.get();
+    Texture* texEmpty = heartEmpty.get();
+    for (int i=0;i<characterController->damageComponent->getMaxLife();i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? texEmpty->getNativeTexturePtr() : texFull->getNativeTexturePtr(),{32, 32}, uv0, uv1);
+    }
+    ImGui::PopFont();
+    ImGui::End();
 
     if (doDebugDraw){
         world->DrawDebugData();

@@ -20,9 +20,9 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
    
-    characterDamagable = gameObject->addComponent<Damagable>();
-    characterDamagable->setMaxLife(10);
-    characterDamagable->overrideDeathAction([this]() {
+    damageComponent = gameObject->addComponent<Damagable>();
+    damageComponent->setMaxLife(10);
+    damageComponent->overrideDeathAction([this]() {
         returnToSpawn = true;
         });
 	
@@ -52,11 +52,10 @@ void CharacterController::update(float deltaTime) {
     {
         auto physicsScale = PlatformerGame::instance->physicsScale;
         this->characterPhysics->getBody()->SetTransform(b2Vec2(spawn.x / physicsScale, spawn.y / physicsScale), 0);
-        this->characterDamagable->resetLife();
+        damageComponent->resetLife();
         std::cout << "Player returned to " << spawn.x << ", " << spawn.y << std::endl;
         returnToSpawn = false;
     }
-	
     // raycast ignores any shape in the starting point
     auto from = characterPhysics->getBody()->GetWorldCenter();
     b2Vec2 to {from.x,from.y -radius*1.3f};

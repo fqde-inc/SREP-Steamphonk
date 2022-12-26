@@ -72,6 +72,9 @@ private:
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
 
+    std::shared_ptr<sre::Texture> heartFull;
+    std::shared_ptr<sre::Texture> heartEmpty;
+
     void updatePhysics();
 
     std::shared_ptr<Level> level;
