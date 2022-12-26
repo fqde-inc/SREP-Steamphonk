@@ -1,0 +1,76 @@
+\hypertarget{classFollowPathComponent}{}\doxysection{Follow\+Path\+Component Class Reference}
+\label{classFollowPathComponent}\index{FollowPathComponent@{FollowPathComponent}}
+
+
+Inheritance diagram for Follow\+Path\+Component\+:
+% FIG 0
+
+
+Collaboration diagram for Follow\+Path\+Component\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_add7e7ae1e21c28cb25087d9cc6429274}\label{classFollowPathComponent_add7e7ae1e21c28cb25087d9cc6429274}} 
+{\bfseries Follow\+Path\+Component} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+void \mbox{\hyperlink{classFollowPathComponent_aa0e856ec5829fd288cccf574bc583485}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_a33a402d454041bfb13dcc50f3099e38f}\label{classFollowPathComponent_a33a402d454041bfb13dcc50f3099e38f}} 
+const std\+::vector$<$ glm\+::vec2 $>$ \& {\bfseries get\+Positions} ()
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_a81cbc8e2daadec593789af56fb752736}\label{classFollowPathComponent_a81cbc8e2daadec593789af56fb752736}} 
+void {\bfseries set\+Positions} (std\+::vector$<$ glm\+::vec2 $>$ positions)
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_a252a7ca5464004154bfdeeeb4b735a06}\label{classFollowPathComponent_a252a7ca5464004154bfdeeeb4b735a06}} 
+const Path\+Type \& {\bfseries get\+Type} ()
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_a3059f9babdafc24df906d20ba4871a81}\label{classFollowPathComponent_a3059f9babdafc24df906d20ba4871a81}} 
+void {\bfseries set\+Type} (Path\+Type \+\_\+type)
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_a1ba9d6a4190846e593b80bb73fd095ce}\label{classFollowPathComponent_a1ba9d6a4190846e593b80bb73fd095ce}} 
+glm\+::vec2 {\bfseries compute\+Position\+At\+Time} (float time)
+\item 
+\mbox{\Hypertarget{classFollowPathComponent_ac1bbb4fcd30d1db97401e39ce31006d7}\label{classFollowPathComponent_ac1bbb4fcd30d1db97401e39ce31006d7}} 
+int {\bfseries get\+Number\+Of\+Segments} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classFollowPathComponent_aa0e856ec5829fd288cccf574bc583485}\label{classFollowPathComponent_aa0e856ec5829fd288cccf574bc583485}} 
+\index{FollowPathComponent@{FollowPathComponent}!update@{update}}
+\index{update@{update}!FollowPathComponent@{FollowPathComponent}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Follow\+Path\+Component\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Follow\+Path\+Component.\+hpp\item 
+Follow\+Path\+Component.\+cpp\end{DoxyCompactItemize}

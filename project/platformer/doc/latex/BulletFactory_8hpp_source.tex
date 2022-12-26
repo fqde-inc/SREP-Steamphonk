@@ -1,0 +1,18 @@
+\hypertarget{BulletFactory_8hpp_source}{}\doxysection{Bullet\+Factory.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once }}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}Bullet.hpp"{}}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{enum} BulletTypes \{}
+\DoxyCodeLine{5     None,}
+\DoxyCodeLine{6     Pellets,}
+\DoxyCodeLine{7     Rocket}
+\DoxyCodeLine{8 \};}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{classBulletFactory}{BulletFactory}} \{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \textcolor{keyword}{static} std::shared\_ptr<Bullet> Make( BulletTypes type );}
+\DoxyCodeLine{13 \};}
+
+\end{DoxyCode}

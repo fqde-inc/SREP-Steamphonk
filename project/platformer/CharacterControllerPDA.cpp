@@ -6,6 +6,7 @@
 #include "CharacterControllerPDA.hpp"
 #include <SDL_events.h>
 #include "PhysicsComponent.hpp"
+#include "Gun.hpp"
 #include "PlatformerGame.hpp"
 
 std::vector<std::shared_ptr<CharacterState>> CharacterState::characterStateStack;
@@ -311,18 +312,12 @@ void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
-            if(character.rocketLauncherFired) break;
-            character.reloadTimer->initTimer(character.reloadTime);
-            character.rocketLauncher->Fire(*character.playerShooting);
-            character.rocketLauncherFired = true;
+            character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
-            if(character.shotgunFired) break;
-            character.reloadTimer->initTimer(character.reloadTime);
-            character.shotgun->Fire(*character.playerShooting);
-            character.shotgunFired = true;
+            character.shotgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;

@@ -1,0 +1,28 @@
+\hypertarget{MovingPlatformComponent_8hpp_source}{}\doxysection{Moving\+Platform\+Component.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}glm/glm.hpp"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformComponent}{PlatformComponent}};}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classMovingPlatformComponent}{MovingPlatformComponent}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{explicit} \mbox{\hyperlink{classMovingPlatformComponent}{MovingPlatformComponent}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keywordtype}{void} setMovementStart(glm::vec2 pos);}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} setMovementEnd(glm::vec2 pos);}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{keywordtype}{float} totalTime = 0;}
+\DoxyCodeLine{20     glm::vec2 movementStart = glm::vec2(0,0);}
+\DoxyCodeLine{21     glm::vec2 movementEnd = glm::vec2(0,0);}
+\DoxyCodeLine{22     std::shared\_ptr<PlatformComponent> platformComponent;}
+\DoxyCodeLine{23 \};}
+
+\end{DoxyCode}

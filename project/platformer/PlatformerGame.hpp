@@ -1,3 +1,4 @@
+
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
 #include <vector>
@@ -9,8 +10,10 @@
 #include "CharacterController.hpp"
 #include "FollowPathComponent.hpp"
 #include "EnemyComponent.hpp"
+#include "Box2D/Box2D.h"
 
 class PhysicsComponent;
+class CharacterController;
 
 enum class GameState{
     Ready,
@@ -80,12 +83,26 @@ private:
 
     std::shared_ptr<FollowPathComponent> birdMovement;
 
+    
+    // Box2D / Physics
+    enum _entityCategory {
+        BACKGROUND  = 0x0001,
+        WALLS       = 0x0002,
+        PLAYER      = 0x0003,
+        ENEMY       = 0x0004,
+        MISSILE     = 0x0005,
+        BULLET      = 0x0006,
+    };
+
     const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
+    
     std::map<b2Fixture*,PhysicsComponent *> physicsComponentLookup;
+    
     Box2DDebugDraw debugDraw;
     bool doDebugDraw = false;
+
     friend class PhysicsComponent;
     friend class Level;
     friend class CharacterController;
@@ -93,5 +110,9 @@ private:
     friend class EnemyComponent;
 
     friend class Missile;
+    friend class Gun;
+    friend class Bullet;
+    friend class RocketBullet;
+    friend class Explosion;
 };
 

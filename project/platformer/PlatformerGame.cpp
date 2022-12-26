@@ -32,12 +32,12 @@ PlatformerGame::PlatformerGame()
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
 
-    using namespace rapidjson;
-    ifstream fis("testlvl.json");
-    IStreamWrapper isw(fis);
-    Document d;
-    d.ParseStream(isw);
-    auto hexValue = d["bgColor"].GetString();
+    //using namespace rapidjson;
+    //ifstream fis("testlvl.json");
+    //IStreamWrapper isw(fis);
+    //Document d;
+    //d.ParseStream(isw);
+    //auto hexValue = d["bgColor"].GetString();
 
     backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
@@ -50,18 +50,13 @@ PlatformerGame::PlatformerGame()
         .withFile("dirtsheet.png")
         .withFilterSampling(false)
         .build());
+	
+    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
 
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
         .withFilterSampling(false)
         .build());
-
-    UIAtlas = SpriteAtlas::create("UISprites.json", Texture::create()
-            .withFile("UISprites.png")
-            .withFilterSampling(false)
-            .build());
-
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas);
 
     initLevel();
 
@@ -161,9 +156,6 @@ void PlatformerGame::initLevel() {
     }, BEZIER);
 
     birdMovement = enemy->getPathing();
-
-    level->generateLevelFromFile(0);
-
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
     auto crosshairSpriteComponent = crosshair->addComponent<SpriteComponent>();
@@ -183,6 +175,7 @@ void PlatformerGame::initLevel() {
 }
 
 void PlatformerGame::update(float time) {
+    level->generateLevelByPosition(player->getPosition());
     updatePhysics();
 	if (time > 0.03) // if framerate approx 30 fps then run two physics steps
 	{
