@@ -28,6 +28,15 @@ std::shared_ptr<GameObject> ObjectPool::get(const std::string& key)
     return res;
 }
 
+void ObjectPool::clear()
+{
+    for (auto it = _used.begin(); it != _used.end(); ++it)
+    {
+        it->second->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
+        _pool.emplace_hint(_pool.cend(), it);
+    }
+}
+
 void ObjectPool::addNew(const std::string& name){
     auto gameObject = PlatformerGame::instance->createGameObject();
     gameObject->name = "Platform";

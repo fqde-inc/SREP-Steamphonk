@@ -26,8 +26,8 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
         .withFile("dirttile.png")
         .withFilterSampling(false)
         .build());;
-	res->tilePool = ObjectPool<GameObject>(res->tileAtlas);
-    res->foliagePool = ObjectPool<GameObject>(res->tileAtlas);
+	res->tilePool = ObjectPool(res->tileAtlas);
+    res->foliagePool = ObjectPool(res->tileAtlas);
 	res->levelName = levelName;
 	res->spritesheetName = spritesheetName;
 
@@ -169,11 +169,9 @@ void Level::generateLevelByPosition(glm::vec2 target)
         return;
     }
 	
-    //Pools tiles by name for later use
-    /*unloadSpecificLevel(id);
-    unloadSpecificLevel(id, Foliage);*/
-    //tilePool.UnloadAll();
-    //foliagePool.UnloadAll();
+    //Pools all tiles for later use
+    tilePool.clear();
+    foliagePool.clear();
 
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
     generateSpecificLevel(id);
@@ -319,12 +317,8 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
 
 std::shared_ptr<PlatformComponent> Level::addTile(std::pair<int, int> coords, string name) {
     //Check if there is an available tile with the correct name in the pool
-    auto res = tilePool.tryGet(name);
-    if (!res)
-    {
-        res = tilePool.addNew(name);
-    }
-    return res;
+    auto res = tilePool.get(name);
+    return res->getComponent<PlatformComponent>();
 }
 
 void Level::addSprite(std::pair<int, int> coords, string name) {

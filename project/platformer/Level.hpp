@@ -50,8 +50,8 @@ public:
 private:
     void generateLevelBounds();
     Level() = default;
-    ObjectPool<GameObject> tilePool;
-    ObjectPool<GameObject> foliagePool;
+    ObjectPool tilePool;
+    ObjectPool foliagePool;
     std::vector<Bounds> levelBounds;
 	std::string levelName;
     std::string spritesheetName;
