@@ -42,9 +42,9 @@ public:
     int getLayerIndexForLevel(std::string identifier, int levelNo);
     std::pair<int,int> srepCoordinates(int x, int y, int worldX, int worldY);
     glm::vec2 getIdentifierPosition(std::string identifier);
-    std::shared_ptr<PlatformComponent> createTile(std::pair<int, int> pos, std::string name);
+    std::shared_ptr<GameObject> createTile(std::pair<int, int> pos, std::string name);
     void addTile(std::pair<int,int> pos, std::string name);
-    std::shared_ptr<PlatformComponent> createSprite(std::pair<int, int> pos, std::string name);
+    std::shared_ptr<GameObject> createSprite(std::pair<int, int> pos, std::string name);
     void addSprite(std::pair<int, int> coords, std::string name);
 
     static constexpr float tileSize = 21;

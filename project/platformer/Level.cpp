@@ -320,15 +320,13 @@ void Level::addTile(std::pair<int, int> coords, string name)
     if (res)
     {
         res->setPosition(glm::vec2(coords.first, coords.second));
-        return res->getComponent<PlatformComponent>();
+        res->getComponent<PlatformComponent>();
     }
     else
     {
         res = createTile(coords, name);
         tilePool->addActiveInstance(res->name, res);
     }
-    
-    return res;
 }
 
 void Level::addSprite(std::pair<int, int> coords, string name) 
@@ -343,8 +341,6 @@ void Level::addSprite(std::pair<int, int> coords, string name)
         res = createSprite(coords, name);
         tilePool->addActiveInstance(res->name, res);
     }
-
-    return res;
 }
 
 std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::string name)

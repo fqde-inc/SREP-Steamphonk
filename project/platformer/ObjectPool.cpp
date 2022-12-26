@@ -16,12 +16,10 @@ std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAt
 std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 {
     auto it = _pool.find(key);
-	//If we dont have a match, add new object
+	//If we dont have a match, return null
     if (it == _pool.end())
     {
-        addActiveInstance(key);
-		//Use end iterator and decrement one
-        it = --_pool.end();
+        return nullptr;
     }
 	//Get the value to the key
     auto res = it->second;
