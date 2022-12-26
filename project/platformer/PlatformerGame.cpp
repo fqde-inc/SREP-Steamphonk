@@ -45,12 +45,8 @@ PlatformerGame::PlatformerGame()
             .withFile( "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
-    tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
-        .withFile("dirttile.png")
-        .withFilterSampling(false)
-        .build());
 	
-    level = Level::createDefaultLevel(this, tileAtlas, "testlvl.json", "dirttile.json");
+    level = Level::createDefaultLevel(this, "testlvl.json", "dirttile.json");
 
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")

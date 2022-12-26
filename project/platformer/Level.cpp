@@ -17,11 +17,14 @@ using namespace rapidjson;
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::string levelName, std::string spritesheetName) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) {
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 
     res->game = game;
-    res->tileAtlas = tileAtlas;
+    res->tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
+        .withFile("dirttile.png")
+        .withFilterSampling(false)
+        .build());;
 	res->levelName = levelName;
 	res->spritesheetName = spritesheetName;
 
