@@ -31,6 +31,16 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
     return res;
 }
 
+void Level::setFoliageLayer(string identifier)
+{
+	foliageLayer = identifier;
+}
+
+void Level::setWorldLayer(string identifier)
+{
+    worldLayer = identifier;
+}
+
 std::string Level::getNameByCoords(std::pair<int, int> coords)
 {
     ifstream tfis(spritesheetName);
@@ -53,18 +63,50 @@ std::string Level::getNameByCoords(std::pair<int, int> coords)
     return "";
 }
 
-/// <summary>
-/// Loads a level from a json file
-/// </summary>
-/// <param name="levelNumber"></param>
-void Level::generateSpecificLevel(int levelNumber)
+int Level::getLayerIndexForLevel(string identifier, int levelNo)
 {
     ifstream fis(levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
+
+    auto level = d["levels"].GetArray()[levelNo]["layerInstances"].GetArray();
 	
-    auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[1]["autoLayerTiles"].GetArray();
+    for (int i = 0; i < level.Size(); i++)
+    {
+        string res = level[i].GetObject()["__identifier"].GetString();
+        if (identifier.compare(res) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/// <summary>
+/// Loads a level from a json file
+/// </summary>
+/// <param name="levelNumber"></param>
+void Level::generateSpecificLevel(int levelNumber, GenerationType type = World)
+{
+    ifstream fis(levelName);
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+
+    int index = -1;
+	
+    switch (type)
+    {
+        case GenerationType::World:
+            index = getLayerIndexForLevel(worldLayer, levelNumber);
+            break;
+        case GenerationType::Foliage:
+            index = getLayerIndexForLevel(worldLayer, levelNumber);
+            break;
+    }
+	
+    auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[index]["autoLayerTiles"].GetArray();
     auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
     auto levelWidth = d["levels"].GetArray()[levelNumber]["pxWid"].GetInt();
     auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
@@ -81,7 +123,15 @@ void Level::generateSpecificLevel(int levelNumber)
         string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
 
 		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
-        addTile(worldX + x, levelHeight - worldY - y, spriteName);
+        switch (type)
+        {
+        case GenerationType::World:
+            addTile(worldX + x, levelHeight - worldY - y, spriteName);
+            break;
+        case GenerationType::Foliage:
+            addSprite(worldX + x, levelHeight - worldY - y, spriteName);
+            break;
+        }
     }
 	
     lastGenerated = levelNumber;
@@ -102,6 +152,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 		
 	cout << "Generating level: " << id << endl;
     generateSpecificLevel(id);
+    generateSpecificLevel(id, Foliage);
 }
 
 /// <summary>
@@ -161,7 +212,9 @@ void Level::generateLevel() {
 
     for (int i = 0; i < levels.Size(); i++)
     {
-        auto level = d["levels"].GetArray()[i]["layerInstances"].GetArray()[2]["autoLayerTiles"].GetArray();
+        auto index = getLayerIndexForLevel(worldLayer, i);
+		
+        auto level = d["levels"].GetArray()[i]["layerInstances"].GetArray()[index]["autoLayerTiles"].GetArray();
         auto levelHeight = d["levels"].GetArray()[i]["pxHei"].GetInt();
         auto levelWidth = d["levels"].GetArray()[i]["pxWid"].GetInt();
         auto worldX = d["levels"].GetArray()[i]["worldX"].GetInt();
@@ -233,4 +286,19 @@ std::shared_ptr<PlatformComponent> Level::addTile(int x, int y, string name) {
     auto res = gameObject->addComponent<PlatformComponent>();
     res->initTile(tileAtlas, x, y, name);
     return res;
+}
+
+void Level::addSprite(int x, int y, string name) {
+    //cout << "(" << x << y << ") ";
+    auto gameObject = game->createGameObject();
+    gameObject->name = "Platform";
+    auto pos = glm::vec2(x, y);
+
+    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
+    auto sprite = tileAtlas->get(name);
+    float tileSize = sprite.getSpriteSize().x;
+
+    gameObject->setPosition(pos);
+
+    spriteComponent->setSprite(sprite);
 }

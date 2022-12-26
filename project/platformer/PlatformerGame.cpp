@@ -47,6 +47,8 @@ PlatformerGame::PlatformerGame()
             .build());
 	
     level = Level::createDefaultLevel(this, "testlvl.json", "dirttile.json");
+    level->setWorldLayer("Background");
+    level->setFoliageLayer("Foliage");
 
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
