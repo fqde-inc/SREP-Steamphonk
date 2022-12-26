@@ -88,7 +88,6 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 
 void PlatformerGame::initLevel() {
     initPhysics();
-    level->generateSpecificLevel(0);
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = characterAtlas->get("tile000.png");
