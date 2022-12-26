@@ -5,13 +5,14 @@
 
 #include "GameObject.hpp"
 
-template <typename T> 
 class ObjectPool {
 public:
     ObjectPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas);
-    std::shared_ptr<T> tryGet(const std::string& key);
-    void addNew(std::string name);
+    std::shared_ptr<GameObject> get(const std::string& key);
+    void clear();
 private:
-	std::map<std::string, std::shared_ptr<T>> _pool = {};
-    std::shared_ptr<sre::SpriteAtlas> tileAtlas tileAtlas;
+    void addNew(const std::string& name);
+	std::map<std::string, std::shared_ptr<GameObject>> _pool = {};
+    std::map<std::string, std::shared_ptr<GameObject>> _used = {};
+    std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 };

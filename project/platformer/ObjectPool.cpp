@@ -4,30 +4,34 @@
 
 #include "PlatformerGame.hpp"
 #include "ObjectPool.hpp"
+#include "PlatformComponent.hpp"
 
 ObjectPool::ObjectPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
 	this->tileAtlas = tileAtlas;
 }
 
-template <typename T>
-std::shared_ptr<T> ObjectPool::tryGet(const std::string& key)
+std::shared_ptr<GameObject> ObjectPool::get(const std::string& key)
 {
     auto it = _pool.find(key);
-    if (it == _pool.end()) 
+	//If we dont have a match, add new object
+    if (it == _pool.end())
     {
-        return std::shared_ptr<T>();
+        addNew(key);
+		//Use end iterator and decrement one
+        it = --_pool.end();
     }
+	//Get the value to the key
     auto res = it->second;
     _pool.erase(it);
+    _used.insert(*it);
     return res;
 }
 
-void ObjectPool::addNew(std::string name){
+void ObjectPool::addNew(const std::string& name){
     auto gameObject = PlatformerGame::instance->createGameObject();
     gameObject->name = "Platform";
     auto res = gameObject->addComponent<PlatformComponent>();
-    res->initTile(tileAtlas, coords, name);
-
-    _pool[name] = res;
+    res->initTile(tileAtlas, std::make_pair(0,0), name);
+    _pool.emplace_hint(_pool.cend(), name, res);
 }

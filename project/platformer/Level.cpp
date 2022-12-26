@@ -18,9 +18,9 @@ using namespace rapidjson;
 using namespace sre;
 using namespace std;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) {
+std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) 
+{
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
-
     res->game = game;
     res->tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
         .withFile("dirttile.png")
@@ -172,6 +172,8 @@ void Level::generateLevelByPosition(glm::vec2 target)
     //Pools tiles by name for later use
     /*unloadSpecificLevel(id);
     unloadSpecificLevel(id, Foliage);*/
+    //tilePool.UnloadAll();
+    //foliagePool.UnloadAll();
 
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
     generateSpecificLevel(id);
