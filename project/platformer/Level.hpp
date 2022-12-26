@@ -34,7 +34,7 @@ public:
     std::string getNameByCoords(std::pair<int, int> coords);
 	
     void generateLevel();
-    void generateSpecificLevel(int levelNumber, GenerationType type);
+    void generateSpecificLevel(int levelNumber, GenerationType type = World);
     void generateLevelByPosition(glm::vec2 target);
     int getLevelIdByPosition(glm::vec2 pos);
     void setWorldLayer(std::string identifier);
