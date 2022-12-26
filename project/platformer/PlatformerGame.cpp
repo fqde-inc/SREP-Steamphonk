@@ -237,14 +237,14 @@ void PlatformerGame::render() {
     ImGui::PopFont();
     ImGui::End();
 
-    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
-    ImGui::SetNextWindowBgAlpha(0);
-    ImGui::PushFont(pixelated);
-    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
-    ImGui::PopFont();
-    ImGui::End();
+//    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
+//    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+//    ImGui::SetNextWindowBgAlpha(0);
+//    ImGui::PushFont(pixelated);
+//    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+//    ImGui::Text("Health: %i", characterController->damageComponent->getCurLife());
+//    ImGui::PopFont();
+//    ImGui::End();
 
     if (doDebugDraw){
         world->DrawDebugData();
