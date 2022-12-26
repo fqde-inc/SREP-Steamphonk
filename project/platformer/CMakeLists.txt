@@ -14,6 +14,15 @@ file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMA
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
+file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+#copy files to graphics
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
 # copy files to dest
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
