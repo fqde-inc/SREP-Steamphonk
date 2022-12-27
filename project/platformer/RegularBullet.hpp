@@ -7,7 +7,7 @@
 
 #pragma once
 
-class ShotgunBullet : public Bullet{
+class RegularBullet : public Bullet{
 public:
-    ShotgunBullet(GameObject* gameObject) : Bullet(gameObject) {};
+    RegularBullet(GameObject* gameObject) : Bullet(gameObject) {};
 };

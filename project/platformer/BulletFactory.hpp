@@ -3,7 +3,7 @@
 
 enum BulletTypes {
     None,
-    Pellets,
+    Regular,
     Rocket
 };
 

@@ -11,7 +11,7 @@
 
 enum GunTypes {
     NullGun,
-    Shotgun,
+    Handgun,
     RocketLauncher,
 };
 

@@ -85,9 +85,9 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
     character.cooldownTimer->initTimer(character.cooldownTime);
     switch (character.equippedGun) {
         case RocketLauncher:
-            character.equippedGun = Shotgun;
+            character.equippedGun = Handgun;
             break;
-        case Shotgun:
+        case Handgun:
             character.equippedGun = RocketLauncher;
             break;
         default:
@@ -319,7 +319,7 @@ void FiringState::update(CharacterController &character, float deltaTime) {
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
-        case Shotgun:
+        case Handgun:
             if(character.shotgunFired) break;
             character.reloadTimer->initTimer(character.reloadTime);
             character.shotgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());

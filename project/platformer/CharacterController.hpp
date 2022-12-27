@@ -8,7 +8,7 @@
 #include "CharacterControllerPDA.hpp"
 #include "Gun.hpp"
 #include "RocketLauncher.hpp"
-#include "Shotgun.hpp"
+#include "HandgunGun.hpp"
 #include "TimerComponent.hpp"
 #include "RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
@@ -35,7 +35,7 @@ public:
     bool handleInput(SDL_Event &event) override;
 
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
-    std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
+    std::unique_ptr<Gun> shotgun = std::make_unique<HandgunGun>();
 
     bool shotgunFired = false;
     bool rocketLauncherFired = false;
