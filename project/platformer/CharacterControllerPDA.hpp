@@ -34,7 +34,6 @@ public:
     virtual void moveRight(CharacterController& character, SDL_Event &event);
     virtual void fire(CharacterController& character);
     virtual void swapWeapons(CharacterController& character, SDL_Event &event);
-    virtual void reload(CharacterController& character);
 
     static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
 

@@ -31,5 +31,7 @@ public:
     float cooldownTime = .1f;
     
     bool Fire(glm::vec2 _position, glm::vec2 _direction);
-    void reload(){clipSize = maxClipSize;};
+    void reload(){
+        clipSize = maxClipSize;
+    };
 };

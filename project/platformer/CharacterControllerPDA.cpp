@@ -91,10 +91,6 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
     }
 }
 
-void CharacterState::reload(CharacterController &character) {
-    //character.reloadTimer->initTimer(character.reloadTime);
-;}
-
 #pragma endregion
 
 #pragma region StandingState
@@ -147,10 +143,6 @@ void StandingState::update(CharacterController &character, float deltaTime) {
     if(animationTime >= animationFrameRate) {
         animationIndex = (animationIndex + 1) % animationSprites.size();
         animationTime = 0;
-    }
-
-    if(!character.reloadTimer->isRunning) {
-        reload(character);
     }
 
     animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
