@@ -52,7 +52,7 @@ void PlayerShooting::shootAt(glm::vec2 position)
     auto spriteComponent = go->addComponent<SpriteComponent>();
     spriteComponent->setSprite(sprite);
 
-    auto l = go->addComponent<Missile>();
+    auto l = go->addComponent<Bullet>();
     l->setOrigin("Player");
     l->setDirection(direction);
 
@@ -70,7 +70,7 @@ void PlayerShooting::shootAtCursor()
     auto spriteComponent = go->addComponent<SpriteComponent>();
     spriteComponent->setSprite(sprite);
 
-    auto l = go->addComponent<Missile>();
+    auto l = go->addComponent<Bullet>();
     l->setOrigin("Player");
     l->setDirection(direction);
 

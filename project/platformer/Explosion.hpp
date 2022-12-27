@@ -19,6 +19,9 @@ public:
 
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
+
+    void setDamage(int _damage){damage = _damage;};
+    void setKnockback(float _knockback){knockback = _knockback;};
     
 private:
 
@@ -33,5 +36,7 @@ private:
     int animationIndex = 0;
     float animationTime = 0;
     float animationFrameRate = 1.0f / 10.0f;
-
+    
+    int damage;
+    float knockback;
 };

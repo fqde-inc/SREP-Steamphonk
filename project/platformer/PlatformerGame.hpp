@@ -97,6 +97,7 @@ private:
         ENEMY       = 0x0004,
         MISSILE     = 0x0005,
         BULLET      = 0x0006,
+        EXPLOSIONS  = 0x0005,
     };
 
     const float physicsScale = 100;

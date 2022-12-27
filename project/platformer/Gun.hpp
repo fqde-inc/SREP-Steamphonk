@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include "Box2D/Box2D.h"
-#include "BulletFactory.hpp"
+#include "Bullet.hpp"
 #include "TimerComponent.hpp"
 
 
@@ -32,4 +32,24 @@ public:
     
     bool Fire(glm::vec2 _position, glm::vec2 _direction);
     void reload(){clipSize = maxClipSize;};
+};
+
+class HandgunGun : public Gun {
+public:
+    explicit HandgunGun() {
+        gunType = Handgun;
+        bulletType = Regular;
+        RecoilMagnitude = 0.001f;
+    }
+};
+
+class RocketLauncherGun : public Gun {
+public:
+    explicit RocketLauncherGun() {
+        gunType = RocketLauncher;
+        bulletType = Rocket;
+        RecoilMagnitude = 0.1f;
+
+        maxClipSize = 1;
+    }
 };
