@@ -15,6 +15,7 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
 	// Particles ?
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
 	sprite.setScale(glm::vec2{5.f});
+	sprite.setOrderInBatch(16);
     spriteComponent = gameObject->addComponent<SpriteComponent>();
 	spriteComponent->setSprite(sprite);
 
@@ -51,7 +52,10 @@ float32 Explosion::ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
 };
 
 void Explosion::onCollisionStart(PhysicsComponent *comp){
-	comp->addImpulse(glm::vec2{0.15f});
+	// Get propulsion direction
+	glm::vec2 propel = gameObject->getPosition() - comp->getGameObject()->getPosition();
+	comp->addImpulse( - glm::normalize(propel)  * 0.15f );
+
 	physics->getBody()->SetAwake(false);
 };
 
