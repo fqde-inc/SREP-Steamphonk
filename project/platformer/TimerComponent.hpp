@@ -5,11 +5,13 @@
 class TimerComponent : public Component {
 public:
     bool isRunning = false;
+    bool hasFinished = false;
     TimerComponent(GameObject *gameObject) : Component(gameObject) {}
 
     void initTimer(float time) {
         elapsedTime = 0;
         setTime = time;
+        hasFinished = false;
         isRunning = true;
     }
 
@@ -25,6 +27,7 @@ public:
 
         if(elapsedTime >= setTime) {
             stopTimer();
+            hasFinished = true;
         }
     }
 

@@ -69,25 +69,21 @@ void CharacterState::moveRight(CharacterController &character, SDL_Event &event)
 }
 
 void CharacterState::fire(CharacterController &character) {
-    if (character.cooldownTimer->isRunning) {
-        return;
-    }
-
-    character.cooldownTimer->initTimer(character.cooldownTime);
     pushStack(std::make_shared<FiringState>());
 }
 
 void CharacterState::swapWeapons(CharacterController &character, SDL_Event &event) {
-    if (character.cooldownTimer->isRunning) {
+
+    if (character.swapTimer->isRunning) {
         return;
     }
 
-    character.cooldownTimer->initTimer(character.cooldownTime);
+    character.swapTimer->initTimer(character.swapTime);
     switch (character.equippedGun) {
         case RocketLauncher:
-            character.equippedGun = Shotgun;
+            character.equippedGun = Handgun;
             break;
-        case Shotgun:
+        case Handgun:
             character.equippedGun = RocketLauncher;
             break;
         default:
@@ -96,10 +92,7 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
 }
 
 void CharacterState::reload(CharacterController &character) {
-    character.shotgunFired = false;
-    character.rocketLauncherFired = false;
-
-    character.reloadTimer->initTimer(character.reloadTime);
+    //character.reloadTimer->initTimer(character.reloadTime);
 ;}
 
 #pragma endregion
@@ -156,7 +149,7 @@ void StandingState::update(CharacterController &character, float deltaTime) {
         animationTime = 0;
     }
 
-    if(!character.reloadTimer->isRunning && (character.shotgunFired || character.rocketLauncherFired)) {
+    if(!character.reloadTimer->isRunning) {
         reload(character);
     }
 
@@ -312,20 +305,18 @@ void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
-            if(character.rocketLauncherFired) break;
-            character.reloadTimer->initTimer(character.reloadTime);
-            character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
-            character.rocketLauncherFired = true;
-            character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
-            character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+            if(character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                character.reloadTimer->initTimer(character.reloadTime);
+                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
+                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+            }
             break;
-        case Shotgun:
-            if(character.shotgunFired) break;
-            character.reloadTimer->initTimer(character.reloadTime);
-            character.shotgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
-            character.shotgunFired = true;
-            character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
-            character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
+        case Handgun:
+            if(character.handgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                character.reloadTimer->initTimer(character.reloadTime);
+                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
+                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+            }
             break;
         default:
             break;

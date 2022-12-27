@@ -121,6 +121,9 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
             return i;
         }
     }
+
+    // Handle warning
+    return 0;
 }
 
 /// <summary>
