@@ -13,10 +13,13 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
     timer->initTimer(duration);
 	
 	// Particles ?
-    auto sprite = PlatformerGame::instance->getExplosionAtlas()->get("Circle_explosion6.png");
-	sprite.setScale(glm::vec2{1.f});
     spriteComponent = gameObject->addComponent<SpriteComponent>();
-	spriteComponent->setSprite(sprite);
+
+    animationSprites = {PlatformerGame::instance->explosionAtlas->get("Circle_explosion4.png"),
+                        PlatformerGame::instance->explosionAtlas->get("Circle_explosion5.png"),
+                        PlatformerGame::instance->explosionAtlas->get("Circle_explosion6.png"),
+                        PlatformerGame::instance->explosionAtlas->get("Circle_explosion7.png"),
+    };
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
 
@@ -34,15 +37,20 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
 
 void Explosion::update(float deltaTime)
 {
-	if(timer->isRunning) {
-		auto sprite = spriteComponent->getSprite();
-		sprite.setColor(glm::vec4{ 1, 1, 1, sprite.getColor().a - 10.0f });
+	if(timer->hasFinished){
+		gameObject->setConsumed(true);
 		return;
 	}
-	
-	gameObject->setConsumed(true);
-}
 
+    animationTime += deltaTime;
+
+    if(animationTime >= animationFrameRate) {
+        animationIndex = (animationIndex + 1) % animationSprites.size();
+        animationTime = 0;
+    }
+
+    spriteComponent->setSprite(animationSprites[animationIndex]);
+}
 
         // raycast callback
 float32 Explosion::ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
