@@ -40,6 +40,7 @@ std::pair<int, int> Level::srepCoordinates(int x, int y, int worldX, int worldY)
     return make_pair(x + worldX, -y - worldY);
 }
 
+//TODO: Instead maybe do a map based on the enum
 void Level::setFoliageLayer(string identifier)
 {
 	foliageLayer = identifier;
@@ -320,6 +321,8 @@ void Level::addTile(std::pair<int, int> coords, string name)
     if (res)
     {
         res->setPosition(glm::vec2(coords.first, coords.second));
+		//TODO: nothing works sadly
+        res->getComponent<PhysicsComponent>()->setPosition(glm::vec2(coords.first, coords.second));
     }
     else
     {
@@ -353,8 +356,8 @@ std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::stri
         glm::vec2(size) / game->physicsScale * 0.5f,
         gameObject->getPosition() / game->physicsScale,
         0);
-    physics->setAutoUpdate(false);
-
+    physics->setAutoUpdate(true);
+    //physics->setPosition(gameObject->getPosition() / game->physicsScale);
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::WALLS;
     filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
