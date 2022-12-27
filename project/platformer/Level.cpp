@@ -344,10 +344,21 @@ void Level::addSprite(std::pair<int, int> coords, string name)
 
 std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::string name)
 {
-    auto gameObject = game->createGameObject();
-    gameObject->name = name;
-    auto res = gameObject->addComponent<PlatformComponent>();
-    res->initTile(tileAtlas, std::make_pair(pos.first,pos.second), name);
+    auto gameObject = createSprite(pos, name);
+    auto size = tileAtlas->get(name).getSpriteSize();
+    auto physics = gameObject->addComponent<PhysicsComponent>();
+    //TODO: this box does not update with the game object. VERY CRINGE!
+    physics->initBox(
+        b2_staticBody,
+        glm::vec2(size) / game->physicsScale * 0.5f,
+        gameObject->getPosition() / game->physicsScale,
+        0);
+    physics->setAutoUpdate(false);
+
+    b2Filter filter = physics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::WALLS;
+    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
+    physics->getFixture()->SetFilterData(filter);
     return gameObject;
 }
 
