@@ -345,7 +345,7 @@ void Level::addSprite(std::pair<int, int> coords, string name)
 std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::string name)
 {
     auto gameObject = game->createGameObject();
-    gameObject->name = "Platform";
+    gameObject->name = name;
     auto res = gameObject->addComponent<PlatformComponent>();
     res->initTile(tileAtlas, std::make_pair(pos.first,pos.second), name);
     return gameObject;
@@ -358,7 +358,7 @@ std::shared_ptr<GameObject> Level::createSprite(std::pair<int, int> pos, std::st
     auto sprite = tileAtlas->get(name);
     float tileSize = sprite.getSpriteSize().x;
     spriteComponent->setSprite(sprite);
-    gameObject->name = "Sprite";
+    gameObject->name = name;
     gameObject->setPosition(glm::vec2(pos.first, pos.second));
     return gameObject;
 }
