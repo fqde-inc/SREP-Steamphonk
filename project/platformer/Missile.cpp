@@ -28,7 +28,7 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 
     b2Filter filter = missilePhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::MISSILE;
-    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::ENEMY | PlatformerGame::PLAYER;
+    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::WALLS | PlatformerGame::PLAYER;
     missilePhysics->getFixture()->SetFilterData(filter);
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
@@ -38,14 +38,16 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 }
 
 void Missile::update(float deltaTime) {
-
-    // Check whether missile has collided with the level using a raycast (platforms)
+    // Check whether missile has collided with the ground using a raycast (platforms)
     auto from = missilePhysics->getBody()->GetWorldCenter();
 
-    b2Vec2 to {from.x, from.y - radius/PlatformerGame::instance->physicsScale};
+    b2Vec2 to { from.x, from.y - radius/PlatformerGame::instance->physicsScale};
     PlatformerGame::instance->world->RayCast(this, from, to);
 
-    //TODO: Do we want self desintegration ?
+    to = { from.x  - radius/PlatformerGame::instance->physicsScale, from.y};
+    PlatformerGame::instance->world->RayCast(this, from, to);
+
+    // Self desintegration ?
     lifetime += deltaTime;
     if(lifetime >= lifespan ) {
         gameObject->setConsumed( true );
@@ -53,13 +55,15 @@ void Missile::update(float deltaTime) {
 
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
     missilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
-
 }
 
 // Raycast callback
 float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-
-    //gameObject->setConsumed(true);
+    if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
+        return 1;
+    
+    fixture->GetBody()->ApplyLinearImpulseToCenter(b2Vec2{2.0f,2.0f}, true);
+    gameObject->setConsumed(true);
     return 0;
 };
 
