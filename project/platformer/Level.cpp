@@ -320,12 +320,11 @@ void Level::addTile(std::pair<int, int> coords, string name)
     if (res)
     {
         res->setPosition(glm::vec2(coords.first, coords.second));
-        res->getComponent<PlatformComponent>();
     }
     else
     {
         res = createTile(coords, name);
-        tilePool->addActiveInstance(res->name, res);
+        tilePool->addActiveInstance(name, res);
     }
 }
 
@@ -339,7 +338,7 @@ void Level::addSprite(std::pair<int, int> coords, string name)
     else
     {
         res = createSprite(coords, name);
-        tilePool->addActiveInstance(res->name, res);
+        foliagePool->addActiveInstance(name, res);
     }
 }
 

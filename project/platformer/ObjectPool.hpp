@@ -12,7 +12,9 @@ public:
     void releaseAllInstances();
     void addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object);
 private:
-	std::map<std::string, std::shared_ptr<GameObject>> _pool = {};
-    std::map<std::string, std::shared_ptr<GameObject>> _used = {};
+    int recycled = 0;
+    int spawned = 0;
+	std::multimap<std::string, std::shared_ptr<GameObject>> _pool = {};
+    std::multimap<std::string, std::shared_ptr<GameObject>> _used = {};
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 };

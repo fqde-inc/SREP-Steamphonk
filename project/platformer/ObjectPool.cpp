@@ -21,6 +21,8 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
     {
         return nullptr;
     }
+    recycled++;
+	
 	//Get the value to the key
     auto res = it->second;
     _pool.erase(it);
@@ -30,7 +32,7 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 
 void ObjectPool::releaseAllInstances()
 {
-	std::cout << "Moved " << _used.size() << " objects to pool" << std::endl;
+	std::cout << "Moved " << _used.size() << " objects to pool. In this cycle " << spawned << " were spawned, " << recycled << " were recycled" << std::endl;
     for (auto it = _used.begin(); it != _used.end(); ++it)
     {
         std::shared_ptr<GameObject> res = it->second;
@@ -41,5 +43,6 @@ void ObjectPool::releaseAllInstances()
 
 void ObjectPool::addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object)
 {
+    spawned++;
     _used.emplace_hint(_used.cend(), key, object);
 }
