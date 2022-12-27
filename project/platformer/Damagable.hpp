@@ -11,6 +11,8 @@ public:
     void setLife(int life);
     void addLife(int life);
     void resetLife();
+    int getCurLife();
+    int getMaxLife();
 private:
 	//Void function pointer that takes no parameters, initialize to lambda function with no parameters and body
     std::function<void()> deathAction = [](){};

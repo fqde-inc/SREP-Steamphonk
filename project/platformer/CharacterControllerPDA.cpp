@@ -95,6 +95,13 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
     }
 }
 
+void CharacterState::reload(CharacterController &character) {
+    character.shotgunFired = false;
+    character.rocketLauncherFired = false;
+
+    character.reloadTimer->initTimer(character.reloadTime);
+;}
+
 #pragma endregion
 
 #pragma region StandingState
@@ -138,10 +145,6 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
 }
 
 void StandingState::update(CharacterController &character, float deltaTime) {
-    if(character.characterPhysics->getLinearVelocity().y != 0) {
-        pushStack(std::make_shared<JumpingState>());
-    }
-
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
@@ -151,6 +154,10 @@ void StandingState::update(CharacterController &character, float deltaTime) {
     if(animationTime >= animationFrameRate) {
         animationIndex = (animationIndex + 1) % animationSprites.size();
         animationTime = 0;
+    }
+
+    if(!character.reloadTimer->isRunning && (character.shotgunFired || character.rocketLauncherFired)) {
+        reload(character);
     }
 
     animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
@@ -305,12 +312,18 @@ void FiringState::update(CharacterController &character, float deltaTime) {
 
     switch (character.equippedGun) {
         case RocketLauncher:
+            if(character.rocketLauncherFired) break;
+            character.reloadTimer->initTimer(character.reloadTime);
             character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
+            character.rocketLauncherFired = true;
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
             break;
         case Shotgun:
+            if(character.shotgunFired) break;
+            character.reloadTimer->initTimer(character.reloadTime);
             character.shotgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection());
+            character.shotgunFired = true;
             character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
             character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.shotgun->RecoilMagnitude));
             break;

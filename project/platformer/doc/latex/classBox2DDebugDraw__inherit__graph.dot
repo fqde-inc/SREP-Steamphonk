@@ -1,0 +1,10 @@
+digraph "Box2DDebugDraw"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [label="{Box2DDebugDraw\n||+ Box2DDebugDraw()\l+ DrawPolygon()\l+ DrawSolidPolygon()\l+ DrawCircle()\l+ DrawSolidCircle()\l+ DrawSegment()\l+ DrawTransform()\l+ DrawPoint()\l+ clear()\l+ getLines()\l}",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="steelblue1",style="solid",arrowtail="onormal"];
+  Node2 [label="{b2Draw\n||}",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+}

@@ -7,7 +7,6 @@
 #include "PlatformerGame.hpp"
 #include "SpriteComponent.hpp"
 #include "PlayerShooting.hpp"
-#include "Damagable.hpp"
 using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
@@ -15,14 +14,15 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     cooldownTimer = gameObject->addComponent<TimerComponent>();
+    reloadTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
    
-    characterDamagable = gameObject->addComponent<Damagable>();
-    characterDamagable->setMaxLife(10);
-    characterDamagable->overrideDeathAction([this]() {
+    damageComponent = gameObject->addComponent<Damagable>();
+    damageComponent->setMaxLife(10);
+    damageComponent->overrideDeathAction([this]() {
         returnToSpawn = true;
         });
 	
@@ -52,11 +52,10 @@ void CharacterController::update(float deltaTime) {
     {
         auto physicsScale = PlatformerGame::instance->physicsScale;
         this->characterPhysics->getBody()->SetTransform(b2Vec2(spawn.x / physicsScale, spawn.y / physicsScale), 0);
-        this->characterDamagable->resetLife();
+        damageComponent->resetLife();
         std::cout << "Player returned to " << spawn.x << ", " << spawn.y << std::endl;
         returnToSpawn = false;
     }
-	
     // raycast ignores any shape in the starting point
     auto from = characterPhysics->getBody()->GetWorldCenter();
     b2Vec2 to {from.x,from.y -radius*1.3f};
@@ -97,6 +96,10 @@ void CharacterController::update(float deltaTime) {
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
+
+    if(!isGrounded && (state_->characterStateStack[0]->stateType != Jumping && state_->characterStateStack[0]->stateType != Firing)) {
+        state_->pushStack(std::make_shared<JumpingState>());
+    }
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
 }

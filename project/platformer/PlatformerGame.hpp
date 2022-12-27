@@ -65,11 +65,15 @@ private:
     void handleContact(b2Contact *contact, bool begin);
 
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
+    std::shared_ptr<sre::SpriteAtlas> UIAtlas;
     std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
+
+    std::shared_ptr<sre::Texture> heartFull;
+    std::shared_ptr<sre::Texture> heartEmpty;
 
     void updatePhysics();
 
@@ -78,7 +82,9 @@ private:
     sre::Color backgroundColor;
     b2World * world = nullptr;
 
-     std::shared_ptr<FollowPathComponent> birdMovement;
+    ImFont* pixelated;
+
+    std::shared_ptr<FollowPathComponent> birdMovement;
 
     
     // Box2D / Physics

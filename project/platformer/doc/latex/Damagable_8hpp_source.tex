@@ -1,0 +1,23 @@
+\hypertarget{Damagable_8hpp_source}{}\doxysection{Damagable.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{classDamagable}{Damagable}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{6 \textcolor{keyword}{public}:}
+\DoxyCodeLine{7     \textcolor{keyword}{explicit} \mbox{\hyperlink{classDamagable}{Damagable}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9     \textcolor{keywordtype}{void} takeDamage(\textcolor{keywordtype}{int} damage);}
+\DoxyCodeLine{10     \textcolor{keywordtype}{void} setMaxLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{11     \textcolor{keywordtype}{void} setLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{12     \textcolor{keywordtype}{void} addLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{13     }
+\DoxyCodeLine{14 \textcolor{keyword}{private}:}
+\DoxyCodeLine{15     \textcolor{keywordtype}{int} maxLife = 10;}
+\DoxyCodeLine{16     \textcolor{keywordtype}{int} curLife = 10;}
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+
+\end{DoxyCode}

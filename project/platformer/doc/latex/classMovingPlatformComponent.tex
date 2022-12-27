@@ -1,0 +1,64 @@
+\hypertarget{classMovingPlatformComponent}{}\doxysection{Moving\+Platform\+Component Class Reference}
+\label{classMovingPlatformComponent}\index{MovingPlatformComponent@{MovingPlatformComponent}}
+
+
+Inheritance diagram for Moving\+Platform\+Component\+:
+% FIG 0
+
+
+Collaboration diagram for Moving\+Platform\+Component\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMovingPlatformComponent_a5d31696c49c03568ce8d0f1bea1cb487}\label{classMovingPlatformComponent_a5d31696c49c03568ce8d0f1bea1cb487}} 
+{\bfseries Moving\+Platform\+Component} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classMovingPlatformComponent_a5b98ca06f4b2a5fb5ef1099f558d98be}\label{classMovingPlatformComponent_a5b98ca06f4b2a5fb5ef1099f558d98be}} 
+void {\bfseries set\+Movement\+Start} (glm\+::vec2 pos)
+\item 
+\mbox{\Hypertarget{classMovingPlatformComponent_a8604003264614bcf227ddb7eb4aac6ba}\label{classMovingPlatformComponent_a8604003264614bcf227ddb7eb4aac6ba}} 
+void {\bfseries set\+Movement\+End} (glm\+::vec2 pos)
+\item 
+void \mbox{\hyperlink{classMovingPlatformComponent_acba677e8175c07026bfacd4cbca0c1b6}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMovingPlatformComponent_acba677e8175c07026bfacd4cbca0c1b6}\label{classMovingPlatformComponent_acba677e8175c07026bfacd4cbca0c1b6}} 
+\index{MovingPlatformComponent@{MovingPlatformComponent}!update@{update}}
+\index{update@{update}!MovingPlatformComponent@{MovingPlatformComponent}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Moving\+Platform\+Component\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Moving\+Platform\+Component.\+hpp\item 
+Moving\+Platform\+Component.\+cpp\end{DoxyCompactItemize}

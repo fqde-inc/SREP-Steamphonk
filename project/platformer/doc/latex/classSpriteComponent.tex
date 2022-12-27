@@ -1,0 +1,64 @@
+\hypertarget{classSpriteComponent}{}\doxysection{Sprite\+Component Class Reference}
+\label{classSpriteComponent}\index{SpriteComponent@{SpriteComponent}}
+
+
+Inheritance diagram for Sprite\+Component\+:
+% FIG 0
+
+
+Collaboration diagram for Sprite\+Component\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSpriteComponent_a28b1d29fe814b02d53c104c3e19bbad7}\label{classSpriteComponent_a28b1d29fe814b02d53c104c3e19bbad7}} 
+{\bfseries Sprite\+Component} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+void \mbox{\hyperlink{classSpriteComponent_a5845a00c1533764fbb56f703cc897410}{render\+Sprite}} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder) override
+\item 
+\mbox{\Hypertarget{classSpriteComponent_a09e7d008c442c1e782fcb267d52d9c8d}\label{classSpriteComponent_a09e7d008c442c1e782fcb267d52d9c8d}} 
+void {\bfseries set\+Sprite} (const sre\+::\+Sprite \&sprite)
+\item 
+\mbox{\Hypertarget{classSpriteComponent_aae3fd9edfe6d19a370fdb81eb768f2f2}\label{classSpriteComponent_aae3fd9edfe6d19a370fdb81eb768f2f2}} 
+sre\+::\+Sprite {\bfseries get\+Sprite} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}\label{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}} 
+virtual void {\bfseries update} (float delta\+Time)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classSpriteComponent_a5845a00c1533764fbb56f703cc897410}\label{classSpriteComponent_a5845a00c1533764fbb56f703cc897410}} 
+\index{SpriteComponent@{SpriteComponent}!renderSprite@{renderSprite}}
+\index{renderSprite@{renderSprite}!SpriteComponent@{SpriteComponent}}
+\doxysubsubsection{\texorpdfstring{renderSprite()}{renderSprite()}}
+{\footnotesize\ttfamily void Sprite\+Component\+::render\+Sprite (\begin{DoxyParamCaption}\item[{sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&}]{sprite\+Batch\+Builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sprite\+Component.\+hpp\item 
+Sprite\+Component.\+cpp\end{DoxyCompactItemize}

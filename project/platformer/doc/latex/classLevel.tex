@@ -1,0 +1,45 @@
+\hypertarget{classLevel}{}\doxysection{Level Class Reference}
+\label{classLevel}\index{Level@{Level}}
+
+
+Collaboration diagram for Level\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_ab2b8d22dd17008c452343931dc1f4325}\label{classLevel_ab2b8d22dd17008c452343931dc1f4325}} 
+void {\bfseries generate\+Level} ()
+\item 
+\mbox{\Hypertarget{classLevel_aad66c395199444b703f0df5aac199770}\label{classLevel_aad66c395199444b703f0df5aac199770}} 
+void {\bfseries generate\+Level\+From\+File} (int level\+Number)
+\item 
+\mbox{\Hypertarget{classLevel_a591826a2d859fb51ebbf17a2b53c46aa}\label{classLevel_a591826a2d859fb51ebbf17a2b53c46aa}} 
+glm\+::vec2 {\bfseries get\+Identifier\+Position} (int level\+Number, std\+::string identifier)
+\item 
+\mbox{\Hypertarget{classLevel_ad4e75498b50971043b079fcc3fdb2bc5}\label{classLevel_ad4e75498b50971043b079fcc3fdb2bc5}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPlatformComponent}{Platform\+Component}} $>$ {\bfseries add\+Platform} (int x, int y, int start\+Sprite\+Id, int length, bool kinematic)
+\item 
+\mbox{\Hypertarget{classLevel_ac27f6ed907197da0610f87b11e7e350e}\label{classLevel_ac27f6ed907197da0610f87b11e7e350e}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPlatformComponent}{Platform\+Component}} $>$ {\bfseries add\+Wall} (int x, int y, int start\+Sprite\+Id, int height)
+\item 
+\mbox{\Hypertarget{classLevel_a9ec90fd17a785551eeea54b4877ebb1c}\label{classLevel_a9ec90fd17a785551eeea54b4877ebb1c}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPlatformComponent}{Platform\+Component}} $>$ {\bfseries add\+Tile} (int x, int y, std\+::string name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_a521696dbe05b661f44d82966cda0f73d}\label{classLevel_a521696dbe05b661f44d82966cda0f73d}} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classLevel}{Level}} $>$ {\bfseries create\+Default\+Level} (\mbox{\hyperlink{classPlatformerGame}{Platformer\+Game}} $\ast$game, std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ sprite\+Atlas, std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ tile\+Atlas)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_ac83c67424a07b359a5fb919b44ee4f2a}\label{classLevel_ac83c67424a07b359a5fb919b44ee4f2a}} 
+static constexpr float {\bfseries tile\+Size} = 21
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Level.\+hpp\item 
+Level.\+cpp\end{DoxyCompactItemize}

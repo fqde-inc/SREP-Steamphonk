@@ -12,6 +12,7 @@
 #include "TimerComponent.hpp"
 #include "RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
+#include "Damagable.hpp"
 
 
 class CharacterState;
@@ -35,11 +36,15 @@ public:
 
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
     std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
+
+    bool shotgunFired = false;
+    bool rocketLauncherFired = false;
+
     std::shared_ptr<PlayerShooting> playerShooting;
+    std::shared_ptr<Damagable> damageComponent;
 
     GunTypes equippedGun = RocketLauncher;
 
-    // raycast callback
     virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
                                       const b2Vec2& normal, float32 fraction) override;
 
@@ -50,7 +55,9 @@ public:
     std::shared_ptr<PhysicsComponent> characterPhysics;
     std::shared_ptr<Damagable> characterDamagable;
     std::shared_ptr<TimerComponent> cooldownTimer;
-    float cooldownTime = .75f;
+    std::shared_ptr<TimerComponent> reloadTimer;
+    float cooldownTime = .25f;
+    float reloadTime = .75f;
 
     bool left = false;
     bool right = false;

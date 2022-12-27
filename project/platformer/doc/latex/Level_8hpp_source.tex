@@ -1,0 +1,47 @@
+\hypertarget{Level_8hpp_source}{}\doxysection{Level.\+hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <sre/SpriteAtlas.hpp>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformerGame}{PlatformerGame}};}
+\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{classGameObject}{GameObject}};}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformComponent}{PlatformComponent}};}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{enum class} TileCollider \{}
+\DoxyCodeLine{11     Block,}
+\DoxyCodeLine{12     BlockHalf,}
+\DoxyCodeLine{13     Incline,}
+\DoxyCodeLine{14     Decline}
+\DoxyCodeLine{15 \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{classLevel}{Level}} \{}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \textcolor{keyword}{static} std::shared\_ptr<Level> createDefaultLevel(\mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}* game, std::shared\_ptr<sre::SpriteAtlas> spriteAtlas, std::shared\_ptr<sre::SpriteAtlas> tileAtlas);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} generateLevel();}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} generateLevelFromFile(\textcolor{keywordtype}{int} levelNumber);}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     glm::vec2 getIdentifierPosition(\textcolor{keywordtype}{int} levelNumber, std::string identifier);}
+\DoxyCodeLine{25     }
+\DoxyCodeLine{26     std::shared\_ptr<PlatformComponent> addPlatform(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} startSpriteId, \textcolor{keywordtype}{int} length, \textcolor{keywordtype}{bool} kinematic);}
+\DoxyCodeLine{27     std::shared\_ptr<PlatformComponent> addWall(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} startSpriteId, \textcolor{keywordtype}{int} height);}
+\DoxyCodeLine{28     std::shared\_ptr<PlatformComponent> addTile(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, std::string name);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{float} tileSize = 21;}
+\DoxyCodeLine{31 \textcolor{keyword}{private}:}
+\DoxyCodeLine{32     \mbox{\hyperlink{classLevel}{Level}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{33     \mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}* game;}
+\DoxyCodeLine{34     std::shared\_ptr<sre::SpriteAtlas> spriteAtlas;}
+\DoxyCodeLine{35     std::shared\_ptr<sre::SpriteAtlas> tileAtlas;}
+\DoxyCodeLine{36     std::map<std::pair<int,int>, std::string> ldtkMap\{}
+\DoxyCodeLine{37         \{std::make\_pair(0,0), \textcolor{stringliteral}{"{}dirt.png"{}}\},}
+\DoxyCodeLine{38         \{std::make\_pair(0,16), \textcolor{stringliteral}{"{}dirt\_bot.png"{}}\},}
+\DoxyCodeLine{39         \{std::make\_pair(16,0), \textcolor{stringliteral}{"{}dirt\_top.png"{}}\}}
+\DoxyCodeLine{40     \};}
+\DoxyCodeLine{41 \};}
+\DoxyCodeLine{42 }
+
+\end{DoxyCode}

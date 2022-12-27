@@ -148,9 +148,20 @@ void PlatformerGame::initLevel() {
     auto crosshairSpriteComponent = crosshair->addComponent<SpriteComponent>();
     auto crosshairSprite = characterAtlas->get("crosshair.png");
     crosshairSprite.setScale({0.3f, 0.3f});
-//    crosshairSprite.setOrderInBatch(99);
+    crosshairSprite.setOrderInBatch(99);
     crosshairSpriteComponent->setSprite(crosshairSprite);
     crosshair->addComponent<Crosshair>();
+
+    auto& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    pixelated = io.Fonts->AddFontFromFileTTF("PixelatedFont.ttf", 20);
+    io.FontDefault = io.Fonts->Fonts[0];
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowBorderSize = 0.0f;
+
+    heartFull  = Texture::create().withFile("heartFull.png").withFilterSampling(false).build();
+    heartEmpty = Texture::create().withFile("heartEmpty.png").withFilterSampling(false).build();
 }
 
 void PlatformerGame::update(float time) {
@@ -205,6 +216,42 @@ void PlatformerGame::render() {
 
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
+
+
+    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 40), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
+    ImGui::Begin("weapon", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shotgun");
+    ImGui::PopFont();
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 80), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
+    ImGui::Begin("Health", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    ImGui::Text("%s", "Health:");
+    ImGui::PopFont();
+    ImGui::End();
+
+    ImVec2 uv0(0,1); // flip y axis coordinates
+    ImVec2 uv1(1,0);
+
+    ImGui::SetNextWindowPos(ImVec2(-24 + 85, windowSize.y - 85), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::PushFont(pixelated);
+    ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    Texture* texFull = heartFull.get();
+    Texture* texEmpty = heartEmpty.get();
+    for (int i=0;i<characterController->damageComponent->getMaxLife();i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? texEmpty->getNativeTexturePtr() : texFull->getNativeTexturePtr(),{32, 32}, uv0, uv1);
+    }
+    ImGui::PopFont();
+    ImGui::End();
 
     if (doDebugDraw){
         world->DrawDebugData();
