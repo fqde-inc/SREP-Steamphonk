@@ -281,6 +281,17 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
 }
 
 void WalkingState::update(CharacterController &character, float deltaTime) {
+//    if(!PlatformerGame::instance->state[SDL_SCANCODE_A] || !PlatformerGame::instance->state[SDL_SCANCODE_D]) {
+//        popStack(Walking);
+//    }
+
+    if(!PlatformerGame::instance->keyboardState[SDL_SCANCODE_A] && !PlatformerGame::instance->keyboardState[SDL_SCANCODE_D]) {
+        character.left = false;
+        character.right = false;
+        popStack(Walking);
+        return;
+    }
+
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }

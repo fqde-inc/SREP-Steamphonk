@@ -95,6 +95,7 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 }
 
 void PlatformerGame::initLevel() {
+    keyboardState = SDL_GetKeyboardState(NULL);
     initPhysics();
 
     player = createGameObject();
@@ -200,6 +201,7 @@ void PlatformerGame::update(float time) {
 
         sceneObjects[i]->update(time);
     }
+
 }
 
 void PlatformerGame::render() {
