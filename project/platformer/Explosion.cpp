@@ -15,7 +15,6 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
 	// Particles ?
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
 	sprite.setScale(glm::vec2{5.f});
-	sprite.setOrderInBatch(16);
     spriteComponent = gameObject->addComponent<SpriteComponent>();
 	spriteComponent->setSprite(sprite);
 
