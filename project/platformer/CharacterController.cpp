@@ -13,7 +13,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     gameObject->name = "Player";
 
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
-    cooldownTimer = gameObject->addComponent<TimerComponent>();
+    swapTimer = gameObject->addComponent<TimerComponent>();
     reloadTimer = gameObject->addComponent<TimerComponent>();
     gameObject->addComponent<PlayerShooting>();
 
@@ -102,6 +102,11 @@ void CharacterController::update(float deltaTime) {
     }
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
+
+    if(reloadTimer->hasFinished){
+        handgun->reload();
+        rocketLauncher->reload();
+    }
 }
 
 void CharacterController::onCollisionStart(PhysicsComponent *comp) {

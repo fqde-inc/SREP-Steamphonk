@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Box2D/Box2D.h"
 #include "BulletFactory.hpp"
+#include "TimerComponent.hpp"
 
 
 enum GunTypes {
@@ -17,11 +18,18 @@ enum GunTypes {
 
 class Gun {
 public:
-    explicit Gun(){};
+    explicit Gun();
 
     GunTypes gunType = NullGun;
     BulletTypes bulletType = None;
     float RecoilMagnitude = 0;
+
+    int maxClipSize = 3;
+    int clipSize;
     
-    void Fire(glm::vec2 _position, glm::vec2 _direction);
+    std::shared_ptr<TimerComponent> cooldown;
+    float cooldownTime = .1f;
+    
+    bool Fire(glm::vec2 _position, glm::vec2 _direction);
+    void reload(){clipSize = maxClipSize;};
 };
