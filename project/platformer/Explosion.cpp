@@ -13,8 +13,8 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
     timer->initTimer(duration);
 	
 	// Particles ?
-    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
-	sprite.setScale(glm::vec2{5.f});
+    auto sprite = PlatformerGame::instance->getExplosionAtlas()->get("Circle_explosion6.png");
+	sprite.setScale(glm::vec2{1.f});
     spriteComponent = gameObject->addComponent<SpriteComponent>();
 	spriteComponent->setSprite(sprite);
 

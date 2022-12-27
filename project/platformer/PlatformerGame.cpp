@@ -50,6 +50,11 @@ PlatformerGame::PlatformerGame()
         .withFile("dirtsheet.png")
         .withFilterSampling(false)
         .build());
+
+    explosionAtlas = SpriteAtlas::create("explosion.json", Texture::create()
+        .withFile("explosion.png")
+        .withFilterSampling(false)
+        .build());
 	
     level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
 

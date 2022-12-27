@@ -9,7 +9,7 @@ file(GLOB Platformer
 add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
-# old graphics
+# Original graphics
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
@@ -18,34 +18,31 @@ file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-#copy files to graphics
-file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/dirtsheet.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+# Graphics
+file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-# copy files to dest
+# Level files
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
-# copy level texture packer json
-file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
-# copy character texture packer json
-file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY Character_Anims/characterAnims.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
-# copy files to levels
+# Test level
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# Character animations
+file(COPY Character_Anims/characterAnims.json Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Character_Anims/characterAnims.json Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY Character_Anims/characterAnims.json Character_Anims/characterAnims.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+# Explosions
+file(COPY explosion.json explosion.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY explosion.json explosion.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY explosion.json explosion.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
 
 IF (WIN32)
     # Copy dll files to ${CMAKE_CURRENT_BINARY_DIR}/Debug
