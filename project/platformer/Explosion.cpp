@@ -52,18 +52,28 @@ void Explosion::update(float deltaTime)
     spriteComponent->setSprite(animationSprites[animationIndex]);
 }
 
-        // raycast callback
+// raycast callback
 float32 Explosion::ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
 									const b2Vec2& normal, float32 fraction) {
 	return 0;
 };
 
 void Explosion::onCollisionStart(PhysicsComponent *comp){
-	// Get propulsion direction
-	glm::vec2 propel = gameObject->getPosition() - comp->getGameObject()->getPosition();
-	comp->addImpulse( - glm::normalize(propel)  * 0.15f );
 
-	physics->getBody()->SetAwake(false);
+    auto go = comp->getGameObject();
+    
+    auto damageable = go->getComponent<Damagable>();
+    if(damageable != nullptr && go->name != "Player"){
+        damageable->takeDamage(damage);
+    }
+
+    if(go->name == "Player"){
+        // Get propulsion direction
+        glm::vec2 propel = gameObject->getPosition() - go->getPosition();
+        comp->addImpulse( - glm::normalize(propel)  * 0.15f );
+        physics->getBody()->SetAwake(false);
+    }
+
 };
 
 void Explosion::onCollisionEnd(PhysicsComponent *comp) {

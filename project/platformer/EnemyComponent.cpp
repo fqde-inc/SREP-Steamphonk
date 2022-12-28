@@ -28,7 +28,7 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
 
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::ENEMY;
-    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::PLAYER;
+    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::PLAYER | PlatformerGame::EXPLOSIONS;
     physics->getFixture()->SetFilterData(filter);
 
     damagable = gameObject->addComponent<Damagable>();

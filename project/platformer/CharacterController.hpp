@@ -7,10 +7,7 @@
 #include "sre/Sprite.hpp"
 #include "CharacterControllerPDA.hpp"
 #include "Gun.hpp"
-#include "RocketLauncher.hpp"
-#include "HandgunGun.hpp"
 #include "TimerComponent.hpp"
-#include "RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
 #include "Damagable.hpp"
 
