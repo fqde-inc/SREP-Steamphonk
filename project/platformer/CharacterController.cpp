@@ -71,9 +71,11 @@ void CharacterController::update(float deltaTime) {
 
     if (left){
         movement.x --;
+        lastIsLeft = true;
     }
     if (right){
         movement.x ++;
+        lastIsLeft = false;
     }
 
     glm::vec2 currentVel = characterPhysics->getLinearVelocity();

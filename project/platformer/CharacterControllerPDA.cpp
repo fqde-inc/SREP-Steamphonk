@@ -59,13 +59,11 @@ void CharacterState::jump(CharacterController &character, SDL_Event &event) {
 
 void CharacterState::moveLeft(CharacterController &character, SDL_Event &event) {
     character.left = event.type == SDL_KEYDOWN;
-    character.lastIsLeft = true;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
 void CharacterState::moveRight(CharacterController &character, SDL_Event &event) {
     character.right = event.type == SDL_KEYDOWN;
-    character.lastIsLeft = false;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
