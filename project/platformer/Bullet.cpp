@@ -8,7 +8,7 @@
 Bullet::Bullet(GameObject* gameObject): Projectile(gameObject) {
     b2Filter filter = ProjectilePhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::BULLET;
-    filter.maskBits     = PlatformerGame::Projectile | PlatformerGame::ENEMY | PlatformerGame::WALLS;
+    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::ENEMY | PlatformerGame::WALLS;
     ProjectilePhysics->getFixture()->SetFilterData(filter);
 };
 

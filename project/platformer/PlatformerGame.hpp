@@ -118,7 +118,7 @@ private:
         WALLS       = 0x0002,
         PLAYER      = 0x0003,
         ENEMY       = 0x0004,
-        Projectile     = 0x0005,
+        MISSILE     = 0x0005,
         BULLET      = 0x0006,
         EXPLOSIONS  = 0x0005,
     };

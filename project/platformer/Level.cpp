@@ -23,8 +23,8 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 	
     res->game = game;
-    res->tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
-        .withFile("dirttile.png")
+    res->tileAtlas = SpriteAtlas::create(LEVEL_ART_PATH +"dirttile.json", Texture::create()
+        .withFile(LEVEL_ART_PATH + "dirttile.png")
         .withFilterSampling(false)
         .build());;
 	res->tilePool = ObjectPool::createPool(res->tileAtlas);

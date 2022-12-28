@@ -34,7 +34,7 @@ void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, st
 
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::WALLS;
-    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::Projectile;
+    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
     physics->getFixture()->SetFilterData(filter);
 }
 

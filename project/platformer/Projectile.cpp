@@ -27,7 +27,7 @@ Projectile::Projectile(GameObject *gameObject) : Component(gameObject) {
     ProjectilePhysics->setSensor(true);
 
     b2Filter filter = ProjectilePhysics->getFixture()->GetFilterData();
-    filter.categoryBits = PlatformerGame::Projectile;
+    filter.categoryBits = PlatformerGame::MISSILE;
     filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::WALLS | PlatformerGame::PLAYER;
     ProjectilePhysics->getFixture()->SetFilterData(filter);
 

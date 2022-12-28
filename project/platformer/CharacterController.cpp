@@ -33,7 +33,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     b2Filter filter = characterPhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::PLAYER;
-    filter.maskBits = PlatformerGame::WALLS | PlatformerGame::Projectile | PlatformerGame::EXPLOSIONS;
+    filter.maskBits = PlatformerGame::WALLS | PlatformerGame::MISSILE | PlatformerGame::EXPLOSIONS;
     characterPhysics->getFixture()->SetFilterData(filter);
 
     characterPhysics->fixRotation();
