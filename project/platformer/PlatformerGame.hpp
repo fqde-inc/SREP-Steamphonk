@@ -33,6 +33,7 @@ public:
     void BeginContact(b2Contact *contact) override;
 
     void EndContact(b2Contact *contact) override;
+    void generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type);
 
     static PlatformerGame* instance;
 	
@@ -86,7 +87,7 @@ private:
 
     ImFont* pixelated;
 
-    std::shared_ptr<FollowPathComponent> birdMovement;
+    //std::shared_ptr<FollowPathComponent> birdMovement;
 
     
     // Box2D / Physics

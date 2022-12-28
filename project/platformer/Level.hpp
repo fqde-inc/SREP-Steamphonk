@@ -37,6 +37,7 @@ public:
     void generateSpecificLevel(int levelNumber, GenerationType type = World);
     void generateLevelByPosition(glm::vec2 target);
     int getLevelIdByPosition(glm::vec2 pos);
+    void generateBirdsForLevel(int id);
     void setWorldLayer(std::string identifier);
     void setFoliageLayer(std::string identifier);
     int getLayerIndexForLevel(std::string identifier, int levelNo);

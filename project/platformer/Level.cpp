@@ -178,6 +178,52 @@ void Level::generateLevelByPosition(glm::vec2 target)
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
     generateSpecificLevel(id, World);
     generateSpecificLevel(id, Foliage);
+    generateBirdsForLevel(id);
+}
+
+void Level::generateBirdsForLevel(int id)
+{
+    ifstream fis(levelName);
+    IStreamWrapper isw(fis);
+    Document d;
+    d.ParseStream(isw);
+    string identifier = "PatrolStart";
+
+    auto levels = d["levels"].GetArray();
+
+    auto entities = d["levels"].GetArray()[id]["layerInstances"].GetArray();
+    auto worldX = d["levels"].GetArray()[id]["worldX"].GetInt();
+    auto worldY = d["levels"].GetArray()[id]["worldY"].GetInt();
+
+    for (int j = 0; j < entities.Size(); j++)
+    {
+        auto entity = entities[j]["entityInstances"].GetArray();
+
+        for (int i = 0; i < entity.Size(); i++)
+        {
+            string compare = entity[i].GetObject()["__identifier"].GetString();
+            cout << i << ": " << compare << endl;
+            if (identifier.compare(compare) == 0)
+            {
+                auto pos = entity[i].GetObject()["px"].GetArray();
+                int x = pos[0].GetInt();
+                int y = pos[1].GetInt();
+                auto coords = srepCoordinates(x, y, worldX, worldY);
+
+                auto path = entity[i].GetObject()["fieldInstances"].GetArray()[0].GetObject()["__value"].GetArray();
+                std::vector<glm::vec2> positions;
+				for (int i = 0; i < path.Size(); i++)
+				{
+					auto p = path[i].GetObject();
+                    int x = p["cx"].GetInt();
+					int y = p["cy"].GetInt();
+					positions.push_back(glm::vec2(x + coords.first, y + coords.second));
+				}
+
+                PlatformerGame::instance->generateSingleBird(coords, positions, BEZIER);
+            }
+        }
+    }
 }
 
 /// <summary>

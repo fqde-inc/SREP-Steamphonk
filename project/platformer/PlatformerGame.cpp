@@ -23,14 +23,14 @@ const glm::vec2 PlatformerGame::windowSize(1400,800);
 PlatformerGame* PlatformerGame::instance = nullptr;
 
 PlatformerGame::PlatformerGame()
-        :debugDraw(physicsScale)
+    :debugDraw(physicsScale)
 {
     instance = this;
     r.setWindowSize(windowSize);
     bool useVsync = true;
     r.init().withSdlInitFlags(SDL_INIT_EVERYTHING)
-            .withSdlWindowFlags(SDL_WINDOW_OPENGL)
-            .withVSync(useVsync);
+        .withSdlWindowFlags(SDL_WINDOW_OPENGL)
+        .withVSync(useVsync);
 
     //using namespace rapidjson;
     //ifstream fis("testlvl.json");
@@ -39,13 +39,13 @@ PlatformerGame::PlatformerGame()
     //d.ParseStream(isw);
     //auto hexValue = d["bgColor"].GetString();
 
-    backgroundColor = {0.14f,0.12f,0.11f,1.0f};
+    backgroundColor = { 0.14f,0.12f,0.11f,1.0f };
 
-    spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
-            .withFile( "platformer-art-deluxe.png")
-            .withFilterSampling(false)
-            .build());
-	
+    spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json", Texture::create()
+        .withFile("platformer-art-deluxe.png")
+        .withFilterSampling(false)
+        .build());
+
     level = Level::createDefaultLevel(this, "testlvl.json", "dirttile.json");
     level->setWorldLayer("Background");
     level->setFoliageLayer("Foliage");
@@ -54,13 +54,45 @@ PlatformerGame::PlatformerGame()
         .withFile("explosion.png")
         .withFilterSampling(false)
         .build());
-	
+
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
         .withFilterSampling(false)
         .build());
 
     initLevel();
+
+    //std::vector<glm::vec2> positions = {
+    //{ -50,350 },
+    //{ 0,300 },
+    //{ 50,350 },
+    //{ 100,300 },
+    //{ 150,350 },
+    //{ 200,300 },
+    //{ 250,350 },
+    //{ 300,300 },
+    //{ 350,350 },
+    //{ 400,300 },
+    //{ 450,350 },
+    //{ 500,400 },
+    //{ 550,350 },
+    //{ 600,300 },
+    //{ 650,350 },
+    //{ 700,400 },
+    //{ 750,350 },
+    //{ 800,300 },
+    //{ 850,350 },
+    //{ 900,400 },
+    //{ 950,350 },
+    //{ 1000,300 },
+    //{ 1050,350 },
+    //{ 1100,400 },
+    //{ 1150,350 },
+    //{ 1200,300 },
+    //{ 1250,350 },
+    //};
+	
+    //generateSingleBird(make_pair(300, -600), positions, BEZIER);
 
     //Enable mouse lock
     SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
@@ -86,6 +118,19 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
+void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type)
+{
+    auto birdObj = PlatformerGame::instance->createGameObject();
+    birdObj->name = "Bird";
+    auto spriteComponent = birdObj->addComponent<SpriteComponent>();
+    auto bird = PlatformerGame::instance->getSpriteAtlas()->get("433.png");
+    bird.setFlip({ true,false });
+    spriteComponent->setSprite(bird);
+
+    auto enemy = birdObj->addComponent<EnemyComponent>();
+    enemy->setPathing(positions, type);
+}
+
 std::shared_ptr<Level> PlatformerGame::getLevel()
 {
 	return level;
@@ -109,45 +154,6 @@ void PlatformerGame::initLevel() {
     camera->setFollowObject(player, { 0,0});
     camera->setZoomMode(true);
 
-    auto birdObj = createGameObject();
-    birdObj->name = "Bird";
-    auto spriteComponent = birdObj->addComponent<SpriteComponent>();
-    auto bird = spriteAtlas->get("433.png");
-    bird.setFlip({true,false});
-    spriteComponent->setSprite(bird);
-    
-    auto enemy = birdObj->addComponent<EnemyComponent>();
-    enemy->setPathing({
-        {-50,350},
-        {0,300},
-        {50,350},
-        {100,300},
-        {150,350},
-        {200,300},
-        {250,350},
-        {300,300},
-        {350,350},
-        {400,300},
-        {450,350},
-        {500,400},
-        {550,350},
-        {600,300},
-        {650,350},
-        {700,400},
-        {750,350},
-        {800,300},
-        {850,350},
-        {900,400},
-        {950,350},
-        {1000,300},
-        {1050,350},
-        {1100,400},
-        {1150,350},
-        {1200,300},
-        {1250,350},
-    }, BEZIER);
-
-    birdMovement = enemy->getPathing();
     crosshair = createGameObject();
     crosshair->name = "Crosshair";
     auto crosshairSpriteComponent = crosshair->addComponent<SpriteComponent>();
@@ -200,16 +206,16 @@ void PlatformerGame::render() {
         profiler.update();
         profiler.gui(false);
 
-        std::vector<glm::vec3> lines;
-        for (int i=0;i<5000;i++){
-            float t = (i/5001.0f) * birdMovement->getNumberOfSegments();
-            float t1 = ((i+1)/5001.0f) * birdMovement->getNumberOfSegments();
-            auto p = birdMovement->computePositionAtTime(t);
-            auto p1 = birdMovement->computePositionAtTime(t1);
-            lines.push_back(glm::vec3(p,0));
-            lines.push_back(glm::vec3(p1,0));
-        }
-        rp.drawLines(lines);
+        //std::vector<glm::vec3> lines;
+        //for (int i=0;i<5000;i++){
+        //    float t = (i/5001.0f) * birdMovement->getNumberOfSegments();
+        //    float t1 = ((i+1)/5001.0f) * birdMovement->getNumberOfSegments();
+        //    auto p = birdMovement->computePositionAtTime(t);
+        //    auto p1 = birdMovement->computePositionAtTime(t1);
+        //    lines.push_back(glm::vec3(p,0));
+        //    lines.push_back(glm::vec3(p1,0));
+        //}
+        //rp.drawLines(lines);
     }
 
     auto pos = camera->getGameObject()->getPosition();
