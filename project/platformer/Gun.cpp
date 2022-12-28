@@ -6,10 +6,19 @@
 #include "Gun.hpp"
 #include "Bullet.hpp"
 #include "SpriteComponent.hpp"
+#include "TimerComponent.hpp"
 #include "PlatformerGame.hpp"
 
+Gun::Gun() {
+    auto go = PlatformerGame::instance->createGameObject();
+    cooldown = go->addComponent<TimerComponent>();
+    reload();
+}
 
-void Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
+bool Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
+
+    if(clipSize == 0 || cooldown->isRunning)
+        return false;
 
     auto l = BulletFactory::Make(bulletType);
 
@@ -19,4 +28,8 @@ void Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
     auto go = l->getGameObject();
     go->setPosition(_position);
     go->setRotation(180 - glm::atan(_direction.x, _direction.y) * 180 / M_PI);
+
+    clipSize--;
+    cooldown->initTimer(cooldownTime);
+    return true;
 }

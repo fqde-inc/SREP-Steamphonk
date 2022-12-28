@@ -12,5 +12,7 @@ public:
         gunType = RocketLauncher;
         bulletType = Rocket;
         RecoilMagnitude = 0.1f;
+
+        maxClipSize = 1;
     }
 };

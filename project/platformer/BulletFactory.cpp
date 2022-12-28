@@ -3,7 +3,7 @@
 #include "PlatformerGame.hpp"
 #include "Bullet.hpp"
 #include "RocketBullet.hpp"
-#include "ShotgunBullet.hpp"
+#include "RegularBullet.hpp"
 #include "GameObject.hpp"
 
 std::shared_ptr<Bullet> BulletFactory::Make( BulletTypes type ){
@@ -14,8 +14,8 @@ std::shared_ptr<Bullet> BulletFactory::Make( BulletTypes type ){
     {
         case None:
             return go->addComponent<Bullet>();
-        case Pellets:
-            return go->addComponent<ShotgunBullet>();
+        case Regular:
+            return go->addComponent<RegularBullet>();
         case Rocket:
             return go->addComponent<RocketBullet>();
         default:

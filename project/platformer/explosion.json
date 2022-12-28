@@ -1,0 +1,265 @@
+{
+  "frames": [
+    {
+      "filename": "Circle_explosion9.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 165,
+        "h": 148
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 56,
+        "w": 165,
+        "h": 148
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion10.png",
+      "frame": {
+        "x": 165,
+        "y": 0,
+        "w": 158,
+        "h": 146
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 59,
+        "w": 158,
+        "h": 146
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion8.png",
+      "frame": {
+        "x": 323,
+        "y": 0,
+        "w": 136,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 63,
+        "y": 65,
+        "w": 136,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion1.png",
+      "frame": {
+        "x": 459,
+        "y": 0,
+        "w": 48,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 107,
+        "y": 110,
+        "w": 48,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion7.png",
+      "frame": {
+        "x": 323,
+        "y": 138,
+        "w": 132,
+        "h": 125
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 66,
+        "y": 72,
+        "w": 132,
+        "h": 125
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion2.png",
+      "frame": {
+        "x": 455,
+        "y": 138,
+        "w": 57,
+        "h": 51
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 102,
+        "y": 107,
+        "w": 57,
+        "h": 51
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion6.png",
+      "frame": {
+        "x": 165,
+        "y": 146,
+        "w": 121,
+        "h": 105
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 74,
+        "y": 82,
+        "w": 121,
+        "h": 105
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion5.png",
+      "frame": {
+        "x": 0,
+        "y": 148,
+        "w": 93,
+        "h": 84
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 86,
+        "y": 88,
+        "w": 93,
+        "h": 84
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion3.png",
+      "frame": {
+        "x": 93,
+        "y": 148,
+        "w": 70,
+        "h": 70
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 95,
+        "y": 99,
+        "w": 70,
+        "h": 70
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Circle_explosion4.png",
+      "frame": {
+        "x": 0,
+        "y": 232,
+        "w": 80,
+        "h": 79
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 90,
+        "y": 90,
+        "w": 80,
+        "h": 79
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "texture.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 512,
+      "h": 512
+    },
+    "scale": 1
+  }
+}

@@ -50,6 +50,11 @@ PlatformerGame::PlatformerGame()
     level->setWorldLayer("Background");
     level->setFoliageLayer("Foliage");
 
+    explosionAtlas = SpriteAtlas::create("explosion.json", Texture::create()
+        .withFile("explosion.png")
+        .withFilterSampling(false)
+        .build());
+	
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
         .withFilterSampling(false)
@@ -223,7 +228,7 @@ void PlatformerGame::render() {
     ImGui::SetNextWindowBgAlpha(0);
     ImGui::PushFont(pixelated);
     ImGui::Begin("weapon", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Shotgun");
+    ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Handgun");
     ImGui::PopFont();
     ImGui::End();
 

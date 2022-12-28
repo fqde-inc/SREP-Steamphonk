@@ -45,6 +45,7 @@ public:
     static constexpr float32 timeStep = 1.0f / 60.0f;
 
     std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
+    std::shared_ptr<sre::SpriteAtlas> getExplosionAtlas(){return explosionAtlas;};
 
     // Less expensive to store player pointer and get position on demand
     glm::vec2 getPlayerPositon(){return player->getPosition();};
@@ -68,6 +69,7 @@ private:
     std::shared_ptr<sre::SpriteAtlas> UIAtlas;
     std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
+    std::shared_ptr<sre::SpriteAtlas> explosionAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;

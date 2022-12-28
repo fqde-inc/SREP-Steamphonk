@@ -32,6 +32,7 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
     missilePhysics->getFixture()->SetFilterData(filter);
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
+	sprite.setOrderInBatch(16);
     spriteComponent = gameObject->addComponent<SpriteComponent>();
     spriteComponent->setSprite(sprite);
 }

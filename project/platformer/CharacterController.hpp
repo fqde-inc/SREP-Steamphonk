@@ -8,7 +8,7 @@
 #include "CharacterControllerPDA.hpp"
 #include "Gun.hpp"
 #include "RocketLauncher.hpp"
-#include "Shotgun.hpp"
+#include "HandgunGun.hpp"
 #include "TimerComponent.hpp"
 #include "RocketLauncher.hpp"
 #include "PlayerShooting.hpp"
@@ -35,10 +35,7 @@ public:
     bool handleInput(SDL_Event &event) override;
 
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
-    std::unique_ptr<Gun> shotgun = std::make_unique<ShotgunGun>();
-
-    bool shotgunFired = false;
-    bool rocketLauncherFired = false;
+    std::unique_ptr<Gun> handgun = std::make_unique<HandgunGun>();
 
     std::shared_ptr<PlayerShooting> playerShooting;
     std::shared_ptr<Damagable> damageComponent;
@@ -54,9 +51,9 @@ public:
 
     std::shared_ptr<PhysicsComponent> characterPhysics;
     std::shared_ptr<Damagable> characterDamagable;
-    std::shared_ptr<TimerComponent> cooldownTimer;
+    std::shared_ptr<TimerComponent> swapTimer;
     std::shared_ptr<TimerComponent> reloadTimer;
-    float cooldownTime = .25f;
+    float swapTime = .25f;
     float reloadTime = .75f;
 
     bool left = false;

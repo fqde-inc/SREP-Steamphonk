@@ -27,6 +27,11 @@ private:
     std::shared_ptr<PhysicsComponent> physics;
     
     float radius = 10.0f;
-    float duration = 0.15f;
+    float duration = 0.25f;
+    
+    std::vector<sre::Sprite> animationSprites;
+    int animationIndex = 0;
+    float animationTime = 0;
+    float animationFrameRate = 1.0f / 10.0f;
 
 };
