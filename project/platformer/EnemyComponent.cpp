@@ -34,6 +34,9 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     damagable = gameObject->addComponent<Damagable>();
     damagable->setMaxLife(1);
     damagable->setLife(1);
+    damagable->overrideDamageSound([this]() {
+        Mix_PlayChannel(-1, PlatformerGame::instance->hitBirdSFX, 0);
+    });
 }
 
 void EnemyComponent::setPathing( std::vector<glm::vec2> positions, PathType type = BEZIER){

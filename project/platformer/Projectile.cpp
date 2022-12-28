@@ -71,8 +71,12 @@ void Projectile::update(float deltaTime) {
 // Raycast callback
 float32 Projectile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
     if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
+    {
         return 1;
-    
+    }
+
+    Mix_PlayChannel(-1, PlatformerGame::instance->hitWallSFX, 0);
+
     fixture->GetBody()->ApplyLinearImpulseToCenter(b2Vec2{2.0f,2.0f}, true);
     gameObject->setConsumed(true);
     return 0;

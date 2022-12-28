@@ -93,17 +93,3 @@ private:
 };
 
 #pragma endregion
-
-#pragma region FiringState
-
-class FiringState : public CharacterState {
-public:
-    explicit FiringState() : CharacterState(0) {
-        stateType = Firing;
-    };
-    void handleInput(CharacterController& character, SDL_Event &event) override {}
-
-    void update(CharacterController &character, float deltaTime) override;
-};
-
-#pragma endregion
