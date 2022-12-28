@@ -85,8 +85,8 @@ void Projectile::onCollisionStart(PhysicsComponent *comp) {
     if ( go->name == origin )
 		return;
 
-    if (comp->getGameObject()->getComponent<Damagable>() != nullptr) {
-        comp->getGameObject()->getComponent<Damagable>()->takeDamage(damage);
+    if (go->getComponent<Damagable>() != nullptr) {
+        go->getComponent<Damagable>()->takeDamage(damage);
     }
     
     gameObject->setConsumed(true);

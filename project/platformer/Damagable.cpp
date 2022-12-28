@@ -12,9 +12,18 @@ void Damagable::overrideDeathAction(std::function<void()> action) {
 	deathAction = action;
 }
 
+void Damagable::overrideDamageSound(std::function<void()> action) {
+    hasDamageSound = true;
+    damageSoundAction = action;
+}
+
 void Damagable::takeDamage(int damage)
 {
 	curLife -= damage;
+
+    if(hasDamageSound)
+        (this->damageSoundAction)();
+
 	if (curLife <= 0) {
 		if (hasDeathAction)
 		{

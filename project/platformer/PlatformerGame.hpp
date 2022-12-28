@@ -71,7 +71,17 @@ public:
 
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
-    int initMixer;
+    Mix_Chunk* deathSFX;
+    Mix_Chunk* explosionOneSFX;
+    Mix_Chunk* explosionTwoSFX;
+    Mix_Chunk* explosionThreeSFX;
+    Mix_Chunk* handgunShootSFX;
+    Mix_Chunk* rocketShootSFX;
+    Mix_Chunk* hitBirdSFX;
+    Mix_Chunk* hitPlayerSFX;
+    Mix_Chunk* hitWallSFX;
+    Mix_Chunk* jumpSFX;
+    Mix_Chunk* startGameSFX;
 
 private:
     sre::SDLRenderer r;

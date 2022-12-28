@@ -33,7 +33,7 @@ PlatformerGame::PlatformerGame()
         .withSdlWindowFlags(SDL_WINDOW_OPENGL)
         .withVSync(useVsync);
 
-    initMixer = Mix_Init(0);
+    Mix_Init(0);
 
     //using namespace rapidjson;
     //ifstream fis("testlvl.json");
@@ -144,9 +144,17 @@ void PlatformerGame::initLevel() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     Mix_Music* music = Mix_LoadMUS( (SOUND_PATH + "phonkLoop.wav").c_str());
 
-    if (!music) {
-        cout << "Music error\n";
-    }
+    deathSFX = Mix_LoadWAV( (SOUND_PATH + "death.wav").c_str());
+    explosionOneSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_1.wav").c_str());
+    explosionTwoSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_2.wav").c_str());
+    explosionThreeSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_3.wav").c_str());
+    handgunShootSFX = Mix_LoadWAV( (SOUND_PATH + "handgun_shoot.wav").c_str());
+    rocketShootSFX = Mix_LoadWAV( (SOUND_PATH + "rocket_shoot.wav").c_str());
+    hitBirdSFX = Mix_LoadWAV( (SOUND_PATH + "hit_player.wav").c_str());
+    hitPlayerSFX = Mix_LoadWAV( (SOUND_PATH + "hit_bird.wav").c_str());
+    hitWallSFX = Mix_LoadWAV( (SOUND_PATH + "hit_wall.wav").c_str());
+    jumpSFX = Mix_LoadWAV( (SOUND_PATH + "jump.wav").c_str());
+    startGameSFX = Mix_LoadWAV( (SOUND_PATH + "start_game.wav").c_str());
 
     Mix_PlayMusic(music, -1);
 
