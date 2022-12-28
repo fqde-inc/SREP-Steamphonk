@@ -10,9 +10,9 @@ add_executable(SRE-Platformer ${Platformer})
 target_link_libraries(SRE-Platformer ${all_libs})
 
 # Original graphics
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY Sound/phonkLoop.wav platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Sound/phonkLoop.wav platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY Sound/phonkLoop.wav platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
