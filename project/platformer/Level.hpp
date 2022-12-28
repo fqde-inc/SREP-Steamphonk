@@ -29,7 +29,7 @@ struct Bounds {
 
 class Level {
 public:
-    static std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName);
+    static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName);
 
     std::string getNameByCoords(std::pair<int, int> coords);
 	
@@ -62,5 +62,7 @@ private:
     int lastGenerated = -2;
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
+
+    std::string getLevelPath(std::string name);
 };
 

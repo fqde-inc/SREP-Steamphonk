@@ -6,9 +6,9 @@
 #include "SpriteComponent.hpp"
 #include "Component.hpp"
 
-class Missile : public Component, b2RayCastCallback{
+class Projectile : public Component, b2RayCastCallback{
 public:
-    Missile(GameObject* gameObject);
+    Projectile(GameObject* gameObject);
 	
     void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 
@@ -28,7 +28,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
 protected:
-    std::shared_ptr<PhysicsComponent> missilePhysics;
+    std::shared_ptr<PhysicsComponent> ProjectilePhysics;
     std::shared_ptr<SpriteComponent> spriteComponent;
     glm::vec2 direction;
 

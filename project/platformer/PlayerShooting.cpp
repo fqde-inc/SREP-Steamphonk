@@ -8,7 +8,7 @@
 #include "EnemyComponent.hpp"
 #include "GameObject.hpp"
 #include "PlatformerGame.hpp"
-#include "Missile.hpp"
+#include "Projectile.hpp"
 #include "SpriteComponent.hpp"
 #include "PlayerShooting.hpp"
 
