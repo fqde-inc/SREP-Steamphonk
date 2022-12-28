@@ -129,6 +129,7 @@ void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<
 
     auto enemy = birdObj->addComponent<EnemyComponent>();
     enemy->setPathing(positions, type);
+    cout << "Made a bird at " << coords.first << ", " << coords.second << " with " << positions.size() << " points" << endl;
 }
 
 std::shared_ptr<Level> PlatformerGame::getLevel()

@@ -1165,12 +1165,18 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [64,400],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 9, "cy": 26 }, { "cx": 15, "cy": 25 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 7, "cy": 27 }, { "cx": 11, "cy": 27 }, { "cx": 14, "cy": 25 }, { "cx": 15, "cy": 23 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
 								"id": "V_String",
-								"params": ["9,26"]
+								"params": ["7,27"]
 							}, {
 								"id": "V_String",
-								"params": ["15,25"]
+								"params": ["11,27"]
+							}, {
+								"id": "V_String",
+								"params": ["14,25"]
+							}, {
+								"id": "V_String",
+								"params": ["15,23"]
 							} ] }]
 						},
 						{
@@ -1537,7 +1543,7 @@
 			]
 		},
 		{
-			"identifier": "Level_3",
+			"identifier": "Level_2",
 			"iid": "c642f040-7820-11ed-a18a-ef1533da8c93",
 			"uid": 37,
 			"worldX": 0,
@@ -1674,12 +1680,18 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [256,64],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 13, "cy": 1 }, { "cx": 5, "cy": 1 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 13, "cy": 1 }, { "cx": 11, "cy": 2 }, { "cx": 7, "cy": 0 }, { "cx": 4, "cy": 2 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
 								"id": "V_String",
 								"params": ["13,1"]
 							}, {
 								"id": "V_String",
-								"params": ["5,1"]
+								"params": ["11,2"]
+							}, {
+								"id": "V_String",
+								"params": ["7,0"]
+							}, {
+								"id": "V_String",
+								"params": ["4,2"]
 							} ] }]
 						}
 					]

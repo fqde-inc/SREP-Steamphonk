@@ -194,6 +194,7 @@ void Level::generateBirdsForLevel(int id)
     auto entities = d["levels"].GetArray()[id]["layerInstances"].GetArray();
     auto worldX = d["levels"].GetArray()[id]["worldX"].GetInt();
     auto worldY = d["levels"].GetArray()[id]["worldY"].GetInt();
+    auto gSize = d["defaultGridSize"].GetInt();
 
     for (int j = 0; j < entities.Size(); j++)
     {
@@ -202,7 +203,6 @@ void Level::generateBirdsForLevel(int id)
         for (int i = 0; i < entity.Size(); i++)
         {
             string compare = entity[i].GetObject()["__identifier"].GetString();
-            cout << i << ": " << compare << endl;
             if (identifier.compare(compare) == 0)
             {
                 auto pos = entity[i].GetObject()["px"].GetArray();
@@ -215,12 +215,14 @@ void Level::generateBirdsForLevel(int id)
 				for (int i = 0; i < path.Size(); i++)
 				{
 					auto p = path[i].GetObject();
-                    int x = p["cx"].GetInt();
-					int y = p["cy"].GetInt();
-					positions.push_back(glm::vec2(x + coords.first, y + coords.second));
+                    int pgx = p["cx"].GetInt();
+					int pgy = p["cy"].GetInt();
+                    auto srepPos = srepCoordinates(pgx * gSize, pgy * gSize, worldX, worldY);
+					positions.push_back(glm::vec2(srepPos.first, srepPos.second));
+                    cout << "Added " << srepPos.first << ", " << srepPos.second << endl;
 				}
 
-                PlatformerGame::instance->generateSingleBird(coords, positions, BEZIER);
+                PlatformerGame::instance->generateSingleBird(coords, positions, LINEAR);
             }
         }
     }
