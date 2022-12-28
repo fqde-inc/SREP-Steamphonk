@@ -143,6 +143,8 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 void PlatformerGame::initLevel() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     Mix_Music* music = Mix_LoadMUS( (SOUND_PATH + "phonkLoop.wav").c_str());
+    Mix_VolumeMusic(20);
+    Mix_Volume(-1, 25);
 
     deathSFX = Mix_LoadWAV( (SOUND_PATH + "death.wav").c_str());
     explosionOneSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_1.wav").c_str());

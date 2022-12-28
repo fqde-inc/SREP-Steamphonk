@@ -73,6 +73,7 @@ void CharacterState::fire(CharacterController &character) {
     switch (character.equippedGun) {
         case RocketLauncher:
             if(character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                Mix_PlayChannel(-1, PlatformerGame::instance->rocketShootSFX, 0);
                 character.reloadTimer->initTimer(character.reloadTime);
                 character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
                 character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
@@ -80,6 +81,7 @@ void CharacterState::fire(CharacterController &character) {
             break;
         case Handgun:
             if(character.handgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                Mix_PlayChannel(-1, PlatformerGame::instance->handgunShootSFX, 0);
                 character.reloadTimer->initTimer(character.reloadTime);
                 character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
                 character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
