@@ -20,7 +20,7 @@
 EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
-
+    //TODO: Why does this follow the bird???
     physics->initCircle(b2_dynamicBody, 15/physicsScale, gameObject->getPosition()/physicsScale, 0);
     physics->setAutoUpdate(false);
     physics->getBody()->SetGravityScale(0.0f);
@@ -28,7 +28,7 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
 
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::ENEMY;
-    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::PLAYER;
+    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::PLAYER | PlatformerGame::EXPLOSIONS;
     physics->getFixture()->SetFilterData(filter);
 
     damagable = gameObject->addComponent<Damagable>();

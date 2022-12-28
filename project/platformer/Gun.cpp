@@ -1,6 +1,9 @@
 //
 // Created by Giorgio Perri  on 31/10/22.
 // 
+
+#include <map>
+#include <memory>
 #include <iostream>
 #include "Box2D/Box2D.h"
 #include "Gun.hpp"
@@ -20,14 +23,22 @@ bool Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
     if(clipSize == 0 || cooldown->isRunning)
         return false;
 
-    auto l = BulletFactory::Make(bulletType);
-
-    l->setOrigin("Player");
-    l->setDirection(_direction);
-
-    auto go = l->getGameObject();
+    auto go = PlatformerGame::instance->createGameObject();
     go->setPosition(_position);
     go->setRotation(180 - glm::atan(_direction.x, _direction.y) * 180 / M_PI);
+    
+    auto bullet = std::shared_ptr<Bullet>();
+
+    if (bulletType == Regular) {
+        bullet = go->addComponent<RegularBullet>();
+    } else if (bulletType == Rocket) {
+        bullet = go->addComponent<RocketBullet>();
+    } else {
+        bullet = go->addComponent<Bullet>();
+    }
+
+    bullet->setOrigin("Player");
+    bullet->setDirection(_direction);
 
     clipSize--;
     cooldown->initTimer(cooldownTime);
