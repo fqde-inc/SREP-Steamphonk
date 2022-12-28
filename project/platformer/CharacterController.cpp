@@ -103,7 +103,7 @@ void CharacterController::update(float deltaTime) {
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
 
-    if(reloadTimer->hasFinished){
+    if(reloadTimer->hasFinished && isGrounded){
         handgun->reload();
         rocketLauncher->reload();
     }

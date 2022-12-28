@@ -32,6 +32,8 @@ PlatformerGame::PlatformerGame()
         .withSdlWindowFlags(SDL_WINDOW_OPENGL)
         .withVSync(useVsync);
 
+    initMixer = Mix_Init(0);
+
     //using namespace rapidjson;
     //ifstream fis("testlvl.json");
     //IStreamWrapper isw(fis);
@@ -138,6 +140,16 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 }
 
 void PlatformerGame::initLevel() {
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+    Mix_Music* music = Mix_LoadMUS("phonkLoop.wav");
+
+    if (!music) {
+        cout << "Music error\n";
+    }
+
+    Mix_PlayMusic(music, -1);
+
+    keyboardState = SDL_GetKeyboardState(NULL);
     initPhysics();
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
@@ -194,6 +206,7 @@ void PlatformerGame::update(float time) {
 
         sceneObjects[i]->update(time);
     }
+
 }
 
 void PlatformerGame::render() {
