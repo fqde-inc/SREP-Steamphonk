@@ -106,8 +106,24 @@ private:
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
 
+
     std::shared_ptr<sre::Texture> heartFull;
+    sre::Texture* heartFullTexture;
+
     std::shared_ptr<sre::Texture> heartEmpty;
+    sre::Texture* heartEmptyTexture;
+
+    std::shared_ptr<sre::Texture> missileUp;
+    sre::Texture* missileUpTexture;
+
+    std::shared_ptr<sre::Texture> missileDown;
+    sre::Texture* missileDownTexture;
+
+    std::shared_ptr<sre::Texture> handgunUp;
+    sre::Texture* handgunUpTexture;
+
+    std::shared_ptr<sre::Texture> handgunDown;
+    sre::Texture* handgunDownTexture;
 
     void updatePhysics();
 

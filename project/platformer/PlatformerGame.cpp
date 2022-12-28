@@ -144,7 +144,7 @@ void PlatformerGame::initLevel() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     Mix_Music* music = Mix_LoadMUS( (SOUND_PATH + "phonkLoop.wav").c_str());
     Mix_VolumeMusic(20);
-    Mix_Volume(-1, 25);
+    Mix_Volume(-1, 64);
 
     deathSFX = Mix_LoadWAV( (SOUND_PATH + "death.wav").c_str());
     explosionOneSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_1.wav").c_str());
@@ -196,7 +196,22 @@ void PlatformerGame::initLevel() {
     style.WindowBorderSize = 0.0f;
 
     heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
+    heartFullTexture = heartFull.get();
+
     heartEmpty = Texture::create().withFile( UI_ART_PATH + "heartEmpty.png").withFilterSampling(false).build();
+    heartEmptyTexture = heartEmpty.get();
+
+    missileUp = Texture::create().withFile( UI_ART_PATH + "missileUp.png").withFilterSampling(false).build();
+    missileUpTexture = missileUp.get();
+
+    missileDown = Texture::create().withFile( UI_ART_PATH + "missileDown.png").withFilterSampling(false).build();
+    missileDownTexture = missileDown.get();
+
+    handgunUp = Texture::create().withFile( UI_ART_PATH + "handgunUp.png").withFilterSampling(false).build();
+    handgunUpTexture = handgunUp.get();
+
+    handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
+    handgunDownTexture = handgunDown.get();
 }
 
 void PlatformerGame::update(float time) {
@@ -280,11 +295,9 @@ void PlatformerGame::render() {
     ImGui::SetNextWindowBgAlpha(0);
     ImGui::PushFont(pixelated);
     ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    Texture* texFull = heartFull.get();
-    Texture* texEmpty = heartEmpty.get();
     for (int i=0;i<characterController->damageComponent->getMaxLife();i++){
         ImGui::SameLine(40 * i + 32);
-        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? texEmpty->getNativeTexturePtr() : texFull->getNativeTexturePtr(),{32, 32}, uv0, uv1);
+        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? heartEmptyTexture->getNativeTexturePtr() : heartFullTexture->getNativeTexturePtr(),{32, 32}, uv0, uv1);
     }
     ImGui::PopFont();
     ImGui::End();
