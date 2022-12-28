@@ -99,7 +99,7 @@ int Level::getLayerIndexForLevel(string identifier, int levelNo)
 /// <param name="levelNumber"></param>
 void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
