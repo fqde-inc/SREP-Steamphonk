@@ -38,21 +38,32 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
 }
 
 void Missile::update(float deltaTime) {
-    // Check whether missile has collided with the ground using a raycast (platforms)
-    auto from = missilePhysics->getBody()->GetWorldCenter();
-
-    b2Vec2 to { from.x, from.y - radius/PlatformerGame::instance->physicsScale};
-    PlatformerGame::instance->world->RayCast(this, from, to);
-
-    to = { from.x  - radius/PlatformerGame::instance->physicsScale, from.y};
-    PlatformerGame::instance->world->RayCast(this, from, to);
-
+    
     // Self desintegration ?
     lifetime += deltaTime;
     if(lifetime >= lifespan ) {
         gameObject->setConsumed( true );
     }
 
+    // Check whether missile has collided with the ground using a raycast (platforms)
+    auto from = missilePhysics->getBody()->GetPosition();
+
+    // We want the raycast to go in the facing direction
+    // We use cos(abs(angle)) for x, so regardless of the facing angle
+    // It's always forward
+    float angle = atan2(direction.y, direction.x);
+    b2Vec2 facing(cos(abs(angle)), sin(angle));
+
+    // Y axis uses that angle too, minus radius size to not over extend body size
+    if (angle < 0.0f)
+        facing.y = facing.y - radius/PlatformerGame::instance->physicsScale;
+
+    // shorting length of raycast
+    b2Vec2 to = from + 0.1f * facing;
+
+    PlatformerGame::instance->world->RayCast(this, from, to);
+
+    // Physics update
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
     missilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 }
