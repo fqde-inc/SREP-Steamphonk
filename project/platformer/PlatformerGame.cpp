@@ -290,16 +290,34 @@ void PlatformerGame::render() {
     ImVec2 uv0(0,1); // flip y axis coordinates
     ImVec2 uv1(1,0);
 
-    ImGui::SetNextWindowPos(ImVec2(-24 + 85, windowSize.y - 85), ImGuiSetCond_Always);
+    ImGui::SetNextWindowPos(ImVec2(61, windowSize.y - 85), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
     ImGui::SetNextWindowBgAlpha(0);
-    ImGui::PushFont(pixelated);
     ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
     for (int i=0;i<characterController->damageComponent->getMaxLife();i++){
         ImGui::SameLine(40 * i + 32);
         ImGui::Image(i >= characterController->damageComponent->getCurLife() ? heartEmptyTexture->getNativeTexturePtr() : heartFullTexture->getNativeTexturePtr(),{32, 32}, uv0, uv1);
     }
-    ImGui::PopFont();
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    for (int i=0;i<characterController->handgun->maxClipSize;i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->handgun->clipSize ? handgunDown->getNativeTexturePtr() : handgunUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    }
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 95, windowSize.y - 65), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("rocket", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    for (int i=0;i<characterController->rocketLauncher->maxClipSize;i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->rocketLauncher->clipSize ? missileDown->getNativeTexturePtr() : missileUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    }
     ImGui::End();
 
     if (doDebugDraw){
