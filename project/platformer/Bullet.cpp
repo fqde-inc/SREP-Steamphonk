@@ -5,10 +5,10 @@
 #include "Bullet.hpp"
 #include "PlatformerGame.hpp"
 
-Bullet::Bullet(GameObject* gameObject): Missile(gameObject) {
-    b2Filter filter = missilePhysics->getFixture()->GetFilterData();
+Bullet::Bullet(GameObject* gameObject): Projectile(gameObject) {
+    b2Filter filter = ProjectilePhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::BULLET;
-    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::ENEMY | PlatformerGame::WALLS;
-    missilePhysics->getFixture()->SetFilterData(filter);
+    filter.maskBits     = PlatformerGame::Projectile | PlatformerGame::ENEMY | PlatformerGame::WALLS;
+    ProjectilePhysics->getFixture()->SetFilterData(filter);
 };
 

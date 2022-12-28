@@ -4,7 +4,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <iostream>
 #include <cmath>
-#include "Missile.hpp"
+#include "Projectile.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "PhysicsComponent.hpp"
@@ -15,21 +15,21 @@
 
 using namespace std;
 
-Missile::Missile(GameObject *gameObject) : Component(gameObject) {
+Projectile::Projectile(GameObject *gameObject) : Component(gameObject) {
 
-    gameObject->name = "Missile";
+    gameObject->name = "Projectile";
 
-    missilePhysics = gameObject->addComponent<PhysicsComponent>();
+    ProjectilePhysics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
 
-    missilePhysics->initCircle(b2_kinematicBody, radius/physicsScale, gameObject->getPosition()/physicsScale, 0);
-    missilePhysics->setAutoUpdate(false);
-    missilePhysics->setSensor(true);
+    ProjectilePhysics->initCircle(b2_kinematicBody, radius/physicsScale, gameObject->getPosition()/physicsScale, 0);
+    ProjectilePhysics->setAutoUpdate(false);
+    ProjectilePhysics->setSensor(true);
 
-    b2Filter filter = missilePhysics->getFixture()->GetFilterData();
-    filter.categoryBits = PlatformerGame::MISSILE;
+    b2Filter filter = ProjectilePhysics->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::Projectile;
     filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::WALLS | PlatformerGame::PLAYER;
-    missilePhysics->getFixture()->SetFilterData(filter);
+    ProjectilePhysics->getFixture()->SetFilterData(filter);
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
 	sprite.setOrderInBatch(16);
@@ -37,7 +37,7 @@ Missile::Missile(GameObject *gameObject) : Component(gameObject) {
     spriteComponent->setSprite(sprite);
 }
 
-void Missile::update(float deltaTime) {
+void Projectile::update(float deltaTime) {
     
     // Self desintegration ?
     lifetime += deltaTime;
@@ -45,8 +45,8 @@ void Missile::update(float deltaTime) {
         gameObject->setConsumed( true );
     }
 
-    // Check whether missile has collided with the ground using a raycast (platforms)
-    auto from = missilePhysics->getBody()->GetPosition();
+    // Check whether Projectile has collided with the ground using a raycast (platforms)
+    auto from = ProjectilePhysics->getBody()->GetPosition();
 
     // We want the raycast to go in the facing direction
     // We use cos(abs(angle)) for x, so regardless of the facing angle
@@ -65,11 +65,11 @@ void Missile::update(float deltaTime) {
 
     // Physics update
     gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
-    missilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+    ProjectilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 }
 
 // Raycast callback
-float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+float32 Projectile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
     if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
         return 1;
     
@@ -78,7 +78,7 @@ float32 Missile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b
     return 0;
 };
 
-void Missile::onCollisionStart(PhysicsComponent *comp) {
+void Projectile::onCollisionStart(PhysicsComponent *comp) {
     //TODO add collision handling on player's side
     auto go = comp->getGameObject();
 
@@ -92,5 +92,5 @@ void Missile::onCollisionStart(PhysicsComponent *comp) {
     gameObject->setConsumed(true);
 }
 
-void Missile::onCollisionEnd(PhysicsComponent *comp) {
+void Projectile::onCollisionEnd(PhysicsComponent *comp) {
 }

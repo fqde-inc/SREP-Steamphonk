@@ -1,3 +1,18 @@
+#ifndef PROJECT_DATA_PATHS
+#define PROJECT_DATA_PATHS
+
+#include <string>
+
+const std::string PROJECT_DATA_PATH = "project_data";
+
+const std::string PLATFORMER_ART_PATH   = PROJECT_DATA_PATH + "/Platformer_Art/";
+const std::string EXPLOSION_ART_PATH    = PROJECT_DATA_PATH + "/Explosion/";
+const std::string CHARACTER_ART_PATH    = PROJECT_DATA_PATH + "/Character_Anims/";
+const std::string LEVEL_ART_PATH        = PROJECT_DATA_PATH + "/levels/";
+const std::string UI_ART_PATH           = PROJECT_DATA_PATH + "/UI/";
+const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
+
+#endif
 
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
@@ -95,7 +110,7 @@ private:
         WALLS       = 0x0002,
         PLAYER      = 0x0003,
         ENEMY       = 0x0004,
-        MISSILE     = 0x0005,
+        Projectile     = 0x0005,
         BULLET      = 0x0006,
         EXPLOSIONS  = 0x0005,
     };
@@ -115,7 +130,7 @@ private:
     friend class PlatformComponent;
     friend class EnemyComponent;
 
-    friend class Missile;
+    friend class Projectile;
     friend class Gun;
     friend class Bullet;
     friend class RocketBullet;

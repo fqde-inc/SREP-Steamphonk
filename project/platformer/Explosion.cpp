@@ -30,8 +30,8 @@ Explosion::Explosion(GameObject* gameObject): Component(gameObject)
     physics->setSensor(true);
 
     b2Filter filter = physics->getFixture()->GetFilterData();
-    filter.categoryBits = PlatformerGame::MISSILE;
-    filter.maskBits     = PlatformerGame::MISSILE | PlatformerGame::ENEMY | PlatformerGame::PLAYER;
+    filter.categoryBits = PlatformerGame::Projectile;
+    filter.maskBits     = PlatformerGame::Projectile | PlatformerGame::ENEMY | PlatformerGame::PLAYER;
     physics->getFixture()->SetFilterData(filter);
 }
 

@@ -1,3 +1,4 @@
+
 #include <sre/Inspector.hpp>
 #include "PlatformerGame.hpp"
 #include "GameObject.hpp"
@@ -41,25 +42,25 @@ PlatformerGame::PlatformerGame()
 
     backgroundColor = {0.14f,0.12f,0.11f,1.0f};
 
-    spriteAtlas = SpriteAtlas::create("platformer-art-deluxe.json",Texture::create()
-            .withFile( "platformer-art-deluxe.png")
+    spriteAtlas = SpriteAtlas::create( PLATFORMER_ART_PATH + "platformer-art-deluxe.json",Texture::create()
+            .withFile( PLATFORMER_ART_PATH + "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
 
-    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
-        .withFile("dirtsheet.png")
+    tileAtlas = SpriteAtlas::create( LEVEL_ART_PATH + "dirtsheet.json", Texture::create()
+        .withFile(LEVEL_ART_PATH + "dirtsheet.png")
         .withFilterSampling(false)
         .build());
 
-    explosionAtlas = SpriteAtlas::create("explosion.json", Texture::create()
-        .withFile("explosion.png")
+    explosionAtlas = SpriteAtlas::create(EXPLOSION_ART_PATH + "explosion.json", Texture::create()
+        .withFile(EXPLOSION_ART_PATH + "explosion.png")
         .withFilterSampling(false)
         .build());
 	
     level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
 
-    characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
-        .withFile("characterAnims.png")
+    characterAtlas = SpriteAtlas::create( CHARACTER_ART_PATH + "characterAnims.json", Texture::create()
+        .withFile( CHARACTER_ART_PATH + "characterAnims.png")
         .withFilterSampling(false)
         .build());
 
@@ -172,14 +173,14 @@ void PlatformerGame::initLevel() {
 
     auto& io = ImGui::GetIO();
     io.Fonts->AddFontDefault();
-    pixelated = io.Fonts->AddFontFromFileTTF("PixelatedFont.ttf", 20);
+    pixelated = io.Fonts->AddFontFromFileTTF( (UI_ART_PATH + "PixelatedFont.ttf").c_str() , 20);
     io.FontDefault = io.Fonts->Fonts[0];
 
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowBorderSize = 0.0f;
 
-    heartFull  = Texture::create().withFile("heartFull.png").withFilterSampling(false).build();
-    heartEmpty = Texture::create().withFile("heartEmpty.png").withFilterSampling(false).build();
+    heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
+    heartEmpty = Texture::create().withFile( UI_ART_PATH + "heartEmpty.png").withFilterSampling(false).build();
 }
 
 void PlatformerGame::update(float time) {

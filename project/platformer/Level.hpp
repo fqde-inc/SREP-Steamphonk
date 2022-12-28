@@ -42,5 +42,7 @@ private:
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
+
+    std::string getLevelPath(std::string name);
 };
 

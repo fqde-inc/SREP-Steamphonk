@@ -10,7 +10,7 @@
 #include "EnemyComponent.hpp"
 #include "GameObject.hpp"
 #include "PlatformerGame.hpp"
-#include "Missile.hpp"
+#include "Projectile.hpp"
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "FollowPathComponent.hpp"
@@ -89,7 +89,7 @@ void EnemyComponent::shootAtPlayer(){
     auto spriteComponent = go->addComponent<SpriteComponent>();
     spriteComponent->setSprite( sprite );
 
-    auto l = go->addComponent<Missile>();
+    auto l = go->addComponent<Projectile>();
     l->setDirection(direction);
     l->setOrigin(gameObject->name);
 
@@ -117,11 +117,11 @@ void EnemyComponent::kill(){
 
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
 
-    if( comp->getGameObject()->getComponent<Missile>() != nullptr ){
-        std::shared_ptr<Missile> missile = comp->getGameObject()->getComponent<Missile>();
+    if( comp->getGameObject()->getComponent<Projectile>() != nullptr ){
+        std::shared_ptr<Projectile> projectile = comp->getGameObject()->getComponent<Projectile>();
 
-        if( missile->getOrigin() == "Player" ){
-            lastHitDirection = missile->getDirection();
+        if( projectile->getOrigin() == "Player" ){
+            lastHitDirection = projectile->getDirection();
         }
     }
 }

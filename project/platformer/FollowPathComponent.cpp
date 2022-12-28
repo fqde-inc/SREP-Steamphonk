@@ -4,7 +4,7 @@
 #include "FollowPathComponent.hpp"
 #include "GameObject.hpp"
 #include "PlatformerGame.hpp"
-#include "Missile.hpp"
+#include "Projectile.hpp"
 #include "SpriteComponent.hpp"
 
 FollowPathComponent::FollowPathComponent(GameObject *gameObject) : Component(gameObject) {
