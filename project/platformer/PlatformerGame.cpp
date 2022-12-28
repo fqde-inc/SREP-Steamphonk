@@ -45,19 +45,16 @@ PlatformerGame::PlatformerGame()
             .withFile( "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
-
-    tileAtlas = SpriteAtlas::create("dirtsheet.json", Texture::create()
-        .withFile("dirtsheet.png")
-        .withFilterSampling(false)
-        .build());
+	
+    level = Level::createDefaultLevel(this, "testlvl.json", "dirttile.json");
+    level->setWorldLayer("Background");
+    level->setFoliageLayer("Foliage");
 
     explosionAtlas = SpriteAtlas::create("explosion.json", Texture::create()
         .withFile("explosion.png")
         .withFilterSampling(false)
         .build());
 	
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
-
     characterAtlas = SpriteAtlas::create("characterAnims.json", Texture::create()
         .withFile("characterAnims.png")
         .withFilterSampling(false)
@@ -96,7 +93,6 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 
 void PlatformerGame::initLevel() {
     initPhysics();
-
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = characterAtlas->get("tile000.png");
@@ -106,15 +102,6 @@ void PlatformerGame::initLevel() {
     auto pShooting = player->addComponent<PlayerShooting>();
     characterController = player->addComponent<CharacterController>();
     characterController->playerShooting = pShooting;
-    characterController->setSprites(
-            spriteAtlas->get("19.png"),
-            spriteAtlas->get("20.png"),
-            spriteAtlas->get("21.png"),
-            spriteAtlas->get("26.png"),
-            spriteAtlas->get("27.png"),
-            spriteAtlas->get("28.png")
-    );
-		
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();

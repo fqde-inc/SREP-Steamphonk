@@ -20,7 +20,7 @@
 EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
-
+    //TODO: Why does this follow the bird???
     physics->initCircle(b2_dynamicBody, 15/physicsScale, gameObject->getPosition()/physicsScale, 0);
     physics->setAutoUpdate(false);
     physics->getBody()->SetGravityScale(0.0f);

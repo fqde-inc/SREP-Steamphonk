@@ -226,6 +226,12 @@ void JumpingState::update(CharacterController &character, float deltaTime) {
         animationTime = 0;
     }
 
+    //TODO:AHA! The error is animation related, this is just a quick fix
+    if (spritesToRender.size() <= animationIndex)
+    {
+        std::cout << "An animation outside maximium allowed index was attempted, resetting to max" << std::endl;
+        animationIndex = spritesToRender.size()-1;
+    }
     spritesToRender[animationIndex].setFlip({character.lastIsLeft, false});
 
     character.spriteComponent->setSprite(spritesToRender[animationIndex]);

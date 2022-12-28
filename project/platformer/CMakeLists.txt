@@ -13,20 +13,14 @@ target_link_libraries(SRE-Platformer ${all_libs})
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY platformer-art-deluxe.json platformer-art-deluxe.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY UI/PixelatedFont.ttf UI/heartEmpty.png UI/heartFull.png DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
-# Graphics
-file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/dirtsheet.png levels/dirtsheet.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-
-# Level files
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY levels/1.json levels/steamphonk.png levels/steamphonk.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+# copy files to dest
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY levels/testlvl.json levels/dirttile.png levels/dirttile.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
 # Test level
 file(COPY levels/testlvl.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
