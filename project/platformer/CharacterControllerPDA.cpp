@@ -91,10 +91,6 @@ void CharacterState::swapWeapons(CharacterController &character, SDL_Event &even
     }
 }
 
-void CharacterState::reload(CharacterController &character) {
-    //character.reloadTimer->initTimer(character.reloadTime);
-;}
-
 #pragma endregion
 
 #pragma region StandingState
@@ -147,10 +143,6 @@ void StandingState::update(CharacterController &character, float deltaTime) {
     if(animationTime >= animationFrameRate) {
         animationIndex = (animationIndex + 1) % animationSprites.size();
         animationTime = 0;
-    }
-
-    if(!character.reloadTimer->isRunning) {
-        reload(character);
     }
 
     animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
@@ -226,6 +218,12 @@ void JumpingState::update(CharacterController &character, float deltaTime) {
         animationTime = 0;
     }
 
+    //TODO:AHA! The error is animation related, this is just a quick fix
+    if (spritesToRender.size() <= animationIndex)
+    {
+        std::cout << "An animation outside maximium allowed index was attempted, resetting to max" << std::endl;
+        animationIndex = spritesToRender.size()-1;
+    }
     spritesToRender[animationIndex].setFlip({character.lastIsLeft, false});
 
     character.spriteComponent->setSprite(spritesToRender[animationIndex]);
@@ -281,6 +279,17 @@ void WalkingState::handleInput(CharacterController& character, SDL_Event &event)
 }
 
 void WalkingState::update(CharacterController &character, float deltaTime) {
+//    if(!PlatformerGame::instance->state[SDL_SCANCODE_A] || !PlatformerGame::instance->state[SDL_SCANCODE_D]) {
+//        popStack(Walking);
+//    }
+
+    if(!PlatformerGame::instance->keyboardState[SDL_SCANCODE_A] && !PlatformerGame::instance->keyboardState[SDL_SCANCODE_D]) {
+        character.left = false;
+        character.right = false;
+        popStack(Walking);
+        return;
+    }
+
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }

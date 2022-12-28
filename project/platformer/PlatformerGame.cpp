@@ -33,6 +33,8 @@ PlatformerGame::PlatformerGame()
             .withSdlWindowFlags(SDL_WINDOW_OPENGL)
             .withVSync(useVsync);
 
+    initMixer = Mix_Init(0);
+
     //using namespace rapidjson;
     //ifstream fis("testlvl.json");
     //IStreamWrapper isw(fis);
@@ -46,19 +48,16 @@ PlatformerGame::PlatformerGame()
             .withFile( PLATFORMER_ART_PATH + "platformer-art-deluxe.png")
             .withFilterSampling(false)
             .build());
-
-    tileAtlas = SpriteAtlas::create( LEVEL_ART_PATH + "dirtsheet.json", Texture::create()
-        .withFile(LEVEL_ART_PATH + "dirtsheet.png")
-        .withFilterSampling(false)
-        .build());
+	
+    level = Level::createDefaultLevel(this, "testlvl.json", "dirttile.json");
+    level->setWorldLayer("Background");
+    level->setFoliageLayer("Foliage");
 
     explosionAtlas = SpriteAtlas::create(EXPLOSION_ART_PATH + "explosion.json", Texture::create()
         .withFile(EXPLOSION_ART_PATH + "explosion.png")
         .withFilterSampling(false)
         .build());
 	
-    level = Level::createDefaultLevel(this, spriteAtlas, tileAtlas, "testlvl.json", "dirtsheet.json");
-
     characterAtlas = SpriteAtlas::create( CHARACTER_ART_PATH + "characterAnims.json", Texture::create()
         .withFile( CHARACTER_ART_PATH + "characterAnims.png")
         .withFilterSampling(false)
@@ -96,8 +95,17 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 }
 
 void PlatformerGame::initLevel() {
-    initPhysics();
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
+    Mix_Music* music = Mix_LoadMUS("phonkLoop.wav");
 
+    if (!music) {
+        cout << "Music error\n";
+    }
+
+    Mix_PlayMusic(music, -1);
+
+    keyboardState = SDL_GetKeyboardState(NULL);
+    initPhysics();
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = characterAtlas->get("tile000.png");
@@ -107,15 +115,6 @@ void PlatformerGame::initLevel() {
     auto pShooting = player->addComponent<PlayerShooting>();
     characterController = player->addComponent<CharacterController>();
     characterController->playerShooting = pShooting;
-    characterController->setSprites(
-            spriteAtlas->get("19.png"),
-            spriteAtlas->get("20.png"),
-            spriteAtlas->get("21.png"),
-            spriteAtlas->get("26.png"),
-            spriteAtlas->get("27.png"),
-            spriteAtlas->get("28.png")
-    );
-		
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
@@ -201,6 +200,7 @@ void PlatformerGame::update(float time) {
 
         sceneObjects[i]->update(time);
     }
+
 }
 
 void PlatformerGame::render() {

@@ -26,6 +26,7 @@ const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 #include "FollowPathComponent.hpp"
 #include "EnemyComponent.hpp"
 #include "Box2D/Box2D.h"
+#include "SDL_mixer.h"
 
 class PhysicsComponent;
 class CharacterController;
@@ -66,6 +67,11 @@ public:
     glm::vec2 getPlayerPositon(){return player->getPosition();};
 
     std::shared_ptr<sre::SpriteAtlas> characterAtlas;
+
+    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
+
+    int initMixer;
+
 private:
     sre::SDLRenderer r;
 
@@ -103,7 +109,9 @@ private:
 
     std::shared_ptr<FollowPathComponent> birdMovement;
 
-    
+
+
+
     // Box2D / Physics
     enum _entityCategory {
         BACKGROUND  = 0x0001,

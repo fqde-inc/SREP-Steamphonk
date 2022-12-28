@@ -1,5 +1,5 @@
 //
-// Created by Morten Nobel-Jørgensen on 11/4/17.
+// Created by Søren Skouv and Morten Nobel-Jørgensen
 //
 
 #include <Box2D/Box2D.h>
@@ -15,85 +15,11 @@ PlatformComponent::PlatformComponent(GameObject *gameObject) : Component(gameObj
     physicsScale = game->physicsScale;
 }
 
-void PlatformComponent::init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic) {
-    this->kinematic = kinematic;
-    this->width = width;
-    auto game = PlatformerGame::instance;
-    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
-    auto sprite = spriteAtlas->get(std::to_string(startSpriteId)+".png");
-    float tileSize = Level::tileSize;
-    glm::vec2 offset{tileSize/2,tileSize/2};
-    glm::vec2 pos = offset + glm::vec2{x*tileSize,y*tileSize};
-
-    gameObject->setPosition(pos);
-
-    this->pos = pos;
-
-    spriteComponent->setSprite(sprite);
-
-    physics = gameObject->addComponent<PhysicsComponent>();
-
-    pos.x += (width-1)*0.5f*tileSize;
-    physics->initBox(kinematic?b2_kinematicBody:b2_staticBody, glm::vec2{tileSize*width,tileSize}/physicsScale*0.5f,pos/physicsScale,0);
-    physics->setAutoUpdate(false);
-    physics->getFixture()->SetRestitution(0);
-    
-    for (int i = 1;i<width;i++){
-        auto go = game->createGameObject();
-        auto spriteComponent = go->addComponent<SpriteComponent>();
-        int spriteOffset = i==width-1?2:1; // select middle or right piece
-        auto sprite = spriteAtlas->get(std::to_string(startSpriteId+spriteOffset)+".png");
-        glm::vec2 offset{tileSize/2,tileSize/2};
-        glm::vec2 pos = offset + glm::vec2{(x+i)*tileSize,y*tileSize};
-        go->setPosition(pos);
-        spriteComponent->setSprite(sprite);
-        tiles.push_back(go);
-    }
-}
-
-void PlatformComponent::initWall(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int height) {
-    this->kinematic = false; // walls cannot be moved
-    auto game = PlatformerGame::instance;
-
-    auto spriteComponent = gameObject->addComponent<SpriteComponent>();
-    auto sprite = spriteAtlas->get(std::to_string(startSpriteId+30)+".png");
-    float tileSize = Level::tileSize;
-    glm::vec2 offset{tileSize/2,tileSize/2};
-    pos = offset + glm::vec2{x*tileSize,y*tileSize};
-
-    gameObject->setPosition(pos);
-
-    spriteComponent->setSprite(sprite);
-    physics = gameObject->addComponent<PhysicsComponent>();
-    pos.y += (height-1)*0.5f*tileSize;
-    physics->initBox(kinematic?b2_kinematicBody:b2_staticBody, glm::vec2{tileSize,tileSize*height}/physicsScale*0.5f,pos/physicsScale,0);
-    physics->setAutoUpdate(false);
-    physics->getFixture()->SetRestitution(0);
-
-    b2Filter filter = physics->getFixture()->GetFilterData();
-    filter.categoryBits = PlatformerGame::WALLS;
-    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::Projectile;
-    physics->getFixture()->SetFilterData(filter);
-
-    for (int i = 1;i<height;i++){
-        auto go = game->createGameObject();
-        auto spriteComponent = go->addComponent<SpriteComponent>();
-        int spriteOffset = i==height-1?0:30; // select middle or right piece
-        auto sprite = spriteAtlas->get(std::to_string(startSpriteId+spriteOffset)+".png");
-        glm::vec2 offset{tileSize/2,tileSize/2};
-        glm::vec2 pos = offset + glm::vec2{x*tileSize,(y+i)*tileSize};
-        go->setPosition(pos);
-        spriteComponent->setSprite(sprite);
-
-        tiles.push_back(go);
-    }
-}
-
-void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, int pixelX, int pixelY, std::string name)
+void PlatformComponent::initTile(std::shared_ptr<sre::SpriteAtlas> tileAtlas, std::pair<int,int> coords, std::string name)
 {
     this->kinematic = false; // walls cannot be moved
     auto game = PlatformerGame::instance;
-    pos = glm::vec2(pixelX, pixelY);
+    pos = glm::vec2(coords.first, coords.second);
 
     auto spriteComponent = gameObject->addComponent<SpriteComponent>();
     auto sprite = tileAtlas->get(name);

@@ -9,10 +9,9 @@ Crosshair::Crosshair(GameObject* gameObject): Component(gameObject)
 void Crosshair::update(float deltaTime)
 {
 	auto mouseMotion = PlatformerGame::instance->mouseMotion;
-	auto camPos = PlatformerGame::instance->camera->offset;
-
-	gameObject->setPosition(glm::vec2(
-		mouseMotion.x * sensitivity - PlatformerGame::windowSize.x/2 + camPos.x, 
-		PlatformerGame::windowSize.y - mouseMotion.y * sensitivity - PlatformerGame::windowSize.y/2 + camPos.x
-	));
+	auto playerPos = PlatformerGame::instance->getPlayerPositon();
+	auto mousePx = glm::vec2(mouseMotion.x - PlatformerGame::windowSize.x / 2.0f, PlatformerGame::windowSize.y / 2.0f - mouseMotion.y);
+	auto mouseCenter = mousePx + playerPos;
+	cout << "Mouse (" << mouseCenter.x << ", " << mouseCenter.y << ")" << endl;
+	gameObject->setPosition(mouseCenter);
 }
