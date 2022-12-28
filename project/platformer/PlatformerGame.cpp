@@ -96,7 +96,7 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 
 void PlatformerGame::initLevel() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
-    Mix_Music* music = Mix_LoadMUS("phonkLoop.wav");
+    Mix_Music* music = Mix_LoadMUS( (SOUND_PATH + "phonkLoop.wav").c_str());
 
     if (!music) {
         cout << "Music error\n";
