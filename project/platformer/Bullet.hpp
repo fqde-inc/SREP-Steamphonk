@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Box2D/Box2D.h>
-#include "Missile.hpp"
+#include "Projectile.hpp"
 #include "GameObject.hpp"
 
 enum BulletTypes {
@@ -13,21 +13,13 @@ enum BulletTypes {
     Rocket
 };
 
-class Bullet : public Missile {
+class Bullet : public Projectile {
 public:
     explicit Bullet(GameObject* gameObject);
 
     int damage = 1;
     int speed = 500;
 
-    glm::vec2 velocity;
-    glm::vec2 acceleration;
-
-    // raycast callback
-    float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
-                                      const b2Vec2& normal, float32 fraction){
-        return Missile::ReportFixture(fixture, point, normal, fraction);
-    };
 };
 
 class RegularBullet : public Bullet{

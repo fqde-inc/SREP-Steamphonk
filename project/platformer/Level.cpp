@@ -23,8 +23,8 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
     std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
 	
     res->game = game;
-    res->tileAtlas = SpriteAtlas::create("dirttile.json", Texture::create()
-        .withFile("dirttile.png")
+    res->tileAtlas = SpriteAtlas::create(LEVEL_ART_PATH +"dirttile.json", Texture::create()
+        .withFile(LEVEL_ART_PATH + "dirttile.png")
         .withFilterSampling(false)
         .build());;
 	res->tilePool = ObjectPool::createPool(res->tileAtlas);
@@ -53,7 +53,7 @@ void Level::setWorldLayer(string identifier)
 
 std::string Level::getNameByCoords(std::pair<int, int> coords)
 {
-    ifstream tfis(spritesheetName);
+    ifstream tfis(LEVEL_ART_PATH + spritesheetName);
     IStreamWrapper tisw(tfis);
     Document t;
     t.ParseStream(tisw);
@@ -75,7 +75,7 @@ std::string Level::getNameByCoords(std::pair<int, int> coords)
 
 int Level::getLayerIndexForLevel(string identifier, int levelNo)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -99,7 +99,7 @@ int Level::getLayerIndexForLevel(string identifier, int levelNo)
 /// <param name="levelNumber"></param>
 void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -257,7 +257,7 @@ int Level::getLevelIdByPosition(glm::vec2 pos)
 /// </summary>
 void Level::generateLevelBounds()
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -287,7 +287,7 @@ void Level::generateLevelBounds()
 /// Generates all levels
 /// </summary>
 void Level::generateLevel() {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -327,7 +327,7 @@ void Level::generateLevel() {
 /// <returns></returns>
 glm::vec2 Level::getIdentifierPosition(std::string identifier)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);

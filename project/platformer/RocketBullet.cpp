@@ -8,7 +8,7 @@
 #include "Explosion.hpp"
 
 RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
-    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("missile_0.png");
+    auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("Projectile_0.png");
     spriteComponent->setSprite( sprite );
 };
 

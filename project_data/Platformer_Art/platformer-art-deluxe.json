@@ -1,7 +1,7 @@
 {
   "frames": [
     {
-      "filename": "missile_1.png",
+      "filename": "Projectile_1.png",
       "frame": {
         "x": 0,
         "y": 0,
@@ -26,7 +26,7 @@
       }
     },
     {
-      "filename": "missile_2.png",
+      "filename": "Projectile_2.png",
       "frame": {
         "x": 0,
         "y": 30,
@@ -51,7 +51,7 @@
       }
     },
     {
-      "filename": "missile_3.png",
+      "filename": "Projectile_3.png",
       "frame": {
         "x": 0,
         "y": 59,
@@ -76,7 +76,7 @@
       }
     },
     {
-      "filename": "missile_0.png",
+      "filename": "Projectile_0.png",
       "frame": {
         "x": 11,
         "y": 30,
