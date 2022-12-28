@@ -39,9 +39,9 @@ void PhysicsComponent::addForce(glm::vec2 force) {
     body->ApplyForce(forceV,body->GetWorldCenter(),true);
 }
 
-void PhysicsComponent::setPosition(glm::vec2 pos) {
-	//body->SetTransform(b2Vec2(pos.x,pos.y), body->GetAngle());
-    fixture->GetBody()->SetTransform(b2Vec2(pos.x, pos.y), body->GetAngle());
+void PhysicsComponent::setPhysicsPosition(glm::vec2 pos) 
+{
+	body->SetTransform(b2Vec2(pos.x,pos.y), body->GetAngle());
 }
 
 glm::vec2 PhysicsComponent::getLinearVelocity() {

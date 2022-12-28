@@ -6,6 +6,7 @@
 #include "ObjectPool.hpp"
 #include "PlatformComponent.hpp"
 
+
 std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
     std::shared_ptr<ObjectPool> res = std::shared_ptr<ObjectPool>(new ObjectPool());
@@ -27,6 +28,10 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
     auto res = it->second;
     _pool.erase(it);
     _used.emplace_hint(_used.cend(), key, res);
+    if (res->getComponent<PhysicsComponent>())
+    {
+        res->getComponent<PhysicsComponent>()->getBody()->SetActive(true);
+    }
     return res;
 }
 
@@ -36,7 +41,13 @@ void ObjectPool::releaseAllInstances()
     for (auto it = _used.begin(); it != _used.end(); ++it)
     {
         std::shared_ptr<GameObject> res = it->second;
-        res->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
+        if (res->getComponent<PhysicsComponent>())
+        {
+            res->getComponent<PhysicsComponent>()->getBody()->SetActive(false);
+            res->getComponent<PhysicsComponent>()->setPhysicsPosition(glm::vec2(-500, 0));
+        }
+		//As sprites have no way to be disabled, we move them far away. This call does not affect physics bodies
+		res->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
         _pool.emplace_hint(_pool.cend(), res->name, res);
     }
 }

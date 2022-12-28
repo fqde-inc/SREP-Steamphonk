@@ -292,7 +292,6 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
         for (int j = 0; j < entities.Size(); j++)
         {
             auto entity = entities[j]["entityInstances"].GetArray();
-            //auto levelHeight = d["levels"].GetArray()[i]["pxHei"].GetInt();
             auto worldX = d["levels"].GetArray()[i]["worldX"].GetInt();
             auto worldY = d["levels"].GetArray()[i]["worldY"].GetInt();
 
@@ -320,9 +319,7 @@ void Level::addTile(std::pair<int, int> coords, string name)
     auto res = tilePool->tryGetInstance(name);
     if (res)
     {
-        res->setPosition(glm::vec2(coords.first, coords.second));
-		//TODO: nothing works sadly
-        res->getComponent<PhysicsComponent>()->setPosition(glm::vec2(coords.first, coords.second));
+        res->getComponent<PhysicsComponent>()->setPhysicsPosition(glm::vec2(coords.first, coords.second) / game->physicsScale);
     }
     else
     {
@@ -350,14 +347,13 @@ std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::stri
     auto gameObject = createSprite(pos, name);
     auto size = tileAtlas->get(name).getSpriteSize();
     auto physics = gameObject->addComponent<PhysicsComponent>();
-    //TODO: this box does not update with the game object. VERY CRINGE!
     physics->initBox(
-        b2_staticBody,
+        b2_kinematicBody,
         glm::vec2(size) / game->physicsScale * 0.5f,
         gameObject->getPosition() / game->physicsScale,
         0);
+    //Required for sprite to follow
     physics->setAutoUpdate(true);
-    //physics->setPosition(gameObject->getPosition() / game->physicsScale);
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::WALLS;
     filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
