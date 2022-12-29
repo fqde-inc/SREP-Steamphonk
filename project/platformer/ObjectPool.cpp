@@ -27,9 +27,7 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
     auto it = _pool.find(key);
     auto res = it->second;
     _pool.erase(it);
-	//_used.insert(std::make_pair(key, res));
     _used.emplace(std::make_pair(key, res));
-    //_used.emplace(_used.cend(), key, res);
     auto phys = res->getComponent<PhysicsComponent>();
     if (phys)
     {
