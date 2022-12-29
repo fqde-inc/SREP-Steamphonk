@@ -70,6 +70,7 @@ void CharacterState::moveRight(CharacterController &character, SDL_Event &event)
 void CharacterState::fire(CharacterController &character) {
     switch (character.equippedGun) {
         case RocketLauncher:
+            if(!character.unlockedRocketLauncher) break;
             if(character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
                 Mix_PlayChannel(-1, PlatformerGame::instance->rocketShootSFX, 0);
                 character.reloadTimer->initTimer(character.reloadTime);
@@ -78,6 +79,7 @@ void CharacterState::fire(CharacterController &character) {
             }
             break;
         case Handgun:
+            if(!character.unlockedHandgun) break;
             if(character.handgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
                 Mix_PlayChannel(-1, PlatformerGame::instance->handgunShootSFX, 0);
                 character.reloadTimer->initTimer(character.reloadTime);
@@ -92,7 +94,7 @@ void CharacterState::fire(CharacterController &character) {
 
 void CharacterState::swapWeapons(CharacterController &character, SDL_Event &event) {
 
-    if (character.swapTimer->isRunning) {
+    if (character.swapTimer->isRunning || !character.unlockedHandgun || !character.unlockedRocketLauncher) {
         return;
     }
 
