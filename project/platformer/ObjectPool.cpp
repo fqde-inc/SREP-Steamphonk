@@ -5,10 +5,8 @@
 #include "PlatformerGame.hpp"
 #include "ObjectPool.hpp"
 #include "PlatformComponent.hpp"
-#include "Stopwatch.hpp"
 
 using std::cout;
-using win32::Stopwatch;
 
 std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
@@ -42,8 +40,6 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 
 void ObjectPool::releaseAllInstances()
 {
-    Stopwatch sw;
-    sw.Start();
 	std::cout << "Moved " << _used.size() << " objects to pool. In this cycle " << spawned << " were spawned, " << recycled << " were recycled" << std::endl;
     spawned = 0;
     recycled = 0;
@@ -60,8 +56,6 @@ void ObjectPool::releaseAllInstances()
         _pool.emplace_hint(_pool.cend(), res->name, res);
     }
     _used.clear();
-    sw.Stop();
-    cout << "Release all instances time: " << sw.ElapsedMilliseconds() << " ms\n";
 }
 
 void ObjectPool::addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object)
