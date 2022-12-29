@@ -219,7 +219,6 @@ void Level::generateBirdsForLevel(int id)
 					int pgy = p["cy"].GetInt();
                     auto srepPos = srepCoordinates(pgx * gSize, pgy * gSize, worldX, worldY);
 					positions.push_back(glm::vec2(srepPos.first, srepPos.second));
-                    cout << "Added " << srepPos.first << ", " << srepPos.second << endl;
 				}
 
                 PlatformerGame::instance->generateSingleBird(coords, positions, LINEAR);
