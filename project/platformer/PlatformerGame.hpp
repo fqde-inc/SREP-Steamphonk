@@ -52,6 +52,9 @@ public:
 
     void EndContact(b2Contact *contact) override;
     void generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type);
+    void destroyAllBirds();
+
+    std::vector<std::shared_ptr<GameObject>> currentLevelBirds;
 
     static PlatformerGame* instance;
 	

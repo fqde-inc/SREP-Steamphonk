@@ -176,6 +176,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 
     generateSpecificLevel(id, World);
     generateSpecificLevel(id, Foliage);
+    PlatformerGame::instance->destroyAllBirds();
     generateBirdsForLevel(id);
 }
 

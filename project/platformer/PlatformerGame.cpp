@@ -138,7 +138,16 @@ void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<
 
     auto enemy = birdObj->addComponent<EnemyComponent>();
     enemy->setPathing(positions, type);
+
+    currentLevelBirds.push_back(birdObj);
+    
     cout << "Made a bird at " << coords.first << ", " << coords.second << " with " << positions.size() << " points" << endl;
+}
+
+void PlatformerGame::destroyAllBirds() {
+    for (int i = 0; i < currentLevelBirds.size(); ++i) {
+        currentLevelBirds[i]->setConsumed(true);
+    }
 }
 
 std::shared_ptr<Level> PlatformerGame::getLevel()
