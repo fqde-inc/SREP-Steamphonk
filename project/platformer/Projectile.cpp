@@ -71,8 +71,12 @@ void Projectile::update(float deltaTime) {
 // Raycast callback
 float32 Projectile::ReportFixture( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
     if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
+    {
         return 1;
-    
+    }
+
+    Mix_PlayChannel(-1, PlatformerGame::instance->hitWallSFX, 0);
+
     fixture->GetBody()->ApplyLinearImpulseToCenter(b2Vec2{2.0f,2.0f}, true);
     gameObject->setConsumed(true);
     return 0;
@@ -85,8 +89,8 @@ void Projectile::onCollisionStart(PhysicsComponent *comp) {
     if ( go->name == origin )
 		return;
 
-    if (comp->getGameObject()->getComponent<Damagable>() != nullptr) {
-        comp->getGameObject()->getComponent<Damagable>()->takeDamage(damage);
+    if (go->getComponent<Damagable>() != nullptr) {
+        go->getComponent<Damagable>()->takeDamage(damage);
     }
     
     gameObject->setConsumed(true);

@@ -71,7 +71,17 @@ public:
 
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
-    int initMixer;
+    Mix_Chunk* deathSFX;
+    Mix_Chunk* explosionOneSFX;
+    Mix_Chunk* explosionTwoSFX;
+    Mix_Chunk* explosionThreeSFX;
+    Mix_Chunk* handgunShootSFX;
+    Mix_Chunk* rocketShootSFX;
+    Mix_Chunk* hitBirdSFX;
+    Mix_Chunk* hitPlayerSFX;
+    Mix_Chunk* hitWallSFX;
+    Mix_Chunk* jumpSFX;
+    Mix_Chunk* startGameSFX;
 
 private:
     sre::SDLRenderer r;
@@ -96,8 +106,24 @@ private:
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
 
+
     std::shared_ptr<sre::Texture> heartFull;
+    sre::Texture* heartFullTexture;
+
     std::shared_ptr<sre::Texture> heartEmpty;
+    sre::Texture* heartEmptyTexture;
+
+    std::shared_ptr<sre::Texture> missileUp;
+    sre::Texture* missileUpTexture;
+
+    std::shared_ptr<sre::Texture> missileDown;
+    sre::Texture* missileDownTexture;
+
+    std::shared_ptr<sre::Texture> handgunUp;
+    sre::Texture* handgunUpTexture;
+
+    std::shared_ptr<sre::Texture> handgunDown;
+    sre::Texture* handgunDownTexture;
 
     void updatePhysics();
 

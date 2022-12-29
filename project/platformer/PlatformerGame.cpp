@@ -33,7 +33,7 @@ PlatformerGame::PlatformerGame()
         .withSdlWindowFlags(SDL_WINDOW_OPENGL)
         .withVSync(useVsync);
 
-    initMixer = Mix_Init(0);
+    Mix_Init(0);
 
     //using namespace rapidjson;
     //ifstream fis("testlvl.json");
@@ -143,10 +143,20 @@ std::shared_ptr<Level> PlatformerGame::getLevel()
 void PlatformerGame::initLevel() {
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
     Mix_Music* music = Mix_LoadMUS( (SOUND_PATH + "phonkLoop.wav").c_str());
+    Mix_VolumeMusic(20);
+    Mix_Volume(-1, 64);
 
-    if (!music) {
-        cout << "Music error\n";
-    }
+    deathSFX = Mix_LoadWAV( (SOUND_PATH + "death.wav").c_str());
+    explosionOneSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_1.wav").c_str());
+    explosionTwoSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_2.wav").c_str());
+    explosionThreeSFX = Mix_LoadWAV( (SOUND_PATH + "explosion_3.wav").c_str());
+    handgunShootSFX = Mix_LoadWAV( (SOUND_PATH + "handgun_shoot.wav").c_str());
+    rocketShootSFX = Mix_LoadWAV( (SOUND_PATH + "rocket_shoot.wav").c_str());
+    hitBirdSFX = Mix_LoadWAV( (SOUND_PATH + "hit_player.wav").c_str());
+    hitPlayerSFX = Mix_LoadWAV( (SOUND_PATH + "hit_bird.wav").c_str());
+    hitWallSFX = Mix_LoadWAV( (SOUND_PATH + "hit_wall.wav").c_str());
+    jumpSFX = Mix_LoadWAV( (SOUND_PATH + "jump.wav").c_str());
+    startGameSFX = Mix_LoadWAV( (SOUND_PATH + "start_game.wav").c_str());
 
     Mix_PlayMusic(music, -1);
 
@@ -186,7 +196,22 @@ void PlatformerGame::initLevel() {
     style.WindowBorderSize = 0.0f;
 
     heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
+    heartFullTexture = heartFull.get();
+
     heartEmpty = Texture::create().withFile( UI_ART_PATH + "heartEmpty.png").withFilterSampling(false).build();
+    heartEmptyTexture = heartEmpty.get();
+
+    missileUp = Texture::create().withFile( UI_ART_PATH + "missileUp.png").withFilterSampling(false).build();
+    missileUpTexture = missileUp.get();
+
+    missileDown = Texture::create().withFile( UI_ART_PATH + "missileDown.png").withFilterSampling(false).build();
+    missileDownTexture = missileDown.get();
+
+    handgunUp = Texture::create().withFile( UI_ART_PATH + "handgunUp.png").withFilterSampling(false).build();
+    handgunUpTexture = handgunUp.get();
+
+    handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
+    handgunDownTexture = handgunDown.get();
 }
 
 void PlatformerGame::update(float time) {
@@ -265,18 +290,34 @@ void PlatformerGame::render() {
     ImVec2 uv0(0,1); // flip y axis coordinates
     ImVec2 uv1(1,0);
 
-    ImGui::SetNextWindowPos(ImVec2(-24 + 85, windowSize.y - 85), ImGuiSetCond_Always);
+    ImGui::SetNextWindowPos(ImVec2(61, windowSize.y - 85), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
     ImGui::SetNextWindowBgAlpha(0);
-    ImGui::PushFont(pixelated);
     ImGui::Begin("hp", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    Texture* texFull = heartFull.get();
-    Texture* texEmpty = heartEmpty.get();
     for (int i=0;i<characterController->damageComponent->getMaxLife();i++){
         ImGui::SameLine(40 * i + 32);
-        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? texEmpty->getNativeTexturePtr() : texFull->getNativeTexturePtr(),{32, 32}, uv0, uv1);
+        ImGui::Image(i >= characterController->damageComponent->getCurLife() ? heartEmptyTexture->getNativeTexturePtr() : heartFullTexture->getNativeTexturePtr(),{32, 32}, uv0, uv1);
     }
-    ImGui::PopFont();
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    for (int i=0;i<characterController->handgun->maxClipSize;i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->handgun->clipSize ? handgunDown->getNativeTexturePtr() : handgunUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    }
+    ImGui::End();
+
+    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 95, windowSize.y - 65), ImGuiSetCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+    ImGui::SetNextWindowBgAlpha(0);
+    ImGui::Begin("rocket", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    for (int i=0;i<characterController->rocketLauncher->maxClipSize;i++){
+        ImGui::SameLine(40 * i + 32);
+        ImGui::Image(i >= characterController->rocketLauncher->clipSize ? missileDown->getNativeTexturePtr() : missileUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    }
     ImGui::End();
 
     if (doDebugDraw){

@@ -23,8 +23,12 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     damageComponent = gameObject->addComponent<Damagable>();
     damageComponent->setMaxLife(10);
     damageComponent->overrideDeathAction([this]() {
+        Mix_PlayChannel(-1, PlatformerGame::instance->deathSFX, 0);
         returnToSpawn = true;
         });
+    damageComponent->overrideDamageSound([this]() {
+        Mix_PlayChannel(-1, PlatformerGame::instance->hitPlayerSFX, 0);
+    });
 	
     radius = 10/physicsScale;
     characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
@@ -67,9 +71,11 @@ void CharacterController::update(float deltaTime) {
 
     if (left){
         movement.x --;
+        lastIsLeft = true;
     }
     if (right){
         movement.x ++;
+        lastIsLeft = false;
     }
 
     glm::vec2 currentVel = characterPhysics->getLinearVelocity();

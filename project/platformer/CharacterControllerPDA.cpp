@@ -51,6 +51,7 @@ void CharacterState::popStack(CharacterStateTypes type) {
 void CharacterState::jump(CharacterController &character, SDL_Event &event) {
     if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
         pushStack(std::make_shared<JumpingState>());
+        Mix_PlayChannel(-1, PlatformerGame::instance->jumpSFX, 0);
         character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
         character.characterPhysics->addImpulse({0,0.11f});
     }
@@ -58,18 +59,35 @@ void CharacterState::jump(CharacterController &character, SDL_Event &event) {
 
 void CharacterState::moveLeft(CharacterController &character, SDL_Event &event) {
     character.left = event.type == SDL_KEYDOWN;
-    character.lastIsLeft = true;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
 void CharacterState::moveRight(CharacterController &character, SDL_Event &event) {
     character.right = event.type == SDL_KEYDOWN;
-    character.lastIsLeft = false;
     if(event.type == SDL_KEYUP) popStack(Walking);
 }
 
 void CharacterState::fire(CharacterController &character) {
-    pushStack(std::make_shared<FiringState>());
+    switch (character.equippedGun) {
+        case RocketLauncher:
+            if(character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                Mix_PlayChannel(-1, PlatformerGame::instance->rocketShootSFX, 0);
+                character.reloadTimer->initTimer(character.reloadTime);
+                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
+                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+            }
+            break;
+        case Handgun:
+            if(character.handgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
+                Mix_PlayChannel(-1, PlatformerGame::instance->handgunShootSFX, 0);
+                character.reloadTimer->initTimer(character.reloadTime);
+                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
+                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 void CharacterState::swapWeapons(CharacterController &character, SDL_Event &event) {
@@ -304,34 +322,6 @@ void WalkingState::update(CharacterController &character, float deltaTime) {
     animationSprites[animationIndex].setFlip({character.lastIsLeft, false});
 
     character.spriteComponent->setSprite(animationSprites[animationIndex]);
-}
-
-#pragma endregion
-
-#pragma region FiringState Methods
-
-void FiringState::update(CharacterController &character, float deltaTime) {
-
-    switch (character.equippedGun) {
-        case RocketLauncher:
-            if(character.rocketLauncher->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
-                character.reloadTimer->initTimer(character.reloadTime);
-                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
-                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
-            }
-            break;
-        case Handgun:
-            if(character.handgun->Fire(character.getGameObject()->getPosition(), character.playerShooting->getShootDirection())){
-                character.reloadTimer->initTimer(character.reloadTime);
-                character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
-                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
-            }
-            break;
-        default:
-            break;
-    }
-
-    popStack(Firing);
 }
 
 #pragma endregion

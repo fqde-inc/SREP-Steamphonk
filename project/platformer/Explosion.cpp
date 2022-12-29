@@ -6,7 +6,21 @@ using namespace std;
 
 Explosion::Explosion(GameObject* gameObject): Component(gameObject)
 {
-	gameObject->name = "Explosion";
+    int randNum = rand()%(3-1 + 1) + 1;
+
+    switch (randNum) {
+        case 1:
+            Mix_PlayChannel(-1, PlatformerGame::instance->explosionOneSFX, 0);
+            break;
+        case 2:
+            Mix_PlayChannel(-1, PlatformerGame::instance->explosionTwoSFX, 0);
+            break;
+        case 3:
+            Mix_PlayChannel(-1, PlatformerGame::instance->explosionThreeSFX, 0);
+            break;
+    }
+
+    gameObject->name = "Explosion";
 
     timer = gameObject->addComponent<TimerComponent>();
 
