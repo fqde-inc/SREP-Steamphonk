@@ -1843,10 +1843,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [640,304],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 40, "cy": 21 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 40, "cy": 20 }, { "cx": 40, "cy": 21 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["40,20"]
+							}, {
 								"id": "V_String",
 								"params": ["40,21"]
-							}] }]
+							} ] }]
 						}
 					]
 				},
@@ -2999,10 +3002,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [192,48],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 4, "cy": 3 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 8, "cy": 3 }, { "cx": 4, "cy": 3 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["8,3"]
+							}, {
 								"id": "V_String",
 								"params": ["4,3"]
-							}] }]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -3016,10 +3022,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [64,192],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 12, "cy": 12 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 8, "cy": 12 }, { "cx": 12, "cy": 12 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["8,12"]
+							}, {
 								"id": "V_String",
 								"params": ["12,12"]
-							}] }]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -3621,10 +3630,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [480,240],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 30, "cy": 9 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 30, "cy": 12 }, { "cx": 30, "cy": 8 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
 								"id": "V_String",
-								"params": ["30,9"]
-							}] }]
+								"params": ["30,12"]
+							}, {
+								"id": "V_String",
+								"params": ["30,8"]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -3638,10 +3650,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [640,64],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 40, "cy": 13 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 40, "cy": 10 }, { "cx": 40, "cy": 15 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
 								"id": "V_String",
-								"params": ["40,13"]
-							}] }]
+								"params": ["40,10"]
+							}, {
+								"id": "V_String",
+								"params": ["40,15"]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -3655,10 +3670,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [256,240],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 24, "cy": 15 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 20, "cy": 15 }, { "cx": 24, "cy": 15 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["20,15"]
+							}, {
 								"id": "V_String",
 								"params": ["24,15"]
-							}] }]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -4370,10 +4388,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [64,448],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 4, "cy": 17 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 4, "cy": 22 }, { "cx": 4, "cy": 17 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["4,22"]
+							}, {
 								"id": "V_String",
 								"params": ["4,17"]
-							}] }]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -4387,10 +4408,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [208,48],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 13, "cy": 16 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 13, "cy": 9 }, { "cx": 13, "cy": 16 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["13,9"]
+							}, {
 								"id": "V_String",
 								"params": ["13,16"]
-							}] }]
+							} ] }]
 						},
 						{
 							"__identifier": "PatrolStart",
@@ -4404,10 +4428,13 @@
 							"height": 16,
 							"defUid": 16,
 							"px": [176,272],
-							"fieldInstances": [{ "__identifier": "Path", "__value": [{ "cx": 6, "cy": 17 }], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [{
+							"fieldInstances": [{ "__identifier": "Path", "__value": [ { "cx": 8, "cy": 17 }, { "cx": 6, "cy": 17 } ], "__type": "Array<Point>", "__tile": null, "defUid": 39, "realEditorValues": [ {
+								"id": "V_String",
+								"params": ["8,17"]
+							}, {
 								"id": "V_String",
 								"params": ["6,17"]
-							}] }]
+							} ] }]
 						}
 					]
 				},
