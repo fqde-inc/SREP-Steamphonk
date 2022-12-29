@@ -181,18 +181,20 @@ void Level::generateLevelByPosition(glm::vec2 target)
 
 void Level::generateBirdsForLevel(int id)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
-    string identifier = "PatrolStart";
 
     auto levels = d["levels"].GetArray();
 
     auto entities = d["levels"].GetArray()[id]["layerInstances"].GetArray();
     auto worldX = d["levels"].GetArray()[id]["worldX"].GetInt();
     auto worldY = d["levels"].GetArray()[id]["worldY"].GetInt();
+    auto uid = d["levels"].GetArray()[id]["uid"].GetInt();
     auto gSize = d["defaultGridSize"].GetInt();
+
+    string identifier = "PatrolStart";
 
     for (int j = 0; j < entities.Size(); j++)
     {
