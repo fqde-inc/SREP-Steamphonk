@@ -8,15 +8,23 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformComponent.hpp"
 #include "MovingPlatformComponent.hpp"
+
+//LMAO linker issues
+#include "Stopwatch.hpp"
+using win32::Stopwatch;
+#ifdef GetObject
+#undef GetObject
+#endif
+
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>
 #include <sre/Inspector.hpp>
 #include "ObjectPool.hpp"
 
-using namespace rapidjson;
 using namespace sre;
 using namespace std;
+using namespace rapidjson;
 
 std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) 
 {
@@ -33,6 +41,22 @@ std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::stri
 	res->spritesheetName = spritesheetName;
 
     return res;
+}
+
+void Level::initializeNameCoordMap()
+{
+    ifstream tfis(LEVEL_ART_PATH + spritesheetName);
+    IStreamWrapper tisw(tfis);
+    Document t;
+    t.ParseStream(tisw);
+    auto& tiles = t["frames"].GetArray();
+    for (int i = 0; i < tiles.Size(); i++)
+    {
+        auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
+        auto y = tiles[i].GetObject()["frame"].GetObject()["y"].GetInt();
+
+        nameCoordMap[make_pair(x,y)] = tiles[i].GetObject()["filename"].GetString();
+    }
 }
 
 std::pair<int, int> Level::srepCoordinates(int x, int y, int worldX, int worldY)
@@ -53,24 +77,19 @@ void Level::setWorldLayer(string identifier)
 
 std::string Level::getNameByCoords(std::pair<int, int> coords)
 {
-    ifstream tfis(LEVEL_ART_PATH + spritesheetName);
-    IStreamWrapper tisw(tfis);
-    Document t;
-    t.ParseStream(tisw);
-    auto tiles = t["frames"].GetArray();
-
-    for (int i = 0; i < tiles.Size(); i++)
+    Stopwatch sw;
+    sw.Start();
+    if (nameCoordMap.empty())
     {
-        auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
-        auto y = tiles[i].GetObject()["frame"].GetObject()["y"].GetInt();
-
-        if (x == coords.first && y == coords.second)
-        {
-            return tiles[i].GetObject()["filename"].GetString();
-        }
+        initializeNameCoordMap();
     }
-
-    return "";
+    sw.Stop();
+	cout << "Time to load frames: " << sw.ElapsedMilliseconds() << endl;
+    sw.Start();
+    auto it = nameCoordMap.find(coords);
+    cout << "Time to traverse frames: " << sw.ElapsedMilliseconds() << endl;
+    sw.Stop();
+	return it->second;
 }
 
 int Level::getLayerIndexForLevel(string identifier, int levelNo)
@@ -99,13 +118,15 @@ int Level::getLayerIndexForLevel(string identifier, int levelNo)
 /// <param name="levelNumber"></param>
 void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 {
+    Stopwatch sw;
+	
     ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
 
     int index = -1;
-	
+	//TODO: 63ms
     switch (type)
     {
         case GenerationType::World:
@@ -117,13 +138,10 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type)
             index = getLayerIndexForLevel(foliageLayer, levelNumber);
             break;
     }
-	
     auto level = d["levels"].GetArray()[levelNumber]["layerInstances"].GetArray()[index]["autoLayerTiles"].GetArray();
-    /*auto levelHeight = d["levels"].GetArray()[levelNumber]["pxHei"].GetInt();
-    auto levelWidth = d["levels"].GetArray()[levelNumber]["pxWid"].GetInt();*/
     auto worldX = d["levels"].GetArray()[levelNumber]["worldX"].GetInt();
     auto worldY = d["levels"].GetArray()[levelNumber]["worldY"].GetInt();
-
+	
     for (int i = 0; i < level.Size(); i++)
     {
         auto pos = level[i].GetObject()["px"].GetArray();
@@ -132,19 +150,30 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 		int x = pos[0].GetInt();
 		int y = pos[1].GetInt();
 
+        sw.Start();
         string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
-
+        sw.Stop();
+		cout << "Got name in " << sw.ElapsedMilliseconds() << "ms" << endl;
+        sw.Start();
         std::pair<int,int> coords = srepCoordinates(x, y, worldX, worldY);
+        sw.Stop();
+        cout << "Got coords in " << sw.ElapsedMilliseconds() << "ms" << endl;
 
 		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         switch (type)
         {
             //TODO: these methods should pool their sprites
         case GenerationType::World:
+            sw.Start();
             addTile(coords, spriteName);
+            sw.Stop();
+            cout << "Add tile in " << sw.ElapsedMilliseconds() << "ms" << endl;
             break;
         case GenerationType::Foliage:
+            sw.Start();
             addSprite(coords, spriteName);
+            sw.Stop();
+            cout << "Add sprite in " << sw.ElapsedMilliseconds() << "ms" << endl;
             break;
         }
     }
@@ -176,7 +205,11 @@ void Level::generateLevelByPosition(glm::vec2 target)
     foliagePool->releaseAllInstances();
 
 	cout << "Generating level: " << id  << " for position : (" << target.x << ", " << target.y << ")" << endl;
+    Stopwatch sw;
+    sw.Start();
     generateSpecificLevel(id, World);
+    sw.Stop();
+    cout << "Time spent generating world: " << sw.ElapsedMilliseconds() << endl;
     generateSpecificLevel(id, Foliage);
     generateBirdsForLevel(id);
 }

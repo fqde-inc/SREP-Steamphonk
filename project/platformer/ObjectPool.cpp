@@ -19,33 +19,31 @@ std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAt
 
 std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 {
-    Stopwatch sw;
-    sw.Start();
-    auto it = _pool.find(key);
 	//If we dont have a match, return null
-    if (it == _pool.end())
+    if (_pool.count(key) == 0)
     {
         return nullptr;
     }
-    sw.Stop();
-    cout << "Elapsed time for lookup: " << sw.ElapsedMilliseconds() << " ms\n";
     recycled++;
-    sw.Start();
 	//Get the value to the key
+    auto it = _pool.find(key);
     auto res = it->second;
     _pool.erase(it);
-    _used.emplace_hint(_used.cend(), key, res);
-    if (res->getComponent<PhysicsComponent>())
+	//_used.insert(std::make_pair(key, res));
+    _used.emplace(std::make_pair(key, res));
+    //_used.emplace(_used.cend(), key, res);
+    auto phys = res->getComponent<PhysicsComponent>();
+    if (phys)
     {
-        res->getComponent<PhysicsComponent>()->getBody()->SetActive(true);
+        phys->getBody()->SetActive(true);
     }
-    sw.Stop();
-    cout << "Elapsed time move and erase: " << sw.ElapsedMilliseconds() << " ms\n";
     return res;
 }
 
 void ObjectPool::releaseAllInstances()
 {
+    Stopwatch sw;
+    sw.Start();
 	std::cout << "Moved " << _used.size() << " objects to pool. In this cycle " << spawned << " were spawned, " << recycled << " were recycled" << std::endl;
     spawned = 0;
     recycled = 0;
@@ -62,6 +60,8 @@ void ObjectPool::releaseAllInstances()
         _pool.emplace_hint(_pool.cend(), res->name, res);
     }
     _used.clear();
+    sw.Stop();
+    cout << "Release all instances time: " << sw.ElapsedMilliseconds() << " ms\n";
 }
 
 void ObjectPool::addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object)
