@@ -212,6 +212,20 @@ void PlatformerGame::initLevel() {
 
     handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
     handgunDownTexture = handgunDown.get();
+
+    auto pickUpGun = createGameObject();
+    auto pickUpGunSpriteComp = pickUpGun->addComponent<SpriteComponent>();
+    auto pickUpGunSprite = spriteAtlas->get("projectile.png");
+    pickUpGunSprite.setOrderInBatch(999);
+    pickUpGunSpriteComp->setSprite(pickUpGunSprite);
+    pickUpGun->position = level->getIdentifierPosition("PistolStart");
+
+    auto pickUpGunPhysComp = pickUpGun->addComponent<PhysicsComponent>();
+    pickUpGunPhysComp->initCircle(b2_staticBody,
+                                  10 / physicsScale,
+                                  level->getIdentifierPosition("PistolStart") / physicsScale,
+                                  1);
+    pickUpGunPhysComp->setSensor(true);
 }
 
 void PlatformerGame::update(float time) {
