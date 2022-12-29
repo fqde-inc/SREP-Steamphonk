@@ -5,7 +5,10 @@
 #include "PlatformerGame.hpp"
 #include "ObjectPool.hpp"
 #include "PlatformComponent.hpp"
+#include "Stopwatch.hpp"
 
+using std::cout;
+using win32::Stopwatch;
 
 std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
@@ -16,14 +19,18 @@ std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAt
 
 std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 {
+    Stopwatch sw;
+    sw.Start();
     auto it = _pool.find(key);
 	//If we dont have a match, return null
     if (it == _pool.end())
     {
         return nullptr;
     }
+    sw.Stop();
+    cout << "Elapsed time for lookup: " << sw.ElapsedMilliseconds() << " ms\n";
     recycled++;
-	
+    sw.Start();
 	//Get the value to the key
     auto res = it->second;
     _pool.erase(it);
@@ -32,6 +39,8 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
     {
         res->getComponent<PhysicsComponent>()->getBody()->SetActive(true);
     }
+    sw.Stop();
+    cout << "Elapsed time move and erase: " << sw.ElapsedMilliseconds() << " ms\n";
     return res;
 }
 
