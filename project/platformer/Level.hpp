@@ -3,6 +3,7 @@
 #include <memory>
 #include <sre/SpriteAtlas.hpp>
 #include "ObjectPool.hpp"
+#include "rapidjson/document.h"
 
 class PlatformerGame;
 class GameObject;
@@ -31,7 +32,7 @@ class Level {
 public:
     static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName);
 
-    std::string getNameByCoords(std::pair<int, int> coords);
+    std::string& getNameByCoords(std::pair<int, int> coords);
 	
     void generateLevel();
     void generateSpecificLevel(int levelNumber, GenerationType type = World);
@@ -51,6 +52,7 @@ public:
     static constexpr float tileSize = 21;
 private:
     void generateLevelBounds();
+    void initializeNameCoordMap();
     Level() = default;
     std::shared_ptr<ObjectPool> tilePool;
     std::shared_ptr<ObjectPool> foliagePool;
@@ -63,7 +65,7 @@ private:
     int lastGenerated = -2;
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
-
+    std::map<std::pair<int, int>, std::string> nameCoordMap;
     std::string getLevelPath(std::string name);
 };
 

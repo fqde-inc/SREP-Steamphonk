@@ -4,6 +4,7 @@
 #pragma once
 
 #include "GameObject.hpp"
+#include <unordered_map>
 
 class ObjectPool {
 public:
@@ -14,7 +15,7 @@ public:
 private:
     int recycled = 0;
     int spawned = 0;
-	std::multimap<std::string, std::shared_ptr<GameObject>> _pool = {};
-    std::multimap<std::string, std::shared_ptr<GameObject>> _used = {};
+	std::unordered_multimap<std::string, std::shared_ptr<GameObject>> _pool = {};
+    std::unordered_multimap<std::string, std::shared_ptr<GameObject>> _used = {};
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
 };

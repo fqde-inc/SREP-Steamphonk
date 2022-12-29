@@ -6,6 +6,7 @@
 #include "ObjectPool.hpp"
 #include "PlatformComponent.hpp"
 
+using std::cout;
 
 std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas)
 {
@@ -16,21 +17,21 @@ std::shared_ptr<ObjectPool> ObjectPool::createPool(std::shared_ptr<sre::SpriteAt
 
 std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 {
-    auto it = _pool.find(key);
 	//If we dont have a match, return null
-    if (it == _pool.end())
+    if (_pool.count(key) == 0)
     {
         return nullptr;
     }
     recycled++;
-	
 	//Get the value to the key
+    auto it = _pool.find(key);
     auto res = it->second;
     _pool.erase(it);
-    _used.emplace_hint(_used.cend(), key, res);
-    if (res->getComponent<PhysicsComponent>())
+    _used.emplace(std::make_pair(key, res));
+    auto phys = res->getComponent<PhysicsComponent>();
+    if (phys)
     {
-        res->getComponent<PhysicsComponent>()->getBody()->SetActive(true);
+        phys->getBody()->SetActive(true);
     }
     return res;
 }
