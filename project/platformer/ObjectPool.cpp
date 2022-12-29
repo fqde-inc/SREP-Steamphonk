@@ -38,6 +38,8 @@ std::shared_ptr<GameObject> ObjectPool::tryGetInstance(const std::string& key)
 void ObjectPool::releaseAllInstances()
 {
 	std::cout << "Moved " << _used.size() << " objects to pool. In this cycle " << spawned << " were spawned, " << recycled << " were recycled" << std::endl;
+    spawned = 0;
+    recycled = 0;
     for (auto it = _used.begin(); it != _used.end(); ++it)
     {
         std::shared_ptr<GameObject> res = it->second;
@@ -50,6 +52,7 @@ void ObjectPool::releaseAllInstances()
 		res->setPosition(glm::vec2(FLT_MAX, FLT_MAX));
         _pool.emplace_hint(_pool.cend(), res->name, res);
     }
+    _used.clear();
 }
 
 void ObjectPool::addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object)
