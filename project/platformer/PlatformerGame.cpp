@@ -14,7 +14,6 @@
 #include "rapidjson/document.h"
 #include <fstream>
 #include "Crosshair.hpp"
-#include "PlayerShooting.hpp"
 #include "Damagable.hpp"
 #include "Collectible.hpp"
 
@@ -142,9 +141,9 @@ void PlatformerGame::initLevel() {
     playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
     playerSpriteObj.setScale(glm::vec2(.7,.7));
     playerSprite->setSprite(playerSpriteObj);
-    auto pShooting = player->addComponent<PlayerShooting>();
+
     characterController = player->addComponent<CharacterController>();
-    characterController->playerShooting = pShooting;
+    
     auto camObj = createGameObject();
     camObj->name = "Camera";
     camera = camObj->addComponent<SideScrollingCamera>();
@@ -526,9 +525,6 @@ void PlatformerGame::render() {
                     break;
                 case Walking:
                     ImGui::BulletText("%s","Walking");
-                    break;
-                case Firing:
-                    ImGui::BulletText("%s","Firing");
                     break;
             }
         }

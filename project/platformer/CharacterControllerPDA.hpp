@@ -11,8 +11,7 @@ class CharacterController;
 enum CharacterStateTypes {
     Standing,
     Jumping,
-    Walking,
-    Firing
+    Walking
 };
 
 #pragma region CharacterState

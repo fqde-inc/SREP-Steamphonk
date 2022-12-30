@@ -6,7 +6,7 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 #include "SpriteComponent.hpp"
-#include "PlayerShooting.hpp"
+
 using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
@@ -15,7 +15,6 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     swapTimer = gameObject->addComponent<TimerComponent>();
     reloadTimer = gameObject->addComponent<TimerComponent>();
-    //gameObject->addComponent<PlayerShooting>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
@@ -104,7 +103,7 @@ void CharacterController::update(float deltaTime) {
     }
     updateSprite(deltaTime);
 
-    if(!isGrounded && (state_->characterStateStack[0]->stateType != Jumping && state_->characterStateStack[0]->stateType != Firing)) {
+    if(!isGrounded && state_->characterStateStack[0]->stateType != Jumping) {
         state_->pushStack(std::make_shared<JumpingState>());
     }
 
@@ -161,4 +160,6 @@ void CharacterController::updateSprite(float deltaTime) {
     // todo implement
 }
 
-
+glm::vec2 CharacterController::getShootDirection(){
+    return glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
+}
