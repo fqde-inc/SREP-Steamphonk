@@ -169,6 +169,9 @@ void PlatformerGame::initLevel() {
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowBorderSize = 0.0f;
 
+    menuBG = Texture::create().withFile(UI_ART_PATH + "menu_BG.png").withFilterSampling(false).build();
+    menuBGtexture = menuBG.get();
+
     heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
     heartFullTexture = heartFull.get();
 
@@ -176,16 +179,12 @@ void PlatformerGame::initLevel() {
     heartEmptyTexture = heartEmpty.get();
 
     missileUp = Texture::create().withFile( UI_ART_PATH + "missileUp.png").withFilterSampling(false).build();
-    missileUpTexture = missileUp.get();
 
     missileDown = Texture::create().withFile( UI_ART_PATH + "missileDown.png").withFilterSampling(false).build();
-    missileDownTexture = missileDown.get();
 
     handgunUp = Texture::create().withFile( UI_ART_PATH + "handgunUp.png").withFilterSampling(false).build();
-    handgunUpTexture = handgunUp.get();
 
     handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
-    handgunDownTexture = handgunDown.get();
 
     HandgunCollectible = createGameObject();
     HandgunCollectible->position = level->getIdentifierPosition("PistolStart");
@@ -233,28 +232,28 @@ void PlatformerGame::setScreenshake(Shakes type){
         switch (currentShake)
             {
                 case MILD_LITTLE_PONY:
-                    duration   = 1.5f;
+                    duration   = 0.7f;
                     value      = 10.0f;
                     break;
                 
                 case STEAMPHONK:
-                    duration   = 2.0f;
-                    value      = 30.0f;
+                    duration   = 1;
+                    value      = 15.0f;
                     break;
                 
                 case EPILECTIC_DELIGHT:
-                    duration   = 3.0f;
-                    value      = 50.0f;
+                    duration   = 1.75f;
+                    value      = 30.0f;
                     break;
                 
                 case ULTRAKILL:
-                    duration   = 3.5f;
-                    value      = 60.0f;
+                    duration   = 2;
+                    value      = 40.0f;
                     break;
 
                 case CLOVIS_FRIDAY_NIGHT:
-                    duration   = 5.0f;
-                    value      = 80.0f;
+                    duration   = 2.5f;
+                    value      = 60.0f;
                     break;
             }
 
@@ -292,13 +291,24 @@ void PlatformerGame::render() {
             .withClearColor(true, backgroundColor)
             .build();
 
+    ImVec2 uv0(0,1); // flip y axis coordinates
+    ImVec2 uv1(1,0);
+
     if(currentScene == MAIN_MENU) {
 
         if (setFirstShake) {
             setScreenshake(STEAMPHONK);
             setFirstShake = false;
         }
-        cout << shakeDuration << endl;
+
+        static ImVec4 color_multipler(1, 1, 1, 0.2f);
+
+        ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Image(menuBG->getNativeTexturePtr(),{windowSize.x + 50, windowSize.y + 160}, uv0, uv1, color_multipler);
+        ImGui::End();
 
         ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y / 2 - 220), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
@@ -440,9 +450,6 @@ void PlatformerGame::render() {
     ImGui::Text("%s", "Health:");
     ImGui::PopFont();
     ImGui::End();
-
-    ImVec2 uv0(0,1); // flip y axis coordinates
-    ImVec2 uv1(1,0);
 
     ImGui::SetNextWindowPos(ImVec2(61, windowSize.y - 85), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
