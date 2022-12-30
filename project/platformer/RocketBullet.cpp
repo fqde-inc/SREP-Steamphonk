@@ -32,15 +32,24 @@ void RocketBullet::explode() {
 
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
     Bullet::onCollisionStart(comp);
-    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY )
-        explode();
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){
+        gameObject->setConsumed(false);
+        mustExplode = true;
+    }
 };
 
 void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
     //explode();
 };
 
-//void RocketBullet::update(float deltaTime) {
+void RocketBullet::update(float deltaTime) {
+    if(mustExplode){
+        explode();
+        gameObject->setConsumed(true);
+        return;
+    } 
+    Bullet::update(deltaTime);
+}
 //    Bullet::update(deltaTime);
 
 //     acceleration = SeekTarget();
