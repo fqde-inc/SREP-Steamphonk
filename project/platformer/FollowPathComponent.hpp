@@ -1,7 +1,3 @@
-//
-// Created by Morten Nobel-Jørgensen on 11/6/17.
-//
-
 #pragma once
 
 #include "Component.hpp"

@@ -1,8 +1,3 @@
-//
-// Created by Giorgio Perri  on 31/10/22.
-//
-
-#include <Box2D/Box2D.h>
 #include "PlatformerGame.hpp"
 #include "Bullet.hpp"
 #include "Explosion.hpp"
@@ -54,17 +49,3 @@ void RocketBullet::update(float deltaTime) {
     } 
     Bullet::update(deltaTime);
 }
-//    Bullet::update(deltaTime);
-
-//     acceleration = SeekTarget();
-//     velocity += acceleration * deltaTime;
-//     velocity = velocity.clamped(speed)
-//     rotation = velocity.angle()
-//     position += velocity * delta * 100
-//}
-
-// void SeekTarget() {
-//     if target:
-//         auto desired = (target.position - position).normalized() * speed
-//         steer = (desired - velocity).normalized() * steer_force
-// }

@@ -1,7 +1,3 @@
-//
-// Created by Giorgio Perri  on 02/10/22.
-//
-
 #include <memory>
 #include "CharacterControllerPDA.hpp"
 #include <SDL_events.h>

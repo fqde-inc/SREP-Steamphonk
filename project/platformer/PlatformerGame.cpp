@@ -1,4 +1,3 @@
-
 #include <sre/Inspector.hpp>
 #include "PlatformerGame.hpp"
 #include "GameObject.hpp"
