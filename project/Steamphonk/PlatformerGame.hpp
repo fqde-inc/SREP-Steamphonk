@@ -9,9 +9,8 @@ using namespace std;
 using namespace glm;
 using namespace sre;
 
-const std::string PROJECT_DATA_PATH (PRE_PROJECT_DATA_PATH);
+const string PROJECT_DATA_PATH (PRE_PROJECT_DATA_PATH);
 
-const string PROJECT_DATA_PATH = "project_data";
 
 const string PLATFORMER_ART_PATH   = PROJECT_DATA_PATH + "/Platformer_Art/";
 const string EXPLOSION_ART_PATH    = PROJECT_DATA_PATH + "/Explosion/";
