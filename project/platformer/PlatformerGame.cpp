@@ -234,8 +234,68 @@ void PlatformerGame::update(float time) {
     }
 
     if(shake)
-        screenshake(ULTRAKILL);
+        screenshake();
 
+}
+void PlatformerGame::setScreenshake(Shakes type){
+
+        float duration, value;
+        switch (type)
+            {
+                case MILD_LITTLE_PONY:
+                    duration   = 1.5f;
+                    value      = 10.0f;
+                    break;
+                
+                case STEAMPHONK:
+                    duration   = 2.0f;
+                    value      = 30.0f;
+                    break;
+                
+                case EPILECTIC_DELIGHT:
+                    duration   = 3.0f;
+                    value      = 50.0f;
+                    break;
+                
+                case ULTRAKILL:
+                    duration   = 3.5f;
+                    value      = 60.0f;
+                    break;
+
+                case CLOVIS_FRIDAY_NIGHT:
+                    duration   = 5.0f;
+                    value      = 80.0f;
+                    break;
+                
+                default:
+                    break;
+            }
+
+        if(shakeValue == 0 || value >= shakeValue) {
+            shake           = true;
+            shakeValue      = value;
+            shakeDuration   = duration;
+            shakeFade       = value / (duration * 10);
+
+            camera->offset  = {0,0};
+        }
+    }
+
+void PlatformerGame::screenshake() {
+
+    if(shakeValue <= 0) {
+        shakeValue = 0;
+        shake = false;
+        camera->offset = {0,0};
+        return;
+    }
+
+    glm::vec2 shakeOffset = glm::linearRand(glm::vec2(-shakeValue), glm::vec2(shakeValue));
+
+    camera->offset = shakeOffset;
+
+    lastShake   = shakeOffset;
+    shakeValue -= shakeFade;
 }
 
 void PlatformerGame::render() {

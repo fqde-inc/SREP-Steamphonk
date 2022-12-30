@@ -8,7 +8,7 @@
 #include "Explosion.hpp"
 
 RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
-    speed = 4.5f;
+    speed = 5.5f;
     damage = 3;
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("Projectile_0.png");
@@ -27,12 +27,16 @@ void RocketBullet::explode() {
 
     auto explosion = go->addComponent<Explosion>();
     
-    PlatformerGame::instance->shake = true;
+    PlatformerGame::instance->setScreenshake(PlatformerGame::CLOVIS_FRIDAY_NIGHT);
 }
 
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
     Bullet::onCollisionStart(comp);
-    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){
+
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){\
+
+        // Box2D doesnt't like to create new bodies during collision
+        // Delay explosion post-collision by 1 extra frame so it can be generated during update
         gameObject->setConsumed(false);
         mustExplode = true;
     }

@@ -14,6 +14,10 @@ const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 
 #endif
 
+#define GLM_ENABLE_EXPERIMENTAL true
+#include <glm/gtx/norm.hpp>
+#include <cmath>
+#include <cfenv>
 #include <glm/gtc/random.hpp>
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
@@ -88,7 +92,7 @@ public:
     enum Shakes {
         MILD_LITTLE_PONY,
         STEAMPHONK,
-        EPILEPSIA,
+        EPILECTIC_DELIGHT,
         ULTRAKILL,
         CLOVIS_FRIDAY_NIGHT
     };
@@ -98,47 +102,11 @@ public:
     
     float shakeValue = 0;
     float shakeDuration = 1.0f;
+    float shakeFade = 4.0f;
+    glm::vec2 lastShake {0,0};
 
-    void screenshake(Shakes type){
-
-        if(shakeValue <= 0) {
-            shakeValue = 0;
-            shake = false;
-            camera->offset = {0,0};
-        }
-
-        if(shakeValue == 0) {
-            switch (type)
-            {
-                case MILD_LITTLE_PONY:
-                    shakeValue = 10.0;
-                    break;
-                
-                case STEAMPHONK:
-                    shakeValue = 15.0;
-                    break;
-                
-                case EPILEPSIA:
-                    shakeValue = 20.0;
-                    break;
-                
-                case ULTRAKILL:
-                    shakeValue = 25.0;
-                    break;
-
-                case CLOVIS_FRIDAY_NIGHT:
-                    shakeValue = 40.0;
-                    break;
-                
-                default:
-                    break;
-            }
-        }
-
-        camera->offset = glm::linearRand(glm::vec2(-shakeValue), glm::vec2(shakeValue));
-
-        shakeValue -= 1.0f;
-    }
+    void setScreenshake(Shakes type);
+    void screenshake();
 
 private:
     sre::SDLRenderer r;
