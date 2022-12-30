@@ -14,6 +14,11 @@ const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 
 #endif
 
+#define GLM_ENABLE_EXPERIMENTAL true
+#include <glm/gtx/norm.hpp>
+#include <cmath>
+#include <cfenv>
+#include <glm/gtc/random.hpp>
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
 #include <vector>
@@ -88,6 +93,26 @@ public:
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
 
+    // Box2D / Physics
+    enum Shakes {
+        MILD_LITTLE_PONY,
+        STEAMPHONK,
+        EPILECTIC_DELIGHT,
+        ULTRAKILL,
+        CLOVIS_FRIDAY_NIGHT
+    };
+
+    bool shake = false;
+    Shakes currentShake;
+    
+    float shakeValue = 0;
+    float shakeDuration = 1.0f;
+    float shakeFade = 4.0f;
+    glm::vec2 lastShake {0,0};
+
+    void setScreenshake(Shakes type);
+    void screenshake();
+
 
     std::shared_ptr<sre::SpriteAtlas> collectibleAtlas;
     const float physicsScale = 100;
@@ -145,9 +170,6 @@ private:
     ImFont* pixelated;
 
     //std::shared_ptr<FollowPathComponent> birdMovement;
-
-
-
 
     // Box2D / Physics
     enum _entityCategory {

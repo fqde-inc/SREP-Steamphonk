@@ -24,7 +24,7 @@ public:
     BulletTypes bulletType = None;
     float RecoilMagnitude = 0;
 
-    int maxClipSize = 3;
+    int maxClipSize = 5;
     int clipSize;
     
     std::shared_ptr<TimerComponent> cooldown;

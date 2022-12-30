@@ -64,7 +64,7 @@ void Projectile::update(float deltaTime) {
     PlatformerGame::instance->world->RayCast(this, from, to);
 
     // Physics update
-    gameObject->setPosition( gameObject->getPosition() + ( direction * constSpeed ));
+    gameObject->setPosition( gameObject->getPosition() + ( direction * speed ));
     ProjectilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 }
 

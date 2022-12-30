@@ -404,7 +404,6 @@ std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::stri
     physics->setAutoUpdate(true);
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::WALLS;
-    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
     physics->getFixture()->SetFilterData(filter);
     return gameObject;
 }

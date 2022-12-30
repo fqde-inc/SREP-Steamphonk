@@ -8,19 +8,52 @@
 #include "Explosion.hpp"
 
 RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
+    speed = 5.5f;
+    damage = 3;
+
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("Projectile_0.png");
     spriteComponent->setSprite( sprite );
 };
 
 void RocketBullet::explode() {
-
     auto go = PlatformerGame::instance->createGameObject();
-    go->setPosition(gameObject->getPosition());
+    if( gameObject->getPosition() != glm::vec2{0} )
+        go->setPosition(gameObject->getPosition());
+    else 
+        go->setPosition( glm::vec2 {
+            ProjectilePhysics->getBody()->GetPosition().x,
+            ProjectilePhysics->getBody()->GetPosition().y
+        });
 
     auto explosion = go->addComponent<Explosion>();
+    
+    PlatformerGame::instance->setScreenshake(PlatformerGame::CLOVIS_FRIDAY_NIGHT);
 }
 
-//void RocketBullet::update(float deltaTime) {
+void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
+    Bullet::onCollisionStart(comp);
+
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){\
+
+        // Box2D doesnt't like to create new bodies during collision
+        // Delay explosion post-collision by 1 extra frame so it can be generated during update
+        gameObject->setConsumed(false);
+        mustExplode = true;
+    }
+};
+
+void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
+    //explode();
+};
+
+void RocketBullet::update(float deltaTime) {
+    if(mustExplode){
+        explode();
+        gameObject->setConsumed(true);
+        return;
+    } 
+    Bullet::update(deltaTime);
+}
 //    Bullet::update(deltaTime);
 
 //     acceleration = SeekTarget();

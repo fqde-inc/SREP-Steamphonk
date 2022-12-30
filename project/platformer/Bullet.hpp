@@ -16,15 +16,14 @@ enum BulletTypes {
 class Bullet : public Projectile {
 public:
     explicit Bullet(GameObject* gameObject);
-
-    int damage = 1;
-    int speed = 500;
-
 };
 
 class RegularBullet : public Bullet{
 public:
-    RegularBullet(GameObject* gameObject) : Bullet(gameObject) {};
+    RegularBullet(GameObject* gameObject) : Bullet(gameObject) {
+        speed = 5.5f;
+        damage = 1;
+    };
 };
 
 class RocketBullet : public Bullet {
@@ -35,8 +34,10 @@ public:
     float explosionForce    = 10.0f;
     float steer_force = 15.0f;
 
-    RocketBullet(GameObject* gameObject);    
-    
+    bool mustExplode = false;
+
+    RocketBullet(GameObject* gameObject);
+
     // raycast callback
     float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
                                       const b2Vec2& normal, float32 fraction) {
@@ -49,5 +50,8 @@ public:
 
     void explode();
 
-    //void update(float deltaTime) override; 
+    void onCollisionStart(PhysicsComponent *comp) override;
+    void onCollisionEnd(PhysicsComponent *comp) override;
+    
+    void update(float deltaTime) override; 
 };
