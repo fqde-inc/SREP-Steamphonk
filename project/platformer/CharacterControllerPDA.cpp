@@ -84,7 +84,7 @@ void CharacterState::fire(CharacterController &character) {
                 Mix_PlayChannel(-1, PlatformerGame::instance->handgunShootSFX, 0);
                 character.reloadTimer->initTimer(character.reloadTime);
                 character.characterPhysics->setLinearVelocity({character.characterPhysics->getLinearVelocity().x, 0});
-                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.rocketLauncher->RecoilMagnitude));
+                character.characterPhysics->addImpulse(-(character.playerShooting->getShootDirection() * character.handgun->RecoilMagnitude));
             }
             break;
         default:

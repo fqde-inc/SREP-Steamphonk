@@ -102,8 +102,16 @@ public:
         CLOVIS_FRIDAY_NIGHT
     };
 
+    enum Scenes {
+        MAIN_MENU,
+        HOW_TO_PLAY,
+        GAMEPLAY,
+    };
+
     bool shake = false;
-    Shakes currentShake;
+    bool setFirstShake = true;
+    Shakes currentShake = CLOVIS_FRIDAY_NIGHT;
+    Scenes currentScene;
     
     float shakeValue = 0;
     float shakeDuration = 1.0f;
@@ -142,6 +150,9 @@ private:
     std::shared_ptr<GameObject> RocketLauncherCollectible;
 
 
+    std::shared_ptr<sre::Texture> menuBG;
+    std::shared_ptr<sre::Texture> howToPlayTexture;
+
     std::shared_ptr<sre::Texture> heartFull;
     sre::Texture* heartFullTexture;
 
@@ -149,16 +160,12 @@ private:
     sre::Texture* heartEmptyTexture;
 
     std::shared_ptr<sre::Texture> missileUp;
-    sre::Texture* missileUpTexture;
 
     std::shared_ptr<sre::Texture> missileDown;
-    sre::Texture* missileDownTexture;
 
     std::shared_ptr<sre::Texture> handgunUp;
-    sre::Texture* handgunUpTexture;
 
     std::shared_ptr<sre::Texture> handgunDown;
-    sre::Texture* handgunDownTexture;
 
     void updatePhysics();
 
