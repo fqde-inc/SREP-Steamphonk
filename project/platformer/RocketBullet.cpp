@@ -21,8 +21,8 @@ void RocketBullet::explode() {
         go->setPosition(gameObject->getPosition());
     else 
         go->setPosition( glm::vec2 {
-            ProjectilePhysics->getBody()->GetPosition().x,
-            ProjectilePhysics->getBody()->GetPosition().y
+            physics->getBody()->GetPosition().x,
+            physics->getBody()->GetPosition().y
         });
 
     auto explosion = go->addComponent<Explosion>();
@@ -33,8 +33,7 @@ void RocketBullet::explode() {
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
     Bullet::onCollisionStart(comp);
 
-    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){\
-
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){
         // Box2D doesnt't like to create new bodies during collision
         // Delay explosion post-collision by 1 extra frame so it can be generated during update
         gameObject->setConsumed(false);
@@ -54,17 +53,3 @@ void RocketBullet::update(float deltaTime) {
     } 
     Bullet::update(deltaTime);
 }
-//    Bullet::update(deltaTime);
-
-//     acceleration = SeekTarget();
-//     velocity += acceleration * deltaTime;
-//     velocity = velocity.clamped(speed)
-//     rotation = velocity.angle()
-//     position += velocity * delta * 100
-//}
-
-// void SeekTarget() {
-//     if target:
-//         auto desired = (target.position - position).normalized() * speed
-//         steer = (desired - velocity).normalized() * steer_force
-// }

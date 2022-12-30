@@ -19,17 +19,17 @@ Projectile::Projectile(GameObject *gameObject) : Component(gameObject) {
 
     gameObject->name = "Projectile";
 
-    ProjectilePhysics = gameObject->addComponent<PhysicsComponent>();
+    physics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
 
-    ProjectilePhysics->initCircle(b2_kinematicBody, radius/physicsScale, gameObject->getPosition()/physicsScale, 0);
-    ProjectilePhysics->setAutoUpdate(false);
-    ProjectilePhysics->setSensor(true);
+    physics->initCircle(b2_kinematicBody, radius/physicsScale, gameObject->getPosition()/physicsScale, 0);
+    physics->setAutoUpdate(false);
+    physics->setSensor(true);
 
-    b2Filter filter = ProjectilePhysics->getFixture()->GetFilterData();
+    b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::MISSILE;
-    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::WALLS | PlatformerGame::PLAYER;
-    ProjectilePhysics->getFixture()->SetFilterData(filter);
+    filter.maskBits     = PlatformerGame::BULLET | PlatformerGame::WALLS | PlatformerGame::EXPLOSIONS | PlatformerGame::PLAYER;
+    physics->getFixture()->SetFilterData(filter);
 
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("projectile.png");
 	sprite.setOrderInBatch(16);
@@ -46,7 +46,7 @@ void Projectile::update(float deltaTime) {
     }
 
     // Check whether Projectile has collided with the ground using a raycast (platforms)
-    auto from = ProjectilePhysics->getBody()->GetPosition();
+    auto from = physics->getBody()->GetPosition();
 
     // We want the raycast to go in the facing direction
     // We use cos(abs(angle)) for x, so regardless of the facing angle
@@ -65,7 +65,7 @@ void Projectile::update(float deltaTime) {
 
     // Physics update
     gameObject->setPosition( gameObject->getPosition() + ( direction * speed ));
-    ProjectilePhysics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
+    physics->moveTo( gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 }
 
 // Raycast callback
@@ -88,7 +88,7 @@ void Projectile::onCollisionStart(PhysicsComponent *comp) {
 
     if ( go->name == origin )
 		return;
-
+        
     if (go->getComponent<Damagable>() != nullptr) {
         go->getComponent<Damagable>()->takeDamage(damage);
     }

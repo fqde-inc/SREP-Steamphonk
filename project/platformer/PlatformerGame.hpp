@@ -117,6 +117,18 @@ public:
     std::shared_ptr<sre::SpriteAtlas> collectibleAtlas;
     const float physicsScale = 100;
 
+    // Box2D / Physics
+    enum CollisionLayers {
+        BACKGROUND  = 0x0001,
+        WALLS       = 0x0002,
+        PLAYER      = 0x0003,
+        ENEMY       = 0x0004,
+        MISSILE     = 0x0005,
+        BULLET      = 0x0006,
+        EXPLOSIONS  = 0x0007,
+        COLLECTIBLE = 0x0008,
+    };
+
 private:
     sre::SDLRenderer r;
 
@@ -170,17 +182,6 @@ private:
     ImFont* pixelated;
 
     //std::shared_ptr<FollowPathComponent> birdMovement;
-
-    // Box2D / Physics
-    enum _entityCategory {
-        BACKGROUND  = 0x0001,
-        WALLS       = 0x0002,
-        PLAYER      = 0x0003,
-        ENEMY       = 0x0004,
-        MISSILE     = 0x0005,
-        BULLET      = 0x0006,
-        EXPLOSIONS  = 0x0005,
-    };
 
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);

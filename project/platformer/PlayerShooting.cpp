@@ -13,7 +13,7 @@
 #include "PlayerShooting.hpp"
 
 PlayerShooting::PlayerShooting(GameObject *gameObject) : Component(gameObject) {
-    auto enemyPhysics = gameObject->addComponent<PhysicsComponent>();
+    //auto enemyPhysics = gameObject->addComponent<PhysicsComponent>();
 }
 
 void PlayerShooting::update(float deltaTime) {

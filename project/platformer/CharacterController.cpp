@@ -15,7 +15,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     characterPhysics = gameObject->addComponent<PhysicsComponent>();
     swapTimer = gameObject->addComponent<TimerComponent>();
     reloadTimer = gameObject->addComponent<TimerComponent>();
-    gameObject->addComponent<PlayerShooting>();
+    //gameObject->addComponent<PlayerShooting>();
 
     auto physicsScale = PlatformerGame::instance->physicsScale;
     spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
@@ -37,9 +37,10 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     b2Filter filter = characterPhysics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::PLAYER;
-    filter.maskBits = PlatformerGame::WALLS | PlatformerGame::MISSILE | PlatformerGame::EXPLOSIONS;
+    filter.maskBits = PlatformerGame::MISSILE | PlatformerGame::WALLS | PlatformerGame::EXPLOSIONS | PlatformerGame::COLLECTIBLE;
     characterPhysics->getFixture()->SetFilterData(filter);
     characterPhysics->fixRotation();
+
     spriteComponent = gameObject->getComponent<SpriteComponent>();
 
     state_ = std::make_shared<CharacterState>();
