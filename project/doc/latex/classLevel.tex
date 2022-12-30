@@ -1,0 +1,134 @@
+\hypertarget{classLevel}{}\doxysection{Level Class Reference}
+\label{classLevel}\index{Level@{Level}}
+
+
+Collaboration diagram for Level\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_ad50941454d821eda458aa7096ec2604a}\label{classLevel_ad50941454d821eda458aa7096ec2604a}} 
+std\+::string \& {\bfseries get\+Name\+By\+Coords} (std\+::pair$<$ int, int $>$ coords)
+\item 
+\mbox{\Hypertarget{classLevel_ab2b8d22dd17008c452343931dc1f4325}\label{classLevel_ab2b8d22dd17008c452343931dc1f4325}} 
+void {\bfseries generate\+Level} ()
+\begin{DoxyCompactList}\small\item\em Generates all levels  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLevel_ab51d6dad396832380459c38546271f0b}{generate\+Specific\+Level}} (int level\+Number, Generation\+Type type=World)
+\begin{DoxyCompactList}\small\item\em Loads a level from a json file  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLevel_a74a53d03b583b03092c28afdfe07184e}{generate\+Level\+By\+Position}} (glm\+::vec2 target)
+\begin{DoxyCompactList}\small\item\em Only generate level if the player is within position. Also handles unloading old levels and loading new levels  \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classLevel_adfb9049c5614e73ca3af092bef6ae451}{get\+Level\+Id\+By\+Position}} (glm\+::vec2 pos)
+\begin{DoxyCompactList}\small\item\em Returns the chunk id that the player is inside  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classLevel_a0c961231a44eb5bfc3b8f3c3b2a6658c}\label{classLevel_a0c961231a44eb5bfc3b8f3c3b2a6658c}} 
+void {\bfseries generate\+Birds\+For\+Level} (int id)
+\item 
+\mbox{\Hypertarget{classLevel_a50610d4ed1c5354ad29db16cbf2a7037}\label{classLevel_a50610d4ed1c5354ad29db16cbf2a7037}} 
+void {\bfseries set\+World\+Layer} (std\+::string identifier)
+\item 
+\mbox{\Hypertarget{classLevel_a61244ebadd10342c8219d1f71e2dc857}\label{classLevel_a61244ebadd10342c8219d1f71e2dc857}} 
+void {\bfseries set\+Foliage\+Layer} (std\+::string identifier)
+\item 
+\mbox{\Hypertarget{classLevel_acc0f6c29524e50589ab0bf860432db43}\label{classLevel_acc0f6c29524e50589ab0bf860432db43}} 
+int {\bfseries get\+Layer\+Index\+For\+Level} (std\+::string identifier, int level\+No)
+\item 
+\mbox{\Hypertarget{classLevel_ae9e07ba131864fab8cec2ed88fce1041}\label{classLevel_ae9e07ba131864fab8cec2ed88fce1041}} 
+std\+::pair$<$ int, int $>$ {\bfseries srep\+Coordinates} (int x, int y, int worldX, int worldY)
+\item 
+glm\+::vec2 \mbox{\hyperlink{classLevel_a0f4d6618753b37e692aa7e98fbd55645}{get\+Identifier\+Position}} (std\+::string identifier)
+\begin{DoxyCompactList}\small\item\em Returns the position of a given identifier  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classLevel_ab1e30cc6aa9f144e1403d2bbe4837f9b}\label{classLevel_ab1e30cc6aa9f144e1403d2bbe4837f9b}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ {\bfseries create\+Tile} (std\+::pair$<$ int, int $>$ pos, std\+::string name)
+\item 
+\mbox{\Hypertarget{classLevel_ae30bf0eecf6b9b17178681cbe01e0510}\label{classLevel_ae30bf0eecf6b9b17178681cbe01e0510}} 
+void {\bfseries add\+Tile} (std\+::pair$<$ int, int $>$ pos, std\+::string name)
+\item 
+\mbox{\Hypertarget{classLevel_a9f1f8e93933873f49feeb7e536b14077}\label{classLevel_a9f1f8e93933873f49feeb7e536b14077}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ {\bfseries create\+Sprite} (std\+::pair$<$ int, int $>$ pos, std\+::string name)
+\item 
+\mbox{\Hypertarget{classLevel_a3e4641fb607e430f7d55b83bccb438c3}\label{classLevel_a3e4641fb607e430f7d55b83bccb438c3}} 
+void {\bfseries add\+Sprite} (std\+::pair$<$ int, int $>$ coords, std\+::string name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_a31718319bcd4b68220aca42fe4959731}\label{classLevel_a31718319bcd4b68220aca42fe4959731}} 
+static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classLevel}{Level}} $>$ {\bfseries create\+Default\+Level} (\mbox{\hyperlink{classPlatformerGame}{Platformer\+Game}} $\ast$game, std\+::string level\+Name, std\+::string spritesheet\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLevel_ac83c67424a07b359a5fb919b44ee4f2a}\label{classLevel_ac83c67424a07b359a5fb919b44ee4f2a}} 
+static constexpr float {\bfseries tile\+Size} = 21
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLevel_a74a53d03b583b03092c28afdfe07184e}\label{classLevel_a74a53d03b583b03092c28afdfe07184e}} 
+\index{Level@{Level}!generateLevelByPosition@{generateLevelByPosition}}
+\index{generateLevelByPosition@{generateLevelByPosition}!Level@{Level}}
+\doxysubsubsection{\texorpdfstring{generateLevelByPosition()}{generateLevelByPosition()}}
+{\footnotesize\ttfamily void Level\+::generate\+Level\+By\+Position (\begin{DoxyParamCaption}\item[{glm\+::vec2}]{target }\end{DoxyParamCaption})}
+
+
+
+Only generate level if the player is within position. Also handles unloading old levels and loading new levels  
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLevel_ab51d6dad396832380459c38546271f0b}\label{classLevel_ab51d6dad396832380459c38546271f0b}} 
+\index{Level@{Level}!generateSpecificLevel@{generateSpecificLevel}}
+\index{generateSpecificLevel@{generateSpecificLevel}!Level@{Level}}
+\doxysubsubsection{\texorpdfstring{generateSpecificLevel()}{generateSpecificLevel()}}
+{\footnotesize\ttfamily void Level\+::generate\+Specific\+Level (\begin{DoxyParamCaption}\item[{int}]{level\+Number,  }\item[{Generation\+Type}]{type = {\ttfamily World} }\end{DoxyParamCaption})}
+
+
+
+Loads a level from a json file  
+
+
+\begin{DoxyParams}{Parameters}
+{\em level\+Number} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLevel_a0f4d6618753b37e692aa7e98fbd55645}\label{classLevel_a0f4d6618753b37e692aa7e98fbd55645}} 
+\index{Level@{Level}!getIdentifierPosition@{getIdentifierPosition}}
+\index{getIdentifierPosition@{getIdentifierPosition}!Level@{Level}}
+\doxysubsubsection{\texorpdfstring{getIdentifierPosition()}{getIdentifierPosition()}}
+{\footnotesize\ttfamily glm\+::vec2 Level\+::get\+Identifier\+Position (\begin{DoxyParamCaption}\item[{std\+::string}]{identifier }\end{DoxyParamCaption})}
+
+
+
+Returns the position of a given identifier  
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classLevel_adfb9049c5614e73ca3af092bef6ae451}\label{classLevel_adfb9049c5614e73ca3af092bef6ae451}} 
+\index{Level@{Level}!getLevelIdByPosition@{getLevelIdByPosition}}
+\index{getLevelIdByPosition@{getLevelIdByPosition}!Level@{Level}}
+\doxysubsubsection{\texorpdfstring{getLevelIdByPosition()}{getLevelIdByPosition()}}
+{\footnotesize\ttfamily int Level\+::get\+Level\+Id\+By\+Position (\begin{DoxyParamCaption}\item[{glm\+::vec2}]{pos }\end{DoxyParamCaption})}
+
+
+
+Returns the chunk id that the player is inside  
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Level.\+hpp\item 
+Steamphonk/Level.\+cpp\end{DoxyCompactItemize}

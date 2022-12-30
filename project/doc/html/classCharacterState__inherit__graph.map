@@ -1,0 +1,6 @@
+<map id="CharacterState" name="CharacterState">
+<area shape="rect" id="node1" title=" " alt="" coords="159,5,333,280"/>
+<area shape="rect" id="node2" href="$classJumpingState.html" title=" " alt="" coords="5,328,148,441"/>
+<area shape="rect" id="node3" href="$classStandingState.html" title=" " alt="" coords="173,343,319,427"/>
+<area shape="rect" id="node4" href="$classWalkingState.html" title=" " alt="" coords="343,343,485,427"/>
+</map>

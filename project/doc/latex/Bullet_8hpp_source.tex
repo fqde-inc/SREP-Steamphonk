@@ -1,0 +1,54 @@
+\hypertarget{Bullet_8hpp_source}{}\doxysection{Bullet.\+hpp}
+\label{Bullet_8hpp_source}\index{Steamphonk/Bullet.hpp@{Steamphonk/Bullet.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Projectile.hpp"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{enum} BulletTypes \{}
+\DoxyCodeLine{7     None,}
+\DoxyCodeLine{8     Regular,}
+\DoxyCodeLine{9     Rocket}
+\DoxyCodeLine{10 \};}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{classBullet}{Bullet}} : \textcolor{keyword}{public} \mbox{\hyperlink{classProjectile}{Projectile}} \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \textcolor{keyword}{explicit} \mbox{\hyperlink{classBullet}{Bullet}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{15 \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{classRegularBullet}{RegularBullet}} : \textcolor{keyword}{public} \mbox{\hyperlink{classBullet}{Bullet}}\{}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{classRegularBullet}{RegularBullet}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject) : \mbox{\hyperlink{classBullet}{Bullet}}(gameObject) \{}
+\DoxyCodeLine{20         speed = 5.5f;}
+\DoxyCodeLine{21         damage = 1;}
+\DoxyCodeLine{22     \};}
+\DoxyCodeLine{23 \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{class }\mbox{\hyperlink{classRocketBullet}{RocketBullet}} : \textcolor{keyword}{public} \mbox{\hyperlink{classBullet}{Bullet}} \{}
+\DoxyCodeLine{26 \textcolor{keyword}{public}:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \mbox{\hyperlink{classRocketBullet}{RocketBullet}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{comment}{// raycast callback}}
+\DoxyCodeLine{31     float32 ReportFixture(  b2Fixture* fixture, \textcolor{keyword}{const} b2Vec2\& point,}
+\DoxyCodeLine{32                                       \textcolor{keyword}{const} b2Vec2\& normal, float32 fraction) \{}
+\DoxyCodeLine{33         \textcolor{keywordflow}{if}( Bullet::ReportFixture(fixture, point, normal, fraction) )}
+\DoxyCodeLine{34             \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{35             }
+\DoxyCodeLine{36         explode();}
+\DoxyCodeLine{37         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{38     \};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} explode();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} onCollisionEnd(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{46 \textcolor{keyword}{private}:}
+\DoxyCodeLine{47     \textcolor{keywordtype}{bool} mustExplode = \textcolor{keyword}{false};}
+\DoxyCodeLine{48 \};}
+
+\end{DoxyCode}

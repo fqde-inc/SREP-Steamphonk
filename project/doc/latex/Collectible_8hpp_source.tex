@@ -1,0 +1,37 @@
+\hypertarget{Collectible_8hpp_source}{}\doxysection{Collectible.\+hpp}
+\label{Collectible_8hpp_source}\index{Steamphonk/Collectible.hpp@{Steamphonk/Collectible.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Box2D/Box2D.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}PhysicsComponent.hpp"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}SpriteComponent.hpp"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}Gun.hpp"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{classCollectible}{Collectible}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}}, b2RayCastCallback\{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \mbox{\hyperlink{classCollectible}{Collectible}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} initCollectible(GunTypes gunType);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{comment}{// raycast callback}}
+\DoxyCodeLine{18     \textcolor{keyword}{virtual} float32 ReportFixture(  b2Fixture* fixture, \textcolor{keyword}{const} b2Vec2\& point,}
+\DoxyCodeLine{19                                       \textcolor{keyword}{const} b2Vec2\& normal, float32 fraction) \textcolor{keyword}{override};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     GunTypes gunType;}
+\DoxyCodeLine{24 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{25     std::shared\_ptr<SpriteComponent> spriteComponent;}
+\DoxyCodeLine{26     std::shared\_ptr<PhysicsComponent> physicsComponent;}
+\DoxyCodeLine{27     std::vector<sre::Sprite> animationSprites;}
+\DoxyCodeLine{28     \textcolor{keywordtype}{int} animationIndex = 0;}
+\DoxyCodeLine{29     \textcolor{keywordtype}{float} animationTime = 0;}
+\DoxyCodeLine{30     \textcolor{keywordtype}{float} animationFrameRate = 1.0f / 10.0f;}
+\DoxyCodeLine{31 \};}
+
+\end{DoxyCode}

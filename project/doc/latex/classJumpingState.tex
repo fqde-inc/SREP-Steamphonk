@@ -1,0 +1,112 @@
+\hypertarget{classJumpingState}{}\doxysection{Jumping\+State Class Reference}
+\label{classJumpingState}\index{JumpingState@{JumpingState}}
+
+
+Inheritance diagram for Jumping\+State\+:
+% FIG 0
+
+
+Collaboration diagram for Jumping\+State\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classJumpingState_a89a8a225b7d8d57f18a755045d7ea1ec}{handle\+Input}} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event) override
+\item 
+void \mbox{\hyperlink{classJumpingState_ad9e44628c3fda01455ab33fdd53251eb}{update}} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, float delta\+Time) override
+\item 
+void \mbox{\hyperlink{classJumpingState_abdf4ca65af9485459215931ddda11efe}{enter}} () override
+\item 
+void \mbox{\hyperlink{classJumpingState_a8a1b882b19c969a03d94cae2b9ca1422}{exit}} () override
+\item 
+\mbox{\Hypertarget{classCharacterState_ad39c7e8802ea65768d78a29ba5ce59d9}\label{classCharacterState_ad39c7e8802ea65768d78a29ba5ce59d9}} 
+virtual void {\bfseries jump} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_a65ace25211294fee99e237a889304eae}\label{classCharacterState_a65ace25211294fee99e237a889304eae}} 
+virtual void {\bfseries move\+Left} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_ad32cd92096d576a9499f19a76c7e34f1}\label{classCharacterState_ad32cd92096d576a9499f19a76c7e34f1}} 
+virtual void {\bfseries move\+Right} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_a85f6a72eedb67aa050b5f246cf74ba92}\label{classCharacterState_a85f6a72eedb67aa050b5f246cf74ba92}} 
+virtual void {\bfseries fire} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character)
+\item 
+\mbox{\Hypertarget{classCharacterState_a1b805c192ddd37bdfed2b945162fc22d}\label{classCharacterState_a1b805c192ddd37bdfed2b945162fc22d}} 
+virtual void {\bfseries swap\+Weapons} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_ac1de73ac1ce0aefb36cad7882558f333}\label{classCharacterState_ac1de73ac1ce0aefb36cad7882558f333}} 
+static void {\bfseries push\+Stack} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterState}{Character\+State}} $>$ \&state)
+\item 
+\mbox{\Hypertarget{classCharacterState_ad92928175b4421e34359cae6d1a82c0a}\label{classCharacterState_ad92928175b4421e34359cae6d1a82c0a}} 
+static void {\bfseries pop\+Stack} (Character\+State\+Types type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_abbbcb4f6d1d21a24489cccd8dac4746b}\label{classCharacterState_abbbcb4f6d1d21a24489cccd8dac4746b}} 
+Character\+State\+Types {\bfseries state\+Type} = Standing
+\item 
+\mbox{\Hypertarget{classCharacterState_a10e9cb0c11109bf79ce3e6c147931d14}\label{classCharacterState_a10e9cb0c11109bf79ce3e6c147931d14}} 
+float {\bfseries animation\+Time} = 0
+\item 
+\mbox{\Hypertarget{classCharacterState_afc428c82584377afe2a5a826159b8ffe}\label{classCharacterState_afc428c82584377afe2a5a826159b8ffe}} 
+float {\bfseries animation\+Frame\+Rate} = 1.\+0f / 10.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_a0c58c110e53bf8a628eeb3d81248e31f}\label{classCharacterState_a0c58c110e53bf8a628eeb3d81248e31f}} 
+static std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterState}{Character\+State}} $>$ $>$ {\bfseries character\+State\+Stack}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classJumpingState_abdf4ca65af9485459215931ddda11efe}\label{classJumpingState_abdf4ca65af9485459215931ddda11efe}} 
+\index{JumpingState@{JumpingState}!enter@{enter}}
+\index{enter@{enter}!JumpingState@{JumpingState}}
+\doxysubsubsection{\texorpdfstring{enter()}{enter()}}
+{\footnotesize\ttfamily void Jumping\+State\+::enter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCharacterState}{Character\+State}}.
+
+\mbox{\Hypertarget{classJumpingState_a8a1b882b19c969a03d94cae2b9ca1422}\label{classJumpingState_a8a1b882b19c969a03d94cae2b9ca1422}} 
+\index{JumpingState@{JumpingState}!exit@{exit}}
+\index{exit@{exit}!JumpingState@{JumpingState}}
+\doxysubsubsection{\texorpdfstring{exit()}{exit()}}
+{\footnotesize\ttfamily void Jumping\+State\+::exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCharacterState}{Character\+State}}.
+
+\mbox{\Hypertarget{classJumpingState_a89a8a225b7d8d57f18a755045d7ea1ec}\label{classJumpingState_a89a8a225b7d8d57f18a755045d7ea1ec}} 
+\index{JumpingState@{JumpingState}!handleInput@{handleInput}}
+\index{handleInput@{handleInput}!JumpingState@{JumpingState}}
+\doxysubsubsection{\texorpdfstring{handleInput()}{handleInput()}}
+{\footnotesize\ttfamily void Jumping\+State\+::handle\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&}]{character,  }\item[{SDL\+\_\+\+Event \&}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCharacterState}{Character\+State}}.
+
+\mbox{\Hypertarget{classJumpingState_ad9e44628c3fda01455ab33fdd53251eb}\label{classJumpingState_ad9e44628c3fda01455ab33fdd53251eb}} 
+\index{JumpingState@{JumpingState}!update@{update}}
+\index{update@{update}!JumpingState@{JumpingState}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Jumping\+State\+::update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&}]{character,  }\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCharacterState}{Character\+State}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Character\+Controller\+PDA.\+hpp\item 
+Steamphonk/Character\+Controller\+PDA.\+cpp\end{DoxyCompactItemize}

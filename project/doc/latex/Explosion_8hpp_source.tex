@@ -1,0 +1,48 @@
+\hypertarget{Explosion_8hpp_source}{}\doxysection{Explosion.\+hpp}
+\label{Explosion_8hpp_source}\index{Steamphonk/Explosion.hpp@{Steamphonk/Explosion.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Box2D/Box2D.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}TimerComponent.hpp"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}SpriteComponent.hpp"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}PhysicsComponent.hpp"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classExplosion}{Explosion}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}}, b2RayCastCallback \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{explicit} \mbox{\hyperlink{classExplosion}{Explosion}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{12     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} setRadius(\textcolor{keywordtype}{float} \_radius)\{ radius = \_radius; \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{comment}{// raycast callback}}
+\DoxyCodeLine{17     \textcolor{keyword}{virtual} float32 ReportFixture(  b2Fixture* fixture, \textcolor{keyword}{const} b2Vec2\& point,}
+\DoxyCodeLine{18                                       \textcolor{keyword}{const} b2Vec2\& normal, float32 fraction) \textcolor{keyword}{override};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} onCollisionEnd(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} setDamage(\textcolor{keywordtype}{int} \_damage)\{damage = \_damage;\};}
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} setKnockback(\textcolor{keywordtype}{float} \_knockback)\{knockback = \_knockback;\};}
+\DoxyCodeLine{25     }
+\DoxyCodeLine{26 \textcolor{keyword}{private}:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     std::shared\_ptr<TimerComponent> timer;}
+\DoxyCodeLine{29     std::shared\_ptr<SpriteComponent> spriteComponent;}
+\DoxyCodeLine{30     std::shared\_ptr<PhysicsComponent> physics;}
+\DoxyCodeLine{31     }
+\DoxyCodeLine{32     \textcolor{keywordtype}{float} radius = 10.0f;}
+\DoxyCodeLine{33     \textcolor{keywordtype}{float} duration = 0.25f;}
+\DoxyCodeLine{34     }
+\DoxyCodeLine{35     std::vector<sre::Sprite> animationSprites;}
+\DoxyCodeLine{36     \textcolor{keywordtype}{int} animationIndex = 0;}
+\DoxyCodeLine{37     \textcolor{keywordtype}{float} animationTime = 0;}
+\DoxyCodeLine{38     \textcolor{keywordtype}{float} animationFrameRate = 1.0f / 10.0f;}
+\DoxyCodeLine{39     }
+\DoxyCodeLine{40     \textcolor{keywordtype}{int} damage;}
+\DoxyCodeLine{41     \textcolor{keywordtype}{float} knockback;}
+\DoxyCodeLine{42 \};}
+
+\end{DoxyCode}
