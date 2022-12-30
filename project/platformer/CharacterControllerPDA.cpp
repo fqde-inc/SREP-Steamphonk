@@ -154,6 +154,7 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
 }
 
 void StandingState::update(CharacterController &character, float deltaTime) {
+
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
@@ -219,6 +220,7 @@ void JumpingState::handleInput(CharacterController& character, SDL_Event &event)
 }
 
 void JumpingState::update(CharacterController &character, float deltaTime) {
+    
     if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
         fire(character);
     }
@@ -303,6 +305,10 @@ void WalkingState::update(CharacterController &character, float deltaTime) {
 //        popStack(Walking);
 //    }
 
+    if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
+        fire(character);
+    }
+    
     if(!PlatformerGame::instance->keyboardState[SDL_SCANCODE_A] && !PlatformerGame::instance->keyboardState[SDL_SCANCODE_D]) {
         character.left = false;
         character.right = false;
@@ -310,9 +316,6 @@ void WalkingState::update(CharacterController &character, float deltaTime) {
         return;
     }
 
-    if(PlatformerGame::instance->mouseButton.button == SDL_BUTTON_LEFT && PlatformerGame::instance->mouseButton.type == SDL_MOUSEBUTTONDOWN) {
-        fire(character);
-    }
 
     animationTime += deltaTime;
 
