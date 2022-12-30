@@ -44,7 +44,7 @@ bool Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
     cooldown->initTimer(cooldownTime);
 
 
-    PlatformerGame::instance->setScreenshake(PlatformerGame::MILD_LITTLE_PONY);
+    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->currentShake);
     
     return true;
 }

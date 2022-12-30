@@ -102,8 +102,15 @@ public:
         CLOVIS_FRIDAY_NIGHT
     };
 
+    enum Scenes {
+        MAIN_MENU,
+        GAMEPLAY
+    };
+
     bool shake = false;
-    Shakes currentShake;
+    bool setFirstShake = true;
+    Shakes currentShake = CLOVIS_FRIDAY_NIGHT;
+    Scenes currentScene;
     
     float shakeValue = 0;
     float shakeDuration = 1.0f;
