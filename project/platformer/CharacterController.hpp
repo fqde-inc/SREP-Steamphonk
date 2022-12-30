@@ -31,13 +31,16 @@ public:
 
     bool handleInput(SDL_Event &event) override;
 
+    bool unlockedRocketLauncher = false;
     std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
+
+    bool unlockedHandgun = false;
     std::unique_ptr<Gun> handgun = std::make_unique<HandgunGun>();
 
     std::shared_ptr<PlayerShooting> playerShooting;
     std::shared_ptr<Damagable> damageComponent;
 
-    GunTypes equippedGun = RocketLauncher;
+    GunTypes equippedGun = Handgun;
 
     virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
                                       const b2Vec2& normal, float32 fraction) override;

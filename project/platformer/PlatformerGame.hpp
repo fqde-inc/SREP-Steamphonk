@@ -41,6 +41,8 @@ class PlatformerGame : public b2ContactListener {
 public:
     PlatformerGame();
 
+    std::shared_ptr<CharacterController> characterController;
+
     std::shared_ptr<GameObject> createGameObject();
     static const glm::vec2 windowSize;
 
@@ -50,6 +52,9 @@ public:
 
     void EndContact(b2Contact *contact) override;
     void generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type);
+    void destroyAllBirds();
+
+    std::vector<std::shared_ptr<GameObject>> currentLevelBirds;
 
     static PlatformerGame* instance;
 	
@@ -83,6 +88,10 @@ public:
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
 
+
+    std::shared_ptr<sre::SpriteAtlas> collectibleAtlas;
+    const float physicsScale = 100;
+
 private:
     sre::SDLRenderer r;
 
@@ -99,12 +108,13 @@ private:
 
     std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
     std::shared_ptr<sre::SpriteAtlas> UIAtlas;
-    std::shared_ptr<CharacterController> characterController;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
     std::shared_ptr<sre::SpriteAtlas> explosionAtlas;
 
     std::vector<std::shared_ptr<GameObject>> sceneObjects;
     std::shared_ptr<GameObject> player;
+    std::shared_ptr<GameObject> HandgunCollectible;
+    std::shared_ptr<GameObject> RocketLauncherCollectible;
 
 
     std::shared_ptr<sre::Texture> heartFull;
@@ -150,7 +160,6 @@ private:
         EXPLOSIONS  = 0x0005,
     };
 
-    const float physicsScale = 100;
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
     

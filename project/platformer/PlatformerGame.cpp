@@ -16,6 +16,7 @@
 #include "Crosshair.hpp"
 #include "PlayerShooting.hpp"
 #include "Damagable.hpp"
+#include "Collectible.hpp"
 
 using namespace std;
 using namespace sre;
@@ -46,6 +47,11 @@ PlatformerGame::PlatformerGame()
 
     spriteAtlas = SpriteAtlas::create( PLATFORMER_ART_PATH + "platformer-art-deluxe.json",Texture::create()
             .withFile( PLATFORMER_ART_PATH + "platformer-art-deluxe.png")
+            .withFilterSampling(false)
+            .build());
+
+    collectibleAtlas = SpriteAtlas::create( PLATFORMER_ART_PATH + "CollectibleAnim.json",Texture::create()
+            .withFile( PLATFORMER_ART_PATH + "CollectibleAnim.png")
             .withFilterSampling(false)
             .build());
 	
@@ -132,7 +138,16 @@ void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<
 
     auto enemy = birdObj->addComponent<EnemyComponent>();
     enemy->setPathing(positions, type);
+
+    currentLevelBirds.push_back(birdObj);
+    
     cout << "Made a bird at " << coords.first << ", " << coords.second << " with " << positions.size() << " points" << endl;
+}
+
+void PlatformerGame::destroyAllBirds() {
+    for (int i = 0; i < currentLevelBirds.size(); ++i) {
+        currentLevelBirds[i]->setConsumed(true);
+    }
 }
 
 std::shared_ptr<Level> PlatformerGame::getLevel()
@@ -212,6 +227,18 @@ void PlatformerGame::initLevel() {
 
     handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
     handgunDownTexture = handgunDown.get();
+
+    HandgunCollectible = createGameObject();
+    HandgunCollectible->position = level->getIdentifierPosition("PistolStart");
+
+    auto pickupGunCollectible = HandgunCollectible->addComponent<Collectible>();
+    pickupGunCollectible->initCollectible(Handgun);
+
+    RocketLauncherCollectible = createGameObject();
+    RocketLauncherCollectible->position = level->getIdentifierPosition("RocketStart");
+
+    auto pickupRocketCollectible = RocketLauncherCollectible->addComponent<Collectible>();
+    pickupRocketCollectible->initCollectible(RocketLauncher);
 }
 
 void PlatformerGame::update(float time) {
@@ -274,6 +301,9 @@ void PlatformerGame::render() {
     ImGui::SetNextWindowBgAlpha(0);
     ImGui::PushFont(pixelated);
     ImGui::Begin("weapon", nullptr,  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+    if(!characterController->unlockedRocketLauncher && !characterController->unlockedHandgun) {
+        ImGui::Text("Current Weapon: %s", "None");
+    }
     ImGui::Text("Current Weapon: %s", characterController->equippedGun == RocketLauncher ? "Rocket Launcher" : "Handgun");
     ImGui::PopFont();
     ImGui::End();
@@ -300,25 +330,29 @@ void PlatformerGame::render() {
     }
     ImGui::End();
 
-    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
-    ImGui::SetNextWindowBgAlpha(0);
-    ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    for (int i=0;i<characterController->handgun->maxClipSize;i++){
-        ImGui::SameLine(40 * i + 32);
-        ImGui::Image(i >= characterController->handgun->clipSize ? handgunDown->getNativeTexturePtr() : handgunUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    if(characterController->unlockedHandgun) {
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        for (int i=0;i<characterController->handgun->maxClipSize;i++){
+            ImGui::SameLine(40 * i + 32);
+            ImGui::Image(i >= characterController->handgun->clipSize ? handgunDown->getNativeTexturePtr() : handgunUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+        }
+        ImGui::End();
     }
-    ImGui::End();
 
-    ImGui::SetNextWindowPos(ImVec2(windowSize.x - 95, windowSize.y - 65), ImGuiSetCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
-    ImGui::SetNextWindowBgAlpha(0);
-    ImGui::Begin("rocket", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-    for (int i=0;i<characterController->rocketLauncher->maxClipSize;i++){
-        ImGui::SameLine(40 * i + 32);
-        ImGui::Image(i >= characterController->rocketLauncher->clipSize ? missileDown->getNativeTexturePtr() : missileUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+    if(characterController->unlockedRocketLauncher){
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 95, windowSize.y - 65), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("rocket", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        for (int i=0;i<characterController->rocketLauncher->maxClipSize;i++){
+            ImGui::SameLine(40 * i + 32);
+            ImGui::Image(i >= characterController->rocketLauncher->clipSize ? missileDown->getNativeTexturePtr() : missileUp->getNativeTexturePtr(),{48, 48}, uv0, uv1);
+        }
+        ImGui::End();
     }
-    ImGui::End();
 
     if (doDebugDraw){
         world->DrawDebugData();

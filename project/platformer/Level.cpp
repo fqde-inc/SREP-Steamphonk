@@ -41,7 +41,7 @@ void Level::initializeNameCoordMap()
     IStreamWrapper tisw(tfis);
     Document t;
     t.ParseStream(tisw);
-    auto& tiles = t["frames"].GetArray();
+    auto tiles = t["frames"].GetArray();
     for (int i = 0; i < tiles.Size(); i++)
     {
         auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
@@ -176,6 +176,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 
     generateSpecificLevel(id, World);
     generateSpecificLevel(id, Foliage);
+    PlatformerGame::instance->destroyAllBirds();
     generateBirdsForLevel(id);
 }
 
