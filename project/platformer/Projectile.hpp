@@ -9,15 +9,9 @@
 class Projectile : public Component, b2RayCastCallback{
 public:
     Projectile(GameObject* gameObject);
-	
-    void init(std::shared_ptr<sre::SpriteAtlas> spriteAtlas, int x, int y, int startSpriteId, int width, bool kinematic);
 
-    void update(float deltaTime) override;
-
-    const std::string & getOrigin() const{ return origin; };
-    void setOrigin(std::string _origin) { origin = _origin;};
-
-    const glm::vec2 & getDirection() const{ return direction; };
+    void update(float deltaTime) override;;
+    void setOrigin(std::string _origin) { origin = _origin;};;
     void setDirection(const glm::vec2 & _direction) { direction = _direction; };
 
     // raycast callback

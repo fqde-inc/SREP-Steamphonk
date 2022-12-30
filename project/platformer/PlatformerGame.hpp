@@ -36,12 +36,6 @@ const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 class PhysicsComponent;
 class CharacterController;
 
-enum class GameState{
-    Ready,
-    Running,
-    GameOver
-};
-
 class PlatformerGame : public b2ContactListener {
 public:
     PlatformerGame();
@@ -71,11 +65,10 @@ public:
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
 
-    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas(){return spriteAtlas;};
-    std::shared_ptr<sre::SpriteAtlas> getExplosionAtlas(){return explosionAtlas;};
+    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas();
 
     // Less expensive to store player pointer and get position on demand
-    glm::vec2 getPlayerPositon(){return player->getPosition();};
+    glm::vec2 getPlayerPosition();
 
     std::shared_ptr<sre::SpriteAtlas> characterAtlas;
 
@@ -92,7 +85,6 @@ public:
     Mix_Chunk* hitWallSFX;
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
-
 
     enum Scenes {
         MAIN_MENU,
@@ -115,7 +107,6 @@ public:
     Shakes currentShake;
 
     float shakeValue = 0;
-    float shakeDuration = 1.0f;
     float shakeFade = 4.0f;
     glm::vec2 lastShake {0,0};
 
@@ -128,7 +119,6 @@ public:
 
     // Box2D / Physics
     enum CollisionLayers {
-        BACKGROUND  = 0x0001,
         WALLS       = 0x0002,
         PLAYER      = 0x0003,
         ENEMY       = 0x0004,
@@ -143,7 +133,6 @@ private:
 
     void initLevel();
     void initPhysics();
-    void spawnPlayer();
     void update(float time);
 
     void render();
@@ -202,7 +191,6 @@ private:
     friend class PhysicsComponent;
     friend class Level;
     friend class CharacterController;
-    friend class PlatformComponent;
     friend class EnemyComponent;
 
     friend class Projectile;

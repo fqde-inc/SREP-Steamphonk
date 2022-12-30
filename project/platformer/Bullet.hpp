@@ -17,10 +17,7 @@ public:
 
 class RegularBullet : public Bullet{
 public:
-    RegularBullet(GameObject* gameObject) : Bullet(gameObject) {
-        speed = 5.5f;
-        damage = 1;
-    };
+    RegularBullet(GameObject* gameObject);
 };
 
 class RocketBullet : public Bullet {
@@ -30,13 +27,7 @@ public:
 
     // raycast callback
     float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
-                                      const b2Vec2& normal, float32 fraction) {
-        if( Bullet::ReportFixture(fixture, point, normal, fraction) )
-            return 1;
-            
-        explode();
-        return 0;
-    };
+                                      const b2Vec2& normal, float32 fraction);
 
     void explode();
 

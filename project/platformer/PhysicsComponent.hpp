@@ -17,15 +17,11 @@ public:
 
     void setPhysicsPosition(glm::vec2 pos);
 
-    void addForce(glm::vec2 force);     // Force gradually affects the velocity over time
-
     void addImpulse(glm::vec2 force);   // Instantly affects velocity
 
     void setLinearVelocity(glm::vec2 velocity);
 
     glm::vec2 getLinearVelocity();
-
-    bool isSensor();
 
     void setSensor(bool enabled);
 
@@ -54,9 +50,7 @@ private:
     b2PolygonShape * polygon = nullptr;
     b2CircleShape * circle = nullptr;
     b2Body * body = nullptr;
-    b2Shape::Type shapeType;
     b2Fixture* fixture = nullptr;
-    b2BodyType rbType;
     std::vector<PhysicsComponent *> collidingBodies;
     b2World * world = nullptr;
 };

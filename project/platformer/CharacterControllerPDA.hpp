@@ -60,7 +60,7 @@ private:
 
     class JumpingState : public CharacterState {
     public:
-        explicit JumpingState();;
+        explicit JumpingState();
         void handleInput(CharacterController& character, SDL_Event &event) override;
         void update(CharacterController &character, float deltaTime) override;
         void enter() override;
@@ -79,7 +79,7 @@ private:
 
 class WalkingState : public CharacterState {
 public:
-    explicit WalkingState();;
+    explicit WalkingState();
     void handleInput(CharacterController& character, SDL_Event &event) override;
     void update(CharacterController &character, float deltaTime) override;
 private:

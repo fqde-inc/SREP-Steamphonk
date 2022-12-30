@@ -258,7 +258,6 @@ void PlatformerGame::setScreenshake(Shakes type){
         if(shakeValue == 0 || value >= shakeValue) {
             shake           = true;
             shakeValue      = value;
-            shakeDuration   = duration;
             shakeFade       = value / (duration * 10);
 
             camera->offset  = {0,0};
@@ -320,6 +319,7 @@ void PlatformerGame::render() {
         ImGui::Begin("startbutton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
         if(ImGui::Button("Start", {280, 55})) {
             currentScene = GAMEPLAY;
+            Mix_PlayChannel(-1, startGameSFX, 0);
             SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
             SDL_SetRelativeMouseMode(SDL_TRUE);
         }
@@ -335,6 +335,7 @@ void PlatformerGame::render() {
         ImGui::Begin("howToButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
         if(ImGui::Button("How to play", {280, 55})) {
             currentScene = HOW_TO_PLAY;
+            Mix_PlayChannel(-1, startGameSFX, 0);
         }
         ImGui::PopStyleColor();
         ImGui::PopFont();
@@ -379,6 +380,7 @@ void PlatformerGame::render() {
         const char* buttonLabel = tempButtonLabel.c_str();
 
         if(ImGui::Button(buttonLabel, {280, 55})) {
+            Mix_PlayChannel(-1, startGameSFX, 0);
             switch (shakeOption) {
                 case MILD_LITTLE_PONY:
                     shakeOption = STEAMPHONK;
@@ -426,6 +428,7 @@ void PlatformerGame::render() {
         ImGui::Begin("backButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
         if(ImGui::Button("Back", {280, 55})) {
             currentScene = MAIN_MENU;
+            Mix_PlayChannel(-1, startGameSFX, 0);
         }
         ImGui::PopStyleColor();
         ImGui::PopFont();
@@ -641,3 +644,7 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
         }
     }
 }
+
+std::shared_ptr<sre::SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
+
+glm::vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}

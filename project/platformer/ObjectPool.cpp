@@ -1,10 +1,9 @@
 //
-// Created by Søren Skouv
+// Created by Sï¿½ren Skouv
 //
 
 #include "PlatformerGame.hpp"
 #include "ObjectPool.hpp"
-#include "PlatformComponent.hpp"
 
 using std::cout;
 

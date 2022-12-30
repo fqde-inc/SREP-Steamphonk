@@ -7,14 +7,6 @@
 
 class PlatformerGame;
 class GameObject;
-class PlatformComponent;
-
-enum class TileCollider {
-    Block,
-    BlockHalf,
-    Incline,
-    Decline
-};
 
 enum GenerationType {
 	World,
@@ -33,8 +25,7 @@ public:
     static std::shared_ptr<Level> createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName);
 
     std::string& getNameByCoords(std::pair<int, int> coords);
-	
-    void generateLevel();
+
     void generateSpecificLevel(int levelNumber, GenerationType type = World);
     void generateLevelByPosition(glm::vec2 target);
     int getLevelIdByPosition(glm::vec2 pos);
@@ -66,6 +57,5 @@ private:
     PlatformerGame* game;
     std::shared_ptr<sre::SpriteAtlas> tileAtlas;
     std::map<std::pair<int, int>, std::string> nameCoordMap;
-    std::string getLevelPath(std::string name);
 };
 
