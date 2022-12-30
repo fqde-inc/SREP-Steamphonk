@@ -93,7 +93,14 @@ public:
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
 
-    // Box2D / Physics
+
+    enum Scenes {
+        MAIN_MENU,
+        HOW_TO_PLAY,
+        GAMEPLAY,
+    };
+    Scenes currentScene;
+    
     enum Shakes {
         MILD_LITTLE_PONY,
         STEAMPHONK,
@@ -102,17 +109,11 @@ public:
         CLOVIS_FRIDAY_NIGHT
     };
 
-    enum Scenes {
-        MAIN_MENU,
-        HOW_TO_PLAY,
-        GAMEPLAY,
-    };
-
-    bool shake = false;
-    bool setFirstShake = true;
-    Shakes currentShake = CLOVIS_FRIDAY_NIGHT;
-    Scenes currentScene;
+    Shakes shakeOption = STEAMPHONK;
     
+    bool shake = false;
+    Shakes currentShake;
+
     float shakeValue = 0;
     float shakeDuration = 1.0f;
     float shakeFade = 4.0f;

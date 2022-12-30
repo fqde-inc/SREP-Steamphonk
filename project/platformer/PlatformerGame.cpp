@@ -297,11 +297,6 @@ void PlatformerGame::render() {
 
     if(currentScene == MAIN_MENU) {
 
-        if (setFirstShake) {
-            setScreenshake(STEAMPHONK);
-            setFirstShake = false;
-        }
-
         ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
         ImGui::SetNextWindowBgAlpha(0);
@@ -365,7 +360,7 @@ void PlatformerGame::render() {
 
         std::string tempButtonLabel;
 
-        switch (currentShake) {
+        switch (shakeOption) {
             case MILD_LITTLE_PONY:
                 tempButtonLabel = "MILD_LITTLE_PONY";
                 break;
@@ -386,21 +381,21 @@ void PlatformerGame::render() {
         const char* buttonLabel = tempButtonLabel.c_str();
 
         if(ImGui::Button(buttonLabel, {280, 55})) {
-            switch (currentShake) {
+            switch (shakeOption) {
                 case MILD_LITTLE_PONY:
-                    setScreenshake(STEAMPHONK);
+                    shakeOption = STEAMPHONK;
                     break;
                 case STEAMPHONK:
-                    setScreenshake(EPILECTIC_DELIGHT);
+                    shakeOption = EPILECTIC_DELIGHT;
                     break;
                 case EPILECTIC_DELIGHT:
-                    setScreenshake(ULTRAKILL);
+                    shakeOption = ULTRAKILL;
                     break;
                 case ULTRAKILL:
-                    setScreenshake(CLOVIS_FRIDAY_NIGHT);
+                    shakeOption = CLOVIS_FRIDAY_NIGHT;
                     break;
                 case CLOVIS_FRIDAY_NIGHT:
-                    setScreenshake(MILD_LITTLE_PONY);
+                    shakeOption = MILD_LITTLE_PONY;
                     break;
             }
         }

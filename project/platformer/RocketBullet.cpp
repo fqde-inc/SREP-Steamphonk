@@ -27,7 +27,7 @@ void RocketBullet::explode() {
 
     auto explosion = go->addComponent<Explosion>();
 
-    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->currentShake);
+    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->shakeOption);
 }
 
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
