@@ -293,6 +293,7 @@ void PlatformerGame::render() {
 
     ImVec2 uv0(0,1); // flip y axis coordinates
     ImVec2 uv1(1,0);
+    static ImVec4 color_multipler(1, 1, 1, 0.2f);
 
     if(currentScene == MAIN_MENU) {
 
@@ -300,8 +301,6 @@ void PlatformerGame::render() {
             setScreenshake(STEAMPHONK);
             setFirstShake = false;
         }
-
-        static ImVec4 color_multipler(1, 1, 1, 0.2f);
 
         ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
@@ -411,6 +410,13 @@ void PlatformerGame::render() {
 
         return;
     } else if (currentScene == HOW_TO_PLAY) {
+
+        ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+        ImGui::Image(menuBG->getNativeTexturePtr(),{windowSize.x + 50, windowSize.y + 160}, uv0, uv1, color_multipler);
+        ImGui::End();
 
         ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - (730 / 2), windowSize.y / 2 - (511 / 2)), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(730, 511), ImGuiSetCond_Always);
