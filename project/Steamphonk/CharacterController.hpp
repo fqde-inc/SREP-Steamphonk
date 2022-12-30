@@ -16,13 +16,6 @@ class CharacterController : public Component, public b2RayCastCallback {
 public:
     explicit CharacterController(GameObject *gameObject);
 
-    void setSprites(sre::Sprite standing,
-                    sre::Sprite walk1,
-                    sre::Sprite walk2,
-                    sre::Sprite flyUp,
-                    sre::Sprite fly,
-                    sre::Sprite flyDown);
-
     void updateSprite(float deltaTime);
 
     void update(float deltaTime) override;
@@ -77,5 +70,4 @@ private:
     sre::Sprite flyDown;
     std::shared_ptr<GameObject> cursor;
     float radius;
-    void onDeath();
 };

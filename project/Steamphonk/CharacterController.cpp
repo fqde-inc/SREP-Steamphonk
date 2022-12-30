@@ -123,13 +123,6 @@ void CharacterController::onCollisionEnd(PhysicsComponent *comp) {
 
 }
 
-void CharacterController::onDeath()
-{
-	auto spawn = PlatformerGame::instance->getLevel()->getIdentifierPosition("PlayerStart");
-	gameObject->setPosition(spawn);
-	characterPhysics->setLinearVelocity({ 0,0 });
-}
-
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
 
     if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
@@ -143,16 +136,6 @@ float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &poi
         }
     }
     return 0;
-}
-
-void CharacterController::setSprites(sre::Sprite standing, sre::Sprite walk1, sre::Sprite walk2, sre::Sprite flyUp,
-                                     sre::Sprite fly, sre::Sprite flyDown) {
-    this->standing = standing;
-    this->walk1 = walk1;
-    this->walk2 = walk2;
-    this->flyUp = flyUp;
-    this->fly = fly;
-    this->flyDown = flyDown;
 }
 
 void CharacterController::updateSprite(float deltaTime) {

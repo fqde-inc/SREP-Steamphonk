@@ -8,28 +8,11 @@ public:
     bool hasFinished = false;
     TimerComponent(GameObject *gameObject) : Component(gameObject) {}
 
-    void initTimer(float time) {
-        elapsedTime = 0;
-        setTime = time;
-        hasFinished = false;
-        isRunning = true;
-    }
+    void initTimer(float time);
 
-    void stopTimer() {
-        setTime = 0;
-        isRunning = false;
-    }
+    void stopTimer();
 
-    void update(float deltaTime) override {
-        if (setTime == 0) return;
-
-        elapsedTime += deltaTime;
-
-        if(elapsedTime >= setTime) {
-            stopTimer();
-            hasFinished = true;
-        }
-    }
+    void update(float deltaTime) override;
 
 private:
     float elapsedTime;

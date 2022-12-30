@@ -8,3 +8,7 @@ Bullet::Bullet(GameObject* gameObject): Projectile(gameObject) {
     physics->getFixture()->SetFilterData(filter);
 };
 
+RegularBullet::RegularBullet(GameObject *gameObject) : Bullet(gameObject) {
+    speed = 5.5f;
+    damage = 1;
+}

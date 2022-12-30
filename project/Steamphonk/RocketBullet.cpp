@@ -48,3 +48,11 @@ void RocketBullet::update(float deltaTime) {
     } 
     Bullet::update(deltaTime);
 }
+
+float32 RocketBullet::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
+    if( Bullet::ReportFixture(fixture, point, normal, fraction) )
+        return 1;
+
+    explode();
+    return 0;
+}

@@ -41,3 +41,16 @@ bool Gun::Fire(glm::vec2 _position, glm::vec2 _direction) {
     
     return true;
 }
+
+HandgunGun::HandgunGun() {
+    gunType = Handgun;
+    bulletType = Regular;
+    RecoilMagnitude = 0.075f;
+}
+
+RocketLauncherGun::RocketLauncherGun() {
+    gunType = RocketLauncher;
+    bulletType = Rocket;
+    RecoilMagnitude = 0.1f;
+    maxClipSize = 1;
+}

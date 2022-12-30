@@ -31,20 +31,10 @@ public:
 
 class HandgunGun : public Gun {
 public:
-    explicit HandgunGun() {
-        gunType = Handgun;
-        bulletType = Regular;
-        RecoilMagnitude = 0.075f;
-    }
+    explicit HandgunGun();
 };
 
 class RocketLauncherGun : public Gun {
 public:
-    explicit RocketLauncherGun() {
-        gunType = RocketLauncher;
-        bulletType = Rocket;
-        RecoilMagnitude = 0.1f;
-
-        maxClipSize = 1;
-    }
+    explicit RocketLauncherGun();
 };

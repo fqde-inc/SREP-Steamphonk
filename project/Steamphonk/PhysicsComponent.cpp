@@ -34,12 +34,7 @@ void PhysicsComponent::addImpulse(glm::vec2 force) {
     body->ApplyLinearImpulse(iForceV, body->GetWorldCenter(), true);
 }
 
-void PhysicsComponent::addForce(glm::vec2 force) {
-    b2Vec2 forceV{force.x,force.y};
-    body->ApplyForce(forceV,body->GetWorldCenter(),true);
-}
-
-void PhysicsComponent::setPhysicsPosition(glm::vec2 pos) 
+void PhysicsComponent::setPhysicsPosition(glm::vec2 pos)
 {
 	body->SetTransform(b2Vec2(pos.x,pos.y), body->GetAngle());
 }
@@ -61,10 +56,8 @@ void PhysicsComponent::initCircle(b2BodyType type, float radius, glm::vec2 cente
     assert(body == nullptr);
     autoUpdate = type != b2_staticBody;
     // do init
-    shapeType = b2Shape::Type::e_circle;
     b2BodyDef bd;
     bd.type = type;
-    rbType = type;
     bd.position = b2Vec2(center.x, center.y);
     body = world->CreateBody(&bd);
     circle = new b2CircleShape();
@@ -82,10 +75,8 @@ void PhysicsComponent::initBox(b2BodyType type, glm::vec2 size, glm::vec2 center
     assert(body == nullptr);
     autoUpdate = type != b2_staticBody;
     // do init
-    shapeType = b2Shape::Type::e_polygon;
     b2BodyDef bd;
     bd.type = type;
-    rbType = type;
     bd.position = b2Vec2(center.x, center.y);
     body = world->CreateBody(&bd);
     polygon = new b2PolygonShape();
@@ -97,10 +88,6 @@ void PhysicsComponent::initBox(b2BodyType type, glm::vec2 size, glm::vec2 center
     fixture = body->CreateFixture(&fxD);
 
     PlatformerGame::instance->registerPhysicsComponent(this);
-}
-
-bool PhysicsComponent::isSensor() {
-    return fixture->IsSensor();
 }
 
 void PhysicsComponent::setSensor(bool enabled) {

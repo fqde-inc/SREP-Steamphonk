@@ -63,7 +63,7 @@ void EnemyComponent::update(float deltaTime) {
 
 void EnemyComponent::shootAtPlayer(){
 
-    glm::vec2 direction = glm::normalize( PlatformerGame::instance->getPlayerPositon() - gameObject->getPosition() );
+    glm::vec2 direction = glm::normalize(PlatformerGame::instance->getPlayerPosition() - gameObject->getPosition() );
 
     auto go = PlatformerGame::instance->createGameObject();     
     go->setPosition(gameObject->getPosition());

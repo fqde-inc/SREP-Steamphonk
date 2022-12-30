@@ -6,7 +6,6 @@
 #include "PlatformerGame.hpp"
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
-#include "PlatformComponent.hpp"
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>
@@ -279,43 +278,6 @@ void Level::generateLevelBounds()
         bound.yMax = - y - h;
 
         levelBounds.push_back(bound);
-    }
-}
-
-/// <summary>
-/// Generates all levels
-/// </summary>
-void Level::generateLevel() {
-    ifstream fis(LEVEL_ART_PATH + levelName);
-    IStreamWrapper isw(fis);
-    Document d;
-    d.ParseStream(isw);
-
-    auto levels = d["levels"].GetArray();
-
-    for (int i = 0; i < levels.Size(); i++)
-    {
-        auto index = getLayerIndexForLevel(worldLayer, i);
-		
-        auto level = d["levels"].GetArray()[i]["layerInstances"].GetArray()[index]["autoLayerTiles"].GetArray();
-        auto levelHeight = d["levels"].GetArray()[i]["pxHei"].GetInt();
-        auto levelWidth = d["levels"].GetArray()[i]["pxWid"].GetInt();
-        auto worldX = d["levels"].GetArray()[i]["worldX"].GetInt();
-        auto worldY = d["levels"].GetArray()[i]["worldY"].GetInt();
-
-
-        for (int i = 0; i < level.Size(); i++)
-        {
-            auto pos = level[i].GetObject()["px"].GetArray();
-            auto src = level[i].GetObject()["src"].GetArray();
-
-            int x = pos[0].GetInt();
-            int y = pos[1].GetInt();
-			
-            string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
-            std::pair<int,int> coords = srepCoordinates(x, y, worldX, worldY);
-            addTile(coords, spriteName);
-        }
     }
 }
 
