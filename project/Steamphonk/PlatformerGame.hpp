@@ -4,14 +4,11 @@
 #define PROJECT_DATA_PATHS
 
 #include <string>
+#include <glm/vec3.hpp>
 
 using namespace std;
-using namespace glm;
-using namespace sre;
 
 const string PROJECT_DATA_PATH (PRE_PROJECT_DATA_PATH);
-
-
 const string PLATFORMER_ART_PATH   = PROJECT_DATA_PATH + "/Platformer_Art/";
 const string EXPLOSION_ART_PATH    = PROJECT_DATA_PATH + "/Explosion/";
 const string CHARACTER_ART_PATH    = PROJECT_DATA_PATH + "/Character_Anims/";
@@ -24,7 +21,6 @@ const string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 #define GLM_ENABLE_EXPERIMENTAL
 
 #include <vector>
-
 #include "SDL_mixer.h"
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
@@ -34,6 +30,9 @@ const string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 #include "FollowPathComponent.hpp"
 #include "SideScrollingCamera.hpp"
 #include "Box2DDebugDraw.hpp"
+
+using namespace glm;
+using namespace sre;
 
 class EnemyComponent;
 class PhysicsComponent;
