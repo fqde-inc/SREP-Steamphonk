@@ -8,17 +8,37 @@
 #include "Explosion.hpp"
 
 RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
+    speed = 4.5f;
+    damage = 3;
+
     auto sprite = PlatformerGame::instance->getSpriteAtlas()->get("Projectile_0.png");
     spriteComponent->setSprite( sprite );
 };
 
 void RocketBullet::explode() {
-
     auto go = PlatformerGame::instance->createGameObject();
-    go->setPosition(gameObject->getPosition());
+    if( gameObject->getPosition() != glm::vec2{0} )
+        go->setPosition(gameObject->getPosition());
+    else 
+        go->setPosition( glm::vec2 {
+            ProjectilePhysics->getBody()->GetPosition().x,
+            ProjectilePhysics->getBody()->GetPosition().y
+        });
 
     auto explosion = go->addComponent<Explosion>();
+    
+    PlatformerGame::instance->shake = true;
 }
+
+void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
+    Bullet::onCollisionStart(comp);
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY )
+        explode();
+};
+
+void RocketBullet::onCollisionEnd(PhysicsComponent *comp) {
+    //explode();
+};
 
 //void RocketBullet::update(float deltaTime) {
 //    Bullet::update(deltaTime);

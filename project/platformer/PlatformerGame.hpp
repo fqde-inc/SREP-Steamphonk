@@ -14,6 +14,7 @@ const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 
 #endif
 
+#include <glm/gtc/random.hpp>
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
 #include <vector>
@@ -83,6 +84,62 @@ public:
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
 
+    // Box2D / Physics
+    enum Shakes {
+        MILD_LITTLE_PONY,
+        STEAMPHONK,
+        EPILEPSIA,
+        ULTRAKILL,
+        CLOVIS_FRIDAY_NIGHT
+    };
+
+    bool shake = false;
+    Shakes currentShake;
+    
+    float shakeValue = 0;
+    float shakeDuration = 1.0f;
+
+    void screenshake(Shakes type){
+
+        if(shakeValue <= 0) {
+            shakeValue = 0;
+            shake = false;
+            camera->offset = {0,0};
+        }
+
+        if(shakeValue == 0) {
+            switch (type)
+            {
+                case MILD_LITTLE_PONY:
+                    shakeValue = 10.0;
+                    break;
+                
+                case STEAMPHONK:
+                    shakeValue = 15.0;
+                    break;
+                
+                case EPILEPSIA:
+                    shakeValue = 20.0;
+                    break;
+                
+                case ULTRAKILL:
+                    shakeValue = 25.0;
+                    break;
+
+                case CLOVIS_FRIDAY_NIGHT:
+                    shakeValue = 40.0;
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+
+        camera->offset = glm::linearRand(glm::vec2(-shakeValue), glm::vec2(shakeValue));
+
+        shakeValue -= 1.0f;
+    }
+
 private:
     sre::SDLRenderer r;
 
@@ -135,9 +192,6 @@ private:
     ImFont* pixelated;
 
     //std::shared_ptr<FollowPathComponent> birdMovement;
-
-
-
 
     // Box2D / Physics
     enum _entityCategory {

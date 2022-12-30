@@ -233,6 +233,9 @@ void PlatformerGame::update(float time) {
         sceneObjects[i]->update(time);
     }
 
+    if(shake)
+        screenshake(ULTRAKILL);
+
 }
 
 void PlatformerGame::render() {

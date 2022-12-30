@@ -41,7 +41,7 @@ void Level::initializeNameCoordMap()
     IStreamWrapper tisw(tfis);
     Document t;
     t.ParseStream(tisw);
-    auto& tiles = t["frames"].GetArray();
+    auto tiles = t["frames"].GetArray();
     for (int i = 0; i < tiles.Size(); i++)
     {
         auto x = tiles[i].GetObject()["frame"].GetObject()["x"].GetInt();
@@ -181,7 +181,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 
 void Level::generateBirdsForLevel(int id)
 {
-    ifstream fis(levelName);
+    ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
@@ -401,7 +401,6 @@ std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::stri
     physics->setAutoUpdate(true);
     b2Filter filter = physics->getFixture()->GetFilterData();
     filter.categoryBits = PlatformerGame::WALLS;
-    filter.maskBits = PlatformerGame::ENEMY | PlatformerGame::PLAYER | PlatformerGame::MISSILE;
     physics->getFixture()->SetFilterData(filter);
     return gameObject;
 }

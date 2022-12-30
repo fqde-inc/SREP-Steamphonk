@@ -39,9 +39,9 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
     filter.categoryBits = PlatformerGame::PLAYER;
     filter.maskBits = PlatformerGame::WALLS | PlatformerGame::MISSILE | PlatformerGame::EXPLOSIONS;
     characterPhysics->getFixture()->SetFilterData(filter);
-
     characterPhysics->fixRotation();
     spriteComponent = gameObject->getComponent<SpriteComponent>();
+
     state_ = std::make_shared<CharacterState>();
 }
 
@@ -61,8 +61,8 @@ void CharacterController::update(float deltaTime) {
         returnToSpawn = false;
     }
     // raycast ignores any shape in the starting point
-    auto from = characterPhysics->getBody()->GetWorldCenter();
-    b2Vec2 to {from.x,from.y -radius*1.3f};
+    auto from = characterPhysics->getBody()->GetPosition();
+    b2Vec2 to {from.x, from.y - radius * 1.3f};
     isGrounded = false;
     PlatformerGame::instance->world->RayCast(this, from, to);
 
@@ -131,6 +131,10 @@ void CharacterController::onDeath()
 }
 
 float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) {
+
+    if(fixture->GetFilterData().categoryBits != PlatformerGame::WALLS)
+        return 1;
+
     isGrounded = true;
     if(state_->characterStateStack[0]->stateType == Jumping) {
         state_->popStack(Jumping);
