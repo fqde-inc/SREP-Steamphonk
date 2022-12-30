@@ -1,0 +1,166 @@
+\hypertarget{classCharacterController}{}\doxysection{Character\+Controller Class Reference}
+\label{classCharacterController}\index{CharacterController@{CharacterController}}
+
+
+Inheritance diagram for Character\+Controller\+:
+% FIG 0
+
+
+Collaboration diagram for Character\+Controller\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterController_a601982baa53cc7dd5922c09a7d245cad}\label{classCharacterController_a601982baa53cc7dd5922c09a7d245cad}} 
+{\bfseries Character\+Controller} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classCharacterController_a7c447dab5698f0b5384c322964247200}\label{classCharacterController_a7c447dab5698f0b5384c322964247200}} 
+void {\bfseries set\+Sprites} (sre\+::\+Sprite standing, sre\+::\+Sprite walk1, sre\+::\+Sprite walk2, sre\+::\+Sprite fly\+Up, sre\+::\+Sprite fly, sre\+::\+Sprite fly\+Down)
+\item 
+\mbox{\Hypertarget{classCharacterController_a92861d62ca6f77b5b52d7e2d6dc6bf94}\label{classCharacterController_a92861d62ca6f77b5b52d7e2d6dc6bf94}} 
+void {\bfseries update\+Sprite} (float delta\+Time)
+\item 
+void \mbox{\hyperlink{classCharacterController_a81d022b9e696c6605da65a966c37ff3c}{update}} (float delta\+Time) override
+\item 
+bool \mbox{\hyperlink{classCharacterController_a688a8f6c3604691ca9ac918aef71092e}{handle\+Input}} (SDL\+\_\+\+Event \&event) override
+\item 
+\mbox{\Hypertarget{classCharacterController_a85b91713277c789aa914e6e6e4528986}\label{classCharacterController_a85b91713277c789aa914e6e6e4528986}} 
+virtual float32 {\bfseries Report\+Fixture} (b2\+Fixture $\ast$fixture, const b2\+Vec2 \&point, const b2\+Vec2 \&normal, float32 fraction) override
+\item 
+void \mbox{\hyperlink{classCharacterController_a3675dca3c0693587a157060dbff1f778}{on\+Collision\+Start}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+void \mbox{\hyperlink{classCharacterController_a706c8b5fcada43aa7773e7f1f1afbf4f}{on\+Collision\+End}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+\mbox{\Hypertarget{classCharacterController_a96ca410393a2fbad0a5628bcdbfb0b6e}\label{classCharacterController_a96ca410393a2fbad0a5628bcdbfb0b6e}} 
+glm\+::vec2 {\bfseries get\+Shoot\+Direction} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterController_a71298782d4896f031707e6b17d3fbfe6}\label{classCharacterController_a71298782d4896f031707e6b17d3fbfe6}} 
+bool {\bfseries unlocked\+Rocket\+Launcher} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_a0cd868e42cc632b3eb511cf1664df05e}\label{classCharacterController_a0cd868e42cc632b3eb511cf1664df05e}} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classGun}{Gun}} $>$ {\bfseries rocket\+Launcher} = std\+::make\+\_\+unique$<$\mbox{\hyperlink{classRocketLauncherGun}{Rocket\+Launcher\+Gun}}$>$()
+\item 
+\mbox{\Hypertarget{classCharacterController_a3845d8fa8be0711fb97bb9fe81527675}\label{classCharacterController_a3845d8fa8be0711fb97bb9fe81527675}} 
+bool {\bfseries unlocked\+Handgun} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_af02ca970485e001a7d860273dca740e5}\label{classCharacterController_af02ca970485e001a7d860273dca740e5}} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classGun}{Gun}} $>$ {\bfseries handgun} = std\+::make\+\_\+unique$<$\mbox{\hyperlink{classHandgunGun}{Handgun\+Gun}}$>$()
+\item 
+\mbox{\Hypertarget{classCharacterController_a16b81507eae7ad80b345e2303c8e288f}\label{classCharacterController_a16b81507eae7ad80b345e2303c8e288f}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classDamageable}{Damageable}} $>$ {\bfseries damage\+Component}
+\item 
+\mbox{\Hypertarget{classCharacterController_a79d3666ee8bf13bd0ddfc960db62fc63}\label{classCharacterController_a79d3666ee8bf13bd0ddfc960db62fc63}} 
+Gun\+Types {\bfseries equipped\+Gun} = Handgun
+\item 
+\mbox{\Hypertarget{classCharacterController_a4fc761e9ae69241340883267fcddaf0f}\label{classCharacterController_a4fc761e9ae69241340883267fcddaf0f}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $>$ {\bfseries character\+Physics}
+\item 
+\mbox{\Hypertarget{classCharacterController_a30592b3145fc3c63a6ce65b1e1178638}\label{classCharacterController_a30592b3145fc3c63a6ce65b1e1178638}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classDamageable}{Damageable}} $>$ {\bfseries character\+Damagable}
+\item 
+\mbox{\Hypertarget{classCharacterController_aa7e9294678745378c446df4bab5aba0a}\label{classCharacterController_aa7e9294678745378c446df4bab5aba0a}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classTimerComponent}{Timer\+Component}} $>$ {\bfseries swap\+Timer}
+\item 
+\mbox{\Hypertarget{classCharacterController_ac58b376ae8be02e92ad57cb6361aaaea}\label{classCharacterController_ac58b376ae8be02e92ad57cb6361aaaea}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classTimerComponent}{Timer\+Component}} $>$ {\bfseries reload\+Timer}
+\item 
+\mbox{\Hypertarget{classCharacterController_ae2f19af71f292561d2a281107686b2cf}\label{classCharacterController_ae2f19af71f292561d2a281107686b2cf}} 
+float {\bfseries swap\+Time} = .\+25f
+\item 
+\mbox{\Hypertarget{classCharacterController_a378125db47d2f39628531f8fef3406d2}\label{classCharacterController_a378125db47d2f39628531f8fef3406d2}} 
+float {\bfseries reload\+Time} = .\+75f
+\item 
+\mbox{\Hypertarget{classCharacterController_a327c3d8cda004af51f75858e2a4bb007}\label{classCharacterController_a327c3d8cda004af51f75858e2a4bb007}} 
+bool {\bfseries left} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_a4fb06e7e244080674a01c19e834d88d3}\label{classCharacterController_a4fb06e7e244080674a01c19e834d88d3}} 
+bool {\bfseries right} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_acfe067243e5acb7b2253cdbdf4f88464}\label{classCharacterController_acfe067243e5acb7b2253cdbdf4f88464}} 
+bool {\bfseries last\+Is\+Left} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_aab70a48f61b14d434a8516f1020f7701}\label{classCharacterController_aab70a48f61b14d434a8516f1020f7701}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterState}{Character\+State}} $>$ {\bfseries state\+\_\+}
+\item 
+\mbox{\Hypertarget{classCharacterController_a77661033cb6c2bc78d4a1e5000fdadd6}\label{classCharacterController_a77661033cb6c2bc78d4a1e5000fdadd6}} 
+bool {\bfseries is\+Grounded} = false
+\item 
+\mbox{\Hypertarget{classCharacterController_ae98f1b22f105c9fef5042892cd1cb2ae}\label{classCharacterController_ae98f1b22f105c9fef5042892cd1cb2ae}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSpriteComponent}{Sprite\+Component}} $>$ {\bfseries sprite\+Component}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterController_a6deb290deab5284e2741cfd9e6051f0b}\label{classCharacterController_a6deb290deab5284e2741cfd9e6051f0b}} 
+class {\bfseries Character\+State}
+\item 
+\mbox{\Hypertarget{classCharacterController_a153e869ca5bf0e9282dfe5f2fb528685}\label{classCharacterController_a153e869ca5bf0e9282dfe5f2fb528685}} 
+class {\bfseries Standing\+State}
+\item 
+\mbox{\Hypertarget{classCharacterController_a1b634b8d578cd9fd45c5e9e5b734407e}\label{classCharacterController_a1b634b8d578cd9fd45c5e9e5b734407e}} 
+class {\bfseries Jumping\+State}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCharacterController_a688a8f6c3604691ca9ac918aef71092e}\label{classCharacterController_a688a8f6c3604691ca9ac918aef71092e}} 
+\index{CharacterController@{CharacterController}!handleInput@{handleInput}}
+\index{handleInput@{handleInput}!CharacterController@{CharacterController}}
+\doxysubsubsection{\texorpdfstring{handleInput()}{handleInput()}}
+{\footnotesize\ttfamily bool Character\+Controller\+::handle\+Input (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event \&}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classCharacterController_a706c8b5fcada43aa7773e7f1f1afbf4f}\label{classCharacterController_a706c8b5fcada43aa7773e7f1f1afbf4f}} 
+\index{CharacterController@{CharacterController}!onCollisionEnd@{onCollisionEnd}}
+\index{onCollisionEnd@{onCollisionEnd}!CharacterController@{CharacterController}}
+\doxysubsubsection{\texorpdfstring{onCollisionEnd()}{onCollisionEnd()}}
+{\footnotesize\ttfamily void Character\+Controller\+::on\+Collision\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classCharacterController_a3675dca3c0693587a157060dbff1f778}\label{classCharacterController_a3675dca3c0693587a157060dbff1f778}} 
+\index{CharacterController@{CharacterController}!onCollisionStart@{onCollisionStart}}
+\index{onCollisionStart@{onCollisionStart}!CharacterController@{CharacterController}}
+\doxysubsubsection{\texorpdfstring{onCollisionStart()}{onCollisionStart()}}
+{\footnotesize\ttfamily void Character\+Controller\+::on\+Collision\+Start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classCharacterController_a81d022b9e696c6605da65a966c37ff3c}\label{classCharacterController_a81d022b9e696c6605da65a966c37ff3c}} 
+\index{CharacterController@{CharacterController}!update@{update}}
+\index{update@{update}!CharacterController@{CharacterController}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Character\+Controller\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Character\+Controller.\+hpp\item 
+Steamphonk/Character\+Controller.\+cpp\end{DoxyCompactItemize}

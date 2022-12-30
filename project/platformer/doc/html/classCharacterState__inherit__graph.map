@@ -1,7 +1,0 @@
-<map id="CharacterState" name="CharacterState">
-<area shape="rect" id="node1" title=" " alt="" coords="223,5,398,280"/>
-<area shape="rect" id="node2" href="$classFiringState.html" title=" " alt="" coords="5,343,131,427"/>
-<area shape="rect" id="node3" href="$classJumpingState.html" title=" " alt="" coords="155,328,298,441"/>
-<area shape="rect" id="node4" href="$classStandingState.html" title=" " alt="" coords="323,343,469,427"/>
-<area shape="rect" id="node5" href="$classWalkingState.html" title=" " alt="" coords="493,343,635,427"/>
-</map>

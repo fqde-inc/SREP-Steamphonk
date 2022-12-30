@@ -1,0 +1,36 @@
+\hypertarget{PlatformComponent_8hpp_source}{}\doxysection{Platform\+Component.\+hpp}
+\label{PlatformComponent_8hpp_source}\index{Steamphonk/PlatformComponent.hpp@{Steamphonk/PlatformComponent.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}glm/glm.hpp"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{classGameObject}{GameObject}};}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformComponent}{PlatformComponent}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \textcolor{keyword}{explicit} \mbox{\hyperlink{classPlatformComponent}{PlatformComponent}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} initTile(std::shared\_ptr<sre::SpriteAtlas> tileAtlas, std::pair<int,int> coords, std::string name);}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} moveTo(glm::vec2 tilePos);}
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     glm::vec2 getPosition();}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp)\textcolor{keyword}{ override }\{\};}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} onCollisionEnd(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp)\textcolor{keyword}{ override }\{\};}
+\DoxyCodeLine{23 \textcolor{keyword}{private}:}
+\DoxyCodeLine{24     std::vector<std::shared\_ptr<GameObject>> tiles;}
+\DoxyCodeLine{25     std::shared\_ptr<PhysicsComponent> physics;}
+\DoxyCodeLine{26     \textcolor{keywordtype}{bool} kinematic;}
+\DoxyCodeLine{27     glm::vec2 pos;}
+\DoxyCodeLine{28     \textcolor{keywordtype}{int} width;}
+\DoxyCodeLine{29     \textcolor{keywordtype}{float} physicsScale;}
+\DoxyCodeLine{30 \};}
+
+\end{DoxyCode}

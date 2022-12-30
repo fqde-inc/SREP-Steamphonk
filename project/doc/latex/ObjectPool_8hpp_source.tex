@@ -1,0 +1,27 @@
+\hypertarget{ObjectPool_8hpp_source}{}\doxysection{Object\+Pool.\+hpp}
+\label{ObjectPool_8hpp_source}\index{Steamphonk/ObjectPool.hpp@{Steamphonk/ObjectPool.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Søren Skouv}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classObjectPool}{ObjectPool}} \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{static} std::shared\_ptr<ObjectPool> createPool(std::shared\_ptr<sre::SpriteAtlas> tileAtlas);}
+\DoxyCodeLine{12     std::shared\_ptr<GameObject> tryGetInstance(\textcolor{keyword}{const} std::string\& key);}
+\DoxyCodeLine{13     \textcolor{keywordtype}{void} releaseAllInstances();}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} addActiveInstance(\textcolor{keyword}{const} std::string\& key, std::shared\_ptr<GameObject> \textcolor{keywordtype}{object});}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \textcolor{keywordtype}{int} recycled = 0;}
+\DoxyCodeLine{17     \textcolor{keywordtype}{int} spawned = 0;}
+\DoxyCodeLine{18     std::unordered\_multimap<std::string, std::shared\_ptr<GameObject>> \_pool = \{\};}
+\DoxyCodeLine{19     std::unordered\_multimap<std::string, std::shared\_ptr<GameObject>> \_used = \{\};}
+\DoxyCodeLine{20     std::shared\_ptr<sre::SpriteAtlas> tileAtlas;}
+\DoxyCodeLine{21 \};}
+
+\end{DoxyCode}

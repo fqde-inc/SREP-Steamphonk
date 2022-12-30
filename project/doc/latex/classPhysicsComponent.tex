@@ -1,0 +1,94 @@
+\hypertarget{classPhysicsComponent}{}\doxysection{Physics\+Component Class Reference}
+\label{classPhysicsComponent}\index{PhysicsComponent@{PhysicsComponent}}
+
+
+Inheritance diagram for Physics\+Component\+:
+% FIG 0
+
+
+Collaboration diagram for Physics\+Component\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a39c1f2f5f83aa01bf1874d80b5d93e16}\label{classPhysicsComponent_a39c1f2f5f83aa01bf1874d80b5d93e16}} 
+{\bfseries Physics\+Component} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_ad022c50f8dc2884f78753de9afff3f96}\label{classPhysicsComponent_ad022c50f8dc2884f78753de9afff3f96}} 
+void {\bfseries init\+Circle} (b2\+Body\+Type type, float radius, glm\+::vec2 center, float density)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_ac5ef5b60e401966af6c4502e56ad341b}\label{classPhysicsComponent_ac5ef5b60e401966af6c4502e56ad341b}} 
+void {\bfseries init\+Box} (b2\+Body\+Type type, glm\+::vec2 size, glm\+::vec2 center, float density)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a2f91524b3ec31c3f47e1b5fe3eee6eaa}\label{classPhysicsComponent_a2f91524b3ec31c3f47e1b5fe3eee6eaa}} 
+void {\bfseries set\+Physics\+Position} (glm\+::vec2 pos)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a20bdebebab2c05e4e3a7bbf7de0bdc04}\label{classPhysicsComponent_a20bdebebab2c05e4e3a7bbf7de0bdc04}} 
+void {\bfseries add\+Force} (glm\+::vec2 force)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a2c20af36081b78925e3981160bdc040a}\label{classPhysicsComponent_a2c20af36081b78925e3981160bdc040a}} 
+void {\bfseries add\+Impulse} (glm\+::vec2 force)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a9689b602731ab79560aca9dbe5e02a2a}\label{classPhysicsComponent_a9689b602731ab79560aca9dbe5e02a2a}} 
+void {\bfseries set\+Linear\+Velocity} (glm\+::vec2 velocity)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_aead254014df799b6cd89d32fe48dd6cf}\label{classPhysicsComponent_aead254014df799b6cd89d32fe48dd6cf}} 
+glm\+::vec2 {\bfseries get\+Linear\+Velocity} ()
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_ad0133573aeb7d4c0d5e542cbfb05d5bc}\label{classPhysicsComponent_ad0133573aeb7d4c0d5e542cbfb05d5bc}} 
+bool {\bfseries is\+Sensor} ()
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_abaa300dedaceac7fee302fdecd1071c9}\label{classPhysicsComponent_abaa300dedaceac7fee302fdecd1071c9}} 
+void {\bfseries set\+Sensor} (bool enabled)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a55610fa8ba7c30a9b27cd91117e9676a}\label{classPhysicsComponent_a55610fa8ba7c30a9b27cd91117e9676a}} 
+void {\bfseries fix\+Rotation} ()
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a15a547cd3763ac7a3122dbf6397f437d}\label{classPhysicsComponent_a15a547cd3763ac7a3122dbf6397f437d}} 
+void {\bfseries move\+To} (glm\+::vec2 pos)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a70cf32e951d4f8ae8ef25a97bdc4b4b5}\label{classPhysicsComponent_a70cf32e951d4f8ae8ef25a97bdc4b4b5}} 
+glm\+::vec2 {\bfseries get\+Position} ()
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a937de9c9dcda1d466a0042db99a3f4fe}\label{classPhysicsComponent_a937de9c9dcda1d466a0042db99a3f4fe}} 
+bool {\bfseries is\+Auto\+Update} () const
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a8612ae9679c42c73f45eba159ba4103c}\label{classPhysicsComponent_a8612ae9679c42c73f45eba159ba4103c}} 
+void {\bfseries set\+Auto\+Update} (bool auto\+Update)
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_aac7a0b73ad066732aaf91a162fbe16eb}\label{classPhysicsComponent_aac7a0b73ad066732aaf91a162fbe16eb}} 
+b2\+Body $\ast$ {\bfseries get\+Body} ()
+\item 
+\mbox{\Hypertarget{classPhysicsComponent_a0a45e2f46064255d7ea0ad8c87ee70d2}\label{classPhysicsComponent_a0a45e2f46064255d7ea0ad8c87ee70d2}} 
+b2\+Fixture $\ast$ {\bfseries get\+Fixture} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}\label{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}} 
+virtual void {\bfseries update} (float delta\+Time)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Physics\+Component.\+hpp\item 
+Steamphonk/Physics\+Component.\+cpp\end{DoxyCompactItemize}

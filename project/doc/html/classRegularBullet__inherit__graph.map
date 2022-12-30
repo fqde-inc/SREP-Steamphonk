@@ -1,0 +1,7 @@
+<map id="RegularBullet" name="RegularBullet">
+<area shape="rect" id="node1" title=" " alt="" coords="97,695,240,749"/>
+<area shape="rect" id="node2" href="$classBullet.html" title=" " alt="" coords="122,592,215,647"/>
+<area shape="rect" id="node3" href="$classProjectile.html" title=" " alt="" coords="93,225,244,544"/>
+<area shape="rect" id="node4" href="$classComponent.html" title=" " alt="" coords="5,5,156,177"/>
+<area shape="rect" id="node5" title=" " alt="" coords="180,71,336,111"/>
+</map>

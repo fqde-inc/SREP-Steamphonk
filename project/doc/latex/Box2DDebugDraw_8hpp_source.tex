@@ -1,0 +1,38 @@
+\hypertarget{Box2DDebugDraw_8hpp_source}{}\doxysection{Box2\+DDebug\+Draw.\+hpp}
+\label{Box2DDebugDraw_8hpp_source}\index{Steamphonk/Box2DDebugDraw.hpp@{Steamphonk/Box2DDebugDraw.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Box2D/Common/b2Draw.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <glm/vec3.hpp>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{comment}{// Captures debug information from Box2D as lines (polygon fill and color is discarded)}}
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classBox2DDebugDraw}{Box2DDebugDraw}} : \textcolor{keyword}{public} b2Draw\{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \mbox{\hyperlink{classBox2DDebugDraw}{Box2DDebugDraw}}(\textcolor{keywordtype}{float} scale);}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keywordtype}{void} DrawPolygon(\textcolor{keyword}{const} b2Vec2 *vertices, int32 vertexCount, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} DrawSolidPolygon(\textcolor{keyword}{const} b2Vec2 *vertices, int32 vertexCount, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} DrawCircle(\textcolor{keyword}{const} b2Vec2 \&center, float32 radius, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} DrawSolidCircle(\textcolor{keyword}{const} b2Vec2 \&center, float32 radius, \textcolor{keyword}{const} b2Vec2 \&axis, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} DrawSegment(\textcolor{keyword}{const} b2Vec2 \&p1, \textcolor{keyword}{const} b2Vec2 \&p2, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} DrawTransform(\textcolor{keyword}{const} b2Transform \&xf) \textcolor{keyword}{override};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} DrawPoint(\textcolor{keyword}{const} b2Vec2 \&p, float32 size, \textcolor{keyword}{const} b2Color \&color) \textcolor{keyword}{override};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} clear();}
+\DoxyCodeLine{28     \textcolor{keyword}{const} std::vector<glm::vec3>\& getLines();}
+\DoxyCodeLine{29 \textcolor{keyword}{private}:}
+\DoxyCodeLine{30     std::vector<glm::vec3> lines;}
+\DoxyCodeLine{31     \textcolor{keywordtype}{float} scale;}
+\DoxyCodeLine{32 \};}
+
+\end{DoxyCode}
