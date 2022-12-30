@@ -35,13 +35,7 @@ PlatformerGame::PlatformerGame()
         .withVSync(useVsync);
 
     Mix_Init(0);
-
-    //using namespace rapidjson;
-    //ifstream fis("testlvl.json");
-    //IStreamWrapper isw(fis);
-    //Document d;
-    //d.ParseStream(isw);
-    //auto hexValue = d["bgColor"].GetString();
+    currentScene = MAIN_MENU;
 
     backgroundColor = { 0.14f,0.12f,0.11f,1.0f };
 
@@ -71,41 +65,6 @@ PlatformerGame::PlatformerGame()
 
     initLevel();
 
-    //std::vector<glm::vec2> positions = {
-    //{ -50,350 },
-    //{ 0,300 },
-    //{ 50,350 },
-    //{ 100,300 },
-    //{ 150,350 },
-    //{ 200,300 },
-    //{ 250,350 },
-    //{ 300,300 },
-    //{ 350,350 },
-    //{ 400,300 },
-    //{ 450,350 },
-    //{ 500,400 },
-    //{ 550,350 },
-    //{ 600,300 },
-    //{ 650,350 },
-    //{ 700,400 },
-    //{ 750,350 },
-    //{ 800,300 },
-    //{ 850,350 },
-    //{ 900,400 },
-    //{ 950,350 },
-    //{ 1000,300 },
-    //{ 1050,350 },
-    //{ 1100,400 },
-    //{ 1150,350 },
-    //{ 1200,300 },
-    //{ 1250,350 },
-    //};
-	
-    //generateSingleBird(make_pair(300, -600), positions, BEZIER);
-
-    //Enable mouse lock
-    SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
-    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     // setup callback functions
     r.keyEvent = [&](SDL_Event& e){
@@ -210,6 +169,9 @@ void PlatformerGame::initLevel() {
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowBorderSize = 0.0f;
 
+    menuBG = Texture::create().withFile(UI_ART_PATH + "menu_BG.png").withFilterSampling(false).build();
+    howToPlayTexture = Texture::create().withFile(UI_ART_PATH + "howToPlay.png").withFilterSampling(false).build();
+
     heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
     heartFullTexture = heartFull.get();
 
@@ -217,16 +179,12 @@ void PlatformerGame::initLevel() {
     heartEmptyTexture = heartEmpty.get();
 
     missileUp = Texture::create().withFile( UI_ART_PATH + "missileUp.png").withFilterSampling(false).build();
-    missileUpTexture = missileUp.get();
 
     missileDown = Texture::create().withFile( UI_ART_PATH + "missileDown.png").withFilterSampling(false).build();
-    missileDownTexture = missileDown.get();
 
     handgunUp = Texture::create().withFile( UI_ART_PATH + "handgunUp.png").withFilterSampling(false).build();
-    handgunUpTexture = handgunUp.get();
 
     handgunDown = Texture::create().withFile( UI_ART_PATH + "handgunDown.png").withFilterSampling(false).build();
-    handgunDownTexture = handgunDown.get();
 
     HandgunCollectible = createGameObject();
     HandgunCollectible->position = level->getIdentifierPosition("PistolStart");
@@ -242,6 +200,10 @@ void PlatformerGame::initLevel() {
 }
 
 void PlatformerGame::update(float time) {
+    if(currentScene == MAIN_MENU) {
+        return;
+    }
+
     level->generateLevelByPosition(player->getPosition());
     updatePhysics();
 	if (time > 0.03) // if framerate approx 30 fps then run two physics steps
@@ -265,36 +227,33 @@ void PlatformerGame::update(float time) {
 
 }
 void PlatformerGame::setScreenshake(Shakes type){
-
+        currentShake = type;
         float duration, value;
-        switch (type)
+        switch (currentShake)
             {
                 case MILD_LITTLE_PONY:
-                    duration   = 1.5f;
+                    duration   = 0.7f;
                     value      = 10.0f;
                     break;
                 
                 case STEAMPHONK:
-                    duration   = 2.0f;
-                    value      = 30.0f;
+                    duration   = 1;
+                    value      = 15.0f;
                     break;
                 
                 case EPILECTIC_DELIGHT:
-                    duration   = 3.0f;
-                    value      = 50.0f;
+                    duration   = 1.75f;
+                    value      = 30.0f;
                     break;
                 
                 case ULTRAKILL:
-                    duration   = 3.5f;
-                    value      = 60.0f;
+                    duration   = 2;
+                    value      = 40.0f;
                     break;
 
                 case CLOVIS_FRIDAY_NIGHT:
-                    duration   = 5.0f;
-                    value      = 80.0f;
-                    break;
-                
-                default:
+                    duration   = 2.5f;
+                    value      = 60.0f;
                     break;
             }
 
@@ -326,26 +285,166 @@ void PlatformerGame::screenshake() {
 }
 
 void PlatformerGame::render() {
+
     auto rp = RenderPass::create()
             .withCamera(camera->getCamera())
             .withClearColor(true, backgroundColor)
             .build();
 
+    ImVec2 uv0(0,1); // flip y axis coordinates
+    ImVec2 uv1(1,0);
+    static ImVec4 color_multipler(1, 1, 1, 0.2f);
+
+    if(currentScene == MAIN_MENU) {
+
+        if (setFirstShake) {
+            setScreenshake(STEAMPHONK);
+            setFirstShake = false;
+        }
+
+        ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+        ImGui::Image(menuBG->getNativeTexturePtr(),{windowSize.x + 50, windowSize.y + 160}, uv0, uv1, color_multipler);
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y / 2 - 220), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::Begin("title", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::SetWindowFontScale(2);
+        ImGui::Text("%s", "STEAMPHONK");
+        ImGui::PopFont();
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y / 2 - 150), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
+        ImGui::Begin("startbutton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        if(ImGui::Button("Start", {280, 55})) {
+            currentScene = GAMEPLAY;
+            SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
+            SDL_SetRelativeMouseMode(SDL_TRUE);
+        }
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y / 2 - 80), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
+        ImGui::Begin("howToButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        if(ImGui::Button("How to play", {280, 55})) {
+            currentScene = HOW_TO_PLAY;
+        }
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 115, windowSize.y / 2 + 40), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(230, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::Begin("shakeAmount", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Text("%s", "Screen shake amount:");
+        ImGui::PopFont();
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y / 2 + 80), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
+        ImGui::Begin("shakeSetting", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+
+        std::string tempButtonLabel;
+
+        switch (currentShake) {
+            case MILD_LITTLE_PONY:
+                tempButtonLabel = "MILD_LITTLE_PONY";
+                break;
+            case STEAMPHONK:
+                tempButtonLabel = "STEAMPHONK";
+                break;
+            case EPILECTIC_DELIGHT:
+                tempButtonLabel = "EPILECTIC_DELIGHT";
+                break;
+            case ULTRAKILL:
+                tempButtonLabel = "ULTRAKILL";
+                break;
+            case CLOVIS_FRIDAY_NIGHT:
+                tempButtonLabel = "CLOVIS_FRIDAY_NIGHT";
+                break;
+        }
+
+        const char* buttonLabel = tempButtonLabel.c_str();
+
+        if(ImGui::Button(buttonLabel, {280, 55})) {
+            switch (currentShake) {
+                case MILD_LITTLE_PONY:
+                    setScreenshake(STEAMPHONK);
+                    break;
+                case STEAMPHONK:
+                    setScreenshake(EPILECTIC_DELIGHT);
+                    break;
+                case EPILECTIC_DELIGHT:
+                    setScreenshake(ULTRAKILL);
+                    break;
+                case ULTRAKILL:
+                    setScreenshake(CLOVIS_FRIDAY_NIGHT);
+                    break;
+                case CLOVIS_FRIDAY_NIGHT:
+                    setScreenshake(MILD_LITTLE_PONY);
+                    break;
+            }
+        }
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+        ImGui::End();
+
+        return;
+    } else if (currentScene == HOW_TO_PLAY) {
+
+        ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+        ImGui::Image(menuBG->getNativeTexturePtr(),{windowSize.x + 50, windowSize.y + 160}, uv0, uv1, color_multipler);
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - (730 / 2), windowSize.y / 2 - (511 / 2)), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(730, 511), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("howToPlayScreen", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Image(howToPlayTexture->getNativeTexturePtr(),{730, 511}, uv0, uv1);
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y - 100), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
+        ImGui::Begin("backButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        if(ImGui::Button("Back", {280, 55})) {
+            currentScene = MAIN_MENU;
+        }
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+        ImGui::End();
+
+        return;
+    }
+
     if (doDebugDraw){
         static Inspector profiler;
         profiler.update();
         profiler.gui(false);
-
-        //std::vector<glm::vec3> lines;
-        //for (int i=0;i<5000;i++){
-        //    float t = (i/5001.0f) * birdMovement->getNumberOfSegments();
-        //    float t1 = ((i+1)/5001.0f) * birdMovement->getNumberOfSegments();
-        //    auto p = birdMovement->computePositionAtTime(t);
-        //    auto p1 = birdMovement->computePositionAtTime(t1);
-        //    lines.push_back(glm::vec3(p,0));
-        //    lines.push_back(glm::vec3(p1,0));
-        //}
-        //rp.drawLines(lines);
     }
 
     auto pos = camera->getGameObject()->getPosition();
@@ -357,7 +456,6 @@ void PlatformerGame::render() {
 
     auto sb = spriteBatchBuilder.build();
     rp.draw(sb);
-
 
     ImGui::SetNextWindowPos(ImVec2(8, windowSize.y - 40), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(500, 15), ImGuiSetCond_Always);
@@ -380,9 +478,6 @@ void PlatformerGame::render() {
     ImGui::PopFont();
     ImGui::End();
 
-    ImVec2 uv0(0,1); // flip y axis coordinates
-    ImVec2 uv1(1,0);
-
     ImGui::SetNextWindowPos(ImVec2(61, windowSize.y - 85), ImGuiSetCond_Always);
     ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
     ImGui::SetNextWindowBgAlpha(0);
@@ -394,7 +489,7 @@ void PlatformerGame::render() {
     ImGui::End();
 
     if(characterController->unlockedHandgun) {
-        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 260, windowSize.y - 115), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
         ImGui::SetNextWindowBgAlpha(0);
         ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);

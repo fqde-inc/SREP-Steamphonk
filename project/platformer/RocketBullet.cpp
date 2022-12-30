@@ -26,8 +26,8 @@ void RocketBullet::explode() {
         });
 
     auto explosion = go->addComponent<Explosion>();
-    
-    PlatformerGame::instance->setScreenshake(PlatformerGame::CLOVIS_FRIDAY_NIGHT);
+
+    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->currentShake);
 }
 
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
