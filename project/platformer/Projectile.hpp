@@ -28,7 +28,7 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
 protected:
-    std::shared_ptr<PhysicsComponent> ProjectilePhysics;
+    std::shared_ptr<PhysicsComponent> physics;
     std::shared_ptr<SpriteComponent> spriteComponent;
     glm::vec2 direction;
 

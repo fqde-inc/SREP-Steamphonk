@@ -24,7 +24,7 @@ public:
     int clipSize;
     
     std::shared_ptr<TimerComponent> cooldown;
-    float cooldownTime = .1f;
+    float cooldownTime = .15f;
     
     bool Fire(glm::vec2 _position, glm::vec2 _direction);
     void reload(){clipSize = maxClipSize;};
@@ -35,7 +35,7 @@ public:
     explicit HandgunGun() {
         gunType = Handgun;
         bulletType = Regular;
-        RecoilMagnitude = 0.07f;
+        RecoilMagnitude = 0.075f;
     }
 };
 

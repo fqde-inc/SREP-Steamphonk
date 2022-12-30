@@ -26,13 +26,6 @@ public:
 class RocketBullet : public Bullet {
 public:
 
-    float explosionRadius   = 8.0f;
-    float explosionDamage   = 2.0f;
-    float explosionForce    = 10.0f;
-    float steer_force = 15.0f;
-
-    bool mustExplode = false;
-
     RocketBullet(GameObject* gameObject);
 
     // raycast callback
@@ -50,5 +43,7 @@ public:
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
     
-    void update(float deltaTime) override; 
+    void update(float deltaTime) override;
+private:
+    bool mustExplode = false;
 };

@@ -10,7 +10,7 @@
 using namespace std;
 
 Collectible::Collectible(GameObject *gameObject) : Component(gameObject) {
-    gameObject->name = "Projectile";
+    gameObject->name = "Collectible";
 
     animationSprites = {PlatformerGame::instance->collectibleAtlas->get("collectible1.png"),
                         PlatformerGame::instance->collectibleAtlas->get("collectible2.png"),
@@ -80,4 +80,10 @@ void Collectible::initCollectible(GunTypes gunType) {
                                  PlatformerGame::instance->getLevel()->getIdentifierPosition(gunType == Handgun ? "PistolStart" : "RocketStart") / PlatformerGame::instance->physicsScale,
                                  1);
     physicsComponent->setSensor(true);
+
+    b2Filter filter = physicsComponent->getFixture()->GetFilterData();
+    filter.categoryBits = PlatformerGame::PLAYER;
+    filter.maskBits = PlatformerGame::WALLS | PlatformerGame::EXPLOSIONS;
+    physicsComponent->getFixture()->SetFilterData(filter);
+
 }

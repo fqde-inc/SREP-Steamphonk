@@ -93,7 +93,14 @@ public:
     Mix_Chunk* jumpSFX;
     Mix_Chunk* startGameSFX;
 
-    // Box2D / Physics
+
+    enum Scenes {
+        MAIN_MENU,
+        HOW_TO_PLAY,
+        GAMEPLAY,
+    };
+    Scenes currentScene;
+    
     enum Shakes {
         MILD_LITTLE_PONY,
         STEAMPHONK,
@@ -102,17 +109,11 @@ public:
         CLOVIS_FRIDAY_NIGHT
     };
 
-    enum Scenes {
-        MAIN_MENU,
-        HOW_TO_PLAY,
-        GAMEPLAY,
-    };
-
-    bool shake = false;
-    bool setFirstShake = true;
-    Shakes currentShake = CLOVIS_FRIDAY_NIGHT;
-    Scenes currentScene;
+    Shakes shakeOption = STEAMPHONK;
     
+    bool shake = false;
+    Shakes currentShake;
+
     float shakeValue = 0;
     float shakeDuration = 1.0f;
     float shakeFade = 4.0f;
@@ -124,6 +125,18 @@ public:
 
     std::shared_ptr<sre::SpriteAtlas> collectibleAtlas;
     const float physicsScale = 100;
+
+    // Box2D / Physics
+    enum CollisionLayers {
+        BACKGROUND  = 0x0001,
+        WALLS       = 0x0002,
+        PLAYER      = 0x0003,
+        ENEMY       = 0x0004,
+        MISSILE     = 0x0005,
+        BULLET      = 0x0006,
+        EXPLOSIONS  = 0x0007,
+        COLLECTIBLE = 0x0008,
+    };
 
 private:
     sre::SDLRenderer r;
@@ -177,17 +190,6 @@ private:
     ImFont* pixelated;
 
     //std::shared_ptr<FollowPathComponent> birdMovement;
-
-    // Box2D / Physics
-    enum _entityCategory {
-        BACKGROUND  = 0x0001,
-        WALLS       = 0x0002,
-        PLAYER      = 0x0003,
-        ENEMY       = 0x0004,
-        MISSILE     = 0x0005,
-        BULLET      = 0x0006,
-        EXPLOSIONS  = 0x0005,
-    };
 
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);

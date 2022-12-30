@@ -16,20 +16,19 @@ void RocketBullet::explode() {
         go->setPosition(gameObject->getPosition());
     else 
         go->setPosition( glm::vec2 {
-            ProjectilePhysics->getBody()->GetPosition().x,
-            ProjectilePhysics->getBody()->GetPosition().y
+            physics->getBody()->GetPosition().x,
+            physics->getBody()->GetPosition().y
         });
 
     auto explosion = go->addComponent<Explosion>();
 
-    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->currentShake);
+    PlatformerGame::instance->setScreenshake(PlatformerGame::instance->shakeOption);
 }
 
 void RocketBullet::onCollisionStart(PhysicsComponent *comp) {
     Bullet::onCollisionStart(comp);
 
-    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){\
-
+    if( comp->getFixture()->GetFilterData().categoryBits == PlatformerGame::ENEMY ){
         // Box2D doesnt't like to create new bodies during collision
         // Delay explosion post-collision by 1 extra frame so it can be generated during update
         gameObject->setConsumed(false);

@@ -8,9 +8,7 @@
 #include "CharacterControllerPDA.hpp"
 #include "Gun.hpp"
 #include "TimerComponent.hpp"
-#include "PlayerShooting.hpp"
 #include "Damagable.hpp"
-
 
 class CharacterState;
 
@@ -37,7 +35,6 @@ public:
     bool unlockedHandgun = false;
     std::unique_ptr<Gun> handgun = std::make_unique<HandgunGun>();
 
-    std::shared_ptr<PlayerShooting> playerShooting;
     std::shared_ptr<Damagable> damageComponent;
 
     GunTypes equippedGun = Handgun;
@@ -66,6 +63,9 @@ public:
     friend class JumpingState;
 
     std::shared_ptr<SpriteComponent> spriteComponent;
+
+    glm::vec2 getShootDirection();
+
 private:
     glm::vec2 spawn;
     bool returnToSpawn = false;
