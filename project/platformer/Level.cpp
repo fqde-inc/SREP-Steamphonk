@@ -176,6 +176,7 @@ void Level::generateLevelByPosition(glm::vec2 target)
 
     generateSpecificLevel(id, World);
     generateSpecificLevel(id, Foliage);
+    PlatformerGame::instance->destroyAllBirds();
     generateBirdsForLevel(id);
 }
 
@@ -185,14 +186,16 @@ void Level::generateBirdsForLevel(int id)
     IStreamWrapper isw(fis);
     Document d;
     d.ParseStream(isw);
-    string identifier = "PatrolStart";
 
     auto levels = d["levels"].GetArray();
 
     auto entities = d["levels"].GetArray()[id]["layerInstances"].GetArray();
     auto worldX = d["levels"].GetArray()[id]["worldX"].GetInt();
     auto worldY = d["levels"].GetArray()[id]["worldY"].GetInt();
+    auto uid = d["levels"].GetArray()[id]["uid"].GetInt();
     auto gSize = d["defaultGridSize"].GetInt();
+
+    string identifier = "PatrolStart";
 
     for (int j = 0; j < entities.Size(); j++)
     {
