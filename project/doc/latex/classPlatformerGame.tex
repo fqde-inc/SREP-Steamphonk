@@ -1,0 +1,203 @@
+\hypertarget{classPlatformerGame}{}\doxysection{Platformer\+Game Class Reference}
+\label{classPlatformerGame}\index{PlatformerGame@{PlatformerGame}}
+
+
+Inheritance diagram for Platformer\+Game\+:
+% FIG 0
+
+
+Collaboration diagram for Platformer\+Game\+:
+% FIG 1
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a342cd3eb7feafac91bb9069e81b235ca}\label{classPlatformerGame_a342cd3eb7feafac91bb9069e81b235ca}} 
+enum {\bfseries Collision\+Layers} \{ \newline
+{\bfseries BACKGROUND} = 0x0001
+, {\bfseries WALLS} = 0x0002
+, {\bfseries PLAYER} = 0x0003
+, {\bfseries ENEMY} = 0x0004
+, \newline
+{\bfseries MISSILE} = 0x0005
+, {\bfseries BULLET} = 0x0006
+, {\bfseries EXPLOSIONS} = 0x0007
+, {\bfseries COLLECTIBLE} = 0x0008
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a4d417de7b321ef74fc3bd72655a27b3a}\label{classPlatformerGame_a4d417de7b321ef74fc3bd72655a27b3a}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ {\bfseries create\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a485357109ba0c1873b5f8716210ebd6e}\label{classPlatformerGame_a485357109ba0c1873b5f8716210ebd6e}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classLevel}{Level}} $>$ {\bfseries get\+Level} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a0c9c90d3ca2f3219391f687b92d17edf}\label{classPlatformerGame_a0c9c90d3ca2f3219391f687b92d17edf}} 
+void {\bfseries Begin\+Contact} (b2\+Contact $\ast$contact) override
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a87432f400306b488deb9349ac93449da}\label{classPlatformerGame_a87432f400306b488deb9349ac93449da}} 
+void {\bfseries End\+Contact} (b2\+Contact $\ast$contact) override
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a6411d3ad1f5332e4431de69accb86922}\label{classPlatformerGame_a6411d3ad1f5332e4431de69accb86922}} 
+void {\bfseries generate\+Single\+Bird} (std\+::pair$<$ int, int $>$ coords, std\+::vector$<$ glm\+::vec2 $>$ positions, Path\+Type type)
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a4cc222b153da42b51f424782bdf95cf8}\label{classPlatformerGame_a4cc222b153da42b51f424782bdf95cf8}} 
+void {\bfseries destroy\+All\+Birds} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a000434095c7a96d982928a9508537667}\label{classPlatformerGame_a000434095c7a96d982928a9508537667}} 
+std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ {\bfseries get\+Sprite\+Atlas} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_aa6a05e61275a6eb88122bd26241f7bbd}\label{classPlatformerGame_aa6a05e61275a6eb88122bd26241f7bbd}} 
+std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ {\bfseries get\+Explosion\+Atlas} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a24a7104aa95c4ddbc71f6ea57ca814c5}\label{classPlatformerGame_a24a7104aa95c4ddbc71f6ea57ca814c5}} 
+glm\+::vec2 {\bfseries get\+Player\+Positon} ()
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a587df57a46ff190ea6b7cf5b5a6a8950}\label{classPlatformerGame_a587df57a46ff190ea6b7cf5b5a6a8950}} 
+void {\bfseries set\+Screenshake} (Shakes type)
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a86383b80e0554f1b4fb467621056249c}\label{classPlatformerGame_a86383b80e0554f1b4fb467621056249c}} 
+void {\bfseries screenshake} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a80f9b82256ff9bfb093ea37f48c94bbc}\label{classPlatformerGame_a80f9b82256ff9bfb093ea37f48c94bbc}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterController}{Character\+Controller}} $>$ {\bfseries character\+Controller}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a39c71dd413997e19d1afe382dbd86281}\label{classPlatformerGame_a39c71dd413997e19d1afe382dbd86281}} 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ $>$ {\bfseries current\+Level\+Birds}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a81a0b559b813998a674fabc52f2ff407}\label{classPlatformerGame_a81a0b559b813998a674fabc52f2ff407}} 
+SDL\+\_\+\+Mouse\+Motion\+Event {\bfseries mouse\+Motion}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a2f843c6b38d775f660741c91eeb7b859}\label{classPlatformerGame_a2f843c6b38d775f660741c91eeb7b859}} 
+SDL\+\_\+\+Mouse\+Button\+Event {\bfseries mouse\+Button}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a30628a103169b2fac8cc8ac99dae921c}\label{classPlatformerGame_a30628a103169b2fac8cc8ac99dae921c}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGameObject}{Game\+Object}} $>$ {\bfseries crosshair}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_af6824805304c191ec3f9b87a3ccfa7e0}\label{classPlatformerGame_af6824805304c191ec3f9b87a3ccfa7e0}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSideScrollingCamera}{Side\+Scrolling\+Camera}} $>$ {\bfseries camera}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_acac735479ca0eb9d27c2b3e54fc75253}\label{classPlatformerGame_acac735479ca0eb9d27c2b3e54fc75253}} 
+std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ {\bfseries character\+Atlas}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_aa8ed786298742120115f3af6a70164ce}\label{classPlatformerGame_aa8ed786298742120115f3af6a70164ce}} 
+const Uint8 $\ast$ {\bfseries keyboard\+State} = SDL\+\_\+\+Get\+Keyboard\+State(NULL)
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a40a40221a99afcd56ffef70291b7e9c1}\label{classPlatformerGame_a40a40221a99afcd56ffef70291b7e9c1}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries death\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_aff80e8fdd3258fe5e7e260aaa6e9a6e1}\label{classPlatformerGame_aff80e8fdd3258fe5e7e260aaa6e9a6e1}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries explosion\+One\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_acffd2f7a0bd4f6691bc3f074768af0f5}\label{classPlatformerGame_acffd2f7a0bd4f6691bc3f074768af0f5}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries explosion\+Two\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a30d8c262b8389f5b2ea7ad1b7603d495}\label{classPlatformerGame_a30d8c262b8389f5b2ea7ad1b7603d495}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries explosion\+Three\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_aa2900356861fbc773d855333dd144a45}\label{classPlatformerGame_aa2900356861fbc773d855333dd144a45}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries handgun\+Shoot\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ab21c9295f7cfcc142f50188174d4a0c0}\label{classPlatformerGame_ab21c9295f7cfcc142f50188174d4a0c0}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries rocket\+Shoot\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a297a8a6233386d048b8644e438f21eee}\label{classPlatformerGame_a297a8a6233386d048b8644e438f21eee}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries hit\+Bird\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a56633ebe4cb710fa368e30a58c040175}\label{classPlatformerGame_a56633ebe4cb710fa368e30a58c040175}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries hit\+Player\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a97d194be2edc6401202c6a57fa215a79}\label{classPlatformerGame_a97d194be2edc6401202c6a57fa215a79}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries hit\+Wall\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ac6ea833ae45091a6eed12d40b41ab0be}\label{classPlatformerGame_ac6ea833ae45091a6eed12d40b41ab0be}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries jump\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a8ec83d90ee4294d4e160f4df603ea0d8}\label{classPlatformerGame_a8ec83d90ee4294d4e160f4df603ea0d8}} 
+Mix\+\_\+\+Chunk $\ast$ {\bfseries start\+Game\+SFX}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a5a97616a02b6270d25b04516fd8f7f1f}\label{classPlatformerGame_a5a97616a02b6270d25b04516fd8f7f1f}} 
+Scenes {\bfseries current\+Scene}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ae351832713052b2268644e62e937efa1}\label{classPlatformerGame_ae351832713052b2268644e62e937efa1}} 
+Shakes {\bfseries shake\+Option} = Shakes\+::\+STEAMPHONK
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a62fa54fa9df214b962a699c903c44804}\label{classPlatformerGame_a62fa54fa9df214b962a699c903c44804}} 
+bool {\bfseries shake} = false
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a24b596bf376090180d31ee71cc5bd156}\label{classPlatformerGame_a24b596bf376090180d31ee71cc5bd156}} 
+Shakes {\bfseries current\+Shake}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a67c999bf705a869a04074c999ec48d75}\label{classPlatformerGame_a67c999bf705a869a04074c999ec48d75}} 
+float {\bfseries shake\+Value} = 0
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a2e2cf9b5a36b258f63e1e015d263f9ca}\label{classPlatformerGame_a2e2cf9b5a36b258f63e1e015d263f9ca}} 
+float {\bfseries shake\+Duration} = 1.\+0f
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ae677490ddf0272388ec2930eaec774a9}\label{classPlatformerGame_ae677490ddf0272388ec2930eaec774a9}} 
+float {\bfseries shake\+Fade} = 4.\+0f
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ac231279902cef24f894d3e523a81e355}\label{classPlatformerGame_ac231279902cef24f894d3e523a81e355}} 
+glm\+::vec2 {\bfseries last\+Shake} \{0,0\}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a805101d21cfbe227f129cb4ff611e636}\label{classPlatformerGame_a805101d21cfbe227f129cb4ff611e636}} 
+std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ {\bfseries collectible\+Atlas}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a51e7776dcb98dfcb48caffd99cc0764b}\label{classPlatformerGame_a51e7776dcb98dfcb48caffd99cc0764b}} 
+const float {\bfseries physics\+Scale} = 100
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ae3c218eef9327517e2e574bb82e5e599}\label{classPlatformerGame_ae3c218eef9327517e2e574bb82e5e599}} 
+static const glm\+::vec2 {\bfseries window\+Size}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a4f966a6216599999532d8f68ae3ff680}\label{classPlatformerGame_a4f966a6216599999532d8f68ae3ff680}} 
+static \mbox{\hyperlink{classPlatformerGame}{Platformer\+Game}} $\ast$ {\bfseries instance} = nullptr
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ab8bf18ee4d0d942b5dde63961c03fd93}\label{classPlatformerGame_ab8bf18ee4d0d942b5dde63961c03fd93}} 
+static constexpr float32 {\bfseries time\+Step} = 1.\+0f / 60.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a9895ba894f76d774760c8aa3d58e93db}\label{classPlatformerGame_a9895ba894f76d774760c8aa3d58e93db}} 
+class {\bfseries Physics\+Component}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a564b27969f812d1f057f58288257c783}\label{classPlatformerGame_a564b27969f812d1f057f58288257c783}} 
+class {\bfseries Level}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_aac6deedeabebc6401d4e2d55e3ca83f1}\label{classPlatformerGame_aac6deedeabebc6401d4e2d55e3ca83f1}} 
+class {\bfseries Character\+Controller}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a83c22543dad1c28d8be62b6084f2373b}\label{classPlatformerGame_a83c22543dad1c28d8be62b6084f2373b}} 
+class {\bfseries Platform\+Component}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ab9dfd9a2040765ba9286cc6fd544d531}\label{classPlatformerGame_ab9dfd9a2040765ba9286cc6fd544d531}} 
+class {\bfseries Enemy\+Component}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_ab87f335c626a394897da89d871594aff}\label{classPlatformerGame_ab87f335c626a394897da89d871594aff}} 
+class {\bfseries Projectile}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a0ba045840fb537b0746a1a68459030c8}\label{classPlatformerGame_a0ba045840fb537b0746a1a68459030c8}} 
+class {\bfseries Gun}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a24819047809c73786cf241ae7546a7cd}\label{classPlatformerGame_a24819047809c73786cf241ae7546a7cd}} 
+class {\bfseries Bullet}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a085d1d169151e53cbae47b6571db7c12}\label{classPlatformerGame_a085d1d169151e53cbae47b6571db7c12}} 
+class {\bfseries Rocket\+Bullet}
+\item 
+\mbox{\Hypertarget{classPlatformerGame_a48e51f2b472e8111a60b7b9886f2b3a0}\label{classPlatformerGame_a48e51f2b472e8111a60b7b9886f2b3a0}} 
+class {\bfseries Explosion}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Platformer\+Game.\+hpp\item 
+Steamphonk/Platformer\+Game.\+cpp\end{DoxyCompactItemize}

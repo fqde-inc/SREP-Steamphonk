@@ -1,0 +1,133 @@
+\hypertarget{classRocketBullet}{}\doxysection{Rocket\+Bullet Class Reference}
+\label{classRocketBullet}\index{RocketBullet@{RocketBullet}}
+
+
+Inheritance diagram for Rocket\+Bullet\+:
+% FIG 0
+
+
+Collaboration diagram for Rocket\+Bullet\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRocketBullet_a424a228f09c7e878f9ef4bfe2e352d49}\label{classRocketBullet_a424a228f09c7e878f9ef4bfe2e352d49}} 
+{\bfseries Rocket\+Bullet} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+float32 \mbox{\hyperlink{classRocketBullet_aec69b741716ab84d653ceea4dd1aa2b8}{Report\+Fixture}} (b2\+Fixture $\ast$fixture, const b2\+Vec2 \&point, const b2\+Vec2 \&normal, float32 fraction)
+\item 
+\mbox{\Hypertarget{classRocketBullet_a049cb8b5f4cf318ec4bb50279441f081}\label{classRocketBullet_a049cb8b5f4cf318ec4bb50279441f081}} 
+void {\bfseries explode} ()
+\item 
+void \mbox{\hyperlink{classRocketBullet_aad2275ab051338d44b8815b366eb6eb1}{on\+Collision\+Start}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+void \mbox{\hyperlink{classRocketBullet_ade8029da98fac95230e25ddfb398d9d0}{on\+Collision\+End}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+void \mbox{\hyperlink{classRocketBullet_abce46e58659435690b3ef08dff32c2c7}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classProjectile_ac948e07c3cb644097d7afe0ccf778016}\label{classProjectile_ac948e07c3cb644097d7afe0ccf778016}} 
+void {\bfseries init} (std\+::shared\+\_\+ptr$<$ sre\+::\+Sprite\+Atlas $>$ sprite\+Atlas, int x, int y, int start\+Sprite\+Id, int width, bool kinematic)
+\item 
+\mbox{\Hypertarget{classProjectile_af7b48e4c89e48b80f7bb43c4a3e72465}\label{classProjectile_af7b48e4c89e48b80f7bb43c4a3e72465}} 
+const std\+::string \& {\bfseries get\+Origin} () const
+\item 
+\mbox{\Hypertarget{classProjectile_ae712387c35ffc1369de8f8166fdee91a}\label{classProjectile_ae712387c35ffc1369de8f8166fdee91a}} 
+void {\bfseries set\+Origin} (std\+::string \+\_\+origin)
+\item 
+\mbox{\Hypertarget{classProjectile_a16c942f8b2a020681151ded850a43caf}\label{classProjectile_a16c942f8b2a020681151ded850a43caf}} 
+const glm\+::vec2 \& {\bfseries get\+Direction} () const
+\item 
+\mbox{\Hypertarget{classProjectile_ac03ae2533558001ce05cac5fe5b40f84}\label{classProjectile_ac03ae2533558001ce05cac5fe5b40f84}} 
+void {\bfseries set\+Direction} (const glm\+::vec2 \&\+\_\+direction)
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classProjectile_a8ab384d11e28c6a8ed98ac5754eeef22}\label{classProjectile_a8ab384d11e28c6a8ed98ac5754eeef22}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $>$ {\bfseries physics}
+\item 
+\mbox{\Hypertarget{classProjectile_af1fd2f3a3b97f3518fd47a6dc1269b7e}\label{classProjectile_af1fd2f3a3b97f3518fd47a6dc1269b7e}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSpriteComponent}{Sprite\+Component}} $>$ {\bfseries sprite\+Component}
+\item 
+\mbox{\Hypertarget{classProjectile_a80d29ecf14096b3fba4163bbd3e2d8b0}\label{classProjectile_a80d29ecf14096b3fba4163bbd3e2d8b0}} 
+glm\+::vec2 {\bfseries direction}
+\item 
+\mbox{\Hypertarget{classProjectile_a79341b82f806c60cd752310be081b074}\label{classProjectile_a79341b82f806c60cd752310be081b074}} 
+float {\bfseries lifetime} = 0
+\item 
+\mbox{\Hypertarget{classProjectile_a698ec0a449265de76e278dee8b0cbadd}\label{classProjectile_a698ec0a449265de76e278dee8b0cbadd}} 
+float {\bfseries lifespan} = 2.\+5f
+\item 
+\mbox{\Hypertarget{classProjectile_a70ff500bdae54f3ad1e9e759b0ecd1fe}\label{classProjectile_a70ff500bdae54f3ad1e9e759b0ecd1fe}} 
+float {\bfseries speed} = 3.\+5f
+\item 
+\mbox{\Hypertarget{classProjectile_aaae5471ca99c442e2a59bcd59388caa5}\label{classProjectile_aaae5471ca99c442e2a59bcd59388caa5}} 
+float {\bfseries radius} = 7.\+0f
+\item 
+\mbox{\Hypertarget{classProjectile_a91343747674ed49d437ce27889ac84ec}\label{classProjectile_a91343747674ed49d437ce27889ac84ec}} 
+float {\bfseries damage} = 1
+\item 
+\mbox{\Hypertarget{classProjectile_a07a4a15fedc5b6b6a7a6ee9baf545907}\label{classProjectile_a07a4a15fedc5b6b6a7a6ee9baf545907}} 
+std\+::string {\bfseries origin}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRocketBullet_ade8029da98fac95230e25ddfb398d9d0}\label{classRocketBullet_ade8029da98fac95230e25ddfb398d9d0}} 
+\index{RocketBullet@{RocketBullet}!onCollisionEnd@{onCollisionEnd}}
+\index{onCollisionEnd@{onCollisionEnd}!RocketBullet@{RocketBullet}}
+\doxysubsubsection{\texorpdfstring{onCollisionEnd()}{onCollisionEnd()}}
+{\footnotesize\ttfamily void Rocket\+Bullet\+::on\+Collision\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classRocketBullet_aad2275ab051338d44b8815b366eb6eb1}\label{classRocketBullet_aad2275ab051338d44b8815b366eb6eb1}} 
+\index{RocketBullet@{RocketBullet}!onCollisionStart@{onCollisionStart}}
+\index{onCollisionStart@{onCollisionStart}!RocketBullet@{RocketBullet}}
+\doxysubsubsection{\texorpdfstring{onCollisionStart()}{onCollisionStart()}}
+{\footnotesize\ttfamily void Rocket\+Bullet\+::on\+Collision\+Start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classRocketBullet_aec69b741716ab84d653ceea4dd1aa2b8}\label{classRocketBullet_aec69b741716ab84d653ceea4dd1aa2b8}} 
+\index{RocketBullet@{RocketBullet}!ReportFixture@{ReportFixture}}
+\index{ReportFixture@{ReportFixture}!RocketBullet@{RocketBullet}}
+\doxysubsubsection{\texorpdfstring{ReportFixture()}{ReportFixture()}}
+{\footnotesize\ttfamily float32 Rocket\+Bullet\+::\+Report\+Fixture (\begin{DoxyParamCaption}\item[{b2\+Fixture $\ast$}]{fixture,  }\item[{const b2\+Vec2 \&}]{point,  }\item[{const b2\+Vec2 \&}]{normal,  }\item[{float32}]{fraction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classProjectile}{Projectile}}.
+
+\mbox{\Hypertarget{classRocketBullet_abce46e58659435690b3ef08dff32c2c7}\label{classRocketBullet_abce46e58659435690b3ef08dff32c2c7}} 
+\index{RocketBullet@{RocketBullet}!update@{update}}
+\index{update@{update}!RocketBullet@{RocketBullet}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Rocket\+Bullet\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Bullet.\+hpp\item 
+Steamphonk/Rocket\+Bullet.\+cpp\end{DoxyCompactItemize}

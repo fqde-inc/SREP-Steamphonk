@@ -1,0 +1,20 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,104,153,129"/>
+<area shape="rect" id="node2" href="$classCharacterController.html" title=" " alt="" coords="210,5,359,31"/>
+<area shape="rect" id="node3" href="$classCollectible.html" title=" " alt="" coords="239,55,330,80"/>
+<area shape="rect" id="node4" href="$classEnemyComponent.html" title=" " alt="" coords="213,104,356,129"/>
+<area shape="rect" id="node5" href="$classExplosion.html" title=" " alt="" coords="242,153,327,179"/>
+<area shape="rect" id="node6" href="$classProjectile.html" title=" " alt="" coords="243,203,326,228"/>
+<area shape="rect" id="node7" href="$classBullet.html" title=" " alt="" coords="416,203,476,228"/>
+<area shape="rect" id="node8" href="$classRegularBullet.html" title=" " alt="" coords="524,177,635,203"/>
+<area shape="rect" id="node9" href="$classRocketBullet.html" title=" " alt="" coords="527,227,631,252"/>
+<area shape="rect" id="node10" href="$classComponent.html" title=" " alt="" coords="31,301,128,327"/>
+<area shape="rect" id="node11" href="$classCrosshair.html" title=" " alt="" coords="243,597,326,623"/>
+<area shape="rect" id="node12" href="$classDamageable.html" title=" " alt="" coords="232,252,337,277"/>
+<area shape="rect" id="node13" href="$classFollowPathComponent.html" title=" " alt="" coords="201,301,368,327"/>
+<area shape="rect" id="node14" href="$classPhysicsComponent.html" title=" " alt="" coords="211,351,358,376"/>
+<area shape="rect" id="node15" href="$classPlatformComponent.html" title=" " alt="" coords="208,400,361,425"/>
+<area shape="rect" id="node16" href="$classSideScrollingCamera.html" title=" " alt="" coords="206,449,363,475"/>
+<area shape="rect" id="node17" href="$classSpriteComponent.html" title=" " alt="" coords="217,499,352,524"/>
+<area shape="rect" id="node18" href="$classTimerComponent.html" title=" " alt="" coords="217,548,352,573"/>
+</map>

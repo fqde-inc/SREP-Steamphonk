@@ -1,5 +1,0 @@
-<map id="PlayerShooting" name="PlayerShooting">
-<area shape="rect" id="node1" title=" " alt="" coords="9,505,173,633"/>
-<area shape="rect" id="node2" href="$classComponent.html" title=" " alt="" coords="16,299,167,456"/>
-<area shape="rect" id="node3" href="$classGameObject.html" title=" " alt="" coords="5,5,177,236"/>
-</map>

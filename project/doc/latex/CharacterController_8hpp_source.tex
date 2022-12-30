@@ -1,0 +1,87 @@
+\hypertarget{CharacterController_8hpp_source}{}\doxysection{Character\+Controller.\+hpp}
+\label{CharacterController_8hpp_source}\index{Steamphonk/CharacterController.hpp@{Steamphonk/CharacterController.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Box2D/Box2D.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}SpriteComponent.hpp"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Damageable.hpp"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}sre/Sprite.hpp"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}CharacterControllerPDA.hpp"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}Gun.hpp"{}}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}TimerComponent.hpp"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}Damageable.hpp"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterState}{CharacterState}};}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterController}{CharacterController}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}}, \textcolor{keyword}{public} b2RayCastCallback \{}
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \textcolor{keyword}{explicit} \mbox{\hyperlink{classCharacterController}{CharacterController}}(\mbox{\hyperlink{classGameObject}{GameObject}} *gameObject);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} setSprites(sre::Sprite standing,}
+\DoxyCodeLine{20                     sre::Sprite walk1,}
+\DoxyCodeLine{21                     sre::Sprite walk2,}
+\DoxyCodeLine{22                     sre::Sprite flyUp,}
+\DoxyCodeLine{23                     sre::Sprite fly,}
+\DoxyCodeLine{24                     sre::Sprite flyDown);}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} updateSprite(\textcolor{keywordtype}{float} deltaTime);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{bool} handleInput(SDL\_Event \&event) \textcolor{keyword}{override};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keywordtype}{bool} unlockedRocketLauncher = \textcolor{keyword}{false};}
+\DoxyCodeLine{33     std::unique\_ptr<Gun> rocketLauncher = std::make\_unique<RocketLauncherGun>();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{bool} unlockedHandgun = \textcolor{keyword}{false};}
+\DoxyCodeLine{36     std::unique\_ptr<Gun> handgun = std::make\_unique<HandgunGun>();}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     std::shared\_ptr<Damageable> damageComponent;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     GunTypes equippedGun = Handgun;}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{virtual} float32 ReportFixture(  b2Fixture* fixture, \textcolor{keyword}{const} b2Vec2\& point,}
+\DoxyCodeLine{43                                       \textcolor{keyword}{const} b2Vec2\& normal, float32 fraction) \textcolor{keyword}{override};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} onCollisionStart(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} onCollisionEnd(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *comp) \textcolor{keyword}{override};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     std::shared\_ptr<PhysicsComponent> characterPhysics;}
+\DoxyCodeLine{50     std::shared\_ptr<Damageable> characterDamagable;}
+\DoxyCodeLine{51     std::shared\_ptr<TimerComponent> swapTimer;}
+\DoxyCodeLine{52     std::shared\_ptr<TimerComponent> reloadTimer;}
+\DoxyCodeLine{53     \textcolor{keywordtype}{float} swapTime = .25f;}
+\DoxyCodeLine{54     \textcolor{keywordtype}{float} reloadTime = .75f;}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordtype}{bool} left = \textcolor{keyword}{false};}
+\DoxyCodeLine{57     \textcolor{keywordtype}{bool} right = \textcolor{keyword}{false};}
+\DoxyCodeLine{58     \textcolor{keywordtype}{bool} lastIsLeft = \textcolor{keyword}{false};}
+\DoxyCodeLine{59     std::shared\_ptr<CharacterState> state\_;}
+\DoxyCodeLine{60     \textcolor{keywordtype}{bool} isGrounded = \textcolor{keyword}{false};}
+\DoxyCodeLine{61     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterState}{CharacterState}};}
+\DoxyCodeLine{62     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classStandingState}{StandingState}};}
+\DoxyCodeLine{63     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classJumpingState}{JumpingState}};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     std::shared\_ptr<SpriteComponent> spriteComponent;}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     glm::vec2 getShootDirection();}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \textcolor{keyword}{private}:}
+\DoxyCodeLine{70     glm::vec2 spawn;}
+\DoxyCodeLine{71     \textcolor{keywordtype}{bool} returnToSpawn = \textcolor{keyword}{false};}
+\DoxyCodeLine{72     sre::Sprite standing;}
+\DoxyCodeLine{73     sre::Sprite walk1;}
+\DoxyCodeLine{74     sre::Sprite walk2;}
+\DoxyCodeLine{75     sre::Sprite flyUp;}
+\DoxyCodeLine{76     sre::Sprite fly;}
+\DoxyCodeLine{77     sre::Sprite flyDown;}
+\DoxyCodeLine{78     std::shared\_ptr<GameObject> cursor;}
+\DoxyCodeLine{79     \textcolor{keywordtype}{float} radius;}
+\DoxyCodeLine{80     \textcolor{keywordtype}{void} onDeath();}
+\DoxyCodeLine{81 \};}
+
+\end{DoxyCode}

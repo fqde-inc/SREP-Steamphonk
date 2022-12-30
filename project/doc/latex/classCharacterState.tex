@@ -1,0 +1,70 @@
+\hypertarget{classCharacterState}{}\doxysection{Character\+State Class Reference}
+\label{classCharacterState}\index{CharacterState@{CharacterState}}
+
+
+Inheritance diagram for Character\+State\+:
+% FIG 0
+
+
+Collaboration diagram for Character\+State\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_ad4081ddc042db54812c09dc2cc7eccac}\label{classCharacterState_ad4081ddc042db54812c09dc2cc7eccac}} 
+{\bfseries Character\+State} (int a)
+\item 
+\mbox{\Hypertarget{classCharacterState_ae164ebff0b2ec94451525d2f91ec9331}\label{classCharacterState_ae164ebff0b2ec94451525d2f91ec9331}} 
+virtual void {\bfseries handle\+Input} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_aae8f9dc28f4c17563394d061d3b6f2f4}\label{classCharacterState_aae8f9dc28f4c17563394d061d3b6f2f4}} 
+virtual void {\bfseries update} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, float delta\+Time)
+\item 
+\mbox{\Hypertarget{classCharacterState_ad39c7e8802ea65768d78a29ba5ce59d9}\label{classCharacterState_ad39c7e8802ea65768d78a29ba5ce59d9}} 
+virtual void {\bfseries jump} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_a65ace25211294fee99e237a889304eae}\label{classCharacterState_a65ace25211294fee99e237a889304eae}} 
+virtual void {\bfseries move\+Left} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_ad32cd92096d576a9499f19a76c7e34f1}\label{classCharacterState_ad32cd92096d576a9499f19a76c7e34f1}} 
+virtual void {\bfseries move\+Right} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classCharacterState_a85f6a72eedb67aa050b5f246cf74ba92}\label{classCharacterState_a85f6a72eedb67aa050b5f246cf74ba92}} 
+virtual void {\bfseries fire} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character)
+\item 
+\mbox{\Hypertarget{classCharacterState_a1b805c192ddd37bdfed2b945162fc22d}\label{classCharacterState_a1b805c192ddd37bdfed2b945162fc22d}} 
+virtual void {\bfseries swap\+Weapons} (\mbox{\hyperlink{classCharacterController}{Character\+Controller}} \&character, SDL\+\_\+\+Event \&event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_ac1de73ac1ce0aefb36cad7882558f333}\label{classCharacterState_ac1de73ac1ce0aefb36cad7882558f333}} 
+static void {\bfseries push\+Stack} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterState}{Character\+State}} $>$ \&state)
+\item 
+\mbox{\Hypertarget{classCharacterState_ad92928175b4421e34359cae6d1a82c0a}\label{classCharacterState_ad92928175b4421e34359cae6d1a82c0a}} 
+static void {\bfseries pop\+Stack} (Character\+State\+Types type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_abbbcb4f6d1d21a24489cccd8dac4746b}\label{classCharacterState_abbbcb4f6d1d21a24489cccd8dac4746b}} 
+Character\+State\+Types {\bfseries state\+Type} = Standing
+\item 
+\mbox{\Hypertarget{classCharacterState_a10e9cb0c11109bf79ce3e6c147931d14}\label{classCharacterState_a10e9cb0c11109bf79ce3e6c147931d14}} 
+float {\bfseries animation\+Time} = 0
+\item 
+\mbox{\Hypertarget{classCharacterState_afc428c82584377afe2a5a826159b8ffe}\label{classCharacterState_afc428c82584377afe2a5a826159b8ffe}} 
+float {\bfseries animation\+Frame\+Rate} = 1.\+0f / 10.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCharacterState_a0c58c110e53bf8a628eeb3d81248e31f}\label{classCharacterState_a0c58c110e53bf8a628eeb3d81248e31f}} 
+static std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classCharacterState}{Character\+State}} $>$ $>$ {\bfseries character\+State\+Stack}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Character\+Controller\+PDA.\+hpp\item 
+Steamphonk/Character\+Controller\+PDA.\+cpp\end{DoxyCompactItemize}

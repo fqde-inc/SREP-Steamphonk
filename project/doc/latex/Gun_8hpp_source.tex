@@ -1,0 +1,56 @@
+\hypertarget{Gun_8hpp_source}{}\doxysection{Gun.\+hpp}
+\label{Gun_8hpp_source}\index{Steamphonk/Gun.hpp@{Steamphonk/Gun.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Bullet.hpp"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}TimerComponent.hpp"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{enum} GunTypes \{}
+\DoxyCodeLine{9     NullGun,}
+\DoxyCodeLine{10     Handgun,}
+\DoxyCodeLine{11     RocketLauncher,}
+\DoxyCodeLine{12 \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{classGun}{Gun}} \{}
+\DoxyCodeLine{15 \textcolor{keyword}{public}:}
+\DoxyCodeLine{16     \textcolor{keyword}{explicit} \mbox{\hyperlink{classGun}{Gun}}();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     GunTypes gunType = NullGun;}
+\DoxyCodeLine{19     BulletTypes bulletType = None;}
+\DoxyCodeLine{20     \textcolor{keywordtype}{float} RecoilMagnitude = 0;}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keywordtype}{int} maxClipSize = 5;}
+\DoxyCodeLine{23     \textcolor{keywordtype}{int} clipSize;}
+\DoxyCodeLine{24     }
+\DoxyCodeLine{25     std::shared\_ptr<TimerComponent> cooldown;}
+\DoxyCodeLine{26     \textcolor{keywordtype}{float} cooldownTime = .15f;}
+\DoxyCodeLine{27     }
+\DoxyCodeLine{28     \textcolor{keywordtype}{bool} Fire(glm::vec2 \_position, glm::vec2 \_direction);}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} reload()\{clipSize = maxClipSize;\};}
+\DoxyCodeLine{30 \};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{class }\mbox{\hyperlink{classHandgunGun}{HandgunGun}} : \textcolor{keyword}{public} \mbox{\hyperlink{classGun}{Gun}} \{}
+\DoxyCodeLine{33 \textcolor{keyword}{public}:}
+\DoxyCodeLine{34     \textcolor{keyword}{explicit} \mbox{\hyperlink{classHandgunGun}{HandgunGun}}() \{}
+\DoxyCodeLine{35         gunType = Handgun;}
+\DoxyCodeLine{36         bulletType = Regular;}
+\DoxyCodeLine{37         RecoilMagnitude = 0.075f;}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{class }\mbox{\hyperlink{classRocketLauncherGun}{RocketLauncherGun}} : \textcolor{keyword}{public} \mbox{\hyperlink{classGun}{Gun}} \{}
+\DoxyCodeLine{42 \textcolor{keyword}{public}:}
+\DoxyCodeLine{43     \textcolor{keyword}{explicit} \mbox{\hyperlink{classRocketLauncherGun}{RocketLauncherGun}}() \{}
+\DoxyCodeLine{44         gunType = RocketLauncher;}
+\DoxyCodeLine{45         bulletType = Rocket;}
+\DoxyCodeLine{46         RecoilMagnitude = 0.1f;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         maxClipSize = 1;}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 \};}
+
+\end{DoxyCode}

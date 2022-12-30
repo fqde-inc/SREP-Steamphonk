@@ -1,0 +1,73 @@
+\hypertarget{classDamageable}{}\doxysection{Damageable Class Reference}
+\label{classDamageable}\index{Damageable@{Damageable}}
+
+
+Inheritance diagram for Damageable\+:
+% FIG 0
+
+
+Collaboration diagram for Damageable\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classDamageable_adb74e55bba6bb7ef8f98d23cf4471c7d}\label{classDamageable_adb74e55bba6bb7ef8f98d23cf4471c7d}} 
+{\bfseries Damageable} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classDamageable_a1af162a428a7860a3e1eef09baae1b2b}\label{classDamageable_a1af162a428a7860a3e1eef09baae1b2b}} 
+void {\bfseries override\+Death\+Action} (std\+::function$<$ void()$>$)
+\item 
+\mbox{\Hypertarget{classDamageable_aeec0178223f5e421ae68da4db738f7e9}\label{classDamageable_aeec0178223f5e421ae68da4db738f7e9}} 
+void {\bfseries override\+Damage\+Sound} (std\+::function$<$ void()$>$)
+\item 
+\mbox{\Hypertarget{classDamageable_a11ef6567fa56532a64ef1f59a298b1dc}\label{classDamageable_a11ef6567fa56532a64ef1f59a298b1dc}} 
+void {\bfseries take\+Damage} (int damage)
+\item 
+\mbox{\Hypertarget{classDamageable_aedd164b6aae398e5bfeadce8b81df962}\label{classDamageable_aedd164b6aae398e5bfeadce8b81df962}} 
+void {\bfseries set\+Max\+Life} (int life)
+\item 
+\mbox{\Hypertarget{classDamageable_a665cf2a2fe47535dfc4668acc88570d1}\label{classDamageable_a665cf2a2fe47535dfc4668acc88570d1}} 
+void {\bfseries set\+Life} (int life)
+\item 
+\mbox{\Hypertarget{classDamageable_a4c4a422a956d92392d855199ad768605}\label{classDamageable_a4c4a422a956d92392d855199ad768605}} 
+void {\bfseries add\+Life} (int life)
+\item 
+\mbox{\Hypertarget{classDamageable_a04184a076174d83f78bd417c0049f86d}\label{classDamageable_a04184a076174d83f78bd417c0049f86d}} 
+void {\bfseries reset\+Life} ()
+\item 
+\mbox{\Hypertarget{classDamageable_a939226cb3e7c427c8ec7040e4c2676da}\label{classDamageable_a939226cb3e7c427c8ec7040e4c2676da}} 
+int {\bfseries get\+Cur\+Life} ()
+\item 
+\mbox{\Hypertarget{classDamageable_abc7662d85b9e38ac5901b65030fc12f3}\label{classDamageable_abc7662d85b9e38ac5901b65030fc12f3}} 
+int {\bfseries get\+Max\+Life} ()
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}\label{classComponent_ab0ec409335da4c3ef2bc9c73e1365008}} 
+virtual void {\bfseries update} (float delta\+Time)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}\label{classComponent_ac85d14eb55f79d699ca190f6aaf865ac}} 
+virtual void {\bfseries on\+Collision\+Start} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Damageable.\+hpp\item 
+Steamphonk/Damageable.\+cpp\end{DoxyCompactItemize}

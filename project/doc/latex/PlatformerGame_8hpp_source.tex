@@ -1,0 +1,215 @@
+\hypertarget{PlatformerGame_8hpp_source}{}\doxysection{Platformer\+Game.\+hpp}
+\label{PlatformerGame_8hpp_source}\index{Steamphonk/PlatformerGame.hpp@{Steamphonk/PlatformerGame.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#ifndef PROJECT\_DATA\_PATHS}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#define PROJECT\_DATA\_PATHS}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{const} std::string PROJECT\_DATA\_PATH (PRE\_PROJECT\_DATA\_PATH);}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{const} std::string PLATFORMER\_ART\_PATH   = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/Platformer\_Art/"{}};}
+\DoxyCodeLine{11 \textcolor{keyword}{const} std::string EXPLOSION\_ART\_PATH    = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/Explosion/"{}};}
+\DoxyCodeLine{12 \textcolor{keyword}{const} std::string CHARACTER\_ART\_PATH    = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/Character\_Anims/"{}};}
+\DoxyCodeLine{13 \textcolor{keyword}{const} std::string LEVEL\_ART\_PATH        = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/levels/"{}};}
+\DoxyCodeLine{14 \textcolor{keyword}{const} std::string UI\_ART\_PATH           = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/UI/"{}};}
+\DoxyCodeLine{15 \textcolor{keyword}{const} std::string SOUND\_PATH            = PROJECT\_DATA\_PATH + \textcolor{stringliteral}{"{}/Sound/"{}};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define GLM\_ENABLE\_EXPERIMENTAL}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include "{}SDL\_mixer.h"{}}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include "{}sre/SDLRenderer.hpp"{}}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include "{}sre/SpriteAtlas.hpp"{}}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include "{}GameObject.hpp"{}}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include "{}Level.hpp"{}}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include "{}CharacterController.hpp"{}}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include "{}FollowPathComponent.hpp"{}}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include "{}SideScrollingCamera.hpp"{}}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include "{}Box2DDebugDraw.hpp"{}}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{class }\mbox{\hyperlink{classEnemyComponent}{EnemyComponent}};}
+\DoxyCodeLine{34 \textcolor{keyword}{class }\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{enum class} GameState\{}
+\DoxyCodeLine{37     Ready,}
+\DoxyCodeLine{38     Running,}
+\DoxyCodeLine{39     GameOver}
+\DoxyCodeLine{40 \};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{keyword}{enum class} Scenes \{}
+\DoxyCodeLine{43     MAIN\_MENU,}
+\DoxyCodeLine{44     HOW\_TO\_PLAY,}
+\DoxyCodeLine{45     GAMEPLAY,}
+\DoxyCodeLine{46 \};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{keyword}{enum class} Shakes \{}
+\DoxyCodeLine{49     MILD\_LITTLE\_PONY,}
+\DoxyCodeLine{50     STEAMPHONK,}
+\DoxyCodeLine{51     EPILECTIC\_DELIGHT,}
+\DoxyCodeLine{52     ULTRAKILL,}
+\DoxyCodeLine{53     CLOVIS\_FRIDAY\_NIGHT}
+\DoxyCodeLine{54 \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformerGame}{PlatformerGame}} : \textcolor{keyword}{public} b2ContactListener \{}
+\DoxyCodeLine{57 \textcolor{keyword}{public}:}
+\DoxyCodeLine{58     \mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}();}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     std::shared\_ptr<CharacterController> characterController;}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     std::shared\_ptr<GameObject> createGameObject();}
+\DoxyCodeLine{63     \textcolor{keyword}{static} \textcolor{keyword}{const} glm::vec2 windowSize;}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     std::shared\_ptr<Level> getLevel();}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordtype}{void} BeginContact(b2Contact *contact) \textcolor{keyword}{override};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keywordtype}{void} EndContact(b2Contact *contact) \textcolor{keyword}{override};}
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type);}
+\DoxyCodeLine{71     \textcolor{keywordtype}{void} destroyAllBirds();}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     std::vector<std::shared\_ptr<GameObject>> currentLevelBirds;}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keyword}{static} \mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}* instance;}
+\DoxyCodeLine{76     }
+\DoxyCodeLine{77     SDL\_MouseMotionEvent mouseMotion;}
+\DoxyCodeLine{78     SDL\_MouseButtonEvent mouseButton;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     std::shared\_ptr<GameObject> crosshair;}
+\DoxyCodeLine{81     std::shared\_ptr<SideScrollingCamera> camera;}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{keyword}{static} \textcolor{keyword}{constexpr} float32 timeStep = 1.0f / 60.0f;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     std::shared\_ptr<sre::SpriteAtlas> getSpriteAtlas()\{\textcolor{keywordflow}{return} spriteAtlas;\};}
+\DoxyCodeLine{86     std::shared\_ptr<sre::SpriteAtlas> getExplosionAtlas()\{\textcolor{keywordflow}{return} explosionAtlas;\};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Less expensive to store player pointer and get position on demand}}
+\DoxyCodeLine{89     glm::vec2 getPlayerPositon()\{\textcolor{keywordflow}{return} player-\/>getPosition();\};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     std::shared\_ptr<sre::SpriteAtlas> characterAtlas;}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keyword}{const} Uint8* keyboardState = SDL\_GetKeyboardState(NULL);}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     Mix\_Chunk* deathSFX;}
+\DoxyCodeLine{96     Mix\_Chunk* explosionOneSFX;}
+\DoxyCodeLine{97     Mix\_Chunk* explosionTwoSFX;}
+\DoxyCodeLine{98     Mix\_Chunk* explosionThreeSFX;}
+\DoxyCodeLine{99     Mix\_Chunk* handgunShootSFX;}
+\DoxyCodeLine{100     Mix\_Chunk* rocketShootSFX;}
+\DoxyCodeLine{101     Mix\_Chunk* hitBirdSFX;}
+\DoxyCodeLine{102     Mix\_Chunk* hitPlayerSFX;}
+\DoxyCodeLine{103     Mix\_Chunk* hitWallSFX;}
+\DoxyCodeLine{104     Mix\_Chunk* jumpSFX;}
+\DoxyCodeLine{105     Mix\_Chunk* startGameSFX;}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     Scenes currentScene;}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     Shakes shakeOption = Shakes::STEAMPHONK;}
+\DoxyCodeLine{110     }
+\DoxyCodeLine{111     \textcolor{keywordtype}{bool} shake = \textcolor{keyword}{false};}
+\DoxyCodeLine{112     Shakes currentShake;}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keywordtype}{float} shakeValue = 0;}
+\DoxyCodeLine{115     \textcolor{keywordtype}{float} shakeDuration = 1.0f;}
+\DoxyCodeLine{116     \textcolor{keywordtype}{float} shakeFade = 4.0f;}
+\DoxyCodeLine{117     glm::vec2 lastShake \{0,0\};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordtype}{void} setScreenshake(Shakes type);}
+\DoxyCodeLine{120     \textcolor{keywordtype}{void} screenshake();}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     std::shared\_ptr<sre::SpriteAtlas> collectibleAtlas;}
+\DoxyCodeLine{124     \textcolor{keyword}{const} \textcolor{keywordtype}{float} physicsScale = 100;}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{comment}{// Box2D / Physics}}
+\DoxyCodeLine{127     \textcolor{keyword}{enum} CollisionLayers \{}
+\DoxyCodeLine{128         BACKGROUND  = 0x0001,}
+\DoxyCodeLine{129         WALLS       = 0x0002,}
+\DoxyCodeLine{130         PLAYER      = 0x0003,}
+\DoxyCodeLine{131         ENEMY       = 0x0004,}
+\DoxyCodeLine{132         MISSILE     = 0x0005,}
+\DoxyCodeLine{133         BULLET      = 0x0006,}
+\DoxyCodeLine{134         EXPLOSIONS  = 0x0007,}
+\DoxyCodeLine{135         COLLECTIBLE = 0x0008,}
+\DoxyCodeLine{136     \};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 \textcolor{keyword}{private}:}
+\DoxyCodeLine{139     sre::SDLRenderer r;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keywordtype}{void} initLevel();}
+\DoxyCodeLine{142     \textcolor{keywordtype}{void} initPhysics();}
+\DoxyCodeLine{143     \textcolor{keywordtype}{void} spawnPlayer();}
+\DoxyCodeLine{144     \textcolor{keywordtype}{void} update(\textcolor{keywordtype}{float} time);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keywordtype}{void} render();}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{keywordtype}{void} handleInput(SDL\_Event \&event);}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     \textcolor{keywordtype}{void} handleContact(b2Contact *contact, \textcolor{keywordtype}{bool} begin);}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152     std::shared\_ptr<sre::SpriteAtlas> spriteAtlas;}
+\DoxyCodeLine{153     std::shared\_ptr<sre::SpriteAtlas> UIAtlas;}
+\DoxyCodeLine{154     std::shared\_ptr<sre::SpriteAtlas> tileAtlas;}
+\DoxyCodeLine{155     std::shared\_ptr<sre::SpriteAtlas> explosionAtlas;}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     std::vector<std::shared\_ptr<GameObject>> sceneObjects;}
+\DoxyCodeLine{158     std::shared\_ptr<GameObject> player;}
+\DoxyCodeLine{159     std::shared\_ptr<GameObject> HandgunCollectible;}
+\DoxyCodeLine{160     std::shared\_ptr<GameObject> RocketLauncherCollectible;}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     std::shared\_ptr<sre::Texture> menuBG;}
+\DoxyCodeLine{164     std::shared\_ptr<sre::Texture> howToPlayTexture;}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     std::shared\_ptr<sre::Texture> heartFull;}
+\DoxyCodeLine{167     sre::Texture* heartFullTexture;}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     std::shared\_ptr<sre::Texture> heartEmpty;}
+\DoxyCodeLine{170     sre::Texture* heartEmptyTexture;}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     std::shared\_ptr<sre::Texture> missileUp;}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     std::shared\_ptr<sre::Texture> missileDown;}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     std::shared\_ptr<sre::Texture> handgunUp;}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     std::shared\_ptr<sre::Texture> handgunDown;}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180     \textcolor{keywordtype}{void} updatePhysics();}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     std::shared\_ptr<Level> level;}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     sre::Color backgroundColor;}
+\DoxyCodeLine{185     b2World * world = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     ImFont* pixelated;}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{keywordtype}{void} registerPhysicsComponent(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *r);}
+\DoxyCodeLine{190     \textcolor{keywordtype}{void} deregisterPhysicsComponent(\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}} *r);}
+\DoxyCodeLine{191     }
+\DoxyCodeLine{192     std::map<b2Fixture*,PhysicsComponent *> physicsComponentLookup;}
+\DoxyCodeLine{193     }
+\DoxyCodeLine{194     \mbox{\hyperlink{classBox2DDebugDraw}{Box2DDebugDraw}} debugDraw;}
+\DoxyCodeLine{195     \textcolor{keywordtype}{bool} doDebugDraw = \textcolor{keyword}{false};}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classPhysicsComponent}{PhysicsComponent}};}
+\DoxyCodeLine{198     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classLevel}{Level}};}
+\DoxyCodeLine{199     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterController}{CharacterController}};}
+\DoxyCodeLine{200     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformComponent}{PlatformComponent}};}
+\DoxyCodeLine{201     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classEnemyComponent}{EnemyComponent}};}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classProjectile}{Projectile}};}
+\DoxyCodeLine{204     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classGun}{Gun}};}
+\DoxyCodeLine{205     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classBullet}{Bullet}};}
+\DoxyCodeLine{206     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classRocketBullet}{RocketBullet}};}
+\DoxyCodeLine{207     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classExplosion}{Explosion}};}
+\DoxyCodeLine{208 \};}
+\DoxyCodeLine{209 }
+
+\end{DoxyCode}

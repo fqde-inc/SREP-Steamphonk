@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classCharacterState.html" title=" " alt="" coords="5,55,124,80"/>
+<area shape="rect" id="node2" href="$classJumpingState.html" title=" " alt="" coords="174,5,283,31"/>
+<area shape="rect" id="node3" href="$classStandingState.html" title=" " alt="" coords="172,55,285,80"/>
+<area shape="rect" id="node4" href="$classWalkingState.html" title=" " alt="" coords="175,104,283,129"/>
+</map>

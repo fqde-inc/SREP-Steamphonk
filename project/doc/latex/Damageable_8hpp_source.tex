@@ -1,0 +1,32 @@
+\hypertarget{Damageable_8hpp_source}{}\doxysection{Damageable.\+hpp}
+\label{Damageable_8hpp_source}\index{Steamphonk/Damageable.hpp@{Steamphonk/Damageable.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Component.hpp"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{classDamageable}{Damageable}} : \textcolor{keyword}{public} \mbox{\hyperlink{classComponent}{Component}} \{}
+\DoxyCodeLine{6 \textcolor{keyword}{public}:}
+\DoxyCodeLine{7     \textcolor{keyword}{explicit} \mbox{\hyperlink{classDamageable}{Damageable}}(\mbox{\hyperlink{classGameObject}{GameObject}}* gameObject);}
+\DoxyCodeLine{8     \textcolor{keywordtype}{void} overrideDeathAction(std::function<\textcolor{keywordtype}{void}()>);}
+\DoxyCodeLine{9     \textcolor{keywordtype}{void} overrideDamageSound(std::function<\textcolor{keywordtype}{void}()>);}
+\DoxyCodeLine{10     \textcolor{keywordtype}{void} takeDamage(\textcolor{keywordtype}{int} damage);}
+\DoxyCodeLine{11     \textcolor{keywordtype}{void} setMaxLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{12     \textcolor{keywordtype}{void} setLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{13     \textcolor{keywordtype}{void} addLife(\textcolor{keywordtype}{int} life);}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} resetLife();}
+\DoxyCodeLine{15     \textcolor{keywordtype}{int} getCurLife();}
+\DoxyCodeLine{16     \textcolor{keywordtype}{int} getMaxLife();}
+\DoxyCodeLine{17 \textcolor{keyword}{private}:}
+\DoxyCodeLine{18     \textcolor{comment}{//Void function pointer that takes no parameters, initialize to lambda function with no parameters and body}}
+\DoxyCodeLine{19     std::function<void()> deathAction = []()\{\};}
+\DoxyCodeLine{20     std::function<void()> damageSoundAction = []()\{\};}
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} maxLife = 10;}
+\DoxyCodeLine{22     \textcolor{keywordtype}{int} curLife = 10;}
+\DoxyCodeLine{23     \textcolor{keywordtype}{bool} hasDeathAction = \textcolor{keyword}{false};}
+\DoxyCodeLine{24     \textcolor{keywordtype}{bool} hasDamageSound = \textcolor{keyword}{false};}
+\DoxyCodeLine{25 \};}
+\DoxyCodeLine{26 }
+
+\end{DoxyCode}

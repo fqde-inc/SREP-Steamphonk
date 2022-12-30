@@ -1,0 +1,77 @@
+\hypertarget{Level_8hpp_source}{}\doxysection{Level.\+hpp}
+\label{Level_8hpp_source}\index{Steamphonk/Level.hpp@{Steamphonk/Level.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <sre/SpriteAtlas.hpp>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}ObjectPool.hpp"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}rapidjson/document.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformerGame}{PlatformerGame}};}
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classGameObject}{GameObject}};}
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{classPlatformComponent}{PlatformComponent}};}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{enum class} TileCollider \{}
+\DoxyCodeLine{13     Block,}
+\DoxyCodeLine{14     BlockHalf,}
+\DoxyCodeLine{15     Incline,}
+\DoxyCodeLine{16     Decline}
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{enum} GenerationType \{}
+\DoxyCodeLine{20     World,}
+\DoxyCodeLine{21     Foliage}
+\DoxyCodeLine{22 \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{struct }\mbox{\hyperlink{structBounds}{Bounds}} \{}
+\DoxyCodeLine{25     \textcolor{keywordtype}{int} x;}
+\DoxyCodeLine{26     \textcolor{keywordtype}{int} y;}
+\DoxyCodeLine{27     \textcolor{keywordtype}{int} xMax;}
+\DoxyCodeLine{28     \textcolor{keywordtype}{int} yMax;}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{classLevel}{Level}} \{}
+\DoxyCodeLine{32 \textcolor{keyword}{public}:}
+\DoxyCodeLine{33     \textcolor{keyword}{static} std::shared\_ptr<Level> createDefaultLevel(\mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}* game, std::string levelName, std::string spritesheetName);}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     std::string\& getNameByCoords(std::pair<int, int> coords);}
+\DoxyCodeLine{36     }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} \mbox{\hyperlink{classLevel_ab2b8d22dd17008c452343931dc1f4325}{generateLevel}}();}
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} \mbox{\hyperlink{classLevel_ab51d6dad396832380459c38546271f0b}{generateSpecificLevel}}(\textcolor{keywordtype}{int} levelNumber, GenerationType type = World);}
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} \mbox{\hyperlink{classLevel_a74a53d03b583b03092c28afdfe07184e}{generateLevelByPosition}}(glm::vec2 target);}
+\DoxyCodeLine{40     \textcolor{keywordtype}{int} \mbox{\hyperlink{classLevel_adfb9049c5614e73ca3af092bef6ae451}{getLevelIdByPosition}}(glm::vec2 pos);}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} generateBirdsForLevel(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} setWorldLayer(std::string identifier);}
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} setFoliageLayer(std::string identifier);}
+\DoxyCodeLine{44     \textcolor{keywordtype}{int} getLayerIndexForLevel(std::string identifier, \textcolor{keywordtype}{int} levelNo);}
+\DoxyCodeLine{45     std::pair<int,int> srepCoordinates(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} worldX, \textcolor{keywordtype}{int} worldY);}
+\DoxyCodeLine{46     glm::vec2 \mbox{\hyperlink{classLevel_a0f4d6618753b37e692aa7e98fbd55645}{getIdentifierPosition}}(std::string identifier);}
+\DoxyCodeLine{47     std::shared\_ptr<GameObject> createTile(std::pair<int, int> pos, std::string name);}
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} addTile(std::pair<int,int> pos, std::string name);}
+\DoxyCodeLine{49     std::shared\_ptr<GameObject> createSprite(std::pair<int, int> pos, std::string name);}
+\DoxyCodeLine{50     \textcolor{keywordtype}{void} addSprite(std::pair<int, int> coords, std::string name);}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{float} tileSize = 21;}
+\DoxyCodeLine{53 \textcolor{keyword}{private}:}
+\DoxyCodeLine{54     \textcolor{keywordtype}{void} generateLevelBounds();}
+\DoxyCodeLine{55     \textcolor{keywordtype}{void} initializeNameCoordMap();}
+\DoxyCodeLine{56     \mbox{\hyperlink{classLevel}{Level}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{57     std::shared\_ptr<ObjectPool> tilePool;}
+\DoxyCodeLine{58     std::shared\_ptr<ObjectPool> foliagePool;}
+\DoxyCodeLine{59     std::vector<Bounds> levelBounds;}
+\DoxyCodeLine{60     std::string levelName;}
+\DoxyCodeLine{61     std::string spritesheetName;}
+\DoxyCodeLine{62     std::string foliageLayer;}
+\DoxyCodeLine{63     std::string worldLayer;}
+\DoxyCodeLine{64     \textcolor{comment}{//-\/2 is unitialized, -\/1 not found}}
+\DoxyCodeLine{65     \textcolor{keywordtype}{int} lastGenerated = -\/2;}
+\DoxyCodeLine{66     \mbox{\hyperlink{classPlatformerGame}{PlatformerGame}}* game;}
+\DoxyCodeLine{67     std::shared\_ptr<sre::SpriteAtlas> tileAtlas;}
+\DoxyCodeLine{68     std::map<std::pair<int, int>, std::string> nameCoordMap;}
+\DoxyCodeLine{69     std::string getLevelPath(std::string name);}
+\DoxyCodeLine{70 \};}
+\DoxyCodeLine{71 }
+
+\end{DoxyCode}

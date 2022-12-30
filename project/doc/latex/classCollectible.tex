@@ -1,0 +1,97 @@
+\hypertarget{classCollectible}{}\doxysection{Collectible Class Reference}
+\label{classCollectible}\index{Collectible@{Collectible}}
+
+
+Inheritance diagram for Collectible\+:
+% FIG 0
+
+
+Collaboration diagram for Collectible\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCollectible_a6bb5f0c7d6eca5f140a5cfaea61386d3}\label{classCollectible_a6bb5f0c7d6eca5f140a5cfaea61386d3}} 
+{\bfseries Collectible} (\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$game\+Object)
+\item 
+\mbox{\Hypertarget{classCollectible_a15ef5884585cddcff32d288b375d48ab}\label{classCollectible_a15ef5884585cddcff32d288b375d48ab}} 
+void {\bfseries init\+Collectible} (Gun\+Types gun\+Type)
+\item 
+void \mbox{\hyperlink{classCollectible_a5a53734fc7c9f4d2fa5bf4601a89fd09}{update}} (float delta\+Time) override
+\item 
+\mbox{\Hypertarget{classCollectible_a93782563b575822f6cdb0ea0a322e7ba}\label{classCollectible_a93782563b575822f6cdb0ea0a322e7ba}} 
+virtual float32 {\bfseries Report\+Fixture} (b2\+Fixture $\ast$fixture, const b2\+Vec2 \&point, const b2\+Vec2 \&normal, float32 fraction) override
+\item 
+void \mbox{\hyperlink{classCollectible_a2e3d0a27aa12167f5a62c436408f946d}{on\+Collision\+Start}} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp) override
+\item 
+\mbox{\Hypertarget{classComponent_abed36db99f1ee0ba84a5fb8485e17428}\label{classComponent_abed36db99f1ee0ba84a5fb8485e17428}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries get\+Game\+Object} ()
+\item 
+\mbox{\Hypertarget{classComponent_a8fa6a76f0842776ded467505611d7b3d}\label{classComponent_a8fa6a76f0842776ded467505611d7b3d}} 
+virtual bool {\bfseries handle\+Input} (SDL\+\_\+\+Event \&event)
+\item 
+\mbox{\Hypertarget{classComponent_aef240682a2c099f354c69c763ce95003}\label{classComponent_aef240682a2c099f354c69c763ce95003}} 
+virtual void {\bfseries render\+Sprite} (sre\+::\+Sprite\+Batch\+::\+Sprite\+Batch\+Builder \&sprite\+Batch\+Builder)
+\item 
+\mbox{\Hypertarget{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}\label{classComponent_a0e9a6758cf26f892a0d8f94d911b2216}} 
+virtual void {\bfseries on\+Collision\+End} (\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$comp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCollectible_a574b950f3d2ee125be4fac7f36d4f6e8}\label{classCollectible_a574b950f3d2ee125be4fac7f36d4f6e8}} 
+Gun\+Types {\bfseries gun\+Type}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCollectible_aff70ad6f0e9f1819a03cf2956eaa7a2d}\label{classCollectible_aff70ad6f0e9f1819a03cf2956eaa7a2d}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classSpriteComponent}{Sprite\+Component}} $>$ {\bfseries sprite\+Component}
+\item 
+\mbox{\Hypertarget{classCollectible_a2f2106e4a900b42294710a0b8fd037ad}\label{classCollectible_a2f2106e4a900b42294710a0b8fd037ad}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $>$ {\bfseries physics\+Component}
+\item 
+\mbox{\Hypertarget{classCollectible_a41e2c390858545c1bf57058aee320686}\label{classCollectible_a41e2c390858545c1bf57058aee320686}} 
+std\+::vector$<$ sre\+::\+Sprite $>$ {\bfseries animation\+Sprites}
+\item 
+\mbox{\Hypertarget{classCollectible_a48109bee1114d88262fca086310c6b18}\label{classCollectible_a48109bee1114d88262fca086310c6b18}} 
+int {\bfseries animation\+Index} = 0
+\item 
+\mbox{\Hypertarget{classCollectible_a3fcec5b0e12491652c96b3610707c605}\label{classCollectible_a3fcec5b0e12491652c96b3610707c605}} 
+float {\bfseries animation\+Time} = 0
+\item 
+\mbox{\Hypertarget{classCollectible_a32fef218a1d70cae5e2106c0f6d70bf4}\label{classCollectible_a32fef218a1d70cae5e2106c0f6d70bf4}} 
+float {\bfseries animation\+Frame\+Rate} = 1.\+0f / 10.\+0f
+\item 
+\mbox{\Hypertarget{classComponent_af4a2157b3d021916719085f26f1548b0}\label{classComponent_af4a2157b3d021916719085f26f1548b0}} 
+\mbox{\hyperlink{classGameObject}{Game\+Object}} $\ast$ {\bfseries game\+Object}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCollectible_a2e3d0a27aa12167f5a62c436408f946d}\label{classCollectible_a2e3d0a27aa12167f5a62c436408f946d}} 
+\index{Collectible@{Collectible}!onCollisionStart@{onCollisionStart}}
+\index{onCollisionStart@{onCollisionStart}!Collectible@{Collectible}}
+\doxysubsubsection{\texorpdfstring{onCollisionStart()}{onCollisionStart()}}
+{\footnotesize\ttfamily void Collectible\+::on\+Collision\+Start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPhysicsComponent}{Physics\+Component}} $\ast$}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+\mbox{\Hypertarget{classCollectible_a5a53734fc7c9f4d2fa5bf4601a89fd09}\label{classCollectible_a5a53734fc7c9f4d2fa5bf4601a89fd09}} 
+\index{Collectible@{Collectible}!update@{update}}
+\index{update@{update}!Collectible@{Collectible}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Collectible\+::update (\begin{DoxyParamCaption}\item[{float}]{delta\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classComponent}{Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Steamphonk/Collectible.\+hpp\item 
+Steamphonk/Collectible.\+cpp\end{DoxyCompactItemize}

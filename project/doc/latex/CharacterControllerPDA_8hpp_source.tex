@@ -1,0 +1,96 @@
+\hypertarget{CharacterControllerPDA_8hpp_source}{}\doxysection{Character\+Controller\+PDA.\+hpp}
+\label{CharacterControllerPDA_8hpp_source}\index{Steamphonk/CharacterControllerPDA.hpp@{Steamphonk/CharacterControllerPDA.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}CharacterController.hpp"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterController}{CharacterController}};}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{enum} CharacterStateTypes \{}
+\DoxyCodeLine{9     Standing,}
+\DoxyCodeLine{10     Jumping,}
+\DoxyCodeLine{11     Walking}
+\DoxyCodeLine{12 \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#pragma region CharacterState}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{classCharacterState}{CharacterState}} \{}
+\DoxyCodeLine{17 \textcolor{keyword}{public}:}
+\DoxyCodeLine{18     \textcolor{keyword}{explicit} \mbox{\hyperlink{classCharacterState}{CharacterState}}();}
+\DoxyCodeLine{19     \textcolor{keyword}{explicit} \mbox{\hyperlink{classCharacterState}{CharacterState}}(\textcolor{keywordtype}{int} a) \{\};}
+\DoxyCodeLine{20     \textcolor{keyword}{virtual} \mbox{\hyperlink{classCharacterState}{\string~CharacterState}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     CharacterStateTypes stateType = Standing;}
+\DoxyCodeLine{23     \textcolor{keywordtype}{float} animationTime = 0;}
+\DoxyCodeLine{24     \textcolor{keywordtype}{float} animationFrameRate = 1.0f / 10.0f;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} handleInput(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event);}
+\DoxyCodeLine{27     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} update(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, \textcolor{keywordtype}{float} deltaTime);}
+\DoxyCodeLine{28     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} jump(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event);}
+\DoxyCodeLine{29     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} moveLeft(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event);}
+\DoxyCodeLine{30     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} moveRight(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event);}
+\DoxyCodeLine{31     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} fire(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character);}
+\DoxyCodeLine{32     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} swapWeapons(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keyword}{static} std::vector<std::shared\_ptr<CharacterState>> characterStateStack;}
+\DoxyCodeLine{35     \textcolor{keyword}{static} \textcolor{keywordtype}{void} pushStack(\textcolor{keyword}{const} std::shared\_ptr<CharacterState>\& state);}
+\DoxyCodeLine{36     \textcolor{keyword}{static} \textcolor{keywordtype}{void} popStack(CharacterStateTypes type);}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{private}:}
+\DoxyCodeLine{39     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} enter();}
+\DoxyCodeLine{40     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} exit();}
+\DoxyCodeLine{41 \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#pragma endregion}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#pragma region StandingState}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{class }\mbox{\hyperlink{classStandingState}{StandingState}} : \textcolor{keyword}{public} \mbox{\hyperlink{classCharacterState}{CharacterState}} \{}
+\DoxyCodeLine{48     \textcolor{keyword}{public}:}
+\DoxyCodeLine{49         \textcolor{keyword}{explicit} \mbox{\hyperlink{classStandingState}{StandingState}}();;}
+\DoxyCodeLine{50         \textcolor{keywordtype}{void} handleInput(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event) \textcolor{keyword}{override};}
+\DoxyCodeLine{51         \textcolor{keywordtype}{void} update(\mbox{\hyperlink{classCharacterController}{CharacterController}} \&character, \textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{52     \textcolor{keyword}{private}:}
+\DoxyCodeLine{53         std::vector<sre::Sprite> animationSprites;}
+\DoxyCodeLine{54         \textcolor{keywordtype}{int} animationIndex = 0;}
+\DoxyCodeLine{55     \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#pragma endregion}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#pragma region JumpingState}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{class }\mbox{\hyperlink{classJumpingState}{JumpingState}} : \textcolor{keyword}{public} \mbox{\hyperlink{classCharacterState}{CharacterState}} \{}
+\DoxyCodeLine{62     \textcolor{keyword}{public}:}
+\DoxyCodeLine{63         \textcolor{keyword}{explicit} \mbox{\hyperlink{classJumpingState}{JumpingState}}();;}
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} handleInput(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event) \textcolor{keyword}{override};}
+\DoxyCodeLine{65         \textcolor{keywordtype}{void} update(\mbox{\hyperlink{classCharacterController}{CharacterController}} \&character, \textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{66         \textcolor{keywordtype}{void} enter() \textcolor{keyword}{override};}
+\DoxyCodeLine{67         \textcolor{keywordtype}{void} exit() \textcolor{keyword}{override};}
+\DoxyCodeLine{68     \textcolor{keyword}{private}:}
+\DoxyCodeLine{69         \textcolor{keywordtype}{bool} isFalling;}
+\DoxyCodeLine{70         std::vector<sre::Sprite> spritesToRender;}
+\DoxyCodeLine{71         std::vector<sre::Sprite> animationSpritesStart;}
+\DoxyCodeLine{72         std::vector<sre::Sprite> animationSpritesEnd;}
+\DoxyCodeLine{73         \textcolor{keywordtype}{int} animationIndex = 0;}
+\DoxyCodeLine{74     \};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#pragma endregion}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#pragma region WalkingState}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{keyword}{class }\mbox{\hyperlink{classWalkingState}{WalkingState}} : \textcolor{keyword}{public} \mbox{\hyperlink{classCharacterState}{CharacterState}} \{}
+\DoxyCodeLine{81 \textcolor{keyword}{public}:}
+\DoxyCodeLine{82     \textcolor{keyword}{explicit} \mbox{\hyperlink{classWalkingState}{WalkingState}}();;}
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} handleInput(\mbox{\hyperlink{classCharacterController}{CharacterController}}\& character, SDL\_Event \&event) \textcolor{keyword}{override};}
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} update(\mbox{\hyperlink{classCharacterController}{CharacterController}} \&character, \textcolor{keywordtype}{float} deltaTime) \textcolor{keyword}{override};}
+\DoxyCodeLine{85 \textcolor{keyword}{private}:}
+\DoxyCodeLine{86     std::vector<sre::Sprite> animationSprites;}
+\DoxyCodeLine{87     \textcolor{keywordtype}{int} animationIndex = 0;}
+\DoxyCodeLine{88 \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#pragma endregion}}
+
+\end{DoxyCode}
