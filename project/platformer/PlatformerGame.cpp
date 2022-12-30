@@ -170,7 +170,7 @@ void PlatformerGame::initLevel() {
     style.WindowBorderSize = 0.0f;
 
     menuBG = Texture::create().withFile(UI_ART_PATH + "menu_BG.png").withFilterSampling(false).build();
-    menuBGtexture = menuBG.get();
+    howToPlayTexture = Texture::create().withFile(UI_ART_PATH + "howToPlay.png").withFilterSampling(false).build();
 
     heartFull  = Texture::create().withFile( UI_ART_PATH + "heartFull.png").withFilterSampling(false).build();
     heartFullTexture = heartFull.get();
@@ -306,7 +306,7 @@ void PlatformerGame::render() {
         ImGui::SetNextWindowPos(ImVec2(-25,-40), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(windowSize.x + 50, windowSize.y + 50), ImGuiSetCond_Always);
         ImGui::SetNextWindowBgAlpha(0);
-        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Begin("menubg", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
         ImGui::Image(menuBG->getNativeTexturePtr(),{windowSize.x + 50, windowSize.y + 160}, uv0, uv1, color_multipler);
         ImGui::End();
 
@@ -342,9 +342,7 @@ void PlatformerGame::render() {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
         ImGui::Begin("howToButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
         if(ImGui::Button("How to play", {280, 55})) {
-            currentScene = GAMEPLAY;
-            SDL_SetWindowGrab(r.getSDLWindow(), SDL_TRUE);
-            SDL_SetRelativeMouseMode(SDL_TRUE);
+            currentScene = HOW_TO_PLAY;
         }
         ImGui::PopStyleColor();
         ImGui::PopFont();
@@ -406,6 +404,29 @@ void PlatformerGame::render() {
                     setScreenshake(MILD_LITTLE_PONY);
                     break;
             }
+        }
+        ImGui::PopStyleColor();
+        ImGui::PopFont();
+        ImGui::End();
+
+        return;
+    } else if (currentScene == HOW_TO_PLAY) {
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - (730 / 2), windowSize.y / 2 - (511 / 2)), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(730, 511), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::Begin("howToPlayScreen", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        ImGui::Image(howToPlayTexture->getNativeTexturePtr(),{730, 511}, uv0, uv1);
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x / 2 - 141, windowSize.y - 100), ImGuiSetCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(282, 55), ImGuiSetCond_Always);
+        ImGui::SetNextWindowBgAlpha(0);
+        ImGui::PushFont(pixelated);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
+        ImGui::Begin("backButton", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+        if(ImGui::Button("Back", {280, 55})) {
+            currentScene = MAIN_MENU;
         }
         ImGui::PopStyleColor();
         ImGui::PopFont();

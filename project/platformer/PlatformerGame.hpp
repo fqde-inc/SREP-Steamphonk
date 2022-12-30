@@ -104,7 +104,8 @@ public:
 
     enum Scenes {
         MAIN_MENU,
-        GAMEPLAY
+        HOW_TO_PLAY,
+        GAMEPLAY,
     };
 
     bool shake = false;
@@ -150,7 +151,7 @@ private:
 
 
     std::shared_ptr<sre::Texture> menuBG;
-    sre::Texture* menuBGtexture;
+    std::shared_ptr<sre::Texture> howToPlayTexture;
 
     std::shared_ptr<sre::Texture> heartFull;
     sre::Texture* heartFullTexture;
