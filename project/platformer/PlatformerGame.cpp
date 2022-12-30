@@ -295,7 +295,7 @@ void PlatformerGame::render() {
     if(currentScene == MAIN_MENU) {
 
         if (setFirstShake) {
-            setScreenshake(MILD_LITTLE_PONY);
+            setScreenshake(STEAMPHONK);
             setFirstShake = false;
         }
         cout << shakeDuration << endl;
