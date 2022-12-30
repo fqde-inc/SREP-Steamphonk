@@ -2,11 +2,11 @@
 
 #include "sre/SpriteBatch.hpp"
 
+using namespace sre;
+
 // Forward declaration
 class GameObject;
 class PhysicsComponent;
-
-
 
 class Component {                                           // Abstract class that adds behavior to a GameObject
 public:
@@ -18,7 +18,7 @@ public:
     virtual bool handleInput(SDL_Event &event);                   // The function should return true, if the key event is consumed. This prevents other components to receive the event.
 
     virtual void update(float deltaTime);
-    virtual void renderSprite(sre::SpriteBatch::SpriteBatchBuilder& spriteBatchBuilder);
+    virtual void renderSprite(SpriteBatch::SpriteBatchBuilder& spriteBatchBuilder);
 
     virtual void onCollisionStart(PhysicsComponent* comp);
     virtual void onCollisionEnd(PhysicsComponent* comp);

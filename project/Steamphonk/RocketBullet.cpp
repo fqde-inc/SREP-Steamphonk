@@ -12,10 +12,10 @@ RocketBullet::RocketBullet(GameObject* gameObject) : Bullet(gameObject) {
 
 void RocketBullet::explode() {
     auto go = PlatformerGame::instance->createGameObject();
-    if( gameObject->getPosition() != glm::vec2{0} )
+    if( gameObject->getPosition() != vec2{0} )
         go->setPosition(gameObject->getPosition());
     else 
-        go->setPosition( glm::vec2 {
+        go->setPosition( vec2 {
             physics->getBody()->GetPosition().x,
             physics->getBody()->GetPosition().y
         });

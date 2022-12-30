@@ -7,8 +7,6 @@
 #include "PlatformerGame.hpp"
 #include "EnemyComponent.hpp"
 
-using namespace std;
-
 Collectible::Collectible(GameObject *gameObject) : Component(gameObject) {
     gameObject->name = "Collectible";
 
@@ -27,7 +25,7 @@ Collectible::Collectible(GameObject *gameObject) : Component(gameObject) {
     };
 
     for (int i = 0; i < animationSprites.size(); ++i) {
-        animationSprites[i].setScale(glm::vec2(.4f));
+        animationSprites[i].setScale(vec2(.4f));
         animationSprites[i].setOrderInBatch(999);
     }
 

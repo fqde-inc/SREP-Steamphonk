@@ -5,9 +5,7 @@
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
-#include "SpriteComponent.hpp"
 
-using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     gameObject->name = "Player";
@@ -31,7 +29,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 	
     radius = 10/physicsScale;
     characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
-    std::cout << "Spawned player at " << spawn.x << ", " << spawn.y << std::endl;
+    cout << "Spawned player at " << spawn.x << ", " << spawn.y << endl;
     characterPhysics->getFixture()->SetRestitution(0);
 
     b2Filter filter = characterPhysics->getFixture()->GetFilterData();
@@ -42,7 +40,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     spriteComponent = gameObject->getComponent<SpriteComponent>();
 
-    state_ = std::make_shared<CharacterState>();
+    state_ = make_shared<CharacterState>();
 }
 
 bool CharacterController::handleInput(SDL_Event &event) {
@@ -57,7 +55,7 @@ void CharacterController::update(float deltaTime) {
         auto physicsScale = PlatformerGame::instance->physicsScale;
         this->characterPhysics->getBody()->SetTransform(b2Vec2(spawn.x / physicsScale, spawn.y / physicsScale), 0);
         damageComponent->resetLife();
-        std::cout << "Player returned to " << spawn.x << ", " << spawn.y << std::endl;
+        cout << "Player returned to " << spawn.x << ", " << spawn.y << endl;
         returnToSpawn = false;
     }
     // raycast ignores any shape in the starting point
@@ -67,7 +65,7 @@ void CharacterController::update(float deltaTime) {
     PlatformerGame::instance->world->RayCast(this, from, to);
 
     characterPhysics->fixRotation();
-    glm::vec2 movement{0,0};
+    vec2 movement{0,0};
 
     if (left){
         movement.x --;
@@ -78,18 +76,18 @@ void CharacterController::update(float deltaTime) {
         lastIsLeft = false;
     }
 
-    glm::vec2 currentVel = characterPhysics->getLinearVelocity();
+    vec2 currentVel = characterPhysics->getLinearVelocity();
 
     if (currentVel.x > 0 && !right) {
-        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x - 0.15f, currentVel.y));
+        characterPhysics->setLinearVelocity(vec2(currentVel.x - 0.15f, currentVel.y));
     }
 
     if (currentVel.x < 0 && !left) {
-        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x + 0.15f, currentVel.y));
+        characterPhysics->setLinearVelocity(vec2(currentVel.x + 0.15f, currentVel.y));
     }
 
-    if(!left && !right && glm::abs(currentVel.x) < 0.1f) {
-        characterPhysics->setLinearVelocity(glm::vec2(0, currentVel.y));
+    if(!left && !right && abs(currentVel.x) < 0.1f) {
+        characterPhysics->setLinearVelocity(vec2(0, currentVel.y));
     }
 
     float accelerationSpeed = 0.008f;
@@ -98,13 +96,13 @@ void CharacterController::update(float deltaTime) {
     auto linearVelocity = characterPhysics->getLinearVelocity();
     float currentVelocity = linearVelocity.x;
     if (abs(currentVelocity) > maximumVelocity){
-        linearVelocity.x = glm::sign(linearVelocity.x)*maximumVelocity;
+        linearVelocity.x = sign(linearVelocity.x)*maximumVelocity;
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
 
     if(!isGrounded && state_->characterStateStack[0]->stateType != Jumping) {
-        state_->pushStack(std::make_shared<JumpingState>());
+        state_->pushStack(make_shared<JumpingState>());
     }
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
@@ -132,7 +130,7 @@ float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &poi
     if(state_->characterStateStack[0]->stateType == Jumping) {
         state_->popStack(Jumping);
         if(left || right) {
-            state_->pushStack(std::make_shared<WalkingState>());
+            state_->pushStack(make_shared<WalkingState>());
         }
     }
     return 0;
@@ -143,6 +141,6 @@ void CharacterController::updateSprite(float deltaTime) {
     // todo implement
 }
 
-glm::vec2 CharacterController::getShootDirection(){
-    return glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
+vec2 CharacterController::getShootDirection(){
+    return normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
 }

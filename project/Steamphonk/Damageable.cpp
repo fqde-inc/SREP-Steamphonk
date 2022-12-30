@@ -1,18 +1,17 @@
 #include "Damageable.hpp"
 #include "PlatformerGame.hpp"
 
-using namespace std;
 
 Damageable::Damageable(GameObject* gameObject): Component(gameObject)
 {
 }
 
-void Damageable::overrideDeathAction(std::function<void()> action) {
+void Damageable::overrideDeathAction(function<void()> action) {
 	hasDeathAction = true;
 	deathAction = action;
 }
 
-void Damageable::overrideDamageSound(std::function<void()> action) {
+void Damageable::overrideDamageSound(function<void()> action) {
     hasDamageSound = true;
     damageSoundAction = action;
 }
@@ -43,11 +42,6 @@ void Damageable::setMaxLife(int life)
 void Damageable::setLife(int life)
 {
 	curLife = life;
-}
-
-void Damageable::addLife(int life)
-{
-	curLife += life;
 }
 
 void Damageable::resetLife()

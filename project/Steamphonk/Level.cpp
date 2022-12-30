@@ -12,13 +12,10 @@
 #include <sre/Inspector.hpp>
 #include "ObjectPool.hpp"
 
-using namespace sre;
-using namespace std;
-using namespace rapidjson;
 
-std::shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, std::string levelName, std::string spritesheetName) 
+shared_ptr<Level> Level::createDefaultLevel(PlatformerGame* game, string levelName, string spritesheetName) 
 {
-    std::shared_ptr<Level> res = std::shared_ptr<Level>(new Level());
+    shared_ptr<Level> res = shared_ptr<Level>(new Level());
 	
     res->game = game;
     res->tileAtlas = SpriteAtlas::create(LEVEL_ART_PATH +"dirttile.json", Texture::create()
@@ -49,7 +46,7 @@ void Level::initializeNameCoordMap()
     }
 }
 
-std::pair<int, int> Level::srepCoordinates(int x, int y, int worldX, int worldY)
+pair<int, int> Level::srepCoordinates(int x, int y, int worldX, int worldY)
 {
     return make_pair(x + worldX, -y - worldY);
 }
@@ -65,7 +62,7 @@ void Level::setWorldLayer(string identifier)
     worldLayer = identifier;
 }
 
-std::string& Level::getNameByCoords(std::pair<int, int> coords)
+string& Level::getNameByCoords(pair<int, int> coords)
 {
     if (nameCoordMap.empty())
     {
@@ -130,8 +127,8 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 		int x = pos[0].GetInt();
 		int y = pos[1].GetInt();
 
-        string spriteName = getNameByCoords(std::make_pair(src[0].GetInt(), src[1].GetInt()));
-        std::pair<int,int> coords = srepCoordinates(x, y, worldX, worldY);
+        string spriteName = getNameByCoords(make_pair(src[0].GetInt(), src[1].GetInt()));
+        pair<int,int> coords = srepCoordinates(x, y, worldX, worldY);
 
 		//Instead of adding collison on the tile, only render the sprite here, then use floodfill to generate composite colliders
         switch (type)
@@ -153,10 +150,10 @@ void Level::generateSpecificLevel(int levelNumber, GenerationType type)
 /// Only generate level if the player is within position. Also handles unloading old levels and loading new levels
 /// </summary>
 /// <param name="target"></param>
-void Level::generateLevelByPosition(glm::vec2 target)
+void Level::generateLevelByPosition(vec2 target)
 {
     //This is somehow called before the player is moved to their spawn
-    if (target == glm::vec2(0, 0))
+    if (target == vec2(0, 0))
     {
         return;
     }
@@ -210,14 +207,14 @@ void Level::generateBirdsForLevel(int id)
                 auto coords = srepCoordinates(x, y, worldX, worldY);
 
                 auto path = entity[i].GetObject()["fieldInstances"].GetArray()[0].GetObject()["__value"].GetArray();
-                std::vector<glm::vec2> positions;
+                vector<vec2> positions;
 				for (int i = 0; i < path.Size(); i++)
 				{
 					auto p = path[i].GetObject();
                     int pgx = p["cx"].GetInt();
 					int pgy = p["cy"].GetInt();
                     auto srepPos = srepCoordinates(pgx * gSize, pgy * gSize, worldX, worldY);
-					positions.push_back(glm::vec2(srepPos.first, srepPos.second));
+					positions.push_back(vec2(srepPos.first, srepPos.second));
 				}
 
                 PlatformerGame::instance->generateSingleBird(coords, positions, LINEAR);
@@ -230,7 +227,7 @@ void Level::generateBirdsForLevel(int id)
 /// Returns the chunk id that the player is inside
 /// </summary>
 /// <param name="pos"></param>
-int Level::getLevelIdByPosition(glm::vec2 pos)
+int Level::getLevelIdByPosition(vec2 pos)
 {
     if (levelBounds.empty())
     {
@@ -286,7 +283,7 @@ void Level::generateLevelBounds()
 /// </summary>
 /// <param name="identifier"></param>
 /// <returns></returns>
-glm::vec2 Level::getIdentifierPosition(std::string identifier)
+vec2 Level::getIdentifierPosition(string identifier)
 {
     ifstream fis(LEVEL_ART_PATH + levelName);
     IStreamWrapper isw(fis);
@@ -314,21 +311,21 @@ glm::vec2 Level::getIdentifierPosition(std::string identifier)
                     int x = pos[0].GetInt();
                     int y = pos[1].GetInt();
                     auto coords = srepCoordinates(x, y, worldX, worldY);
-                    return glm::vec2(coords.first, coords.second);
+                    return vec2(coords.first, coords.second);
                 }
             }
         }
     }
 
-    return glm::vec2(0, 0);
+    return vec2(0, 0);
 }
 
-void Level::addTile(std::pair<int, int> coords, string name) 
+void Level::addTile(pair<int, int> coords, string name) 
 {
     auto res = tilePool->tryGetInstance(name);
     if (res)
     {
-        res->getComponent<PhysicsComponent>()->setPhysicsPosition(glm::vec2(coords.first, coords.second) / game->physicsScale);
+        res->getComponent<PhysicsComponent>()->setPhysicsPosition(vec2(coords.first, coords.second) / game->physicsScale);
     }
     else
     {
@@ -337,12 +334,12 @@ void Level::addTile(std::pair<int, int> coords, string name)
     }
 }
 
-void Level::addSprite(std::pair<int, int> coords, string name) 
+void Level::addSprite(pair<int, int> coords, string name) 
 {
     auto res = foliagePool->tryGetInstance(name);
     if (res)
     {
-        res->setPosition(glm::vec2(coords.first, coords.second));
+        res->setPosition(vec2(coords.first, coords.second));
     }
     else
     {
@@ -351,14 +348,14 @@ void Level::addSprite(std::pair<int, int> coords, string name)
     }
 }
 
-std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::string name)
+shared_ptr<GameObject> Level::createTile(pair<int, int> pos, string name)
 {
     auto gameObject = createSprite(pos, name);
     auto size = tileAtlas->get(name).getSpriteSize();
     auto physics = gameObject->addComponent<PhysicsComponent>();
     physics->initBox(
         b2_kinematicBody,
-        glm::vec2(size) / game->physicsScale * 0.5f,
+        vec2(size) / game->physicsScale * 0.5f,
         gameObject->getPosition() / game->physicsScale,
         0);
     //Required for sprite to follow
@@ -369,7 +366,7 @@ std::shared_ptr<GameObject> Level::createTile(std::pair<int, int> pos, std::stri
     return gameObject;
 }
 
-std::shared_ptr<GameObject> Level::createSprite(std::pair<int, int> pos, std::string name)
+shared_ptr<GameObject> Level::createSprite(pair<int, int> pos, string name)
 {
     auto gameObject = game->createGameObject();
     auto spriteComponent = gameObject->addComponent<SpriteComponent>();
@@ -377,6 +374,6 @@ std::shared_ptr<GameObject> Level::createSprite(std::pair<int, int> pos, std::st
     float tileSize = sprite.getSpriteSize().x;
     spriteComponent->setSprite(sprite);
     gameObject->name = name;
-    gameObject->setPosition(glm::vec2(pos.first, pos.second));
+    gameObject->setPosition(vec2(pos.first, pos.second));
     return gameObject;
 }

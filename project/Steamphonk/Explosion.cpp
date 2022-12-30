@@ -1,7 +1,6 @@
 #include "Explosion.hpp"
 #include "PlatformerGame.hpp"
 
-using namespace std;
 
 Explosion::Explosion(GameObject* gameObject): Component(gameObject)
 {
@@ -82,13 +81,13 @@ void Explosion::onCollisionStart(PhysicsComponent *comp){
 
     if(go->name == "Player"){
         // Get propulsion direction
-        glm::vec2 propel = gameObject->getPosition() - go->getPosition();
+        vec2 propel = gameObject->getPosition() - go->getPosition();
 
         // Case where explosion and game object overlap too close to 0,0
-        if (propel == glm::vec2(0)) 
+        if (propel == vec2(0)) 
             propel = {0,-1};
 
-        comp->addImpulse( - glm::normalize(propel)  * 0.15f );
+        comp->addImpulse( - normalize(propel)  * 0.15f );
 
         physics->getBody()->SetAwake(false);
     }

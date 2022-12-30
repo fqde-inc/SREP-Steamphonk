@@ -7,6 +7,10 @@
 #include "Component.hpp"
 #include "Gun.hpp"
 
+using namespace std;
+using namespace sre;
+using namespace glm;
+
 class Collectible : public Component, b2RayCastCallback{
 public:
     Collectible(GameObject* gameObject);
@@ -22,9 +26,9 @@ public:
 
     GunTypes gunType;
 protected:
-    std::shared_ptr<SpriteComponent> spriteComponent;
-    std::shared_ptr<PhysicsComponent> physicsComponent;
-    std::vector<sre::Sprite> animationSprites;
+    shared_ptr<SpriteComponent> spriteComponent;
+    shared_ptr<PhysicsComponent> physicsComponent;
+    vector<Sprite> animationSprites;
     int animationIndex = 0;
     float animationTime = 0;
     float animationFrameRate = 1.0f / 10.0f;

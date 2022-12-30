@@ -1,21 +1,25 @@
 //
-// Created by Søren Skouv
+// Created by Sï¿½ren Skouv
 //
 #pragma once
 
 #include "GameObject.hpp"
 #include <unordered_map>
 
+using namespace std;
+using namespace sre;
+using namespace glm;
+
 class ObjectPool {
 public:
-    static std::shared_ptr<ObjectPool> createPool(std::shared_ptr<sre::SpriteAtlas> tileAtlas);
-    std::shared_ptr<GameObject> tryGetInstance(const std::string& key);
+    static shared_ptr<ObjectPool> createPool(shared_ptr<SpriteAtlas> tileAtlas);
+    shared_ptr<GameObject> tryGetInstance(const string& key);
     void releaseAllInstances();
-    void addActiveInstance(const std::string& key, std::shared_ptr<GameObject> object);
+    void addActiveInstance(const string& key, shared_ptr<GameObject> object);
 private:
     int recycled = 0;
     int spawned = 0;
-	std::unordered_multimap<std::string, std::shared_ptr<GameObject>> _pool = {};
-    std::unordered_multimap<std::string, std::shared_ptr<GameObject>> _used = {};
-    std::shared_ptr<sre::SpriteAtlas> tileAtlas;
+	unordered_multimap<string, shared_ptr<GameObject>> _pool = {};
+    unordered_multimap<string, shared_ptr<GameObject>> _used = {};
+    shared_ptr<SpriteAtlas> tileAtlas;
 };

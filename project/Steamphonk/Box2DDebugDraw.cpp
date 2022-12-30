@@ -6,8 +6,6 @@
 #include "glm/gtc/random.hpp"
 #include "glm/ext.hpp"
 
-using namespace std;
-
 Box2DDebugDraw::Box2DDebugDraw(float scale)
 :scale(scale)
 {
@@ -52,6 +50,6 @@ void Box2DDebugDraw::clear() {
     lines.clear();
 }
 
-const std::vector<glm::vec3> &Box2DDebugDraw::getLines() {
+const vector<glm::vec3> &Box2DDebugDraw::getLines() {
     return lines;
 }

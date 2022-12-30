@@ -18,10 +18,8 @@
 #include "Damageable.hpp"
 #include "Collectible.hpp"
 
-using namespace std;
-using namespace sre;
 
-const glm::vec2 PlatformerGame::windowSize(1400,800);
+const vec2 PlatformerGame::windowSize(1400,800);
 PlatformerGame* PlatformerGame::instance = nullptr;
 
 PlatformerGame::PlatformerGame()
@@ -86,7 +84,7 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
-void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type)
+void PlatformerGame::generateSingleBird(pair<int, int> coords, vector<vec2> positions, PathType type)
 {
     auto birdObj = PlatformerGame::instance->createGameObject();
     birdObj->name = "Bird";
@@ -109,7 +107,7 @@ void PlatformerGame::destroyAllBirds() {
     }
 }
 
-std::shared_ptr<Level> PlatformerGame::getLevel()
+shared_ptr<Level> PlatformerGame::getLevel()
 {
 	return level;
 }
@@ -139,8 +137,8 @@ void PlatformerGame::initLevel() {
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = characterAtlas->get("tile000.png");
-    playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
-    playerSpriteObj.setScale(glm::vec2(.7,.7));
+    playerSpriteObj.setPosition(vec2{1.5,2.5}*Level::tileSize);
+    playerSpriteObj.setScale(vec2(.7,.7));
     playerSprite->setSprite(playerSpriteObj);
 
     characterController = player->addComponent<CharacterController>();
@@ -275,7 +273,7 @@ void PlatformerGame::screenshake() {
         return;
     }
 
-    glm::vec2 shakeOffset = glm::linearRand(glm::vec2(-shakeValue), glm::vec2(shakeValue));
+    vec2 shakeOffset = linearRand(vec2(-shakeValue), vec2(shakeValue));
 
     camera->offset = shakeOffset;
 
@@ -359,7 +357,7 @@ void PlatformerGame::render() {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
         ImGui::Begin("shakeSetting", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
-        std::string tempButtonLabel;
+        string tempButtonLabel;
 
         switch (shakeOption) {
             case Shakes::MILD_LITTLE_PONY:
@@ -564,7 +562,7 @@ void PlatformerGame::handleInput(SDL_Event &event) {
     }
 }
 
-std::shared_ptr<GameObject> PlatformerGame::createGameObject() {
+shared_ptr<GameObject> PlatformerGame::createGameObject() {
     auto obj = shared_ptr<GameObject>(new GameObject());
     sceneObjects.push_back(obj);
     return obj;
@@ -582,7 +580,7 @@ void PlatformerGame::updatePhysics() {
         auto position = physicsComponent->getBody()->GetPosition();
         float angle = physicsComponent->getBody()->GetAngle();
         auto gameObject = physicsComponent->getGameObject();
-        gameObject->setPosition(glm::vec2(position.x*physicsScale, position.y*physicsScale));
+        gameObject->setPosition(vec2(position.x*physicsScale, position.y*physicsScale));
         gameObject->setRotation(angle);
     }
 }
@@ -647,6 +645,6 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
     }
 }
 
-std::shared_ptr<sre::SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
+shared_ptr<SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
 
-glm::vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}
+vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}

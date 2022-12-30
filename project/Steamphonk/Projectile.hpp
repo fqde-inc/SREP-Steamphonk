@@ -6,13 +6,16 @@
 #include "SpriteComponent.hpp"
 #include "Component.hpp"
 
+using namespace std;
+using namespace glm;
+
 class Projectile : public Component, b2RayCastCallback{
 public:
     Projectile(GameObject* gameObject);
 
     void update(float deltaTime) override;;
-    void setOrigin(std::string _origin) { origin = _origin;};;
-    void setDirection(const glm::vec2 & _direction) { direction = _direction; };
+    void setOrigin(string _origin) { origin = _origin;};;
+    void setDirection(const vec2 & _direction) { direction = _direction; };
 
     // raycast callback
     virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
@@ -22,9 +25,9 @@ public:
     void onCollisionEnd(PhysicsComponent *comp) override;
 
 protected:
-    std::shared_ptr<PhysicsComponent> physics;
-    std::shared_ptr<SpriteComponent> spriteComponent;
-    glm::vec2 direction;
+    shared_ptr<PhysicsComponent> physics;
+    shared_ptr<SpriteComponent> spriteComponent;
+    vec2 direction;
 
     float lifetime = 0;
     float lifespan = 2.5f;
@@ -34,5 +37,5 @@ protected:
 
     float damage = 1;
 
-    std::string origin;
+    string origin;
 };

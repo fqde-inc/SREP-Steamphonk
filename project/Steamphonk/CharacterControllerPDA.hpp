@@ -3,6 +3,10 @@
 #include <iostream>
 #include "CharacterController.hpp"
 
+using namespace std;
+using namespace glm;
+using namespace sre;
+
 class CharacterController;
 
 enum CharacterStateTypes {
@@ -31,8 +35,8 @@ public:
     virtual void fire(CharacterController& character);
     virtual void swapWeapons(CharacterController& character, SDL_Event &event);
 
-    static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
-    static void pushStack(const std::shared_ptr<CharacterState>& state);
+    static vector<shared_ptr<CharacterState>> characterStateStack;
+    static void pushStack(const shared_ptr<CharacterState>& state);
     static void popStack(CharacterStateTypes type);
 
 private:
@@ -50,7 +54,7 @@ private:
         void handleInput(CharacterController& character, SDL_Event &event) override;
         void update(CharacterController &character, float deltaTime) override;
     private:
-        std::vector<sre::Sprite> animationSprites;
+        vector<Sprite> animationSprites;
         int animationIndex = 0;
     };
 
@@ -67,9 +71,9 @@ private:
         void exit() override;
     private:
         bool isFalling;
-        std::vector<sre::Sprite> spritesToRender;
-        std::vector<sre::Sprite> animationSpritesStart;
-        std::vector<sre::Sprite> animationSpritesEnd;
+        vector<Sprite> spritesToRender;
+        vector<Sprite> animationSpritesStart;
+        vector<Sprite> animationSpritesEnd;
         int animationIndex = 0;
     };
 
@@ -83,7 +87,7 @@ public:
     void handleInput(CharacterController& character, SDL_Event &event) override;
     void update(CharacterController &character, float deltaTime) override;
 private:
-    std::vector<sre::Sprite> animationSprites;
+    vector<Sprite> animationSprites;
     int animationIndex = 0;
 };
 
