@@ -3,14 +3,18 @@
 
 #include <string>
 
-const std::string PROJECT_DATA_PATH = "project_data";
+using namespace std;
+using namespace glm;
+using namespace sre;
 
-const std::string PLATFORMER_ART_PATH   = PROJECT_DATA_PATH + "/Platformer_Art/";
-const std::string EXPLOSION_ART_PATH    = PROJECT_DATA_PATH + "/Explosion/";
-const std::string CHARACTER_ART_PATH    = PROJECT_DATA_PATH + "/Character_Anims/";
-const std::string LEVEL_ART_PATH        = PROJECT_DATA_PATH + "/levels/";
-const std::string UI_ART_PATH           = PROJECT_DATA_PATH + "/UI/";
-const std::string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
+const string PROJECT_DATA_PATH = "project_data";
+
+const string PLATFORMER_ART_PATH   = PROJECT_DATA_PATH + "/Platformer_Art/";
+const string EXPLOSION_ART_PATH    = PROJECT_DATA_PATH + "/Explosion/";
+const string CHARACTER_ART_PATH    = PROJECT_DATA_PATH + "/Character_Anims/";
+const string LEVEL_ART_PATH        = PROJECT_DATA_PATH + "/levels/";
+const string UI_ART_PATH           = PROJECT_DATA_PATH + "/UI/";
+const string SOUND_PATH            = PROJECT_DATA_PATH + "/Sound/";
 
 #endif
 
@@ -40,37 +44,37 @@ class PlatformerGame : public b2ContactListener {
 public:
     PlatformerGame();
 
-    std::shared_ptr<CharacterController> characterController;
+    shared_ptr<CharacterController> characterController;
 
-    std::shared_ptr<GameObject> createGameObject();
-    static const glm::vec2 windowSize;
+    shared_ptr<GameObject> createGameObject();
+    static const vec2 windowSize;
 
-    std::shared_ptr<Level> getLevel();
+    shared_ptr<Level> getLevel();
 
     void BeginContact(b2Contact *contact) override;
 
     void EndContact(b2Contact *contact) override;
-    void generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type);
+    void generateSingleBird(pair<int, int> coords, vector<vec2> positions, PathType type);
     void destroyAllBirds();
 
-    std::vector<std::shared_ptr<GameObject>> currentLevelBirds;
+    vector<shared_ptr<GameObject>> currentLevelBirds;
 
     static PlatformerGame* instance;
 	
     SDL_MouseMotionEvent mouseMotion;
     SDL_MouseButtonEvent mouseButton;
 
-    std::shared_ptr<GameObject> crosshair;
-    std::shared_ptr<SideScrollingCamera> camera;
+    shared_ptr<GameObject> crosshair;
+    shared_ptr<SideScrollingCamera> camera;
 
     static constexpr float32 timeStep = 1.0f / 60.0f;
 
-    std::shared_ptr<sre::SpriteAtlas> getSpriteAtlas();
+    shared_ptr<SpriteAtlas> getSpriteAtlas();
 
     // Less expensive to store player pointer and get position on demand
-    glm::vec2 getPlayerPosition();
+    vec2 getPlayerPosition();
 
-    std::shared_ptr<sre::SpriteAtlas> characterAtlas;
+    shared_ptr<SpriteAtlas> characterAtlas;
 
     const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
@@ -108,13 +112,13 @@ public:
 
     float shakeValue = 0;
     float shakeFade = 4.0f;
-    glm::vec2 lastShake {0,0};
+    vec2 lastShake {0,0};
 
     void setScreenshake(Shakes type);
     void screenshake();
 
 
-    std::shared_ptr<sre::SpriteAtlas> collectibleAtlas;
+    shared_ptr<SpriteAtlas> collectibleAtlas;
     const float physicsScale = 100;
 
     // Box2D / Physics
@@ -129,7 +133,7 @@ public:
     };
 
 private:
-    sre::SDLRenderer r;
+    SDLRenderer r;
 
     void initLevel();
     void initPhysics();
@@ -141,49 +145,49 @@ private:
 
     void handleContact(b2Contact *contact, bool begin);
 
-    std::shared_ptr<sre::SpriteAtlas> spriteAtlas;
-    std::shared_ptr<sre::SpriteAtlas> UIAtlas;
-    std::shared_ptr<sre::SpriteAtlas> tileAtlas;
-    std::shared_ptr<sre::SpriteAtlas> explosionAtlas;
+    shared_ptr<SpriteAtlas> spriteAtlas;
+    shared_ptr<SpriteAtlas> UIAtlas;
+    shared_ptr<SpriteAtlas> tileAtlas;
+    shared_ptr<SpriteAtlas> explosionAtlas;
 
-    std::vector<std::shared_ptr<GameObject>> sceneObjects;
-    std::shared_ptr<GameObject> player;
-    std::shared_ptr<GameObject> HandgunCollectible;
-    std::shared_ptr<GameObject> RocketLauncherCollectible;
+    vector<shared_ptr<GameObject>> sceneObjects;
+    shared_ptr<GameObject> player;
+    shared_ptr<GameObject> HandgunCollectible;
+    shared_ptr<GameObject> RocketLauncherCollectible;
 
 
-    std::shared_ptr<sre::Texture> menuBG;
-    std::shared_ptr<sre::Texture> howToPlayTexture;
+    shared_ptr<Texture> menuBG;
+    shared_ptr<Texture> howToPlayTexture;
 
-    std::shared_ptr<sre::Texture> heartFull;
-    sre::Texture* heartFullTexture;
+    shared_ptr<Texture> heartFull;
+    Texture* heartFullTexture;
 
-    std::shared_ptr<sre::Texture> heartEmpty;
-    sre::Texture* heartEmptyTexture;
+    shared_ptr<Texture> heartEmpty;
+    Texture* heartEmptyTexture;
 
-    std::shared_ptr<sre::Texture> missileUp;
+    shared_ptr<Texture> missileUp;
 
-    std::shared_ptr<sre::Texture> missileDown;
+    shared_ptr<Texture> missileDown;
 
-    std::shared_ptr<sre::Texture> handgunUp;
+    shared_ptr<Texture> handgunUp;
 
-    std::shared_ptr<sre::Texture> handgunDown;
+    shared_ptr<Texture> handgunDown;
 
     void updatePhysics();
 
-    std::shared_ptr<Level> level;
+    shared_ptr<Level> level;
 
-    sre::Color backgroundColor;
+    Color backgroundColor;
     b2World * world = nullptr;
 
     ImFont* pixelated;
 
-    //std::shared_ptr<FollowPathComponent> birdMovement;
+    //shared_ptr<FollowPathComponent> birdMovement;
 
     void registerPhysicsComponent(PhysicsComponent *r);
     void deregisterPhysicsComponent(PhysicsComponent *r);
     
-    std::map<b2Fixture*,PhysicsComponent *> physicsComponentLookup;
+    map<b2Fixture*,PhysicsComponent *> physicsComponentLookup;
     
     Box2DDebugDraw debugDraw;
     bool doDebugDraw = false;

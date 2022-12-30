@@ -6,6 +6,10 @@
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
 
+using namespace std;
+using namespace sre;
+using namespace glm;
+
 class Explosion : public Component, b2RayCastCallback {
 public:
     explicit Explosion(GameObject* gameObject);
@@ -25,14 +29,14 @@ public:
     
 private:
 
-    std::shared_ptr<TimerComponent> timer;
-    std::shared_ptr<SpriteComponent> spriteComponent;
-    std::shared_ptr<PhysicsComponent> physics;
+    shared_ptr<TimerComponent> timer;
+    shared_ptr<SpriteComponent> spriteComponent;
+    shared_ptr<PhysicsComponent> physics;
     
     float radius = 10.0f;
     float duration = 0.25f;
     
-    std::vector<sre::Sprite> animationSprites;
+    vector<Sprite> animationSprites;
     int animationIndex = 0;
     float animationTime = 0;
     float animationFrameRate = 1.0f / 10.0f;

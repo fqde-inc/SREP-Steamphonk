@@ -6,7 +6,6 @@
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
 
-using namespace std;
 
 CharacterController::CharacterController(GameObject *gameObject) : Component(gameObject) {
     gameObject->name = "Player";
@@ -66,7 +65,7 @@ void CharacterController::update(float deltaTime) {
     PlatformerGame::instance->world->RayCast(this, from, to);
 
     characterPhysics->fixRotation();
-    glm::vec2 movement{0,0};
+    vec2 movement{0,0};
 
     if (left){
         movement.x --;
@@ -77,18 +76,18 @@ void CharacterController::update(float deltaTime) {
         lastIsLeft = false;
     }
 
-    glm::vec2 currentVel = characterPhysics->getLinearVelocity();
+    vec2 currentVel = characterPhysics->getLinearVelocity();
 
     if (currentVel.x > 0 && !right) {
-        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x - 0.15f, currentVel.y));
+        characterPhysics->setLinearVelocity(vec2(currentVel.x - 0.15f, currentVel.y));
     }
 
     if (currentVel.x < 0 && !left) {
-        characterPhysics->setLinearVelocity(glm::vec2(currentVel.x + 0.15f, currentVel.y));
+        characterPhysics->setLinearVelocity(vec2(currentVel.x + 0.15f, currentVel.y));
     }
 
-    if(!left && !right && glm::abs(currentVel.x) < 0.1f) {
-        characterPhysics->setLinearVelocity(glm::vec2(0, currentVel.y));
+    if(!left && !right && abs(currentVel.x) < 0.1f) {
+        characterPhysics->setLinearVelocity(vec2(0, currentVel.y));
     }
 
     float accelerationSpeed = 0.008f;
@@ -97,7 +96,7 @@ void CharacterController::update(float deltaTime) {
     auto linearVelocity = characterPhysics->getLinearVelocity();
     float currentVelocity = linearVelocity.x;
     if (abs(currentVelocity) > maximumVelocity){
-        linearVelocity.x = glm::sign(linearVelocity.x)*maximumVelocity;
+        linearVelocity.x = sign(linearVelocity.x)*maximumVelocity;
         characterPhysics->setLinearVelocity(linearVelocity);
     }
     updateSprite(deltaTime);
@@ -142,6 +141,6 @@ void CharacterController::updateSprite(float deltaTime) {
     // todo implement
 }
 
-glm::vec2 CharacterController::getShootDirection(){
-    return glm::normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
+vec2 CharacterController::getShootDirection(){
+    return normalize(PlatformerGame::instance->crosshair->getPosition() - gameObject->getPosition());
 }

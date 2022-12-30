@@ -38,7 +38,7 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     });
 }
 
-void EnemyComponent::setPathing( std::vector<glm::vec2> positions, PathType type = BEZIER){
+void EnemyComponent::setPathing( vector<vec2> positions, PathType type = BEZIER){
     path = gameObject->addComponent<FollowPathComponent>();
     path->setPositions(positions);
     path->setType(type);
@@ -64,7 +64,7 @@ void EnemyComponent::update(float deltaTime) {
 
 void EnemyComponent::shootAtPlayer(){
 
-    glm::vec2 direction = glm::normalize(PlatformerGame::instance->getPlayerPosition() - gameObject->getPosition() );
+    vec2 direction = normalize(PlatformerGame::instance->getPlayerPosition() - gameObject->getPosition() );
 
     auto go = PlatformerGame::instance->createGameObject();     
     go->setPosition(gameObject->getPosition());
@@ -77,13 +77,13 @@ void EnemyComponent::shootAtPlayer(){
     l->setDirection(direction);
     l->setOrigin(gameObject->name);
 
-    go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
+    go->setRotation( 180 - atan(direction.x, direction.y) * 180 / M_PI );
 }
 
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
 
     if( comp->getGameObject()->getComponent<Projectile>() != nullptr ){
-        std::shared_ptr<Projectile> projectile = comp->getGameObject()->getComponent<Projectile>();
+        shared_ptr<Projectile> projectile = comp->getGameObject()->getComponent<Projectile>();
     }
 }
 

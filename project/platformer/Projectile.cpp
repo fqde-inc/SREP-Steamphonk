@@ -10,8 +10,6 @@
 #include "EnemyComponent.hpp"
 #include "Damagable.hpp"
 
-using namespace std;
-
 Projectile::Projectile(GameObject *gameObject) : Component(gameObject) {
 
     gameObject->name = "Projectile";

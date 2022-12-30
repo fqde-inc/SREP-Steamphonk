@@ -4,6 +4,8 @@
 #include "Projectile.hpp"
 #include "GameObject.hpp"
 
+using namespace glm;
+
 enum BulletTypes {
     None,
     Regular,

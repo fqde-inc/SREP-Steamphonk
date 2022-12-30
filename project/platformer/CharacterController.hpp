@@ -10,6 +10,9 @@
 #include "TimerComponent.hpp"
 #include "Damagable.hpp"
 
+using namespace std;
+using namespace glm;
+
 class CharacterState;
 
 class CharacterController : public Component, public b2RayCastCallback {
@@ -23,12 +26,12 @@ public:
     bool handleInput(SDL_Event &event) override;
 
     bool unlockedRocketLauncher = false;
-    std::unique_ptr<Gun> rocketLauncher = std::make_unique<RocketLauncherGun>();
+    unique_ptr<Gun> rocketLauncher = make_unique<RocketLauncherGun>();
 
     bool unlockedHandgun = false;
-    std::unique_ptr<Gun> handgun = std::make_unique<HandgunGun>();
+    unique_ptr<Gun> handgun = make_unique<HandgunGun>();
 
-    std::shared_ptr<Damagable> damageComponent;
+    shared_ptr<Damagable> damageComponent;
 
     GunTypes equippedGun = Handgun;
 
@@ -39,35 +42,29 @@ public:
 
     void onCollisionEnd(PhysicsComponent *comp) override;
 
-    std::shared_ptr<PhysicsComponent> characterPhysics;
-    std::shared_ptr<Damagable> characterDamagable;
-    std::shared_ptr<TimerComponent> swapTimer;
-    std::shared_ptr<TimerComponent> reloadTimer;
+    shared_ptr<PhysicsComponent> characterPhysics;
+    shared_ptr<Damagable> characterDamagable;
+    shared_ptr<TimerComponent> swapTimer;
+    shared_ptr<TimerComponent> reloadTimer;
     float swapTime = .25f;
     float reloadTime = .75f;
 
     bool left = false;
     bool right = false;
     bool lastIsLeft = false;
-    std::shared_ptr<CharacterState> state_;
+    shared_ptr<CharacterState> state_;
     bool isGrounded = false;
     friend class CharacterState;
     friend class StandingState;
     friend class JumpingState;
 
-    std::shared_ptr<SpriteComponent> spriteComponent;
+    shared_ptr<SpriteComponent> spriteComponent;
 
-    glm::vec2 getShootDirection();
+    vec2 getShootDirection();
 
 private:
-    glm::vec2 spawn;
+    vec2 spawn;
     bool returnToSpawn = false;
-    sre::Sprite standing;
-    sre::Sprite walk1;
-    sre::Sprite walk2;
-    sre::Sprite flyUp;
-    sre::Sprite fly;
-    sre::Sprite flyDown;
-    std::shared_ptr<GameObject> cursor;
+    shared_ptr<GameObject> cursor;
     float radius;
 };

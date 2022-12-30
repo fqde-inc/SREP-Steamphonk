@@ -8,28 +8,31 @@
 #include "FollowPathComponent.hpp"
 #include "Damagable.hpp"
 
+using namespace std;
+using namespace glm;
+
 class EnemyComponent : public Component, public b2RayCastCallback {
 public:
     explicit EnemyComponent(GameObject *gameObject);
 
     void update(float deltaTime) override;
     
-    void setPathing( std::vector<glm::vec2> positions, PathType type);
+    void setPathing( vector<vec2> positions, PathType type);
 
     void onCollisionStart(PhysicsComponent *comp) override;
     void onCollisionEnd(PhysicsComponent *comp) override;
     float32 ReportFixture(b2Fixture *fixture, const b2Vec2 &point, const b2Vec2 &normal, float32 fraction) override;
 private:
 
-    std::shared_ptr<FollowPathComponent> path;
-    std::shared_ptr<PhysicsComponent> physics;
-    std::shared_ptr<Damagable> damagable;
+    shared_ptr<FollowPathComponent> path;
+    shared_ptr<PhysicsComponent> physics;
+    shared_ptr<Damagable> damagable;
 
     void shootAtPlayer();
 
     bool isAlive = true;
     
-    glm::vec2* target;
+    vec2* target;
 
     float reloadTime = 0.0f;
     float reloadTimeLimit = 2.5f;

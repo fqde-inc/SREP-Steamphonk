@@ -6,8 +6,6 @@
 #include "glm/gtc/random.hpp"
 #include "glm/ext.hpp"
 
-using namespace std;
-
 Box2DDebugDraw::Box2DDebugDraw(float scale)
 :scale(scale)
 {

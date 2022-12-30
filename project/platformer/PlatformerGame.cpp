@@ -16,10 +16,8 @@
 #include "Damagable.hpp"
 #include "Collectible.hpp"
 
-using namespace std;
-using namespace sre;
 
-const glm::vec2 PlatformerGame::windowSize(1400,800);
+const vec2 PlatformerGame::windowSize(1400,800);
 PlatformerGame* PlatformerGame::instance = nullptr;
 
 PlatformerGame::PlatformerGame()
@@ -84,7 +82,7 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
-void PlatformerGame::generateSingleBird(pair<int, int> coords, vector<glm::vec2> positions, PathType type)
+void PlatformerGame::generateSingleBird(pair<int, int> coords, vector<vec2> positions, PathType type)
 {
     auto birdObj = PlatformerGame::instance->createGameObject();
     birdObj->name = "Bird";
@@ -137,8 +135,8 @@ void PlatformerGame::initLevel() {
     player = createGameObject();
     auto playerSprite = player->addComponent<SpriteComponent>();
     auto playerSpriteObj = characterAtlas->get("tile000.png");
-    playerSpriteObj.setPosition(glm::vec2{1.5,2.5}*Level::tileSize);
-    playerSpriteObj.setScale(glm::vec2(.7,.7));
+    playerSpriteObj.setPosition(vec2{1.5,2.5}*Level::tileSize);
+    playerSpriteObj.setScale(vec2(.7,.7));
     playerSprite->setSprite(playerSpriteObj);
 
     characterController = player->addComponent<CharacterController>();
@@ -273,7 +271,7 @@ void PlatformerGame::screenshake() {
         return;
     }
 
-    glm::vec2 shakeOffset = glm::linearRand(glm::vec2(-shakeValue), glm::vec2(shakeValue));
+    vec2 shakeOffset = linearRand(vec2(-shakeValue), vec2(shakeValue));
 
     camera->offset = shakeOffset;
 
@@ -580,7 +578,7 @@ void PlatformerGame::updatePhysics() {
         auto position = physicsComponent->getBody()->GetPosition();
         float angle = physicsComponent->getBody()->GetAngle();
         auto gameObject = physicsComponent->getGameObject();
-        gameObject->setPosition(glm::vec2(position.x*physicsScale, position.y*physicsScale));
+        gameObject->setPosition(vec2(position.x*physicsScale, position.y*physicsScale));
         gameObject->setRotation(angle);
     }
 }
@@ -647,4 +645,4 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
 
 shared_ptr<SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
 
-glm::vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}
+vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}

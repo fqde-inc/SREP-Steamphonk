@@ -5,12 +5,12 @@
 #include "Gun.hpp"
 #include "PlatformerGame.hpp"
 
-std::vector<std::shared_ptr<CharacterState>> CharacterState::characterStateStack;
+vector<shared_ptr<CharacterState>> CharacterState::characterStateStack;
 
 #pragma region CharacterState Methods
 
 CharacterState::CharacterState() {
-    auto initState = std::make_shared<StandingState>();
+    auto initState = make_shared<StandingState>();
     pushStack(initState);
 }
 
@@ -30,7 +30,7 @@ void CharacterState::update(CharacterController &character, float deltaTime) {
 
 }
 
-void CharacterState::pushStack(const std::shared_ptr<CharacterState>& state) {
+void CharacterState::pushStack(const shared_ptr<CharacterState>& state) {
     characterStateStack.insert(characterStateStack.begin(), state);
 }
 
@@ -38,7 +38,7 @@ void CharacterState::popStack(CharacterStateTypes type) {
     for (int i = 0; i < characterStateStack.size(); ++i) {
         if(characterStateStack[i]->stateType == type) {
             // TODO characterStateStack[i]->exit();
-            characterStateStack.erase(std::remove(characterStateStack.begin(), characterStateStack.end(), characterStateStack[i]),
+            characterStateStack.erase(remove(characterStateStack.begin(), characterStateStack.end(), characterStateStack[i]),
                                       characterStateStack.end());
         }
     }
@@ -46,9 +46,9 @@ void CharacterState::popStack(CharacterStateTypes type) {
 
 void CharacterState::jump(CharacterController &character, SDL_Event &event) {
     if (character.isGrounded && event.type == SDL_KEYDOWN){ // prevents double jump
-        pushStack(std::make_shared<JumpingState>());
+        pushStack(make_shared<JumpingState>());
         Mix_PlayChannel(-1, PlatformerGame::instance->jumpSFX, 0);
-        character.characterPhysics->setLinearVelocity(glm::vec2(character.characterPhysics->getLinearVelocity().x,0));
+        character.characterPhysics->setLinearVelocity(vec2(character.characterPhysics->getLinearVelocity().x,0));
         character.characterPhysics->addImpulse({0,0.11f});
     }
 }
@@ -123,7 +123,7 @@ StandingState::StandingState() : CharacterState(0) {
     };
 
     for (int i = 0; i < animationSprites.size(); ++i) {
-        animationSprites[i].setScale(glm::vec2(.7f));
+        animationSprites[i].setScale(vec2(.7f));
     }
 }
 
@@ -135,12 +135,12 @@ void StandingState::handleInput(CharacterController& character, SDL_Event &event
 
         case SDLK_a:
             moveLeft(character, event);
-            pushStack(std::make_shared<WalkingState>());
+            pushStack(make_shared<WalkingState>());
             break;
 
         case SDLK_d:
             moveRight(character, event);
-            pushStack(std::make_shared<WalkingState>());
+            pushStack(make_shared<WalkingState>());
             break;
 
         case SDLK_q:
@@ -191,11 +191,11 @@ JumpingState::JumpingState() : CharacterState(0) {
     };
 
     for (int i = 0; i < animationSpritesStart.size(); ++i) {
-        animationSpritesStart[i].setScale(glm::vec2(.7f));
+        animationSpritesStart[i].setScale(vec2(.7f));
     }
 
     for (int i = 0; i < animationSpritesEnd.size(); ++i) {
-        animationSpritesEnd[i].setScale(glm::vec2(.7f));
+        animationSpritesEnd[i].setScale(vec2(.7f));
     }
 }
 
@@ -239,7 +239,7 @@ void JumpingState::update(CharacterController &character, float deltaTime) {
     //TODO:AHA! The error is animation related, this is just a quick fix
     if (spritesToRender.size() <= animationIndex)
     {
-        std::cout << "An animation outside maximium allowed index was attempted, resetting to max" << std::endl;
+        cout << "An animation outside maximium allowed index was attempted, resetting to max" << endl;
         animationIndex = spritesToRender.size()-1;
     }
     spritesToRender[animationIndex].setFlip({character.lastIsLeft, false});
@@ -272,7 +272,7 @@ WalkingState::WalkingState() : CharacterState(0) {
     };
 
     for (int i = 0; i < animationSprites.size(); ++i) {
-        animationSprites[i].setScale(glm::vec2(.7f));
+        animationSprites[i].setScale(vec2(.7f));
     }
 }
 

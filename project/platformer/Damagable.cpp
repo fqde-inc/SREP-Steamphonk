@@ -1,7 +1,6 @@
 #include "Damagable.hpp"
 #include "PlatformerGame.hpp"
 
-using namespace std;
 
 Damagable::Damagable(GameObject* gameObject): Component(gameObject)
 {
@@ -43,11 +42,6 @@ void Damagable::setMaxLife(int life)
 void Damagable::setLife(int life)
 {
 	curLife = life;
-}
-
-void Damagable::addLife(int life)
-{
-	curLife += life;
 }
 
 void Damagable::resetLife()

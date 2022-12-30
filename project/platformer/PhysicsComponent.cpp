@@ -29,30 +29,30 @@ PhysicsComponent::~PhysicsComponent() {
     }
 }
 
-void PhysicsComponent::addImpulse(glm::vec2 force) {
+void PhysicsComponent::addImpulse(vec2 force) {
     b2Vec2 iForceV{force.x,force.y};
     body->ApplyLinearImpulse(iForceV, body->GetWorldCenter(), true);
 }
 
-void PhysicsComponent::setPhysicsPosition(glm::vec2 pos)
+void PhysicsComponent::setPhysicsPosition(vec2 pos)
 {
 	body->SetTransform(b2Vec2(pos.x,pos.y), body->GetAngle());
 }
 
-glm::vec2 PhysicsComponent::getLinearVelocity() {
+vec2 PhysicsComponent::getLinearVelocity() {
     b2Vec2 v = body->GetLinearVelocity();
     return {v.x,v.y};
 }
 
-void PhysicsComponent::setLinearVelocity(glm::vec2 velocity) {
+void PhysicsComponent::setLinearVelocity(vec2 velocity) {
     b2Vec2 v{velocity.x, velocity.y};
-    if (velocity != glm::vec2(0,0)){
+    if (velocity != vec2(0,0)){
         body->SetAwake(true);
     }
     body->SetLinearVelocity(v);
 }
 
-void PhysicsComponent::initCircle(b2BodyType type, float radius, glm::vec2 center, float density) {
+void PhysicsComponent::initCircle(b2BodyType type, float radius, vec2 center, float density) {
     assert(body == nullptr);
     autoUpdate = type != b2_staticBody;
     // do init
@@ -71,7 +71,7 @@ void PhysicsComponent::initCircle(b2BodyType type, float radius, glm::vec2 cente
     PlatformerGame::instance->registerPhysicsComponent(this);
 }
 
-void PhysicsComponent::initBox(b2BodyType type, glm::vec2 size, glm::vec2 center, float density) {
+void PhysicsComponent::initBox(b2BodyType type, vec2 size, vec2 center, float density) {
     assert(body == nullptr);
     autoUpdate = type != b2_staticBody;
     // do init
@@ -98,14 +98,14 @@ void PhysicsComponent::fixRotation() {
     fixture->GetBody()->SetFixedRotation(true);
 }
 
-void PhysicsComponent::moveTo(glm::vec2 pos) {
-    glm::vec2 delta = pos - getPosition();
+void PhysicsComponent::moveTo(vec2 pos) {
+    vec2 delta = pos - getPosition();
 
     setLinearVelocity(delta*(1/PlatformerGame::timeStep));
 }
 
-glm::vec2 PhysicsComponent::getPosition() {
-    return glm::vec2(body->GetPosition().x,body->GetPosition().y);
+vec2 PhysicsComponent::getPosition() {
+    return vec2(body->GetPosition().x,body->GetPosition().y);
 }
 
 bool PhysicsComponent::isAutoUpdate() const {

@@ -17,7 +17,7 @@ void FollowPathComponent::update(float deltaTime) {
     gameObject->setPosition(computePositionAtTime(time));
 }
 
-glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
+vec2 FollowPathComponent::computePositionAtTime(float time) {
     
     // fmod is a "%" function that returns float remainders
     // e.g : If time = 10.5 sec : segment = 10 / t = 0.5f;
@@ -59,7 +59,7 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
                 0.21f);
             
             case LINEAR:
-                return glm::mix(
+                return mix(
                     positions[segment + 1], 
                     positions[segment],
                     t);
@@ -84,37 +84,37 @@ glm::vec2 FollowPathComponent::computePositionAtTime(float time) {
                 0.21f);
         
         case LINEAR:
-            return glm::mix(
+            return mix(
                 positions[segment], 
                 positions[segment+1],
                 t);
     }
 
-    return glm::vec2{0,0};
+    return vec2{0,0};
 }
 
 // Bezier curve math
-glm::vec2 FollowPathComponent::getBezierPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, float t) {
+vec2 FollowPathComponent::getBezierPosition(vec2 p0, vec2 p1, vec2 p2, float t) {
 
-    glm::vec2 v0 = glm::mix(
+    vec2 v0 = mix(
         p0, p1, t
     );
     
-    glm::vec2 v1 = glm::mix(
+    vec2 v1 = mix(
         p1, p2, t
     );
 
-    return glm::mix(v0, v1, t);
+    return mix(v0, v1, t);
 }
 
 // Catmull-Rom curve, uses the tension parameter to soften the curve at inflection point
 // See : https://pomax.github.io/bezierinfo/#catmullconv
-glm::vec2 FollowPathComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, float t, float tension) {
+vec2 FollowPathComponent::getCatmullPosition(vec2 p0, vec2 p1, vec2 p2, vec2 p3, float t, float tension) {
 
     float s = 2 * tension;
     
-    glm::vec2 dv1 = (p2-p0) / s;
-    glm::vec2 dv2 = (p3-p1) / s;
+    vec2 dv1 = (p2-p0) / s;
+    vec2 dv2 = (p3-p1) / s;
 
     float c0 = (2 * t * t * t) - ( 3 * t * t) + 1;
     float c1 = (t * t * t) - ( 2 * t * t ) + t;
@@ -124,12 +124,8 @@ glm::vec2 FollowPathComponent::getCatmullPosition(glm::vec2 p0, glm::vec2 p1, gl
     return c0 * p1 + c1 * dv1 + c2 * p2 + c3 * dv2;
 }
 
-const std::vector<glm::vec2> &FollowPathComponent::getPositions() {
-    return positions;
-}
-
-void FollowPathComponent::setPositions(std::vector<glm::vec2> positions) {
-    this->positions = std::move(positions);
+void FollowPathComponent::setPositions(vector<vec2> positions) {
+    this->positions = move(positions);
 }
 
 int FollowPathComponent::getNumberOfSegments() {
