@@ -1,6 +1,3 @@
-//
-// Created by Morten Nobel-Jørgensen on 12/09/2017.
-//
 #define GLM_ENABLE_EXPERIMENTAL
 #include <iostream>
 #include "Collectible.hpp"

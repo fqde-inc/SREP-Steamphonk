@@ -1,5 +1,5 @@
 //
-// Created by Morten Nobel-Jørgensen on 11/6/17.
+// Created by Morten Nobel-Jørgensen, Clovis Lebret, Søren Skouv, Giorgio Perri on 11/6/17.
 //
 #define GLM_ENABLE_EXPERIMENTAL = true
 
@@ -20,7 +20,6 @@
 EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     physics = gameObject->addComponent<PhysicsComponent>();
     auto physicsScale = PlatformerGame::instance->physicsScale;
-    //TODO: Why does this follow the bird???
     physics->initCircle(b2_dynamicBody, 15/physicsScale, gameObject->getPosition()/physicsScale, 0);
     physics->setAutoUpdate(false);
     physics->getBody()->SetGravityScale(0.0f);
@@ -34,7 +33,7 @@ EnemyComponent::EnemyComponent(GameObject *gameObject) : Component(gameObject) {
     damagable = gameObject->addComponent<Damagable>();
     damagable->setMaxLife(1);
     damagable->setLife(1);
-    damagable->overrideDamageSound([this]() {
+    damagable->overrideDamageSound([]() {
         Mix_PlayChannel(-1, PlatformerGame::instance->hitBirdSFX, 0);
     });
 }
@@ -46,22 +45,6 @@ void EnemyComponent::setPathing( std::vector<glm::vec2> positions, PathType type
 }
 
 void EnemyComponent::update(float deltaTime) {
-    
-    if(mustDie)
-        kill();
-
-    if(!isAlive){
-
-        if(path != nullptr)
-            gameObject->removeComponent(path);
-
-        reloadTime += deltaTime;
-
-        if ( reloadTime >= reloadTimeLimit ){
-            gameObject->setConsumed(true);
-        }
-        return;
-    }
 
     physics->moveTo(gameObject->getPosition()/PlatformerGame::instance->physicsScale);
 
@@ -77,8 +60,6 @@ void EnemyComponent::update(float deltaTime) {
             shootAtPlayer();
         }
     }
-
-    animate();
 }
 
 void EnemyComponent::shootAtPlayer(){
@@ -99,33 +80,10 @@ void EnemyComponent::shootAtPlayer(){
     go->setRotation( 180 - glm::atan(direction.x, direction.y) * 180 / M_PI );
 }
 
-void EnemyComponent::animate(){
-    //TODO: Animate sprite ?
-    //float t = fmod(time, keyFrameTime);
-}
-
-void EnemyComponent::kill(){
-    isAlive = false;
-
-    auto sprite = gameObject->getComponent<SpriteComponent>()->getSprite();
-    sprite.setRotation(sprite.getRotation() + 180);
-    gameObject->getComponent<SpriteComponent>()->setSprite(sprite);
-
-    physics->getBody()->SetAwake(false);
-    physics->getBody()->SetGravityScale(1);
-    physics->getBody()->SetType(b2_kinematicBody);
-    physics->setAutoUpdate(true);
-    physics->addForce(lastHitDirection);
-}
-
 void EnemyComponent::onCollisionStart(PhysicsComponent *comp) {
 
     if( comp->getGameObject()->getComponent<Projectile>() != nullptr ){
         std::shared_ptr<Projectile> projectile = comp->getGameObject()->getComponent<Projectile>();
-
-        if( projectile->getOrigin() == "Player" ){
-            lastHitDirection = projectile->getDirection();
-        }
     }
 }
 

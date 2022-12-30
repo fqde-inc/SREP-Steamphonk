@@ -1,4 +1,3 @@
-
 #include "Explosion.hpp"
 #include "PlatformerGame.hpp"
 

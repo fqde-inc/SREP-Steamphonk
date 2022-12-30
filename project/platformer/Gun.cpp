@@ -1,10 +1,4 @@
-//
-// Created by Giorgio Perri  on 31/10/22.
-// 
-
-#include <map>
 #include <memory>
-#include <iostream>
 #include "Box2D/Box2D.h"
 #include "Gun.hpp"
 #include "Bullet.hpp"

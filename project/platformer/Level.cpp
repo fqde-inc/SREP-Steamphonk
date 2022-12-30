@@ -7,7 +7,6 @@
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "PlatformComponent.hpp"
-#include "MovingPlatformComponent.hpp"
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include <fstream>

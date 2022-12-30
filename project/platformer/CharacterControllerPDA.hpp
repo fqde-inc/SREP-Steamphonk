@@ -1,6 +1,3 @@
-//
-// Created by Giorgio Perri  on 02/10/22.
-//
 #pragma once
 
 #include <iostream>
@@ -35,7 +32,6 @@ public:
     virtual void swapWeapons(CharacterController& character, SDL_Event &event);
 
     static std::vector<std::shared_ptr<CharacterState>> characterStateStack;
-
     static void pushStack(const std::shared_ptr<CharacterState>& state);
     static void popStack(CharacterStateTypes type);
 
