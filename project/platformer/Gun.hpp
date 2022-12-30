@@ -39,7 +39,7 @@ public:
     explicit HandgunGun() {
         gunType = Handgun;
         bulletType = Regular;
-        RecoilMagnitude = 0.001f;
+        RecoilMagnitude = 0.07f;
     }
 };
 

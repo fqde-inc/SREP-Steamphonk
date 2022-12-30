@@ -394,7 +394,7 @@ void PlatformerGame::render() {
     ImGui::End();
 
     if(characterController->unlockedHandgun) {
-        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 180, windowSize.y - 115), ImGuiSetCond_Always);
+        ImGui::SetNextWindowPos(ImVec2(windowSize.x - 260, windowSize.y - 115), ImGuiSetCond_Always);
         ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_Always);
         ImGui::SetNextWindowBgAlpha(0);
         ImGui::Begin("handgun", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
