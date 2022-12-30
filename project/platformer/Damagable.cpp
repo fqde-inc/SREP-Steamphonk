@@ -7,12 +7,12 @@ Damagable::Damagable(GameObject* gameObject): Component(gameObject)
 {
 }
 
-void Damagable::overrideDeathAction(std::function<void()> action) {
+void Damagable::overrideDeathAction(function<void()> action) {
 	hasDeathAction = true;
 	deathAction = action;
 }
 
-void Damagable::overrideDamageSound(std::function<void()> action) {
+void Damagable::overrideDamageSound(function<void()> action) {
     hasDamageSound = true;
     damageSoundAction = action;
 }

@@ -60,7 +60,7 @@ vec2 SideScrollingCamera::vec2lerp(vec2& a, vec2& b, float t)
     return a * t + b * (1.f - t);
 }
 
-void SideScrollingCamera::setFollowObject(std::shared_ptr<GameObject> followObject, glm::vec2 offset) {
+void SideScrollingCamera::setFollowObject(std::shared_ptr<GameObject> followObject, vec2 offset) {
     this->followObject = followObject;
     this->offset = offset;
 }
@@ -77,17 +77,3 @@ void SideScrollingCamera::setZoomMode(bool zoomEnabled) {
 bool SideScrollingCamera::isZoomMode() {
     return zoom;
 }
-
-//glm::vec2 SideScrollingCamera::pixelToCameraSpace(glm::vec2& pixelCoordinates)
-//{
-//    auto position = pixelCoordinates;
-//	
-//    position.x += offset.x;
-//    position.y += offset.y;
-//    if (zoom) {
-//        position.x -= offset.x / 2;
-//        position.y -= offset.y / 2;
-//    }
-//
-//    return position;
-//}

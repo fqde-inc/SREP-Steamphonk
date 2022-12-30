@@ -52,6 +52,6 @@ void Box2DDebugDraw::clear() {
     lines.clear();
 }
 
-const std::vector<glm::vec3> &Box2DDebugDraw::getLines() {
+const vector<glm::vec3> &Box2DDebugDraw::getLines() {
     return lines;
 }

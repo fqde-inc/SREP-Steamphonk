@@ -84,7 +84,7 @@ PlatformerGame::PlatformerGame()
     r.startEventLoop();
 }
 
-void PlatformerGame::generateSingleBird(std::pair<int, int> coords, std::vector<glm::vec2> positions, PathType type)
+void PlatformerGame::generateSingleBird(pair<int, int> coords, vector<glm::vec2> positions, PathType type)
 {
     auto birdObj = PlatformerGame::instance->createGameObject();
     birdObj->name = "Bird";
@@ -107,7 +107,7 @@ void PlatformerGame::destroyAllBirds() {
     }
 }
 
-std::shared_ptr<Level> PlatformerGame::getLevel()
+shared_ptr<Level> PlatformerGame::getLevel()
 {
 	return level;
 }
@@ -357,7 +357,7 @@ void PlatformerGame::render() {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.8f, 0, 0.8f, .6f});
         ImGui::Begin("shakeSetting", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
 
-        std::string tempButtonLabel;
+        string tempButtonLabel;
 
         switch (shakeOption) {
             case MILD_LITTLE_PONY:
@@ -562,7 +562,7 @@ void PlatformerGame::handleInput(SDL_Event &event) {
     }
 }
 
-std::shared_ptr<GameObject> PlatformerGame::createGameObject() {
+shared_ptr<GameObject> PlatformerGame::createGameObject() {
     auto obj = shared_ptr<GameObject>(new GameObject());
     sceneObjects.push_back(obj);
     return obj;
@@ -645,6 +645,6 @@ void PlatformerGame::handleContact(b2Contact *contact, bool begin) {
     }
 }
 
-std::shared_ptr<sre::SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
+shared_ptr<SpriteAtlas> PlatformerGame::getSpriteAtlas() {return spriteAtlas;}
 
 glm::vec2 PlatformerGame::getPlayerPosition() {return player->getPosition();}

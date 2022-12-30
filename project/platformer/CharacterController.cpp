@@ -5,7 +5,6 @@
 #include "SpriteComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "PlatformerGame.hpp"
-#include "SpriteComponent.hpp"
 
 using namespace std;
 
@@ -31,7 +30,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 	
     radius = 10/physicsScale;
     characterPhysics->initCircle(b2_dynamicBody, radius, spawn / physicsScale, 1);
-    std::cout << "Spawned player at " << spawn.x << ", " << spawn.y << std::endl;
+    cout << "Spawned player at " << spawn.x << ", " << spawn.y << endl;
     characterPhysics->getFixture()->SetRestitution(0);
 
     b2Filter filter = characterPhysics->getFixture()->GetFilterData();
@@ -42,7 +41,7 @@ CharacterController::CharacterController(GameObject *gameObject) : Component(gam
 
     spriteComponent = gameObject->getComponent<SpriteComponent>();
 
-    state_ = std::make_shared<CharacterState>();
+    state_ = make_shared<CharacterState>();
 }
 
 bool CharacterController::handleInput(SDL_Event &event) {
@@ -57,7 +56,7 @@ void CharacterController::update(float deltaTime) {
         auto physicsScale = PlatformerGame::instance->physicsScale;
         this->characterPhysics->getBody()->SetTransform(b2Vec2(spawn.x / physicsScale, spawn.y / physicsScale), 0);
         damageComponent->resetLife();
-        std::cout << "Player returned to " << spawn.x << ", " << spawn.y << std::endl;
+        cout << "Player returned to " << spawn.x << ", " << spawn.y << endl;
         returnToSpawn = false;
     }
     // raycast ignores any shape in the starting point
@@ -104,7 +103,7 @@ void CharacterController::update(float deltaTime) {
     updateSprite(deltaTime);
 
     if(!isGrounded && state_->characterStateStack[0]->stateType != Jumping) {
-        state_->pushStack(std::make_shared<JumpingState>());
+        state_->pushStack(make_shared<JumpingState>());
     }
 
     if(state_->characterStateStack.size() != 0) state_->characterStateStack[0].get()->update(*this, deltaTime);
@@ -132,7 +131,7 @@ float32 CharacterController::ReportFixture(b2Fixture *fixture, const b2Vec2 &poi
     if(state_->characterStateStack[0]->stateType == Jumping) {
         state_->popStack(Jumping);
         if(left || right) {
-            state_->pushStack(std::make_shared<WalkingState>());
+            state_->pushStack(make_shared<WalkingState>());
         }
     }
     return 0;
