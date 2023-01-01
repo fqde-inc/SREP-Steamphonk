@@ -1,7 +1,7 @@
 # Copy project data to output path
-foreach(data_folder ../project_data)
-	file(COPY ${data_folder} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Steamphonk)
-endforeach()
+file(COPY  ../project_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Steamphonk)
+file(COPY  ../project_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Steamphonk/Debug)
+file(COPY  ../project_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Steamphonk/Release)
 
 # Pass the PROJECT_DATA_PATH variable to the C++ preprocessor
 add_definitions(-DPRE_PROJECT_DATA_PATH="project_data")
